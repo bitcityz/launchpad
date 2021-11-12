@@ -4,7 +4,7 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'PancakeSwap',
   description:
-    'The most popular AMM on BSC by user count! Earn CAKE through yield farming or win it in the Lottery, then stake it in Syrup Pools to earn more tokens! Initial Farm Offerings (new token launch model pioneered by PancakeSwap), NFTs, and more, on a platform you can trust.',
+    'Meta Fight’s gameplay is designed to revolve around the combination between your personal skills and teawork, Challenge yourself with a wide variety of game modes: Discover & Fighting, coming with monthly updates and attractive rewards.',
   image: 'https://pancakeswap.finance/images/hero.png',
 }
 

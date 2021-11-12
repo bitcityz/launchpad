@@ -52,9 +52,6 @@ const ConnectedProfile = () => {
           isNftLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           isAchievementsLoading={achievementFetchStatus !== AchievementFetchStatus.FETCHED}
         />
-        <TabMenuWrapper>
-          <TabMenu />
-        </TabMenuWrapper>
       </MarketPageHeader>
       <Page style={{ minHeight: 'auto' }}>
         <Route path={`${nftsBaseUrl}/profile/:accountAddress/achievements`}>
