@@ -1,5 +1,5 @@
 export default {
-  "0x6b8B3330A17d4e2f0fd85E6c65b4E00e85e7606C": {
+  "0xFa6F10E64898175eF779Cba7DFeaa3f9C4BbC634": {
     createdAt: "2021-10-07T00:00:00.000Z",
     creatorAddress: "0x0000000000000000000000000000000000000000",
     creatorFee: "0",
@@ -17,7 +17,7 @@ export default {
     verified: true,
     whitelistChecker: "0x0000000000000000000000000000000000000000",
     active: true,
-    address: "0x6b8B3330A17d4e2f0fd85E6c65b4E00e85e7606C",
+    address: "0xFa6F10E64898175eF779Cba7DFeaa3f9C4BbC634",
     avatar: "/logo.png",
     banner: {
       large: "/images/meta-fight-banner.png",

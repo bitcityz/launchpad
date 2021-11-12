@@ -94,18 +94,27 @@ export const getNftApi = async (
   collectionAddress: string,
   tokenId: string,
 ): Promise<ApiResponseSpecificToken['data']> => {
-  const imageURI = 'https://ipfsgw.cowswap.app/ipfs'
   const contract = getErc721Contract(collectionAddress)
-  const data = await contract.metadatas(tokenId)
-  return {
-    ...data,
-    tokenId,
-    image: {
-      original: `${imageURI}/${data.image}`,
-      thumbnail: `${imageURI}/${data.image}`
-    },
-    collection: COLLECTIONS[collectionAddress]
+  const hash = await contract.tokenHash(tokenId)
+  const baseURI = await contract.baseURI()
+  const res = await fetch(`${baseURI}${hash}`)
+  if (res.ok) {
+    const json = await res.json()
+    const result = {
+      ...json,
+      tokenId,
+      image: {
+        original: json.image,
+        thumbnail: json.image
+      },
+      collection: COLLECTIONS[collectionAddress]
+    }
+    console.log({
+      result
+    })
+    return result
   }
+  
   console.error(`API: Can't fetch NFT token ${tokenId} in ${collectionAddress}`)
   return null
 }
@@ -119,9 +128,15 @@ export const getNftsFromDifferentCollectionsApi = async (
   from: { collectionAddress: string; tokenId: string }[],
 ): Promise<NftToken[]> => {
   const promises = from.map((nft) => getNftApi(nft.collectionAddress, nft.tokenId))
-  const responses = await Promise.all(promises)
+  const responses = await Promise.all(promises).catch((e) => {
+    console.log(e)
+    return []
+  })
   // Sometimes API can't find some tokens (e.g. 404 response)
   // at least return the ones that returned successfully
+  console.log({
+    responses
+  })
   return responses
     .filter((resp) => resp)
     .map((res, index) => ({
@@ -588,6 +603,10 @@ export const fetchWalletTokenIdsForCollections = async (
     }
 
     const balanceOf = balanceOfResponse.toNumber()
+
+    console.log({
+      balanceOf
+    })
 
     // User has no NFTs for this collection
     if (balanceOfResponse.eq(0)) {
