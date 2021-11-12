@@ -1,6 +1,7 @@
 import { request, gql } from 'graphql-request'
 import { stringify } from 'qs'
 import { GRAPH_API_NFTMARKET, API_NFT } from 'config/constants/endpoints'
+import COLLECTIONS from 'config/constants/collections'
 import { getErc721Contract } from 'utils/contractHelpers'
 import { ethers } from 'ethers'
 import map from 'lodash/map'
@@ -93,13 +94,19 @@ export const getNftApi = async (
   collectionAddress: string,
   tokenId: string,
 ): Promise<ApiResponseSpecificToken['data']> => {
-  const res = await fetch(`${API_NFT}/collections/${collectionAddress}/tokens/${tokenId}`)
-  if (res.ok) {
-    const json = await res.json()
-    return json.data
+  const imageURI = 'https://ipfsgw.cowswap.app/ipfs'
+  const contract = getErc721Contract(collectionAddress)
+  const data = await contract.metadatas(tokenId)
+  return {
+    ...data,
+    tokenId,
+    image: {
+      original: `${imageURI}/${data.image}`,
+      thumbnail: `${imageURI}/${data.image}`
+    },
+    collection: COLLECTIONS[collectionAddress]
   }
-
-  console.error(`API: Can't fetch NFT token ${tokenId} in ${collectionAddress}`, res.status)
+  console.error(`API: Can't fetch NFT token ${tokenId} in ${collectionAddress}`)
   return null
 }
 

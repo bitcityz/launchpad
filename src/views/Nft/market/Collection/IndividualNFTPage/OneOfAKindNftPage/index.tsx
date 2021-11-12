@@ -26,7 +26,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   const [nft, setNft] = useState<NftToken>(null)
   const [isOwnNft, setIsOwnNft] = useState(false)
 
-  const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
+  // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
 
   const { account } = useWeb3React()
   const { userNftsInitializationState, nfts: userNfts } = useUserNfts()
@@ -83,21 +83,21 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     ? nft.tokenId === userProfilePicture.tokenId && nft.collectionAddress === userProfilePicture.collectionAddress
     : false
 
-  const getAttributesRarity = () => {
-    if (distributionData && !isFetchingDistribution) {
-      return Object.keys(distributionData).reduce((rarityMap, traitType) => {
-        const total = sum(Object.values(distributionData[traitType]))
-        const nftAttributeValue = nft.attributes.find((attribute) => attribute.traitType === traitType)?.value
-        const count = distributionData[traitType][nftAttributeValue]
-        const rarity = (count / total) * 100
-        return {
-          ...rarityMap,
-          [traitType]: rarity,
-        }
-      }, {})
-    }
-    return {}
-  }
+  // const getAttributesRarity = () => {
+  //   if (distributionData && !isFetchingDistribution) {
+  //     return Object.keys(distributionData).reduce((rarityMap, traitType) => {
+  //       const total = sum(Object.values(distributionData[traitType]))
+  //       const nftAttributeValue = nft.attributes.find((attribute) => attribute.traitType === traitType)?.value
+  //       const count = distributionData[traitType][nftAttributeValue]
+  //       const rarity = (count / total) * 100
+  //       return {
+  //         ...rarityMap,
+  //         [traitType]: rarity,
+  //       }
+  //     }, {})
+  //   }
+  //   return {}
+  // }
 
   return (
     <Page>
@@ -109,7 +109,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             isOwnNft={isOwnNft}
             isLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           />
-          <PropertiesCard properties={properties} rarity={getAttributesRarity()} />
+          {/* <PropertiesCard properties={properties} rarity={getAttributesRarity()} /> */}
           <DetailsCard contractAddress={collectionAddress} ipfsJson={nft?.marketData?.metadataUrl} />
         </Flex>
         <OwnerCard nft={nft} isOwnNft={isOwnNft} nftIsProfilePic={nftIsProfilePic} />

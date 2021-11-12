@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { pancakeBunniesAddress } from 'views/Nft/market/constants'
+import COLLECTIONS from 'config/constants/collections'
 import isEmpty from 'lodash/isEmpty'
 import {
   getNftsFromCollectionApi,
@@ -72,8 +73,9 @@ const initialState: State = {
  * Fetch all collections data by combining data from the API (static metadata) and the Subgraph (dynamic market data)
  */
 export const fetchCollections = createAsyncThunk<Record<string, Collection>>('nft/fetchCollections', async () => {
-  const [collections, collectionsMarket] = await Promise.all([getCollectionsApi(), getCollectionsSg()])
-  return combineCollectionData(collections, collectionsMarket)
+  // const [collections, collectionsMarket] = await Promise.all([getCollectionsApi(), getCollectionsSg()])
+  // console.log(combineCollectionData(collections, collectionsMarket))
+  return COLLECTIONS
 })
 
 /**
