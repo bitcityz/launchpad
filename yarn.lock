@@ -2564,6 +2564,18 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
+"@metaxiz/uikit@^0.56.0":
+  version "0.56.0"
+  resolved "https://registry.npmjs.org/@metaxiz/uikit/-/uikit-0.56.0.tgz#925962aff6b538ef0e643d5ebe364a002383798f"
+  integrity sha512-7MpPHJS4PkE54EPuOyO4COekw5Q5RtH+E0F9nAmIn094kvmasXOTh2fZuOIQE+bdiTvOsEbPi5yh3tSHYIBqAQ==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    "@types/lodash" "^4.14.168"
+    "@types/styled-system" "^5.1.10"
+    lodash "^4.17.20"
+    react-popper "^2.2.5"
+    styled-system "^5.1.5"
+
 "@microsoft/fetch-event-source@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@microsoft/fetch-event-source/-/fetch-event-source-2.0.1.tgz#9ceecc94b49fbaa15666e38ae8587f64acce007d"
@@ -2648,18 +2660,6 @@
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
-
-"@pancakeswap/uikit@^0.55.0":
-  version "0.55.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap/uikit/-/uikit-0.55.0.tgz#a783664997512d9199e87fe1cdd49627ec8dd5e6"
-  integrity sha512-JjVuJ8PnH11rDBNZalIfiRJqj/908EDoUjRVDSb0ITZD3KfR/eH9I+7g6bdbPiKyUxnNm3QWgqgqZ58zJBCL4w==
-  dependencies:
-    "@popperjs/core" "^2.9.2"
-    "@types/lodash" "^4.14.168"
-    "@types/styled-system" "^5.1.10"
-    lodash "^4.17.20"
-    react-popper "^2.2.5"
-    styled-system "^5.1.5"
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
