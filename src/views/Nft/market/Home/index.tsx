@@ -83,7 +83,7 @@ const Home = () => {
         dividerPosition="top"
       >
         <Collections />
-        <Newest />
+        {/* <Newest /> */}
       </PageSection>
       <Gradient p="64px 0">
         <SectionsWithFoldableText header={t('FAQs')} config={config(t)} m="auto" />

@@ -109,9 +109,6 @@ export const getNftApi = async (
       },
       collection: COLLECTIONS[collectionAddress]
     }
-    console.log({
-      result
-    })
     return result
   }
   

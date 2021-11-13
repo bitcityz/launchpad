@@ -11,18 +11,18 @@ interface State {
 const useGetCollectionDistribution = (collectionAddress: string) => {
   const [state, setState] = useState<State>({ isFetching: false, data: null })
 
-  useEffect(() => {
-    const fetchTokens = async () => {
-      setState((prevState) => ({ ...prevState, isFetching: true }))
-      const apiResponse = await getCollectionDistributionApi<ApiCollectionDistribution>(collectionAddress)
-      setState({
-        isFetching: false,
-        data: apiResponse.data,
-      })
-    }
+  // useEffect(() => {
+  //   const fetchTokens = async () => {
+  //     setState((prevState) => ({ ...prevState, isFetching: true }))
+  //     const apiResponse = await getCollectionDistributionApi<ApiCollectionDistribution>(collectionAddress)
+  //     setState({
+  //       isFetching: false,
+  //       data: apiResponse.data,
+  //     })
+  //   }
 
-    fetchTokens()
-  }, [collectionAddress, setState])
+  //   fetchTokens()
+  // }, [collectionAddress, setState])
 
   return state
 }
