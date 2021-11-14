@@ -4,7 +4,7 @@ export default {
     creatorAddress: "0x0000000000000000000000000000000000000000",
     creatorFee: "0",
     description: "10,000 unique, randomly-generated Metaxiz NFTs from the mind of Chef Cecy Meade. Join the squad.",
-    id: "0x0a8901b0e25deb55a87524f0cc164e9644020eba",
+    id: "0xFa6F10E64898175eF779Cba7DFeaa3f9C4BbC634",
     name: "Meta fight",
     numberTokensListed: "4250",
     owner: "0x29fE7148636b7Ae0b1E53777b28dfbaA9327af8E",

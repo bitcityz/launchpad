@@ -8,9 +8,11 @@ import {
   useGetNftShowOnlyOnSale,
   useNftsFromCollection,
 } from 'state/nftMarket/hooks'
+import COLLECTIONS from 'config/constants/collections'
 import { Collection, NftFilterLoadingState, NftToken, TokenMarketData } from 'state/nftMarket/types'
 import { fetchNftsFromCollections } from 'state/nftMarket/reducer'
 import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
+import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import { useTranslation } from 'contexts/Localization'
 import GridPlaceholder from '../../components/GridPlaceholder'
 import { CollectibleLinkCard } from '../../components/CollectibleCard'
@@ -27,6 +29,8 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   const [nfts, setNfts] = useState<NftToken[]>([])
   const [isFetchingFilteredNfts, setIsFetchingFilteredNfts] = useState(false)
   const { t } = useTranslation()
+  const nftMarketContract = useNftMarketContract()
+  const collectionContract = useERC721(collectionAddress)
   const collectionNfts = useNftsFromCollection(collectionAddress)
   const nftFilterLoadingState = useGetNftFilterLoadingState(collectionAddress)
   const dispatch = useAppDispatch()
@@ -55,42 +59,95 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   }, [orderField, orderDirection])
 
   useEffect(() => {
-    const fetchApiData = async (marketData: TokenMarketData[]) => {
-      const apiRequestPromises = marketData.map((marketNft) => getNftApi(collectionAddress, marketNft.tokenId))
-      const apiResponses = await Promise.all(apiRequestPromises)
-      const responsesWithMarketData = apiResponses.map((apiNft, i) => {
+    const fetchMarket = async () => {
+      const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
+      const baseURI = await collectionContract.baseURI()
+      const apiRequestPromises: Promise<NftToken>[] = tokenIds.map(async (tokenId): Promise<NftToken> => {
+        const hash = await collectionContract.tokenHash(tokenId.toNumber())
+        const res = await fetch(`${baseURI}${hash}`)
+        if (res.ok) {
+          const json = await res.json()
+          return json
+        }
         return {
-          ...apiNft,
+          tokenId: '',
+          image: {
+            original: '',
+            thumbnail: ''
+          },
+          name: '',
+          description: '',
+          collectionName: '',
+          collectionAddress: ''
+        }
+      })
+      console.log({
+        askInfo
+      })
+      const nftsDetails = await Promise.all(apiRequestPromises)
+      const marketData = tokenIds.map((tokenId, index) => {
+        return {
+          collection: {
+            id: COLLECTIONS[collectionAddress].id
+          },
           collectionAddress,
-          collectionName: apiNft.collection.name,
-          marketData: marketData[i],
+          tokenId: tokenId.toNumber(),
+          collectionName: COLLECTIONS[collectionAddress].name,
+          image: {
+            thumbnail: nftsDetails[index].image
+          },
+          marketData: askInfo[index]
         }
       })
       setIsFetchingFilteredNfts(false)
       setNfts((prevState) => {
-        const combinedNfts = [...prevState, ...responsesWithMarketData]
+        const combinedNfts = [...prevState, ...marketData]
         return uniqBy(combinedNfts, 'tokenId')
       })
     }
-
-    const fetchMarketData = async () => {
-      const subgraphRes = await getNftsMarketData(
-        { collection: collectionAddress.toLowerCase(), isTradable: true },
-        REQUEST_SIZE,
-        orderField,
-        orderDirection,
-        skip,
-      )
-      fetchApiData(subgraphRes)
+    
+    if (nftMarketContract) {
+      console.log({
+        nftMarketContract
+      })
+      fetchMarket()
     }
+    // const fetchApiData = async (marketData: TokenMarketData[]) => {
+    //   const apiRequestPromises = marketData.map((marketNft) => getNftApi(collectionAddress, marketNft.tokenId))
+    //   const apiResponses = await Promise.all(apiRequestPromises)
+    //   const responsesWithMarketData = apiResponses.map((apiNft, i) => {
+    //     return {
+    //       ...apiNft,
+    //       collectionAddress,
+    //       collectionName: apiNft.collection.name,
+    //       marketData: marketData[i],
+    //     }
+    //   })
+    //   setIsFetchingFilteredNfts(false)
+    //   setNfts((prevState) => {
+    //     const combinedNfts = [...prevState, ...responsesWithMarketData]
+    //     return uniqBy(combinedNfts, 'tokenId')
+    //   })
+    // }
 
-    if (orderField !== 'tokenId') {
-      // Query by tokenId is handled in useEffect below since we in this case
-      // we need to show all NFTs, even those that never been on sale (i.e. they are not in subgraph)
-      setIsFetchingFilteredNfts(true)
-      fetchMarketData()
-    }
-  }, [orderField, orderDirection, skip, collectionAddress])
+    // const fetchMarketData = async () => {
+    //   const subgraphRes = await getNftsMarketData(
+    //     { collection: collectionAddress.toLowerCase(), isTradable: true },
+    //     REQUEST_SIZE,
+    //     orderField,
+    //     orderDirection,
+    //     skip,
+    //   )
+    //   fetchApiData(subgraphRes)
+    // }
+
+    // if (orderField !== 'tokenId') {
+    //   // Query by tokenId is handled in useEffect below since we in this case
+    //   // we need to show all NFTs, even those that never been on sale (i.e. they are not in subgraph)
+    //   setIsFetchingFilteredNfts(true)
+    //   fetchMarketData()
+    // }
+  }, [orderField, orderDirection, skip, collectionAddress, nftMarketContract, collectionContract])
 
   useEffect(() => {
     if (orderField === 'tokenId') {

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
+import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { Flex } from '@metaxiz/uikit'
 import sum from 'lodash/sum'
+import BigNumber from 'bignumber.js'
 import Page from 'components/Layout/Page'
 import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
 import { NftLocation, NftToken, UserNftInitializationState } from 'state/nftMarket/types'
 import PageLoader from 'components/Loader/PageLoader'
 import { useUserNfts } from 'state/nftMarket/hooks'
+import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import MainNFTCard from './MainNFTCard'
 import ManageNFTsCard from './ManageNFTsCard'
 import useFetchUserNfts from '../../../Profile/hooks/useFetchUserNfts'
@@ -25,6 +28,7 @@ interface IndividualNFTPageProps {
 const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress, tokenId }) => {
   const [nft, setNft] = useState<NftToken>(null)
   const [isOwnNft, setIsOwnNft] = useState(false)
+  const nftMarketContract = useNftMarketContract()
 
   // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
 
@@ -34,8 +38,12 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
 
   useEffect(() => {
     const fetchNftData = async () => {
+      const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
+      const foundIndex = tokenIds.findIndex(item => item.toString() === tokenId)
+      const foundMarketData = askInfo[foundIndex]
+
       const metadata = await getNftApi(collectionAddress, tokenId)
-      const [marketData] = await getNftsMarketData({ collection: collectionAddress.toLowerCase(), tokenId }, 1)
+      // const [marketData] = await getNftsMarketData({ collection: collectionAddress.toLowerCase(), tokenId }, 1)
       setNft({
         tokenId,
         collectionAddress,
@@ -44,7 +52,17 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
         description: metadata.description,
         image: metadata.image,
         attributes: metadata.attributes,
-        marketData,
+        marketData: {
+          currentAskPrice: new BigNumber(foundMarketData.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
+          tokenId,
+          currentSeller: foundMarketData.seller,
+          latestTradedPriceInBNB: '0',
+          tradeVolumeBNB: '0',
+          metadataUrl: '',
+          totalTrades: '0',
+          isTradable: true,
+          otherId: '56'
+        },
       })
     }
     if (userNftsInitializationState === UserNftInitializationState.INITIALIZED) {
@@ -66,7 +84,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     if (!account) {
       fetchNftData()
     }
-  }, [userNfts, collectionAddress, tokenId, userNftsInitializationState, account])
+  }, [userNfts, collectionAddress, tokenId, userNftsInitializationState, account, nftMarketContract])
 
   if (!nft) {
     // TODO redirect to nft market page if collection or bunny id does not exist (came here from some bad url)
