@@ -13,7 +13,7 @@ const ActivateProfileButton: React.FC<ActivateProfileButtonProps> = ({ t, userSt
   <>
     {(userStatus === UserStatusEnum.NO_PROFILE || userStatus === UserStatusEnum.UNCONNECTED) && (
       <Button as={Link} to="/create-profile" mr="4px">
-        {t('Activate Profile 01')}
+        {t('Activate Profile')}
       </Button>
     )}
   </>

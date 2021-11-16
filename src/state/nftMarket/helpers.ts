@@ -1,12 +1,14 @@
 import { request, gql } from 'graphql-request'
 import { stringify } from 'qs'
+import BigNumber from 'bignumber.js'
 import { GRAPH_API_NFTMARKET, API_NFT } from 'config/constants/endpoints'
 import COLLECTIONS from 'config/constants/collections'
-import { getErc721Contract } from 'utils/contractHelpers'
+import { getErc721Contract, getNftMarketContract } from 'utils/contractHelpers'
 import { ethers } from 'ethers'
 import map from 'lodash/map'
 import { uniq } from 'lodash'
 import { pancakeBunniesAddress } from 'views/Nft/market/constants'
+import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import {
   TokenMarketData,
   ApiCollections,
@@ -769,6 +771,7 @@ export const getCompleteAccountNftData = async (
   collections: ApiCollections,
   profileNftWithCollectionAddress?: TokenIdWithCollectionAddress,
 ): Promise<NftToken[]> => {
+  const marketContract = getNftMarketContract()
   const walletNftIdsWithCollectionAddress = await fetchWalletTokenIdsForCollections(account, collections)
   if (profileNftWithCollectionAddress?.tokenId) {
     walletNftIdsWithCollectionAddress.unshift(profileNftWithCollectionAddress)
@@ -806,12 +809,29 @@ export const getCompleteAccountNftData = async (
       return profileNftWithCollectionAddress?.tokenId !== walletNft.tokenId
     })
     .map((nft) => nft.tokenId)
+  
+  const asksRequests = Object.keys(collections).map(collection => marketContract.viewAsksByCollectionAndSeller(collection, account, 0, 200))
+  const asksData = await Promise.all(asksRequests)
 
-  const marketDataForSaleNfts = []
-  const tokenIdsForSale = marketDataForSaleNfts.map((nft) => nft.tokenId)
+  const marketDataForSaleNfts = asksData.reduce((acu, ask, index) => {
+    const results = ask.tokenIds.map(tokenId => {
+      return {
+        collection: {
+          id: Object.keys(collections)[index]
+        },
+        isTradable: true,
+        tokenId: new BigNumber(tokenId._hex).toString(),
+        currentAskPrice: new BigNumber(ask.askInfo[index].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
+      }
+    })
+    return [...acu, ...results]
+  }, [])
 
-  const forSaleNftIds = marketDataForSaleNfts.map((nft) => {
-    return { collectionAddress: nft.collection.id, tokenId: nft.tokenId }
+
+  const tokenIdsForSale = marketDataForSaleNfts.map(tokenId => tokenId)
+
+  const forSaleNftIds = marketDataForSaleNfts.map((nft, index) => {
+    return { collectionAddress: Object.keys(collections)[index], tokenId: nft.tokenId }
   })
 
   const metadataForAllNfts = await getNftsFromDifferentCollectionsApi([
