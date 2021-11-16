@@ -243,8 +243,7 @@ export const fetchUserNfts = createAsyncThunk<
   NftToken[],
   { account: string; profileNftWithCollectionAddress?: TokenIdWithCollectionAddress; collections: ApiCollections }
 >('nft/fetchUserNfts', async ({ account, profileNftWithCollectionAddress, collections }) => {
-  const completeNftData = await getCompleteAccountNftData(account, collections, profileNftWithCollectionAddress)
-  return completeNftData
+  return getCompleteAccountNftData(account, collections, profileNftWithCollectionAddress)
 })
 
 export const updateUserNft = createAsyncThunk<

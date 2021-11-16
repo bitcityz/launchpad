@@ -126,14 +126,10 @@ export const getNftsFromDifferentCollectionsApi = async (
 ): Promise<NftToken[]> => {
   const promises = from.map((nft) => getNftApi(nft.collectionAddress, nft.tokenId))
   const responses = await Promise.all(promises).catch((e) => {
-    console.log(e)
     return []
   })
   // Sometimes API can't find some tokens (e.g. 404 response)
   // at least return the ones that returned successfully
-  console.log({
-    responses
-  })
   return responses
     .filter((resp) => resp)
     .map((res, index) => ({
@@ -601,10 +597,6 @@ export const fetchWalletTokenIdsForCollections = async (
 
     const balanceOf = balanceOfResponse.toNumber()
 
-    console.log({
-      balanceOf
-    })
-
     // User has no NFTs for this collection
     if (balanceOfResponse.eq(0)) {
       return []
@@ -815,7 +807,7 @@ export const getCompleteAccountNftData = async (
     })
     .map((nft) => nft.tokenId)
 
-  const marketDataForSaleNfts = await getNftsMarketData({ currentSeller: account.toLowerCase() })
+  const marketDataForSaleNfts = []
   const tokenIdsForSale = marketDataForSaleNfts.map((nft) => nft.tokenId)
 
   const forSaleNftIds = marketDataForSaleNfts.map((nft) => {

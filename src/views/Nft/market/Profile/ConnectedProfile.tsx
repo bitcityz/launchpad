@@ -33,7 +33,6 @@ const TabMenuWrapper = styled(Box)`
 
 const ConnectedProfile = () => {
   const { profile, isLoading: isProfileLoading } = useProfile()
-  const { achievements, achievementFetchStatus } = useAchievements()
   const { account } = useWeb3React()
   const { userNftsInitializationState, nfts: userNfts } = useUserNfts()
 
@@ -46,21 +45,12 @@ const ConnectedProfile = () => {
         <ProfileHeader
           accountPath={account}
           profile={profile}
-          achievements={achievements}
           nftCollected={userNfts.length}
           isProfileLoading={isProfileLoading}
           isNftLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
-          isAchievementsLoading={achievementFetchStatus !== AchievementFetchStatus.FETCHED}
         />
       </MarketPageHeader>
       <Page style={{ minHeight: 'auto' }}>
-        <Route path={`${nftsBaseUrl}/profile/:accountAddress/achievements`}>
-          <Achievements
-            achievements={achievements}
-            isLoading={achievementFetchStatus !== AchievementFetchStatus.FETCHED}
-            points={profile?.points}
-          />
-        </Route>
         <Route path={`${nftsBaseUrl}/profile/:accountAddress/activity`}>
           <SubMenu />
           <ActivityHistory />

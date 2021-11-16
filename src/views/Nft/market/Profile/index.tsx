@@ -26,9 +26,7 @@ const NftProfile = () => {
           <ProfileHeader
             accountPath={accountAddress}
             profile={null}
-            achievements={null}
             nftCollected={null}
-            isAchievementsLoading={false}
             isNftLoading={false}
             isProfileLoading={false}
           />
