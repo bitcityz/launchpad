@@ -827,11 +827,11 @@ export const getCompleteAccountNftData = async (
     return [...acu, ...results]
   }, [])
 
-
+  
   const tokenIdsForSale = marketDataForSaleNfts.map(tokenId => tokenId)
 
-  const forSaleNftIds = marketDataForSaleNfts.map((nft, index) => {
-    return { collectionAddress: Object.keys(collections)[index], tokenId: nft.tokenId }
+  const forSaleNftIds = marketDataForSaleNfts.map(nft => {
+    return { collectionAddress: nft.collection.id, tokenId: nft.tokenId }
   })
 
   const metadataForAllNfts = await getNftsFromDifferentCollectionsApi([
