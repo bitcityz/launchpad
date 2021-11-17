@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
 import uniqBy from 'lodash/uniqBy'
 import { AutoRenewIcon, Button, Flex, Grid, Text } from '@metaxiz/uikit'
 import { useAppDispatch } from 'state'
@@ -11,7 +12,8 @@ import {
 import COLLECTIONS from 'config/constants/collections'
 import { Collection, NftFilterLoadingState, NftToken, TokenMarketData } from 'state/nftMarket/types'
 import { fetchNftsFromCollections } from 'state/nftMarket/reducer'
-import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
+// import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
+import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import { useTranslation } from 'contexts/Localization'
 import GridPlaceholder from '../../components/GridPlaceholder'
@@ -24,8 +26,8 @@ interface CollectionNftsProps {
 
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   const { totalSupply, numberTokensListed, address: collectionAddress } = collection
-  const [page, setPage] = useState(1)
-  const [skip, setSkip] = useState(0)
+  const [page, setPage] = useState(0)
+  const [skip, setSkip] = useState(REQUEST_SIZE)
   const [nfts, setNfts] = useState<NftToken[]>([])
   const [isFetchingFilteredNfts, setIsFetchingFilteredNfts] = useState(false)
   const { t } = useTranslation()
@@ -41,9 +43,10 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     orderField === 'tokenId' ? nftFilterLoadingState === NftFilterLoadingState.LOADING : isFetchingFilteredNfts
 
   const handleLoadMore = () => {
-    if (orderField === 'tokenId') {
-      setPage((prevPage) => prevPage + 1)
-    }
+    // if (orderField === 'tokenId') {
+    //   setPage((prevPage) => prevPage + 1)
+    // }
+    setPage((prevPage) => prevPage + REQUEST_SIZE)
     setSkip(skip + REQUEST_SIZE)
   }
 
@@ -55,12 +58,12 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
 
   useEffect(() => {
     setNfts([])
-    setSkip(0)
+    // setSkip(0)
   }, [orderField, orderDirection])
 
   useEffect(() => {
     const fetchMarket = async () => {
-      const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
+      const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
       const baseURI = await collectionContract.baseURI()
       const apiRequestPromises: Promise<NftToken>[] = tokenIds.map(async (tokenId): Promise<NftToken> => {
         const hash = await collectionContract.tokenHash(tokenId.toNumber())
@@ -81,9 +84,6 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
           collectionAddress: ''
         }
       })
-      console.log({
-        askInfo
-      })
       const nftsDetails = await Promise.all(apiRequestPromises)
       const marketData = tokenIds.map((tokenId, index) => {
         return {
@@ -96,10 +96,18 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
           image: {
             thumbnail: nftsDetails[index].image
           },
-          marketData: askInfo[index]
+          marketData: {
+            collection: {
+              id: collectionAddress
+            },
+            isTradable: true,
+            tokenId: new BigNumber(tokenId._hex).toString(),
+            currentAskPrice: new BigNumber(askInfo[index].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
+          }
         }
       })
       setIsFetchingFilteredNfts(false)
+
       setNfts((prevState) => {
         const combinedNfts = [...prevState, ...marketData]
         return uniqBy(combinedNfts, 'tokenId')
@@ -107,9 +115,6 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     }
     
     if (nftMarketContract) {
-      console.log({
-        nftMarketContract
-      })
       fetchMarket()
     }
     // const fetchApiData = async (marketData: TokenMarketData[]) => {
@@ -147,7 +152,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     //   setIsFetchingFilteredNfts(true)
     //   fetchMarketData()
     // }
-  }, [orderField, orderDirection, skip, collectionAddress, nftMarketContract, collectionContract])
+  }, [orderField, orderDirection, skip, collectionAddress, nftMarketContract, collectionContract, page])
 
   useEffect(() => {
     if (orderField === 'tokenId') {
