@@ -753,7 +753,9 @@ export const combineNftMarketAndMetadata = (
     } else {
       marketData = walletNfts.find((marketNft) => marketNft.tokenId === nft.tokenId)
     }
+    
     const location = getNftLocationForMarketNft(nft.tokenId, tokenIdsInWallet, tokenIdsForSale, profileNftId)
+
     return { ...nft, marketData, location }
   })
   return completeNftData
@@ -828,7 +830,7 @@ export const getCompleteAccountNftData = async (
   }, [])
 
   
-  const tokenIdsForSale = marketDataForSaleNfts.map(tokenId => tokenId)
+  const tokenIdsForSale = marketDataForSaleNfts.map(({tokenId}) => tokenId)
 
   const forSaleNftIds = marketDataForSaleNfts.map(nft => {
     return { collectionAddress: nft.collection.id, tokenId: nft.tokenId }
