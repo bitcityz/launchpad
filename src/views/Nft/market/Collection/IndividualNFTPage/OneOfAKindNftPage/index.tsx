@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { Flex } from '@metaxiz/uikit'
-import sum from 'lodash/sum'
+// import sum from 'lodash/sum'
 import BigNumber from 'bignumber.js'
 import Page from 'components/Layout/Page'
 import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
@@ -14,9 +14,9 @@ import MainNFTCard from './MainNFTCard'
 import ManageNFTsCard from './ManageNFTsCard'
 import useFetchUserNfts from '../../../Profile/hooks/useFetchUserNfts'
 import { TwoColumnsContainer } from '../shared/styles'
-import PropertiesCard from '../shared/PropertiesCard'
+// import PropertiesCard from '../shared/PropertiesCard'
 import DetailsCard from '../shared/DetailsCard'
-import useGetCollectionDistribution from '../../../hooks/useGetCollectionDistribution'
+// import useGetCollectionDistribution from '../../../hooks/useGetCollectionDistribution'
 import OwnerCard from './OwnerCard'
 import MoreFromThisCollection from '../shared/MoreFromThisCollection'
 
@@ -38,8 +38,6 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
 
   useEffect(() => {
     const fetchNftData = async () => {
-      // eslint-disable-next-line no-debugger
-      debugger
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
       const foundIndex = tokenIds.findIndex(item => item.toString() === tokenId)
       const foundMarketData = askInfo[foundIndex]
@@ -96,7 +94,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     return <PageLoader />
   }
 
-  const properties = nft.attributes
+  // const properties = nft.attributes
 
   const userProfilePicture = userNfts.find((userNft) => userNft.location === NftLocation.PROFILE)
   const nftIsProfilePic = userProfilePicture

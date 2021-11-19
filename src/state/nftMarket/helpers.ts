@@ -818,14 +818,14 @@ export const getCompleteAccountNftData = async (
   const asksData = await Promise.all(asksRequests)
 
   const marketDataForSaleNfts = asksData.reduce((acu, ask, index) => {
-    const results = ask.tokenIds.map(tokenId => {
+    const results = ask.tokenIds.map((tokenId, askIndex) => {
       return {
         collection: {
           id: Object.keys(collections)[index]
         },
         isTradable: true,
         tokenId: new BigNumber(tokenId._hex).toString(),
-        currentAskPrice: new BigNumber(ask.askInfo[index].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
+        currentAskPrice: new BigNumber(ask.askInfo[askIndex].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
       }
     })
     return [...acu, ...results]
@@ -851,15 +851,15 @@ export const getCompleteAccountNftData = async (
     tokenIdsForSale,
     profileNftWithCollectionAddress?.tokenId,
   )
-  console.log({
-    completeNftData,
-    metadataForAllNfts,
-    marketDataForSaleNfts,
-    walletNftsWithMarketData,
-    walletTokenIds,
-    tokenIdsForSale,
-    asksData
-  })
+  // console.log({
+  //   completeNftData,
+  //   metadataForAllNfts,
+  //   marketDataForSaleNfts,
+  //   walletNftsWithMarketData,
+  //   walletTokenIds,
+  //   tokenIdsForSale,
+  //   asksData
+  // })
   return completeNftData
 }
 
