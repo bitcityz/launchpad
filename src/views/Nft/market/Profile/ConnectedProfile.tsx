@@ -56,7 +56,6 @@ const ConnectedProfile = () => {
           <ActivityHistory />
         </Route>
         <Route exact path={`${nftsBaseUrl}/profile/:accountAddress`}>
-          <SubMenu />
           <UserNfts />
         </Route>
       </Page>

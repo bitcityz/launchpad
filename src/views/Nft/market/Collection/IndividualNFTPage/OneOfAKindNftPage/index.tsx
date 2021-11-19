@@ -38,6 +38,8 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
 
   useEffect(() => {
     const fetchNftData = async () => {
+      // eslint-disable-next-line no-debugger
+      debugger
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
       const foundIndex = tokenIds.findIndex(item => item.toString() === tokenId)
       const foundMarketData = askInfo[foundIndex]

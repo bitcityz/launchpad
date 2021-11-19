@@ -852,7 +852,13 @@ export const getCompleteAccountNftData = async (
     profileNftWithCollectionAddress?.tokenId,
   )
   console.log({
-    completeNftData
+    completeNftData,
+    metadataForAllNfts,
+    marketDataForSaleNfts,
+    walletNftsWithMarketData,
+    walletTokenIds,
+    tokenIdsForSale,
+    asksData
   })
   return completeNftData
 }

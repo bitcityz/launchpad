@@ -51,7 +51,6 @@ const UnconnectedProfile = () => {
           <ActivityHistory />
         </Route>
         <Route exact path={`${nftsBaseUrl}/profile/:accountAddress`}>
-          <SubMenu />
           <UnconnectedProfileNfts nfts={nfts} isLoading={isNftLoading} />
         </Route>
       </Page>

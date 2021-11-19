@@ -63,9 +63,9 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
           </StatBox>
         </MarketPageTitle>
       </MarketPageHeader>
-      <Container>
+      {/* <Container>
         <BaseSubMenu items={itemsConfig} activeItem={`${pathname}${hash || '#items'}`} mt="24px" mb="8px" />
-      </Container>
+      </Container> */}
     </>
   )
 }
