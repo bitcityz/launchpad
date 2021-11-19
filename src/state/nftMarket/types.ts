@@ -110,6 +110,7 @@ export interface NftToken {
   collectionName: string
   collectionAddress: string
   image: Image
+  hash?: string
   attributes?: NftAttribute[]
   createdAt?: string // API createdAt
   updatedAt?: string // API updatedAt

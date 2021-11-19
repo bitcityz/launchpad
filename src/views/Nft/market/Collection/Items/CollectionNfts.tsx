@@ -70,7 +70,10 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
         const res = await fetch(`${baseURI}${hash}`)
         if (res.ok) {
           const json = await res.json()
-          return json
+          return {
+            ...json,
+            hash
+          }
         }
         return {
           tokenId: '',
@@ -96,6 +99,8 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
           image: {
             thumbnail: nftsDetails[index].image
           },
+          count: 1,
+          hash: nftsDetails[index].hash,
           marketData: {
             collection: {
               id: collectionAddress
@@ -110,7 +115,16 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
 
       setNfts((prevState) => {
         const combinedNfts = [...prevState, ...marketData]
-        return uniqBy(combinedNfts, 'tokenId')
+        const nftMap = {}
+
+        combinedNfts.forEach(nft => {
+          if (nftMap[nft.hash]) {
+            nftMap[nft.hash].count ++
+            return
+          }
+          nftMap[nft.hash] = nft
+        })
+        return Object.values(nftMap)
       })
     }
     

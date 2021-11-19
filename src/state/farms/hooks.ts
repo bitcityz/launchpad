@@ -51,7 +51,7 @@ export const usePollFarmsPublicData = (includeArchive = false) => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
     const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
 
-    dispatch(fetchFarmsPublicDataAsync(pids))
+    // dispatch(fetchFarmsPublicDataAsync(pids))
   }, [includeArchive, dispatch, slowRefresh])
 }
 
@@ -64,10 +64,10 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
     const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
 
-    dispatch(fetchFarmsPublicDataAsync(pids))
+    // dispatch(fetchFarmsPublicDataAsync(pids))
 
     if (account) {
-      dispatch(fetchFarmUserDataAsync({ account, pids }))
+      // dispatch(fetchFarmUserDataAsync({ account, pids }))
     }
   }, [includeArchive, dispatch, slowRefresh, account])
 }

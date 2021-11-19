@@ -105,6 +105,7 @@ export const getNftApi = async (
     const result = {
       ...json,
       tokenId,
+      hash,
       image: {
         original: json.image,
         thumbnail: json.image
@@ -143,6 +144,7 @@ export const getNftsFromDifferentCollectionsApi = async (
       attributes: res.attributes,
       createdAt: res.createdAt,
       updatedAt: res.updatedAt,
+      hash: res.hash,
       image: {
         original: res.image?.original,
         thumbnail: res.image?.thumbnail,
@@ -849,7 +851,9 @@ export const getCompleteAccountNftData = async (
     tokenIdsForSale,
     profileNftWithCollectionAddress?.tokenId,
   )
-
+  console.log({
+    completeNftData
+  })
   return completeNftData
 }
 

@@ -12,7 +12,8 @@ import { ContextApi } from 'contexts/Localization/types'
 import { isAddress } from 'utils'
 import { useErc721CollectionContract, useNftMarketContract } from 'hooks/useContract'
 import { useAppDispatch } from 'state'
-import { removeUserNft, updateUserNft } from 'state/nftMarket/reducer'
+import { removeUserNft, fetchUserNfts } from 'state/nftMarket/reducer'
+import { useGetCollections } from 'state/nftMarket/hooks'
 import { NftLocation, NftToken } from 'state/nftMarket/types'
 import { useGetLowestPriceFromNft } from 'views/Nft/market/hooks/useGetLowestPrice'
 import SellStage from './SellStage'
@@ -90,6 +91,7 @@ const SellModal: React.FC<SellModalProps> = ({ variant, nftToSell, onDismiss }) 
   const collectionContract = useErc721CollectionContract(nftToSell.collectionAddress)
   const nftMarketContract = useNftMarketContract()
   const dispatch = useAppDispatch()
+  const collections = useGetCollections()
 
   const isInvalidTransferAddress = transferAddress.length > 0 && !isAddress(transferAddress)
 
@@ -165,10 +167,10 @@ const SellModal: React.FC<SellModalProps> = ({ variant, nftToSell, onDismiss }) 
       // Remove from sale
       case SellingStage.CONFIRM_REMOVE_FROM_MARKET:
         dispatch(
-          updateUserNft({
-            tokenId: nftToSell.tokenId,
-            collectionAddress: nftToSell.collectionAddress,
-            location: NftLocation.WALLET,
+          fetchUserNfts({
+            account,
+            collections,
+            // location: NftLocation.WALLET,
           }),
         )
         break
@@ -183,10 +185,10 @@ const SellModal: React.FC<SellModalProps> = ({ variant, nftToSell, onDismiss }) 
       default:
         // Modify listing OR list for sale
         dispatch(
-          updateUserNft({
-            tokenId: nftToSell.tokenId,
-            collectionAddress: nftToSell.collectionAddress,
-            location: NftLocation.FORSALE,
+          fetchUserNfts({
+            account,
+            collections,
+            // location: NftLocation.FORSALE,
           }),
         )
         break
@@ -224,7 +226,9 @@ const SellModal: React.FC<SellModalProps> = ({ variant, nftToSell, onDismiss }) 
       }
       const methodName = variant === 'sell' ? 'createAskOrder' : 'modifyAskOrder'
       const askPrice = parseUnits(price)
-      return callWithGasPrice(nftMarketContract, methodName, [nftToSell.collectionAddress, nftToSell.tokenId, askPrice])
+
+      const params = [nftToSell.collectionAddress, nftToSell.tokenId, askPrice]
+      return callWithGasPrice(nftMarketContract, methodName, variant === 'sell' ? [...params, nftToSell.hash] : params)
     },
     onSuccess: async ({ receipt }) => {
       toastSuccess(getToastText(variant, stage, t), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
