@@ -1,12 +1,11 @@
 import React from 'react'
 import { Box, Flex, Text, NftIcon } from '@metaxiz/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { NftAttribute } from 'state/nftMarket/types'
 import ExpandableCard from './ExpandableCard'
 
 interface PropertiesCardProps {
-  properties: NftAttribute[]
-  rarity: { [key: string]: number }
+  properties: any
+  // rarity: { [key: string]: number }
 }
 
 // Map of known traits to human-readable text
@@ -14,10 +13,10 @@ const KNOWN_TRAITS_TEXT = {
   bunnyId: 'Bunny ID',
 }
 
-const SingleProperty: React.FC<{ title: string; value: string | number; rarity: number }> = ({
+const SingleProperty: React.FC<{ title: string; value: string | number }> = ({
   title,
   value,
-  rarity,
+  // rarity,
 }) => {
   return (
     <Flex justifyContent="space-between" alignItems="center">
@@ -28,26 +27,25 @@ const SingleProperty: React.FC<{ title: string; value: string | number; rarity: 
         <Text bold textTransform="uppercase" mr="4px">
           {value}
         </Text>
-        {rarity && (
+        {/* {rarity && (
           <Text small color="textSubtle">
             ({rarity.toFixed(2)}%)
           </Text>
-        )}
+        )} */}
       </Flex>
     </Flex>
   )
 }
 
-const PropertiesCard: React.FC<PropertiesCardProps> = ({ properties, rarity }) => {
+const PropertiesCard: React.FC<PropertiesCardProps> = ({ properties }) => {
   const { t } = useTranslation()
   const content = (
     <Box p="24px">
       {properties.map((property) => (
         <SingleProperty
-          key={property.traitType}
-          title={property.traitType}
+          title={property.key}
           value={property.value}
-          rarity={rarity[property.traitType]}
+          // rarity={rarity[property.traitType]}
         />
       ))}
     </Box>

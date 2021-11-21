@@ -1,11 +1,12 @@
 import { ChainId, Currency, currencyEquals, JSBI, Price } from '@pancakeswap/sdk'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import tokens, { mainnetTokens } from 'config/constants/tokens'
+import tokens, { testnetTokens, mainnetTokens } from 'config/constants/tokens'
 import { PairState, usePairs } from './usePairs'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 const BUSD_MAINNET = mainnetTokens.busd
+const BUSD_TESTNET = testnetTokens.busd
 const { wbnb: WBNB } = tokens
 
 /**
@@ -18,8 +19,8 @@ export default function useBUSDPrice(currency?: Currency): Price | undefined {
   const tokenPairs: [Currency | undefined, Currency | undefined][] = useMemo(
     () => [
       [chainId && wrapped && currencyEquals(WBNB, wrapped) ? undefined : currency, chainId ? WBNB : undefined],
-      [wrapped?.equals(BUSD_MAINNET) ? undefined : wrapped, chainId === ChainId.MAINNET ? BUSD_MAINNET : undefined],
-      [chainId ? WBNB : undefined, chainId === ChainId.MAINNET ? BUSD_MAINNET : undefined],
+      [wrapped?.equals(BUSD_MAINNET) ? undefined : wrapped, chainId === ChainId.MAINNET ? BUSD_MAINNET : BUSD_TESTNET],
+      [chainId ? WBNB : undefined, chainId === ChainId.MAINNET ? BUSD_MAINNET : BUSD_TESTNET],
     ],
     [chainId, currency, wrapped],
   )
@@ -70,11 +71,29 @@ export default function useBUSDPrice(currency?: Currency): Price | undefined {
 }
 
 export const useCakeBusdPrice = (): Price | undefined => {
-  const cakeBusdPrice = useBUSDPrice(tokens.cake)
-  return cakeBusdPrice
+  // const cakeBusdPrice = useBUSDPrice(tokens.cake)
+  return undefined
 }
 
 export const useBNBBusdPrice = (): Price | undefined => {
   const bnbBusdPrice = useBUSDPrice(tokens.wbnb)
+  return bnbBusdPrice
+}
+
+export const useBNBVsBusdPrice = (): number | undefined => {
+  const [bnbBusdPrice, setBnbBusdPrice] = useState()
+  useEffect(() => {
+    const fetchBNBBusdPrice = async () => {
+      const res = await fetch('https://api.pancakeswap.info/api/v2/tokens/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c')
+      if (res.ok) {
+        const { data } = await res.json()
+        console.log(data)
+        setBnbBusdPrice(data.price)
+      } else {
+        setBnbBusdPrice(undefined)
+      }
+    }
+    fetchBNBBusdPrice()
+  }, [])
   return bnbBusdPrice
 }

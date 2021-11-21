@@ -143,11 +143,11 @@ const IndividualPancakeBunnyPage: React.FC<IndividualPancakeBunnyPageProps> = ({
       <TwoColumnsContainer flexDirection={['column', 'column', 'row']}>
         <Flex flexDirection="column" width="100%">
           <ManagePancakeBunniesCard bunnyId={bunnyId} lowestPrice={cheapestBunny?.marketData?.currentAskPrice} />
-          <PropertiesCard properties={properties} rarity={propertyRarity} />
+          <PropertiesCard properties={properties} />
           <DetailsCard
             contractAddress={pancakeBunniesAddress}
-            ipfsJson={cheapestBunny?.marketData?.metadataUrl}
-            rarity={propertyRarity?.bunnyId}
+            ipfsLink=""
+            // rarity={propertyRarity?.bunnyId}
             count={getBunnyIdCount()}
           />
         </Flex>

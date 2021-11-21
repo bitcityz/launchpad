@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import { Box, Flex, Text, SearchIcon, Link } from '@metaxiz/uikit'
 import { getBscScanLink } from 'utils'
 import { formatNumber } from 'utils/formatBalance'
-import uriToHttp from 'utils/uriToHttp'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ExpandableCard from './ExpandableCard'
 
 interface DetailsCardProps {
   contractAddress: string
-  ipfsJson: string
+  ipfsLink: string
   count?: number
   rarity?: number
 }
@@ -22,10 +21,9 @@ const LongTextContainer = styled(Text)`
   text-overflow: ellipsis;
 `
 
-const DetailsCard: React.FC<DetailsCardProps> = ({ contractAddress, ipfsJson, count, rarity }) => {
+const DetailsCard: React.FC<DetailsCardProps> = ({ contractAddress, ipfsLink, count, rarity }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
-  const ipfsLink = ipfsJson ? uriToHttp(ipfsJson)[0] : null
   const content = (
     <Box p="24px">
       <Flex justifyContent="space-between" alignItems="center" mb="16px">

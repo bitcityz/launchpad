@@ -107,8 +107,6 @@ export const cancelAskOrder = async (
   tokenId: number,
 ): Promise<string> => {
   try {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const tx = await contract.cancelAskOrder(collectionAddress, tokenId)
     const receipt = await tx.wait()
     return receipt.transactionHash

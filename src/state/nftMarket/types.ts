@@ -111,7 +111,7 @@ export interface NftToken {
   collectionAddress: string
   image: Image
   hash?: string
-  attributes?: NftAttribute[]
+  attributes?: any
   createdAt?: string // API createdAt
   updatedAt?: string // API updatedAt
   marketData?: TokenMarketData
@@ -249,6 +249,7 @@ export interface ApiResponseSpecificToken {
     createdAt: string
     updatedAt: string
     attributes: NftAttribute[]
+    hash: string
     collection: {
       name: string
     }

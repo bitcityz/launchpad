@@ -4,7 +4,7 @@ import { Flex, Card, Grid, SellIcon, Text, useModal, Box, BinanceIcon, Skeleton,
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import { NftToken } from 'state/nftMarket/types'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { formatNumber } from 'utils/formatBalance'
 import { multiplyPriceByAmount } from 'utils/prices'
 import useNftOwner from 'views/Nft/market/hooks/useNftOwner'
@@ -38,11 +38,11 @@ interface OwnerCardProps {
 const OwnerCard: React.FC<OwnerCardProps> = ({ nft, isOwnNft, nftIsProfilePic }) => {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useBNBVsBusdPrice()
 
   const { owner, isLoadingOwner } = useNftOwner(nft)
 
-  const priceInUsd = multiplyPriceByAmount(bnbBusdPrice, parseFloat(nft.marketData?.currentAskPrice))
+  const priceInUsd = bnbBusdPrice *  parseFloat(nft.marketData?.currentAskPrice)
 
   const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
   const [onPresentAdjustPriceModal] = useModal(

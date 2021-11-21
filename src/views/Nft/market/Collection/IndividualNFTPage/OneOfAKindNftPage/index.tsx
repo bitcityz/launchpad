@@ -5,7 +5,7 @@ import { Flex } from '@metaxiz/uikit'
 // import sum from 'lodash/sum'
 import BigNumber from 'bignumber.js'
 import Page from 'components/Layout/Page'
-import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
+import { getNftApi } from 'state/nftMarket/helpers'
 import { NftLocation, NftToken, UserNftInitializationState } from 'state/nftMarket/types'
 import PageLoader from 'components/Loader/PageLoader'
 import { useUserNfts } from 'state/nftMarket/hooks'
@@ -14,9 +14,8 @@ import MainNFTCard from './MainNFTCard'
 import ManageNFTsCard from './ManageNFTsCard'
 import useFetchUserNfts from '../../../Profile/hooks/useFetchUserNfts'
 import { TwoColumnsContainer } from '../shared/styles'
-// import PropertiesCard from '../shared/PropertiesCard'
 import DetailsCard from '../shared/DetailsCard'
-// import useGetCollectionDistribution from '../../../hooks/useGetCollectionDistribution'
+import PropertiesCard from '../shared/PropertiesCard'
 import OwnerCard from './OwnerCard'
 import MoreFromThisCollection from '../shared/MoreFromThisCollection'
 
@@ -29,13 +28,18 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   const [nft, setNft] = useState<NftToken>(null)
   const [isOwnNft, setIsOwnNft] = useState(false)
   const nftMarketContract = useNftMarketContract()
+  const nftContract = useERC721(collectionAddress)
+  const [baseURI, setBaseURI] = useState('')
 
   // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
 
   const { account } = useWeb3React()
+  
   const { userNftsInitializationState, nfts: userNfts } = useUserNfts()
   useFetchUserNfts()
-
+  useEffect(() => {
+    nftContract.baseURI().then(setBaseURI)
+  }, [nftContract])
   useEffect(() => {
     const fetchNftData = async () => {
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
@@ -52,6 +56,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
         description: metadata.description,
         image: metadata.image,
         attributes: metadata.attributes,
+        hash: metadata.hash,
         marketData: {
           currentAskPrice: new BigNumber(foundMarketData.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
           tokenId,
@@ -94,7 +99,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     return <PageLoader />
   }
 
-  // const properties = nft.attributes
+  const properties = nft.attributes?.metafight
 
   const userProfilePicture = userNfts.find((userNft) => userNft.location === NftLocation.PROFILE)
   const nftIsProfilePic = userProfilePicture
@@ -127,8 +132,8 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             isOwnNft={isOwnNft}
             isLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           />
-          {/* <PropertiesCard properties={properties} rarity={getAttributesRarity()} /> */}
-          <DetailsCard contractAddress={collectionAddress} ipfsJson={nft?.marketData?.metadataUrl} />
+          {properties ? <PropertiesCard properties={properties} /> : null}
+          <DetailsCard contractAddress={collectionAddress} ipfsLink={baseURI + nft.hash} />
         </Flex>
         <OwnerCard nft={nft} isOwnNft={isOwnNft} nftIsProfilePic={nftIsProfilePic} />
       </TwoColumnsContainer>
