@@ -99,7 +99,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     return <PageLoader />
   }
 
-  const properties = nft.attributes?.metafight
+  const properties = nft.attributes
 
   const userProfilePicture = userNfts.find((userNft) => userNft.location === NftLocation.PROFILE)
   const nftIsProfilePic = userProfilePicture
@@ -132,7 +132,9 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             isOwnNft={isOwnNft}
             isLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           />
-          {properties ? <PropertiesCard properties={properties} /> : null}
+          {properties ? Object.keys(properties).map(key => {
+            return <PropertiesCard title={key} properties={properties[key]} />
+          }) : null}
           <DetailsCard contractAddress={collectionAddress} ipfsLink={baseURI + nft.hash} />
         </Flex>
         <OwnerCard nft={nft} isOwnNft={isOwnNft} nftIsProfilePic={nftIsProfilePic} />

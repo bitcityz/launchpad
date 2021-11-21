@@ -143,7 +143,6 @@ const IndividualPancakeBunnyPage: React.FC<IndividualPancakeBunnyPageProps> = ({
       <TwoColumnsContainer flexDirection={['column', 'column', 'row']}>
         <Flex flexDirection="column" width="100%">
           <ManagePancakeBunniesCard bunnyId={bunnyId} lowestPrice={cheapestBunny?.marketData?.currentAskPrice} />
-          <PropertiesCard properties={properties} />
           <DetailsCard
             contractAddress={pancakeBunniesAddress}
             ipfsLink=""

@@ -5,6 +5,7 @@ import ExpandableCard from './ExpandableCard'
 
 interface PropertiesCardProps {
   properties: any
+  title: string
   // rarity: { [key: string]: number }
 }
 
@@ -37,20 +38,18 @@ const SingleProperty: React.FC<{ title: string; value: string | number }> = ({
   )
 }
 
-const PropertiesCard: React.FC<PropertiesCardProps> = ({ properties }) => {
-  const { t } = useTranslation()
+const PropertiesCard: React.FC<PropertiesCardProps> = ({ properties, title }) => {
   const content = (
     <Box p="24px">
       {properties.map((property) => (
         <SingleProperty
           title={property.key}
           value={property.value}
-          // rarity={rarity[property.traitType]}
         />
       ))}
     </Box>
   )
-  return <ExpandableCard title={t('Properties')} icon={<NftIcon width="24px" height="24px" />} content={content} />
+  return <ExpandableCard title={title.toUpperCase()} icon={<NftIcon width="24px" height="24px" />} content={content} />
 }
 
 export default PropertiesCard
