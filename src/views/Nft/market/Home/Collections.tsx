@@ -2,18 +2,17 @@ import React from 'react'
 import orderBy from 'lodash/orderBy'
 import { Button, ChevronRightIcon, Flex, Grid, Heading, Text } from '@metaxiz/uikit'
 import { Link } from 'react-router-dom'
-import { useGetCollections } from 'state/nftMarket/hooks'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
 import { useTranslation } from 'contexts/Localization'
+import COLLECTIONS from 'config/constants/collections'
 import { HotCollectionCard } from '../components/CollectibleCard'
 import { BNBAmountLabel } from '../components/CollectibleCard/styles'
 
 const Collections = () => {
   const { t } = useTranslation()
-  const collections = useGetCollections()
 
   const orderedCollections = orderBy(
-    collections,
+    COLLECTIONS,
     (collection) => (collection.totalVolumeBNB ? parseFloat(collection.totalVolumeBNB) : 0),
     'desc',
   )

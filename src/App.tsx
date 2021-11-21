@@ -25,6 +25,7 @@ import history from './routerHistory'
 // Only pool is included in the main bundle because of it's the most visited page
 const NotFound = lazy(() => import('./views/NotFound'))
 const NftMarket = lazy(() => import('./views/Nft/market'))
+const NftHome = lazy(() => import('./views/Nft/market/Home'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -50,8 +51,8 @@ const App: React.FC = () => {
       <Menu>
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
-            <Route path="/" exact>
-              <NftMarket />
+            <Route exact path="/">
+              <NftHome />
             </Route>
             {/* <Route exact path="/farms/auction">
               <FarmAuction />

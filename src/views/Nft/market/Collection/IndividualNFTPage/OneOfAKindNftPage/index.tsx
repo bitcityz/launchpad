@@ -45,30 +45,35 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
       const foundIndex = tokenIds.findIndex(item => item.toString() === tokenId)
       const foundMarketData = askInfo[foundIndex]
-
+      console.log({
+        foundMarketData
+      })
       const metadata = await getNftApi(collectionAddress, tokenId)
       // const [marketData] = await getNftsMarketData({ collection: collectionAddress.toLowerCase(), tokenId }, 1)
-      setNft({
-        tokenId,
-        collectionAddress,
-        collectionName: metadata.collection.name,
-        name: metadata.name,
-        description: metadata.description,
-        image: metadata.image,
-        attributes: metadata.attributes,
-        hash: metadata.hash,
-        marketData: {
-          currentAskPrice: new BigNumber(foundMarketData.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
+      if (foundMarketData) {
+        setNft({
           tokenId,
-          currentSeller: foundMarketData.seller,
-          latestTradedPriceInBNB: '0',
-          tradeVolumeBNB: '0',
-          metadataUrl: '',
-          totalTrades: '0',
-          isTradable: true,
-          otherId: '56'
-        },
-      })
+          collectionAddress,
+          collectionName: metadata.collection.name,
+          name: metadata.name,
+          description: metadata.description,
+          image: metadata.image,
+          attributes: metadata.attributes,
+          hash: metadata.hash,
+          location: foundMarketData ? NftLocation.FORSALE : NftLocation.PROFILE,
+          marketData: {
+            currentAskPrice: foundMarketData ? new BigNumber(foundMarketData.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString() : undefined,
+            tokenId,
+            currentSeller: foundMarketData.seller,
+            latestTradedPriceInBNB: '0',
+            tradeVolumeBNB: '0',
+            metadataUrl: '',
+            totalTrades: '0',
+            isTradable: true,
+            otherId: '56'
+          },
+        })
+      }
     }
     if (userNftsInitializationState === UserNftInitializationState.INITIALIZED) {
       const nftOwnedByConnectedUser = userNfts.find(
@@ -133,7 +138,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             isLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           />
           {properties ? Object.keys(properties).map(key => {
-            return <PropertiesCard title={key} properties={properties[key]} />
+            return <PropertiesCard key={key} title={key} properties={properties[key]} />
           }) : null}
           <DetailsCard contractAddress={collectionAddress} ipfsLink={baseURI + nft.hash} />
         </Flex>
