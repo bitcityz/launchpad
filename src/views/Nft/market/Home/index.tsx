@@ -5,15 +5,12 @@ import { useWeb3React } from '@web3-react/core'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import PageHeader from 'components/PageHeader'
-import SectionsWithFoldableText from 'components/FoldableSection/SectionsWithFoldableText'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
 import useTheme from 'hooks/useTheme'
 import SearchBar from '../components/SearchBar'
 import Collections from './Collections'
-import Newest from './Newest'
-import config from './config'
 
 const Gradient = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.cardHeader};
@@ -85,9 +82,6 @@ const Home = () => {
         <Collections />
         {/* <Newest /> */}
       </PageSection>
-      <Gradient p="64px 0">
-        <SectionsWithFoldableText header={t('FAQs')} config={config(t)} m="auto" />
-      </Gradient>
     </>
   )
 }

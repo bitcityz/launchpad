@@ -3,7 +3,6 @@ import { Flex, Text } from '@metaxiz/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import RulesCard from './RulesCard'
-import FAQs from './FAQs'
 
 const Wrapper = styled(Flex)`
   flex-direction: column;
@@ -39,7 +38,6 @@ const Rules = () => {
           </Text>
         </RulesCard>
       </StyledCardWrapper>
-      <FAQs />
     </Wrapper>
   )
 }
