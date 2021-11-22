@@ -127,7 +127,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
         return Object.values(nftMap)
       })
     }
-    
+
     if (nftMarketContract) {
       fetchMarket()
     }

@@ -22,8 +22,8 @@ const Collection = () => {
   return (
     <>
       <HashRoute exact path={path} hash="" component={Items} />
-      <HashRoute exact path={path} hash="#items" component={Items} />
-      <HashRoute exact path={path} hash="#traits" component={Traits} />
+      {/* <HashRoute exact path={path} hash="#items" component={Items} />
+      <HashRoute exact path={path} hash="#traits" component={Traits} /> */}
       <Route path={`${path}/:tokenId`}>
         <IndividualNFTPageRouter />
       </Route>

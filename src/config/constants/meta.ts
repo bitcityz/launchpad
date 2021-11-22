@@ -2,7 +2,7 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'PancakeSwap',
+  title: 'Metaxiz',
   description:
     'Meta Fight’s gameplay is designed to revolve around the combination between your personal skills and teawork, Challenge yourself with a wide variety of game modes: Discover & Fighting, coming with monthly updates and attractive rewards.',
   image: 'https://pancakeswap.finance/images/hero.png',
@@ -33,106 +33,106 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
   switch (basePath) {
     case '/':
       return {
-        title: `${t('Home')} | ${t('PancakeSwap')}`,
+        title: `${t('Home')} | ${t('Metaxiz')}`,
       }
     case '/swap':
       return {
-        title: `${t('Exchange')} | ${t('PancakeSwap')}`,
+        title: `${t('Exchange')} | ${t('Metaxiz')}`,
       }
     case '/add':
       return {
-        title: `${t('Add Liquidity')} | ${t('PancakeSwap')}`,
+        title: `${t('Add Liquidity')} | ${t('Metaxiz')}`,
       }
     case '/remove':
       return {
-        title: `${t('Remove Liquidity')} | ${t('PancakeSwap')}`,
+        title: `${t('Remove Liquidity')} | ${t('Metaxiz')}`,
       }
     case '/liquidity':
       return {
-        title: `${t('Liquidity')} | ${t('PancakeSwap')}`,
+        title: `${t('Liquidity')} | ${t('Metaxiz')}`,
       }
     case '/find':
       return {
-        title: `${t('Import Pool')} | ${t('PancakeSwap')}`,
+        title: `${t('Import Pool')} | ${t('Metaxiz')}`,
       }
     case '/competition':
       return {
-        title: `${t('Trading Battle')} | ${t('PancakeSwap')}`,
+        title: `${t('Trading Battle')} | ${t('Metaxiz')}`,
       }
     case '/prediction':
       return {
-        title: `${t('Prediction')} | ${t('PancakeSwap')}`,
+        title: `${t('Prediction')} | ${t('Metaxiz')}`,
       }
     case '/prediction/leaderboard':
       return {
-        title: `${t('Leaderboard')} | ${t('PancakeSwap')}`,
+        title: `${t('Leaderboard')} | ${t('Metaxiz')}`,
       }
     case '/farms':
       return {
-        title: `${t('Farms')} | ${t('PancakeSwap')}`,
+        title: `${t('Farms')} | ${t('Metaxiz')}`,
       }
     case '/farms/auction':
       return {
-        title: `${t('Farm Auctions')} | ${t('PancakeSwap')}`,
+        title: `${t('Farm Auctions')} | ${t('Metaxiz')}`,
       }
     case '/pools':
       return {
-        title: `${t('Pools')} | ${t('PancakeSwap')}`,
+        title: `${t('Pools')} | ${t('Metaxiz')}`,
       }
     case '/lottery':
       return {
-        title: `${t('Lottery')} | ${t('PancakeSwap')}`,
+        title: `${t('Lottery')} | ${t('Metaxiz')}`,
       }
     case '/ifo':
       return {
-        title: `${t('Initial Farm Offering')} | ${t('PancakeSwap')}`,
+        title: `${t('Initial Farm Offering')} | ${t('Metaxiz')}`,
       }
     case '/teams':
       return {
-        title: `${t('Leaderboard')} | ${t('PancakeSwap')}`,
+        title: `${t('Leaderboard')} | ${t('Metaxiz')}`,
       }
     case '/voting':
       return {
-        title: `${t('Voting')} | ${t('PancakeSwap')}`,
+        title: `${t('Voting')} | ${t('Metaxiz')}`,
       }
     case '/voting/proposal':
       return {
-        title: `${t('Proposals')} | ${t('PancakeSwap')}`,
+        title: `${t('Proposals')} | ${t('Metaxiz')}`,
       }
     case '/voting/proposal/create':
       return {
-        title: `${t('Make a Proposal')} | ${t('PancakeSwap')}`,
+        title: `${t('Make a Proposal')} | ${t('Metaxiz')}`,
       }
     case '/info':
       return {
-        title: `${t('Overview')} | ${t('PancakeSwap Info & Analytics')}`,
+        title: `${t('Overview')} | ${t('Metaxiz Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/pools':
       return {
-        title: `${t('Pools')} | ${t('PancakeSwap Info & Analytics')}`,
+        title: `${t('Pools')} | ${t('Metaxiz Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/tokens':
       return {
-        title: `${t('Tokens')} | ${t('PancakeSwap Info & Analytics')}`,
+        title: `${t('Tokens')} | ${t('Metaxiz Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/nfts':
       return {
-        title: `${t('Overview')} | ${t('PancakeSwap')}`,
+        title: `${t('Overview')} | ${t('Metaxiz')}`,
       }
     case '/nfts/collections':
       return {
-        title: `${t('Collections')} | ${t('PancakeSwap')}`,
+        title: `${t('Collections')} | ${t('Metaxiz')}`,
       }
     case '/nfts/profile':
       return {
-        title: `${t('Your Profile')} | ${t('PancakeSwap')}`,
+        title: `${t('Your Profile')} | ${t('Metaxiz')}`,
       }
     case '/pancake-squad':
       return {
-        title: `${t('Pancake Squad')} | ${t('PancakeSwap')}`,
+        title: `${t('Pancake Squad')} | ${t('Metaxiz')}`,
       }
     default:
       return null

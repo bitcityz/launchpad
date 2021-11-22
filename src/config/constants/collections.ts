@@ -18,7 +18,7 @@ export default {
     whitelistChecker: "0x0000000000000000000000000000000000000000",
     active: true,
     address: "0xFa6F10E64898175eF779Cba7DFeaa3f9C4BbC634",
-    avatar: "/logo.png",
+    avatar: "/images/collections/logo_metaxiz.png",
     banner: {
       large: "/images/meta-fight-banner.png",
       small: "/images/meta-fight-banner.png"

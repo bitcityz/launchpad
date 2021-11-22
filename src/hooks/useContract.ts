@@ -31,16 +31,18 @@ import {
   getPancakeSquadContract,
   getErc721CollectionContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress } from 'utils/addressHelpers'
+import { getMulticallAddress, getNftMarketAddress } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
 import { ChainId, WETH } from '@pancakeswap/sdk'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
-import ENS_PUBLIC_RESOLVER_ABI from '../config/abi/ens-public-resolver.json'
-import ENS_ABI from '../config/abi/ens-registrar.json'
-import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
-import ERC20_ABI from '../config/abi/erc20.json'
+import nftMarketAbi from 'config/abi/nftMarket.json'
+import ENS_PUBLIC_RESOLVER_ABI from 'config/abi/ens-public-resolver.json'
+import ENS_ABI from 'config/abi/ens-registrar.json'
+import { ERC20_BYTES32_ABI } from 'config/abi/erc20'
+import ERC20_ABI from 'config/abi/erc20.json'
+import ERC721_ABI from 'config/abi/erc721.json'
 import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import { getContract } from '../utils'
@@ -68,8 +70,9 @@ export const useERC20 = (address: string) => {
  * @see https://docs.openzeppelin.com/contracts/3.x/api/token/erc721
  */
 export const useERC721 = (address: string) => {
-  const { library } = useActiveWeb3React()
-  return useMemo(() => getErc721Contract(address, library.getSigner()), [address, library])
+  // const { library } = useActiveWeb3React()
+  // return useMemo(() => getErc721Contract(address, library.getSigner()), [address, library])
+  return useContract(address, ERC721_ABI)
 }
 
 export const useCake = () => {
@@ -199,8 +202,9 @@ export const useFarmAuctionContract = () => {
 }
 
 export const useNftMarketContract = () => {
-  const { library } = useActiveWeb3React()
-  return useMemo(() => getNftMarketContract(library.getSigner()), [library])
+  // const { library } = useActiveWeb3React()
+  // return useMemo(() => getNftMarketContract(library.getSigner()), [library])
+  return useContract(getNftMarketAddress(), nftMarketAbi)
 }
 
 export const useErc721CollectionContract = (collectionAddress: string) => {

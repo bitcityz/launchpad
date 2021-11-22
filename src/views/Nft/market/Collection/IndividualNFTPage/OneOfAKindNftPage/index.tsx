@@ -32,7 +32,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   const [baseURI, setBaseURI] = useState('')
 
   // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
-
+ 
   const { account } = useWeb3React()
   
   const { userNftsInitializationState, nfts: userNfts } = useUserNfts()
@@ -45,9 +45,6 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, 0, 20)
       const foundIndex = tokenIds.findIndex(item => item.toString() === tokenId)
       const foundMarketData = askInfo[foundIndex]
-      console.log({
-        foundMarketData
-      })
       const metadata = await getNftApi(collectionAddress, tokenId)
       // const [marketData] = await getNftsMarketData({ collection: collectionAddress.toLowerCase(), tokenId }, 1)
       if (foundMarketData) {

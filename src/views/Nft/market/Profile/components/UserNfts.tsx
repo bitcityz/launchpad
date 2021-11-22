@@ -27,9 +27,6 @@ const UserNfts = () => {
   const [onPresentProfileNftModal] = useModal(<ProfileNftModal nft={clickedProfileNft.nft} />)
   const [onPresentSellModal] = useModal(<SellModal variant={clickedSellNft.variant} nftToSell={clickedSellNft.nft} />)
   const { t } = useTranslation()
-  console.log({
-    nfts
-  })
   const handleCollectibleClick = (nft: NftToken, location: NftLocation) => {
     switch (location) {
       case NftLocation.PROFILE:
