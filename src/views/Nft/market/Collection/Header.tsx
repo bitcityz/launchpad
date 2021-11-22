@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router'
 import { Text } from '@metaxiz/uikit'
 import { Collection } from 'state/nftMarket/types'
 import { formatNumber } from 'utils/formatBalance'
 import { useTranslation } from 'contexts/Localization'
-import Container from 'components/Layout/Container'
+import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import MarketPageHeader from '../components/MarketPageHeader'
 import MarketPageTitle from '../components/MarketPageTitle'
 import StatBox, { StatBoxItem } from '../components/StatBox'
 import BannerHeader from '../components/BannerHeader'
 import AvatarImage from '../components/BannerHeader/AvatarImage'
-import BaseSubMenu from '../components/BaseSubMenu'
 import { nftsBaseUrl } from '../constants'
 import TopBar from './TopBar'
 import LowestPriceStatBoxItem from './LowestPriceStatBoxItem'
@@ -21,9 +20,18 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ collection }) => {
   const { collectionAddress } = useParams<{ collectionAddress: string }>()
-  const { totalSupply, numberTokensListed, totalVolumeBNB, banner, avatar } = collection
+  const { totalVolumeBNB, banner, avatar } = collection
+  const nftMarketContract = useNftMarketContract()
+  const nftContract = useERC721(collectionAddress)
   const { t } = useTranslation()
-  const { pathname, hash } = useLocation()
+
+  const [totalSupply, setTotalSupply] = useState(0)
+  const [numberTokensListed, setNumberTokensListed] = useState(0)
+  
+  useEffect(() => {
+    nftContract.totalSupply().then(setTotalSupply)
+    nftMarketContract.totalOrderCollection(collectionAddress).then(setNumberTokensListed)
+  }, [nftContract, nftMarketContract, collectionAddress])
 
   const volume = totalVolumeBNB
     ? parseFloat(totalVolumeBNB).toLocaleString(undefined, {
@@ -31,17 +39,6 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
         maximumFractionDigits: 3,
       })
     : '0'
-
-  const itemsConfig = [
-    {
-      label: t('Items'),
-      href: `${nftsBaseUrl}/collections/${collectionAddress}#items`,
-    },
-    {
-      label: t('Traits'),
-      href: `${nftsBaseUrl}/collections/${collectionAddress}#traits`,
-    },
-  ]
 
   return (
     <>
