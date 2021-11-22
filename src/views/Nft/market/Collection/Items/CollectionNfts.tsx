@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
-import uniqBy from 'lodash/uniqBy'
+import orderBy from 'lodash/orderBy'
 import { AutoRenewIcon, Button, Flex, Grid, Text } from '@metaxiz/uikit'
 import { useAppDispatch } from 'state'
 import {
@@ -36,6 +36,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   const collectionNfts = useNftsFromCollection(collectionAddress)
   const nftFilterLoadingState = useGetNftFilterLoadingState(collectionAddress)
   const dispatch = useAppDispatch()
+  const [isLoading, setIsLoading] = useState(false)
 
   const showOnlyNftsOnSale = useGetNftShowOnlyOnSale(collectionAddress)
   const { field: orderField, direction: orderDirection } = useGetNftOrdering(collectionAddress)
@@ -51,18 +52,13 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   }
 
   useEffect(() => {
-    if (orderField === 'tokenId') {
-      setPage(1)
-    }
-  }, [orderField])
-
-  useEffect(() => {
     setNfts([])
     // setSkip(0)
   }, [orderField, orderDirection])
 
   useEffect(() => {
     const fetchMarket = async () => {
+      setIsLoading(true)
       const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
       const baseURI = await collectionContract.baseURI()
       const apiRequestPromises: Promise<NftToken>[] = tokenIds.map(async (tokenId): Promise<NftToken> => {
@@ -115,17 +111,10 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
 
       setNfts((prevState) => {
         const combinedNfts = [...prevState, ...marketData]
-        const nftMap = {}
-
-        combinedNfts.forEach(nft => {
-          if (nftMap[nft.hash]) {
-            nftMap[nft.hash].count ++
-            return
-          }
-          nftMap[nft.hash] = nft
-        })
-        return Object.values(nftMap)
+        const key = `marketData.${orderField}`
+        return orderBy(combinedNfts, key, orderDirection)
       })
+      setIsLoading(false)
     }
 
     if (nftMarketContract) {
@@ -168,30 +157,24 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     // }
   }, [orderField, orderDirection, skip, collectionAddress, nftMarketContract, collectionContract, page])
 
-  useEffect(() => {
-    if (orderField === 'tokenId') {
-      dispatch(
-        fetchNftsFromCollections({
-          collectionAddress,
-          page,
-          size: REQUEST_SIZE,
-        }),
-      )
-    }
-  }, [page, collectionAddress, dispatch, orderField])
+  // useEffect(() => {
+  //   if (orderField === 'tokenId') {
+  //     dispatch(
+  //       fetchNftsFromCollections({
+  //         collectionAddress,
+  //         page,
+  //         size: REQUEST_SIZE,
+  //       }),
+  //     )
+  //   }
+  // }, [page, collectionAddress, dispatch, orderField])
 
-  const nftsToShow =
-    orderField === 'tokenId'
-      ? collectionNfts?.filter((nft) => {
-          if (showOnlyNftsOnSale) {
-            return nft.marketData?.isTradable
-          }
-          return true
-        })
-      : nfts
-
-  if (!nftsToShow || nftsToShow?.length === 0) {
+  const nftsToShow = nfts
+  if (isLoading) {
     return <GridPlaceholder />
+  }
+  if (!nftsToShow || nftsToShow?.length === 0) {
+    return <Text>No order yet!</Text>
   }
 
   const isNotLastPage =
