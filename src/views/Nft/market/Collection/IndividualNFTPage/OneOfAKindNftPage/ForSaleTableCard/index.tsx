@@ -39,22 +39,16 @@ const StyledCard = styled(Card)<{ hasManyPages: boolean }>`
 
 interface ForSaleTableCardProps {
   nftsForSale: NftToken[]
-  bunnyId: string
   totalForSale: number
-  priceSort: 'asc' | 'desc'
   isFetchingMoreNfts: boolean
-  togglePriceSort: () => void
-  loadMore: (orderDirection: 'asc' | 'desc') => void
+  loadMore: () => void
 }
 
 const ForSaleTableCard: React.FC<ForSaleTableCardProps> = ({
   nftsForSale,
-  bunnyId,
   totalForSale,
   loadMore,
   isFetchingMoreNfts,
-  priceSort,
-  togglePriceSort,
 }) => {
   const [page, setPage] = useState(1)
   const { isMobile } = useMatchBreakpoints()
@@ -63,11 +57,11 @@ const ForSaleTableCard: React.FC<ForSaleTableCardProps> = ({
   const { t } = useTranslation()
   const { theme } = useTheme()
 
-  useEffect(() => {
-    // If user clicks on other NFT at the bottom of the page - load new NFT table starting on page 1
-    // Same for reversing sorting direction
-    setPage(1)
-  }, [bunnyId, priceSort])
+  // useEffect(() => {
+  //   // If user clicks on other NFT at the bottom of the page - load new NFT table starting on page 1
+  //   // Same for reversing sorting direction
+  //   setPage(1)
+  // }, [priceSort])
 
   const needsExtraPage = nftsForSale.length % itemsPerPage !== 0
   let maxPage = Math.floor(nftsForSale.length / itemsPerPage)
@@ -81,16 +75,12 @@ const ForSaleTableCard: React.FC<ForSaleTableCardProps> = ({
     setPage(pageNumber)
   }
 
-  const loadMoreHandler = () => {
-    loadMore(priceSort)
-  }
-
   const loadMoreButton = isFetchingMoreNfts ? (
     <Flex width="96px" justifyContent="center">
       <Spinner size={32} />
     </Flex>
   ) : (
-    <Button variant="primary" scale="xs" ml="12px" onClick={loadMoreHandler}>
+    <Button variant="primary" scale="xs" ml="12px" onClick={loadMore}>
       {t('Load more')}
     </Button>
   )
@@ -112,12 +102,11 @@ const ForSaleTableCard: React.FC<ForSaleTableCardProps> = ({
       {nftsOnCurrentPage.length > 0 ? (
         <>
           <TableHeading flex="0 1 auto" gridTemplateColumns="2fr 2fr 1fr" py="12px">
-            <StyledSortButton type="button" onClick={togglePriceSort}>
+            <StyledSortButton type="button">
               <Flex alignItems="center">
                 <Text textTransform="uppercase" color="textSubtle" bold fontSize="12px" px="24px">
                   {t('Price')}
                 </Text>
-                {priceSort === 'asc' ? <ArrowUpIcon color="textSubtle" /> : <ArrowDownIcon color="textSubtle" />}
               </Flex>
             </StyledSortButton>
             <Text textTransform="uppercase" color="textSubtle" bold fontSize="12px">

@@ -49,7 +49,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   useEffect(() => {
     const fetchMarket = async () => {
       setIsLoading(true)
-      const asked = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
+      const asked = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip).catch(console.log)
       if (!asked) {
         setIsLoading(false)
         return
