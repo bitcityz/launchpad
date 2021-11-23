@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router'
+import { useParams } from 'react-router'
+import BigNumber from 'bignumber.js'
 import { Text } from '@metaxiz/uikit'
 import { Collection } from 'state/nftMarket/types'
 import { formatNumber } from 'utils/formatBalance'
 import { useTranslation } from 'contexts/Localization'
+import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import MarketPageHeader from '../components/MarketPageHeader'
 import MarketPageTitle from '../components/MarketPageTitle'
 import StatBox, { StatBoxItem } from '../components/StatBox'
 import BannerHeader from '../components/BannerHeader'
 import AvatarImage from '../components/BannerHeader/AvatarImage'
-import { nftsBaseUrl } from '../constants'
 import TopBar from './TopBar'
 import LowestPriceStatBoxItem from './LowestPriceStatBoxItem'
 
@@ -20,25 +21,20 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ collection }) => {
   const { collectionAddress } = useParams<{ collectionAddress: string }>()
-  const { totalVolumeBNB, banner, avatar } = collection
+  const { banner, avatar } = collection
   const nftMarketContract = useNftMarketContract()
   const nftContract = useERC721(collectionAddress)
   const { t } = useTranslation()
 
+  const [totalVolumeBNB, setTotalVolumeBNB] = useState('0')
   const [totalSupply, setTotalSupply] = useState(0)
   const [numberTokensListed, setNumberTokensListed] = useState(0)
   
   useEffect(() => {
     nftContract.totalSupply().then(setTotalSupply)
     nftMarketContract.totalOrderCollection(collectionAddress).then(setNumberTokensListed)
+    nftMarketContract.volumeCollection(collectionAddress).then(val => setTotalVolumeBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
   }, [nftContract, nftMarketContract, collectionAddress])
-
-  const volume = totalVolumeBNB
-    ? parseFloat(totalVolumeBNB).toLocaleString(undefined, {
-        minimumFractionDigits: 3,
-        maximumFractionDigits: 3,
-      })
-    : '0'
 
   return (
     <>
@@ -56,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
               stat={numberTokensListed ? formatNumber(Number(numberTokensListed), 0, 0) : '0'}
             />
             <LowestPriceStatBoxItem collectionAddress={collection.address} />
-            <StatBoxItem title={t('Vol. (%symbol%)', { symbol: 'BNB' })} stat={volume} />
+            <StatBoxItem title={t('Vol. (%symbol%)', { symbol: 'BNB' })} stat={totalVolumeBNB} />
           </StatBox>
         </MarketPageTitle>
       </MarketPageHeader>

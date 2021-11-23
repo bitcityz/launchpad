@@ -13,6 +13,8 @@ import {
   Text,
   ArrowForwardIcon,
 } from '@metaxiz/uikit'
+import BigNumber from 'bignumber.js'
+import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useGetCollections } from 'state/nftMarket/hooks'
@@ -20,6 +22,7 @@ import { useTranslation } from 'contexts/Localization'
 import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
+import { useERC721, useNftMarketContract } from 'hooks/useContract'
 
 export const ITEMS_PER_PAGE = 10
 
@@ -50,10 +53,28 @@ const Collectible = () => {
   const { t } = useTranslation()
   const collections = useGetCollections()
   const { isMobile } = useMatchBreakpoints()
+  const nftMarketContract = useNftMarketContract()
   const [sortField, setSortField] = useState(null)
   const [sortDirection, setSortDirection] = useState<boolean>(false)
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+
+  const [totalVolumeBNBMap, setTotalVolumeBNBMap] = useState({})
+  const [totalOrderMap, setTotalOrderMap] = useState({})
+
+  useEffect(() => {
+    Object.keys(collections).forEach(address => {
+      nftMarketContract.volumeCollection(address).then(val => setTotalVolumeBNBMap((prevState) => ({
+        ...prevState,
+        [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
+      })))
+      nftMarketContract.totalOrderCollection(address).then(val => setTotalOrderMap((prevState) => ({
+        ...prevState,
+        [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
+      })))
+      
+    })
+  }, [totalVolumeBNBMap, nftMarketContract, collections])
 
   useEffect(() => {
     let extraPages = 1
@@ -128,12 +149,6 @@ const Collectible = () => {
             </thead>
             <tbody>
               {sortedCollections.map((collection) => {
-                const volume = collection.totalVolumeBNB
-                  ? parseFloat(collection.totalVolumeBNB).toLocaleString(undefined, {
-                      minimumFractionDigits: 3,
-                      maximumFractionDigits: 3,
-                    })
-                  : '0'
                 return (
                   <tr key={collection.address}>
                     <Td>
@@ -146,13 +161,13 @@ const Collectible = () => {
                     </Td>
                     <Td>
                       <Flex alignItems="center">
-                        {volume}
+                        {totalVolumeBNBMap[collection.address]}
                         <BnbUsdtPairTokenIcon ml="8px" />
                       </Flex>
                     </Td>
                     {!isMobile && (
                       <>
-                        <Td>{collection.numberTokensListed}</Td>
+                        <Td>{totalOrderMap[collection.address]}</Td>
                         <Td>{collection.totalSupply}</Td>
                       </>
                     )}
