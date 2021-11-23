@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import orderBy from 'lodash/orderBy'
 import { AutoRenewIcon, Button, Flex, Grid, Text } from '@metaxiz/uikit'
-import { useAppDispatch } from 'state'
 import {
   useGetNftFilterLoadingState,
   useGetNftOrdering,
   useGetNftShowOnlyOnSale,
-  useNftsFromCollection,
 } from 'state/nftMarket/hooks'
 import COLLECTIONS from 'config/constants/collections'
-import { Collection, NftFilterLoadingState, NftToken, TokenMarketData } from 'state/nftMarket/types'
-import { fetchNftsFromCollections } from 'state/nftMarket/reducer'
-// import { getNftApi, getNftsMarketData } from 'state/nftMarket/helpers'
+import { Collection, NftFilterLoadingState, NftToken } from 'state/nftMarket/types'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import { useTranslation } from 'contexts/Localization'
@@ -33,9 +29,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   const { t } = useTranslation()
   const nftMarketContract = useNftMarketContract()
   const collectionContract = useERC721(collectionAddress)
-  const collectionNfts = useNftsFromCollection(collectionAddress)
   const nftFilterLoadingState = useGetNftFilterLoadingState(collectionAddress)
-  const dispatch = useAppDispatch()
   const [isLoading, setIsLoading] = useState(false)
 
   const showOnlyNftsOnSale = useGetNftShowOnlyOnSale(collectionAddress)
@@ -44,11 +38,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     orderField === 'tokenId' ? nftFilterLoadingState === NftFilterLoadingState.LOADING : isFetchingFilteredNfts
 
   const handleLoadMore = () => {
-    // if (orderField === 'tokenId') {
-    //   setPage((prevPage) => prevPage + 1)
-    // }
     setPage((prevPage) => prevPage + REQUEST_SIZE)
-    setSkip(skip + REQUEST_SIZE)
   }
 
   useEffect(() => {
@@ -59,7 +49,12 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   useEffect(() => {
     const fetchMarket = async () => {
       setIsLoading(true)
-      const { tokenIds, askInfo } = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
+      const asked = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
+      if (!asked) {
+        setIsLoading(false)
+        return
+      }
+      const { tokenIds, askInfo } = asked
       const baseURI = await collectionContract.baseURI()
       const apiRequestPromises: Promise<NftToken>[] = tokenIds.map(async (tokenId): Promise<NftToken> => {
         const hash = await collectionContract.tokenHash(tokenId.toNumber())
@@ -182,13 +177,11 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
       ? nftsToShow?.length < Number(numberTokensListed)
       : nftsToShow?.length < Number(totalSupply)
 
-  const resultsAmount = showOnlyNftsOnSale || orderField !== 'tokenId' ? numberTokensListed : totalSupply
-
   return (
     <>
       <Flex p="16px">
         <Text bold>
-          {resultsAmount} {t('Results')}
+          {nftsToShow.length} {t('Results')}
         </Text>
       </Flex>
       <Grid

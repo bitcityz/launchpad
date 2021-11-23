@@ -27,13 +27,15 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
   const { t } = useTranslation()
 
   const [totalVolumeBNB, setTotalVolumeBNB] = useState('0')
+  const [totalVolumeCollectionBNB, setTotalVolumeCollectionBNB] = useState('0')
   const [totalSupply, setTotalSupply] = useState(0)
   const [numberTokensListed, setNumberTokensListed] = useState(0)
   
   useEffect(() => {
     nftContract.totalSupply().then(setTotalSupply)
     nftMarketContract.totalOrderCollection(collectionAddress).then(setNumberTokensListed)
-    nftMarketContract.volumeCollection(collectionAddress).then(val => setTotalVolumeBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
+    nftMarketContract.volume().then(val => setTotalVolumeBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
+    nftMarketContract.volumeCollection(collectionAddress).then(val => setTotalVolumeCollectionBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
   }, [nftContract, nftMarketContract, collectionAddress])
 
   return (
@@ -51,14 +53,11 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
               title={t('Items listed')}
               stat={numberTokensListed ? formatNumber(Number(numberTokensListed), 0, 0) : '0'}
             />
-            <LowestPriceStatBoxItem collectionAddress={collection.address} />
-            <StatBoxItem title={t('Vol. (%symbol%)', { symbol: 'BNB' })} stat={totalVolumeBNB} />
+            <StatBoxItem title={t('Vol. (%symbol%)', { symbol: 'BNB' })} stat={totalVolumeCollectionBNB} />
+            <StatBoxItem title={t('All Vol. (%symbol%)', { symbol: 'BNB' })} stat={totalVolumeBNB} />
           </StatBox>
         </MarketPageTitle>
       </MarketPageHeader>
-      {/* <Container>
-        <BaseSubMenu items={itemsConfig} activeItem={`${pathname}${hash || '#items'}`} mt="24px" mb="8px" />
-      </Container> */}
     </>
   )
 }

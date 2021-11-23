@@ -22,7 +22,9 @@ import { useTranslation } from 'contexts/Localization'
 import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
-import { useERC721, useNftMarketContract } from 'hooks/useContract'
+import { multicallv2 } from 'utils/multicall'
+import { useNftMarketContract } from 'hooks/useContract'
+import ERC721_ABI from 'config/abi/erc721.json'
 
 export const ITEMS_PER_PAGE = 10
 
@@ -61,20 +63,30 @@ const Collectible = () => {
 
   const [totalVolumeBNBMap, setTotalVolumeBNBMap] = useState({})
   const [totalOrderMap, setTotalOrderMap] = useState({})
+  const [totalSupplyMap, setTotalSupplyMap] = useState({})
 
   useEffect(() => {
-    Object.keys(collections).forEach(address => {
+    Object.keys(collections).forEach(async address => {
       nftMarketContract.volumeCollection(address).then(val => setTotalVolumeBNBMap((prevState) => ({
         ...prevState,
         [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
       })))
       nftMarketContract.totalOrderCollection(address).then(val => setTotalOrderMap((prevState) => ({
         ...prevState,
-        [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
+        [address]: new BigNumber(val._hex).toNumber(),
       })))
-      
+      const calls = [{
+        name: 'totalSupply',
+        address,
+        params: [],
+      }]
+      const [[multicallRes]] = await multicallv2(ERC721_ABI, calls, { requireSuccess: false })
+      setTotalSupplyMap((prevState) => ({
+        ...prevState,
+        [address]: new BigNumber(multicallRes._hex).toNumber(),
+      }))
     })
-  }, [totalVolumeBNBMap, nftMarketContract, collections])
+  }, [nftMarketContract, collections])
 
   useEffect(() => {
     let extraPages = 1
@@ -168,7 +180,7 @@ const Collectible = () => {
                     {!isMobile && (
                       <>
                         <Td>{totalOrderMap[collection.address]}</Td>
-                        <Td>{collection.totalSupply}</Td>
+                        <Td>{totalSupplyMap[collection.address]}</Td>
                       </>
                     )}
                   </tr>
