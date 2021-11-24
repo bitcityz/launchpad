@@ -41,12 +41,11 @@ export const BNBAmountLabel: React.FC<BNBAmountLabelProps> = ({ amount, ...props
 
 interface CostLabelProps extends FlexProps {
   cost: number
-  bnbBusdPrice: Price
+  bnbBusdPrice: number
 }
 
 export const CostLabel: React.FC<CostLabelProps> = ({ cost, bnbBusdPrice, ...props }) => {
-  const priceInUsd = multiplyPriceByAmount(bnbBusdPrice, cost)
-
+  const priceInUsd = bnbBusdPrice * cost
   return (
     <Flex alignItems="center" {...props}>
       {priceInUsd > 0 && (
@@ -136,7 +135,7 @@ export const StyledCollectibleCard = styled(Card)`
 interface LowestPriceMetaRowProps {
   lowestPrice: number
   isFetching: boolean
-  bnbBusdPrice: Price
+  bnbBusdPrice: number
 }
 
 export const LowestPriceMetaRow = ({ lowestPrice, isFetching, bnbBusdPrice }: LowestPriceMetaRowProps) => {

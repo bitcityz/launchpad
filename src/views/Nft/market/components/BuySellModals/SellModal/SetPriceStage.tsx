@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Flex, Grid, Box, Text, Button, BinanceIcon, ErrorIcon, useTooltip } from '@metaxiz/uikit'
-import { multiplyPriceByAmount } from 'utils/prices'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useTranslation } from 'contexts/Localization'
 import { NftToken } from 'state/nftMarket/types'
 import { useGetCollection } from 'state/nftMarket/hooks'
@@ -40,9 +39,9 @@ const SetPriceStage: React.FC<SetPriceStageProps> = ({
   const { creatorFee, tradingFee } = useGetCollection(nftToSell.collectionAddress)
   const creatorFeeAsNumber = parseFloat(creatorFee)
   const tradingFeeAsNumber = parseFloat(tradingFee)
-  const bnbPrice = useBNBBusdPrice()
+  const bnbPrice = useBNBVsBusdPrice()
   const priceAsFloat = parseFloat(price)
-  const priceInUsd = multiplyPriceByAmount(bnbPrice, priceAsFloat)
+  const priceInUsd = bnbPrice * priceAsFloat
 
   const priceIsOutOfRange = priceAsFloat > MAX_PRICE || priceAsFloat < MIN_PRICE
 

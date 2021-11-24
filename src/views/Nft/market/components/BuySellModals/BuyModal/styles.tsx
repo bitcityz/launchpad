@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Modal, Grid, Flex, Text, BinanceIcon, Skeleton } from '@metaxiz/uikit'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
-import { multiplyPriceByAmount } from 'utils/prices'
+import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { BuyingStage } from './types'
 
 export const StyledModal = styled(Modal)<{ stage: BuyingStage }>`
@@ -40,7 +39,7 @@ interface BnbAmountCellProps {
 }
 
 export const BnbAmountCell: React.FC<BnbAmountCellProps> = ({ bnbAmount, isLoading, isInsufficient }) => {
-  const bnbBusdPrice = useBNBBusdPrice()
+  const bnbBusdPrice = useBNBVsBusdPrice()
   if (isLoading) {
     return (
       <Flex flexDirection="column" justifySelf="flex-end">
@@ -49,7 +48,7 @@ export const BnbAmountCell: React.FC<BnbAmountCellProps> = ({ bnbAmount, isLoadi
       </Flex>
     )
   }
-  const usdAmount = multiplyPriceByAmount(bnbBusdPrice, bnbAmount)
+  const usdAmount = bnbBusdPrice * bnbAmount
   return (
     <Flex justifySelf="flex-end" flexDirection="column">
       <Flex justifyContent="flex-end">

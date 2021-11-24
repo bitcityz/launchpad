@@ -11,8 +11,6 @@ const Items = () => {
   const { collectionAddress } = useParams<{ collectionAddress: string }>()
   const collection = COLLECTIONS[collectionAddress]
 
-  const { address } = collection || {}
-
   // useEffect(() => {
   //   if (address) {
   //     dispatch(fetchCollection(address))
