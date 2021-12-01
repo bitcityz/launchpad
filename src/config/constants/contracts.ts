@@ -87,6 +87,10 @@ export default {
     56: '0x29fE7148636b7Ae0b1E53777b28dfbaA9327af8E',
     97: '0xe486De509c5381cbdBF3e71F57D7F1f7570f5c46',
   },
+  boxSale: {
+    56: '',
+    97: '0xEac23Bf268c24eB1aAF88250c3B1b5AdC45E1066'
+  },
   pancakeSquad: {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',
     97: '0xfC0c3F11fDA72Cb9A56F28Ec8D44C0ae4B3ABF86',

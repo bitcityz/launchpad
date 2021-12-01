@@ -52,7 +52,14 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   //   ],
   // },
   {
-    label: t('NFT'),
+    label: 'MEXI BOXS',
+    href: `/boxes`,
+    icon: 'Nft',
+    items: [
+    ],
+  },
+  {
+    label: 'MARKETPLACE',
     href: `${nftsBaseUrl}`,
     icon: 'Nft',
     items: [
