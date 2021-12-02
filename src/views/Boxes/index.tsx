@@ -39,18 +39,18 @@ const Boxes: React.FC = () => {
         <Static />
         <Flex mt="32px">
           <Link to="/boxes/mother">
-            <HorizontalCard bnbValue="500 BNB" mexiValue="1000 MEXI" backgroundImage={metaxizBg} itemImage={metaxizBox} title="METAXIZ BOX" remaining="Remaining boxes: 4000"/>
+            <HorizontalCard bnbValue="19.99 BNB" mexiValue="1000 MEXI" backgroundImage={metaxizBg} itemImage={metaxizBox} title="METAXIZ BOX" remaining="Remaining boxes: 4000"/>
           </Link>
         </Flex>
         <Flex mt="32px">
           <Link to="/boxes/common">
-            <VerticalCard bnbValue="500 BNB" mexiValue="1000 MEXI" backgroundImage={commonBoxBg} itemImage={commonBox} title="COMMON BOX" remaining="Remaining boxes: 4000"/>
+            <VerticalCard bnbValue="0.05 BNB" mexiValue="1000 MEXI" backgroundImage={commonBoxBg} itemImage={commonBox} title="COMMON BOX" remaining="Remaining boxes: 4000"/>
           </Link>
           <Link to="/boxes/epic">
-            <VerticalCard bnbValue="500 BNB" mexiValue="1000 MEXI" backgroundImage={epicBoxBg} itemImage={epicBox} title="EPIC BOX" remaining="Remaining boxes: 4000"/>
+            <VerticalCard bnbValue="0.8 BNB" mexiValue="1000 MEXI" backgroundImage={epicBoxBg} itemImage={epicBox} title="EPIC BOX" remaining="Remaining boxes: 4000"/>
           </Link>
           <Link to="/boxes/legendary">
-            <VerticalCard bnbValue="500 BNB" mexiValue="1000 MEXI" backgroundImage={legendaryBoxBg} itemImage={legendaryBox} title="LEGENDARY BOX" remaining="Remaining boxes: 4000"/>
+            <VerticalCard bnbValue="4.99 BNB" mexiValue="1000 MEXI" backgroundImage={legendaryBoxBg} itemImage={legendaryBox} title="LEGENDARY BOX" remaining="Remaining boxes: 4000"/>
           </Link>
         </Flex>
       </Flex>

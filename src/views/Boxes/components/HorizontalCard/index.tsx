@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import BigNumber from 'bignumber.js'
-import { Text, Flex } from '@metaxiz/uikit'
+import React from 'react'
+import { Text } from '@metaxiz/uikit'
 import styled from 'styled-components'
-import { formatNumber } from 'utils/formatBalance'
-import { useTranslation } from 'contexts/Localization'
-import { DEFAULT_TOKEN_DECIMAL } from 'config'
-import { useERC721, useNftMarketContract } from 'hooks/useContract'
 import btnBackgroundUrl from './images/Group 5 1.png'
 
 const CardStyled = styled.div`
@@ -32,6 +27,10 @@ const CardStyled = styled.div`
     }
     .btn-01 {
     }
+  }
+  transition: transform .2s;
+  &:hover {
+    transform: scale(1.1);
   }
 `
 
