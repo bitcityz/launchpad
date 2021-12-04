@@ -66,20 +66,26 @@ const Collectible = () => {
   const [totalSupplyMap, setTotalSupplyMap] = useState({})
 
   useEffect(() => {
-    Object.keys(collections).forEach(async address => {
-      nftMarketContract.volumeCollection(address).then(val => setTotalVolumeBNBMap((prevState) => ({
-        ...prevState,
-        [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
-      })))
-      nftMarketContract.totalOrderCollection(address).then(val => setTotalOrderMap((prevState) => ({
-        ...prevState,
-        [address]: new BigNumber(val._hex).toNumber(),
-      })))
-      const calls = [{
-        name: 'totalSupply',
-        address,
-        params: [],
-      }]
+    Object.keys(collections).forEach(async (address) => {
+      nftMarketContract.volumeCollection(address).then((val) =>
+        setTotalVolumeBNBMap((prevState) => ({
+          ...prevState,
+          [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
+        })),
+      )
+      nftMarketContract.totalOrderCollection(address).then((val) =>
+        setTotalOrderMap((prevState) => ({
+          ...prevState,
+          [address]: new BigNumber(val._hex).toNumber(),
+        })),
+      )
+      const calls = [
+        {
+          name: 'totalSupply',
+          address,
+          params: [],
+        },
+      ]
       const [[multicallRes]] = await multicallv2(ERC721_ABI, calls, { requireSuccess: false })
       setTotalSupplyMap((prevState) => ({
         ...prevState,

@@ -101,6 +101,9 @@ const App: React.FC = () => {
             <Route path="/nfts">
               <NftMarket />
             </Route>
+            <Route path="/airdrops">
+              <NftMarket />
+            </Route>
 
             {/* <Route path="/pancake-squad">
               <PancakeSquad />

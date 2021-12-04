@@ -3,11 +3,7 @@ import BigNumber from 'bignumber.js'
 import orderBy from 'lodash/orderBy'
 import uniqBy from 'lodash/uniqBy'
 import { AutoRenewIcon, Button, Flex, Grid, Text } from '@metaxiz/uikit'
-import {
-  useGetNftFilterLoadingState,
-  useGetNftOrdering,
-  useGetNftShowOnlyOnSale,
-} from 'state/nftMarket/hooks'
+import { useGetNftFilterLoadingState, useGetNftOrdering, useGetNftShowOnlyOnSale } from 'state/nftMarket/hooks'
 import COLLECTIONS from 'config/constants/collections'
 import { Collection, NftFilterLoadingState, NftToken } from 'state/nftMarket/types'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
@@ -64,44 +60,44 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
           const json = await res.json()
           return {
             ...json,
-            hash
+            hash,
           }
         }
         return {
           tokenId: '',
           image: {
             original: '',
-            thumbnail: ''
+            thumbnail: '',
           },
           name: '',
           description: '',
           collectionName: '',
-          collectionAddress: ''
+          collectionAddress: '',
         }
       })
       const nftsDetails = await Promise.all(apiRequestPromises)
       const marketData = tokenIds.map((tokenId, index) => {
         return {
           collection: {
-            id: COLLECTIONS[collectionAddress].id
+            id: COLLECTIONS[collectionAddress].id,
           },
           name: nftsDetails[index].name,
           collectionAddress,
           tokenId: tokenId.toNumber(),
           collectionName: COLLECTIONS[collectionAddress].name,
           image: {
-            thumbnail: nftsDetails[index].image
+            thumbnail: nftsDetails[index].image,
           },
           count: 1,
           hash: nftsDetails[index].hash,
           marketData: {
             collection: {
-              id: collectionAddress
+              id: collectionAddress,
             },
             isTradable: true,
             tokenId: new BigNumber(tokenId._hex).toString(),
-            currentAskPrice: new BigNumber(askInfo[index].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
-          }
+            currentAskPrice: new BigNumber(askInfo[index].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
+          },
         }
       })
       setIsFetchingFilteredNfts(false)

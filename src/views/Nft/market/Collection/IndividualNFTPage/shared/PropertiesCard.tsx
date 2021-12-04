@@ -42,11 +42,7 @@ const PropertiesCard: React.FC<PropertiesCardProps> = ({ properties, title }) =>
   const content = (
     <Box p="24px">
       {properties.map((property) => (
-        <SingleProperty
-          key={property.key}
-          title={property.key}
-          value={property.value}
-        />
+        <SingleProperty key={property.key} title={property.key} value={property.value} />
       ))}
     </Box>
   )

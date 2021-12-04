@@ -16,11 +16,13 @@ const Collections = () => {
   const [totalVolumeBNBMap, setTotalVolumeBNBMap] = useState({})
 
   useEffect(() => {
-    Object.keys(COLLECTIONS).forEach(address => {
-      nftMarketContract.volumeCollection(address).then(val => setTotalVolumeBNBMap((prevState) => ({
-        ...prevState,
-        [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
-      })))
+    Object.keys(COLLECTIONS).forEach((address) => {
+      nftMarketContract.volumeCollection(address).then((val) =>
+        setTotalVolumeBNBMap((prevState) => ({
+          ...prevState,
+          [address]: new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber(),
+        })),
+      )
     })
   }, [totalVolumeBNBMap, nftMarketContract])
   return (
@@ -40,24 +42,26 @@ const Collections = () => {
         </Button>
       </Flex>
       <Grid gridGap="16px" gridTemplateColumns={['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} mb="64px">
-        {Object.values(COLLECTIONS).slice(0, 5).map((collection) => {
-          return (
-            <HotCollectionCard
-              key={collection.address}
-              bgSrc={collection.banner.small}
-              avatarSrc={collection.avatar}
-              collectionName={collection.name}
-              url={`${nftsBaseUrl}/collections/${collection.address}`}
-            >
-              <Flex alignItems="center">
-                <Text fontSize="12px" color="textSubtle">
-                  {t('Volume')}
-                </Text>
-                <BNBAmountLabel amount={totalVolumeBNBMap[collection.address] || 0} />
-              </Flex>
-            </HotCollectionCard>
-          )
-        })}
+        {Object.values(COLLECTIONS)
+          .slice(0, 5)
+          .map((collection) => {
+            return (
+              <HotCollectionCard
+                key={collection.address}
+                bgSrc={collection.banner.small}
+                avatarSrc={collection.avatar}
+                collectionName={collection.name}
+                url={`${nftsBaseUrl}/collections/${collection.address}`}
+              >
+                <Flex alignItems="center">
+                  <Text fontSize="12px" color="textSubtle">
+                    {t('Volume')}
+                  </Text>
+                  <BNBAmountLabel amount={totalVolumeBNBMap[collection.address] || 0} />
+                </Flex>
+              </HotCollectionCard>
+            )
+          })}
       </Grid>
     </>
   )

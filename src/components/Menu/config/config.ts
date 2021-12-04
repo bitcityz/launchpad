@@ -1,6 +1,6 @@
 import { MenuItemsType, DropdownMenuItemType } from '@metaxiz/uikit'
 import { ContextApi } from 'contexts/Localization/types'
-import { nftsBaseUrl } from 'views/Nft/market/constants'
+import { airdropBaseUrl, nftsBaseUrl } from 'views/Nft/market/constants'
 
 export type ConfigMenuItemsType = MenuItemsType & { hideSubNav?: boolean }
 
@@ -63,6 +63,17 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
       {
         label: t('Collections'),
         href: `${nftsBaseUrl}/collections`,
+      },
+    ],
+  },
+  {
+    label: t('Airdrops'),
+    href: `${airdropBaseUrl}`,
+    icon: 'Nft',
+    items: [
+      {
+        label: t('Airdrops'),
+        href: `${airdropBaseUrl}`,
       },
     ],
   },

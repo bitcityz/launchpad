@@ -108,13 +108,13 @@ export const getNftApi = async (
       hash,
       image: {
         original: json.image,
-        thumbnail: json.image
+        thumbnail: json.image,
       },
-      collection: COLLECTIONS[collectionAddress]
+      collection: COLLECTIONS[collectionAddress],
     }
     return result
   }
-  
+
   console.error(`API: Can't fetch NFT token ${tokenId} in ${collectionAddress}`)
   return null
 }
@@ -755,7 +755,7 @@ export const combineNftMarketAndMetadata = (
     } else {
       marketData = walletNfts.find((marketNft) => marketNft.tokenId === nft.tokenId)
     }
-    
+
     const location = getNftLocationForMarketNft(nft.tokenId, tokenIdsInWallet, tokenIdsForSale, profileNftId)
 
     return { ...nft, marketData, location }
@@ -813,28 +813,29 @@ export const getCompleteAccountNftData = async (
       return profileNftWithCollectionAddress?.tokenId !== walletNft.tokenId
     })
     .map((nft) => nft.tokenId)
-  
-  const asksRequests = Object.keys(collections).map(collection => marketContract.viewAsksByCollectionAndSeller(collection, account, 0, 200))
+
+  const asksRequests = Object.keys(collections).map((collection) =>
+    marketContract.viewAsksByCollectionAndSeller(collection, account, 0, 200),
+  )
   const asksData = await Promise.all(asksRequests)
 
   const marketDataForSaleNfts = asksData.reduce((acu, ask, index) => {
     const results = ask.tokenIds.map((tokenId, askIndex) => {
       return {
         collection: {
-          id: Object.keys(collections)[index]
+          id: Object.keys(collections)[index],
         },
         isTradable: true,
         tokenId: new BigNumber(tokenId._hex).toString(),
-        currentAskPrice: new BigNumber(ask.askInfo[askIndex].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
+        currentAskPrice: new BigNumber(ask.askInfo[askIndex].price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
       }
     })
     return [...acu, ...results]
   }, [])
 
-  
-  const tokenIdsForSale = marketDataForSaleNfts.map(({tokenId}) => tokenId)
+  const tokenIdsForSale = marketDataForSaleNfts.map(({ tokenId }) => tokenId)
 
-  const forSaleNftIds = marketDataForSaleNfts.map(nft => {
+  const forSaleNftIds = marketDataForSaleNfts.map((nft) => {
     return { collectionAddress: nft.collection.id, tokenId: nft.tokenId }
   })
 

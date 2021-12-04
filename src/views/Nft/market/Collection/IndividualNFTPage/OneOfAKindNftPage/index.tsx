@@ -37,20 +37,19 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   const [baseURI, setBaseURI] = useState('')
 
   // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
- 
+
   const { account } = useWeb3React()
 
   const handleLoadMore = () => {
     setPage((prevState) => prevState + 1)
   }
-  
+
   const { userNftsInitializationState, nfts: userNfts } = useUserNfts()
   useFetchUserNfts()
   useEffect(() => {
     nftContract.baseURI().then(setBaseURI)
   }, [nftContract])
   useEffect(() => {
-    
     const fetchNftData = async () => {
       const foundInMarket = await nftMarketContract._askDetails(collectionAddress, tokenId)
       const { price, seller } = foundInMarket
@@ -73,7 +72,9 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
           hash: metadata.hash,
           location: foundInMarket ? NftLocation.FORSALE : NftLocation.PROFILE,
           marketData: {
-            currentAskPrice: foundInMarket ? new BigNumber(price._hex).div(DEFAULT_TOKEN_DECIMAL).toString() : undefined,
+            currentAskPrice: foundInMarket
+              ? new BigNumber(price._hex).div(DEFAULT_TOKEN_DECIMAL).toString()
+              : undefined,
             tokenId,
             currentSeller: seller,
             latestTradedPriceInBNB: '0',
@@ -81,7 +82,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             metadataUrl: '',
             totalTrades: '0',
             isTradable: true,
-            otherId: '56'
+            otherId: '56',
           },
         })
       }
@@ -94,9 +95,13 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
 
   useEffect(() => {
     const fetchNftData = async () => {
-      const foundInMarket = await nftMarketContract.viewAsksByCollectionAndHash(collectionAddress, nft.hash, page * LIMIT, LIMIT)
+      const foundInMarket = await nftMarketContract.viewAsksByCollectionAndHash(
+        collectionAddress,
+        nft.hash,
+        page * LIMIT,
+        LIMIT,
+      )
       const marketDataForSaleNfts = foundInMarket.askInfo.map((ask, index) => {
-
         return {
           tokenId: new BigNumber(foundInMarket.tokenIds[index]._hex).toString(),
           collectionAddress,
@@ -109,13 +114,13 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
           location: foundInMarket ? NftLocation.FORSALE : NftLocation.PROFILE,
           marketData: {
             collection: {
-              id: collectionAddress
+              id: collectionAddress,
             },
             isTradable: true,
             tokenId: new BigNumber(foundInMarket.tokenIds[index]._hex).toString(),
             currentAskPrice: new BigNumber(ask.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
-            currentSeller: ask.seller
-          }
+            currentSeller: ask.seller,
+          },
         }
       })
       setNftsOnCurrentPage(marketDataForSaleNfts)
@@ -150,12 +155,19 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             isOwnNft={isOwnNft}
             isLoading={userNftsInitializationState !== UserNftInitializationState.INITIALIZED}
           />
-          {properties ? Object.keys(properties).map(key => {
-            return <PropertiesCard key={key} title={key} properties={properties[key]} />
-          }) : null}
+          {properties
+            ? Object.keys(properties).map((key) => {
+                return <PropertiesCard key={key} title={key} properties={properties[key]} />
+              })
+            : null}
           <DetailsCard contractAddress={collectionAddress} ipfsLink={baseURI + nft.hash} />
         </Flex>
-        <ForSaleTableCard isFetchingMoreNfts={false} loadMore={handleLoadMore} totalForSale={totalOrder} nftsForSale={nftsOnCurrentPage} />
+        <ForSaleTableCard
+          isFetchingMoreNfts={false}
+          loadMore={handleLoadMore}
+          totalForSale={totalOrder}
+          nftsForSale={nftsOnCurrentPage}
+        />
         {/* <OwnerCard nft={nft} isOwnNft={isOwnNft} nftIsProfilePic={nftIsProfilePic} /> */}
       </TwoColumnsContainer>
       <MoreFromThisCollection collectionAddress={collectionAddress} currentTokenName={nft.name} />

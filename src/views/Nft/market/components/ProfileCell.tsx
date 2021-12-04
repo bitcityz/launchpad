@@ -15,7 +15,6 @@ const StyledFlex = styled(Flex)`
 `
 
 const ProfileCell: React.FC<{ accountAddress: string }> = ({ accountAddress }) => {
-
   return (
     <Link to={`${nftsBaseUrl}/profile/${accountAddress}`}>
       <StyledFlex>

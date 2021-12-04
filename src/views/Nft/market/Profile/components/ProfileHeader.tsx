@@ -15,12 +15,7 @@ interface HeaderProps {
 }
 
 // Account and profile passed down as the profile could be used to render _other_ users' profiles.
-const ProfileHeader: React.FC<HeaderProps> = ({
-  accountPath,
-  profile,
-  nftCollected,
-  isNftLoading,
-}) => {
+const ProfileHeader: React.FC<HeaderProps> = ({ accountPath, profile, nftCollected, isNftLoading }) => {
   const { t } = useTranslation()
 
   const numNftCollected = !isNftLoading ? (nftCollected ? formatNumber(nftCollected, 0, 0) : '-') : null

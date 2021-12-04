@@ -215,7 +215,11 @@ const SellModal: React.FC<SellModalProps> = ({ variant, nftToSell, onDismiss }) 
     },
     onConfirm: () => {
       if (stage === SellingStage.CONFIRM_REMOVE_FROM_MARKET) {
-        return callWithGasPrice(nftMarketContract, 'cancelAskOrder', [nftToSell.collectionAddress, nftToSell.tokenId, nftToSell.hash])
+        return callWithGasPrice(nftMarketContract, 'cancelAskOrder', [
+          nftToSell.collectionAddress,
+          nftToSell.tokenId,
+          nftToSell.hash,
+        ])
       }
       if (stage === SellingStage.CONFIRM_TRANSFER) {
         return callWithGasPrice(collectionContract, 'safeTransferFrom(address,address,uint256)', [

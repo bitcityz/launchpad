@@ -30,12 +30,16 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
   const [totalVolumeCollectionBNB, setTotalVolumeCollectionBNB] = useState('0')
   const [totalSupply, setTotalSupply] = useState(0)
   const [numberTokensListed, setNumberTokensListed] = useState(0)
-  
+
   useEffect(() => {
     nftContract.totalSupply().then(setTotalSupply)
     nftMarketContract.totalOrderCollection(collectionAddress).then(setNumberTokensListed)
-    nftMarketContract.volume().then(val => setTotalVolumeBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
-    nftMarketContract.volumeCollection(collectionAddress).then(val => setTotalVolumeCollectionBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
+    nftMarketContract
+      .volume()
+      .then((val) => setTotalVolumeBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
+    nftMarketContract
+      .volumeCollection(collectionAddress)
+      .then((val) => setTotalVolumeCollectionBNB(new BigNumber(val._hex).div(DEFAULT_TOKEN_DECIMAL).toString()))
   }, [nftContract, nftMarketContract, collectionAddress])
 
   return (

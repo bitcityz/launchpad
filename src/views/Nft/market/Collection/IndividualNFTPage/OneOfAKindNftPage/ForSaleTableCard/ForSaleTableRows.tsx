@@ -30,8 +30,7 @@ interface RowProps {
 }
 
 const Row: React.FC<RowProps> = ({ t, nft, bnbBusdPrice, account }) => {
-
-  const priceInUsd = bnbBusdPrice *  parseFloat(nft.marketData?.currentAskPrice)
+  const priceInUsd = bnbBusdPrice * parseFloat(nft.marketData?.currentAskPrice)
 
   const ownNft = account ? nft.marketData.currentSeller === account.toLowerCase() : false
   const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
