@@ -31,7 +31,7 @@ import {
   getPancakeSquadContract,
   getErc721CollectionContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress, getNftMarketAddress, getBoxSaleAddress } from 'utils/addressHelpers'
+import { getMulticallAddress, getNftMarketAddress, getBoxSaleAddress, getBoxOpenAddress } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
@@ -41,6 +41,7 @@ import nftMarketAbi from 'config/abi/nftMarket.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'config/abi/ens-public-resolver.json'
 import ENS_ABI from 'config/abi/ens-registrar.json'
 import BOX_SALE_ABI from 'config/abi/boxSale.json'
+import BOX_OPEN_ABI from 'config/abi/boxOpen.json'
 import { ERC20_BYTES32_ABI } from 'config/abi/erc20'
 import ERC20_ABI from 'config/abi/erc20.json'
 import ERC721_ABI from 'config/abi/erc721.json'
@@ -80,6 +81,10 @@ export const useBoxSaleContract = () => {
   // const { library } = useActiveWeb3React()
   // return useMemo(() => getErc721Contract(address, library.getSigner()), [address, library])
   return useContract(getBoxSaleAddress(), BOX_SALE_ABI)
+}
+
+export const useBoxOpenContract = () => {
+  return useContract(getBoxOpenAddress(), BOX_OPEN_ABI)
 }
 
 export const useCake = () => {

@@ -1,35 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
-import { Text, Flex, Box, Modal, useModal, InjectedModalProps, Button } from '@metaxiz/uikit'
-import { useBoxSaleContract } from 'hooks/useContract'
+import { useWeb3React } from '@web3-react/core'
+import ReactModal from 'react-modal'
+import { signMessage } from 'utils/web3React'
+import { Text, Flex, Box, IconButton, CloseIcon } from '@metaxiz/uikit'
+import { useBoxSaleContract, useERC721 } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
 import { AutoColumn } from 'components/Layout/Column'
 import { ethers } from 'ethers'
+import { simpleRpcProvider } from 'utils/providers'
 import { parseUnits } from 'ethers/lib/utils'
 import { useParams } from 'react-router-dom'
 import PageSection from 'components/PageSection'
-import backgroundUrl from './images/background.png'
-import modalUrl from './images/modal.png'
+
+import useOpenBox from '../../Nft/market/hooks/useOpenBox'
+import useClaim from '../../Nft/market/hooks/useClaim'
+
+import backgroundUrl from './images/background.svg'
+import modalUrl from './images/modal.svg'
 import epicShapeUrl from './images/shape-epic.png'
 import commonShapeUrl from './images/shape-common.png'
 import legendaryShapeUrl from './images/shape-legendary.png'
 import rareShapeUrl from './images/shape-rare.png'
 import popupBgUrl from './images/popup-bg.png'
+import BtnCheckout from './images/button_checkout.svg'
 
 import commonBox from '../images/common-box.png'
 import epicBox from '../images/epic-box.png'
 import legendaryBox from '../images/legendary-box.png'
 import metaxizBox from '../images/metaxiz-box.png'
-
-interface Props extends InjectedModalProps {
-  boxId: string
-  price: string
-  box: string
-}
 
 const BOXMAP = {
   common: {
@@ -105,19 +108,23 @@ const PurchaseButtonStyled = styled.button`
   }
 `
 
+const PolygonFlex = styled(Flex)`
+  padding: 8px;
+  background: #3A206F;
+`
+
 const CheckoutButtonStyled = styled.button`
-  background: #251345;
+  background: url('${BtnCheckout}');
+  background-size: cover;
   font-size: 16px;
   color: white;
-  transform: skew(-20deg);
   border: 0;
   outline: 0;
   cursor: pointer;
   padding: 8px;
-  &:hover { background: #2a1949; }
+  &:hover { color: #FAB820 }
   span {
-    display: inline-block; 
-    transform: skew(20deg);
+    display: inline-block;
   }
 `
 
@@ -156,64 +163,55 @@ const ShapeTextStyled = styled(Text)`
   clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 0% 100%);
 `
 
-const ModalStyle = styled(Modal)`
-  clip-path: polygon(7% 0, 100% 0, 100% 93%, 93% 100%, 0 100%, 0 100%, 0 7%);
-  background: #412672;
-  padding: 16px;
-  border-radius: 0;
-  border: none;
-  >div {
-    border-bottom: none;
-  }
-  h2 {
-    color: white
-  }
-`
+const customStyles = {
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    border: 'unset',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundImage: `url('${popupBgUrl}')`,
+    backgroundColor: 'transparent',
+    width: 358,
+    height: 370,
+    backgroundSize: 'contain',
+    padding: '36px 48px 36px 36px',
+    overflow: 'inherit'
+  },
+};
 
 const getValueAsEthersBn = (value: string) => {
   const valueAsFloat = parseFloat(value)
   return Number.isNaN(valueAsFloat) ? ethers.BigNumber.from(0) : parseUnits(value)
 }
 
-const CheckoutModal: React.FC<Props> = ({ boxId, onDismiss, price, box }) => {
-  const data = useGetBnbBalance()
-  const [isTxPending, setIsTxPending] = useState(false)
-  const boxSaleContract = useBoxSaleContract()
-  const { callWithGasPrice } = useCallWithGasPrice()
-  const checkout = async() => {
-    const tx = await callWithGasPrice(boxSaleContract, 'buy', [boxId], { value: getValueAsEthersBn(price).toString() })
-    setIsTxPending(true)
-    await tx.wait()
-    setIsTxPending(false)
-    onDismiss()
-  }
-  const isEnoughBlance = Number(price) < new BigNumber(data.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber()
-  return (
-    <ModalStyle title="Checkout" maxWidth="420px" onDismiss={onDismiss}>
-      <AutoColumn gap="lg">
-        <Text color="white">You are about to purchase {box.toUpperCase()} box</Text>
-       
-        <AutoColumn gap="lg">
-          <Flex justifyContent="space-between">
-            <Text color="white">Price:</Text>
-            <Text color="white" bold>{price} BNB</Text>
-          </Flex>
-          <Flex justifyContent="space-between">
-            <Text color="white">Your balance:</Text>
-            <Text color="white" bold>{ new BigNumber(data.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toFixed(5)} BNB</Text>
-          </Flex>
-          <CheckoutButtonStyled disabled={!isEnoughBlance || isTxPending} onClick={checkout}><span>{isTxPending ? 'Loading' : isEnoughBlance ? 'Check Out' : 'Insufficient balance'}</span></CheckoutButtonStyled>
-        </AutoColumn>
-      </AutoColumn>
-    </ModalStyle>
-  )
-}
-
 const BoxNft: React.FC = () => {
+  const [isPurchasedOpened, setIsPurchasedOpened] = useState(false)
+  const [boxGetReady, setBoxGetReady] = useState(false)
   const { box }: { box: string } = useParams()
   const boxSaleContract = useBoxSaleContract()
   const [remaning, setRemaining] = useState('0')
   const [price, setPrice] = useState('0')
+
+  const bnbBalance = useGetBnbBalance()
+  const [isTxPending, setIsTxPending] = useState(false)
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const {handleOpenBox, newNfts, token} = useOpenBox()
+  const {handleClaim, loading} = useClaim(newNfts[0], token)
+  const checkout = async() => {
+    const tx = await callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], { value: getValueAsEthersBn(price).toString() })
+    setIsTxPending(true)
+    await tx.wait()
+    setIsTxPending(false)
+    setBoxGetReady(true)
+  }
+  const isEnoughBlance = Number(price) < new BigNumber(bnbBalance.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber()
+
   const [heroMap, setHeroMap] = useState({
     "common": {
       "percent": 90,
@@ -253,16 +251,12 @@ const BoxNft: React.FC = () => {
 
       if (res.ok) {
         const [data] = await res.json()
-        console.log({
-          data
-        })
         setHeroMap(data['1stRound'].options[0])
       }
     }
     fetchStatic()
   }, [box])
 
-  const [onPresentModal] = useModal(<CheckoutModal boxId={BOXMAP[box].id} price={price} box={box} />)
   return (
     <PageStyed>
       <PageSection
@@ -285,7 +279,7 @@ const BoxNft: React.FC = () => {
                 <Text color="white">Remaining boxes: {remaning}</Text>
                 <ButtonStyled><span>BNB</span></ButtonStyled>
               </Flex>
-              <PurchaseButtonStyled onClick={onPresentModal}><span>Purchase</span></PurchaseButtonStyled>
+              <PurchaseButtonStyled onClick={() => setIsPurchasedOpened(true)}><span>Purchase</span></PurchaseButtonStyled>
             </Flex>
             <Flex width="40%" flexDirection="column">
               <Flex width="100%" flexDirection="column">
@@ -362,6 +356,41 @@ const BoxNft: React.FC = () => {
           </Flex>
         </BoxStyed>
       </PageSection>
+      <ReactModal
+        isOpen={isPurchasedOpened}
+        onRequestClose={() => setIsPurchasedOpened(false)}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <IconButton style={{ position: 'absolute', top: "16px", right: "24px"}} variant="text" onClick={() => setIsPurchasedOpened(false)}>
+          <CloseIcon width="24px" color="white" />
+        </IconButton>
+        {boxGetReady ? <AutoColumn gap="lg">
+            <img style={{
+              position: 'absolute',
+              width: '70%',
+              top: '-35px'
+            }} alt='metaxiz box' src={BOXMAP[box].boxImage} />
+            <CheckoutButtonStyled onClick={newNfts.length ? handleClaim : handleOpenBox}>{loading ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}</CheckoutButtonStyled>
+          </AutoColumn> : 
+          <AutoColumn gap="lg">
+            <Text mt="8px" fontSize="16px" fontWeight="bold" color="white">CHECKOUT</Text>
+            <Text color="white">You are about to purchase {box.toUpperCase()} box</Text>
+          
+            <AutoColumn gap="lg">
+              <PolygonFlex justifyContent="space-between">
+                <Text color="white">Price:</Text>
+                <Text color="white" bold>{price} BNB</Text>
+              </PolygonFlex>
+              <Flex justifyContent="space-between">
+                <Text color="white">Your balance:</Text>
+                <Text color="white" bold>{ new BigNumber(bnbBalance.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toFixed(5)} BNB</Text>
+              </Flex>
+              <CheckoutButtonStyled disabled={!isEnoughBlance || isTxPending} onClick={checkout}><span>{isTxPending ? 'Loading' : isEnoughBlance ? 'Check Out' : 'Insufficient balance'}</span></CheckoutButtonStyled>
+            </AutoColumn>
+          </AutoColumn>
+      }
+      </ReactModal>
     </PageStyed>
   )
 }
