@@ -206,7 +206,10 @@ const BoxNft: React.FC = () => {
   const { callWithGasPrice } = useCallWithGasPrice()
 
   const { handleOpenBox, newNfts, token } = useOpenBox()
-  const { handleClaim, loading } = useClaim(newNfts[0], token)
+  console.log({
+    newNfts
+  })
+  const { loading, isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
   const checkout = async () => {
     const tx = await callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
       value: getValueAsEthersBn(price).toString(),
@@ -243,7 +246,9 @@ const BoxNft: React.FC = () => {
   const bnbBusdPrice = useBNBVsBusdPrice()
 
   const priceInUsd = bnbBusdPrice * parseFloat(price)
-
+  console.log({
+    isApproving, isApproved, isConfirming
+  })
   useEffect(() => {
     boxSaleContract.boxs(BOXMAP[box].id).then((item) => {
       setRemaining(new BigNumber(item.remain._hex).toString())
@@ -428,9 +433,14 @@ const BoxNft: React.FC = () => {
               alt="metaxiz box"
               src={BOXMAP[box].boxImage}
             />
-            <CheckoutButtonStyled onClick={newNfts.length ? handleClaim : handleOpenBox}>
-              {loading ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
-            </CheckoutButtonStyled>
+            {!isApproved && newNfts.length ?
+              <CheckoutButtonStyled onClick={handleApprove}>
+                {isApproving ? 'Loading' : 'Approve'}
+              </CheckoutButtonStyled> :
+              <CheckoutButtonStyled onClick={newNfts.length ? handleConfirm : handleOpenBox}>
+                {isConfirming ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
+              </CheckoutButtonStyled>
+            }
           </AutoColumn>
         ) : (
           <AutoColumn gap="lg">

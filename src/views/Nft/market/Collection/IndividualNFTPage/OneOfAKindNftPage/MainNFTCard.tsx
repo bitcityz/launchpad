@@ -27,7 +27,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
     <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} />,
   )
   const { handleOpenBox, newNfts, token } = useOpenBox()
-  const { handleClaim, loading } = useClaim(newNfts[0], token)
+  const { isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
 
   const ownerButtons = (
     <Flex flexDirection={['column', 'column', 'row']}>
@@ -41,18 +41,27 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
-      {nft.marketData?.isTradable && (
+      {!isApproved && newNfts.length ?
+        <Button
+          minWidth="168px"
+          mr="16px"
+          width={['100%', null, 'max-content']}
+          mt="24px"
+          onClick={handleApprove}
+        >
+          {isApproving ? 'Loading' : 'Approve'}
+        </Button> :
         <Button
           disabled={nftIsProfilePic}
           minWidth="168px"
           mr="16px"
           width={['100%', null, 'max-content']}
           mt="24px"
-          onClick={newNfts.length ? handleClaim : handleOpenBox}
+          onClick={newNfts.length ? handleConfirm : handleOpenBox}
         >
-          {loading ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
+          {isConfirming ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
         </Button>
-      )}
+      }
     </Flex>
   )
 
