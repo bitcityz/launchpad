@@ -8,8 +8,8 @@ interface State {
   data: ApiCollectionDistribution['data']
 }
 
-const useGetCollectionDistribution = (collectionAddress: string) => {
-  const [state, setState] = useState<State>({ isFetching: false, data: null })
+const useGetCollectionDistribution = () => {
+  const [state] = useState<State>({ isFetching: false, data: null })
 
   // useEffect(() => {
   //   const fetchTokens = async () => {

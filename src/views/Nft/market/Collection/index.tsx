@@ -5,7 +5,6 @@ import { Route, useParams, useRouteMatch } from 'react-router'
 import { useFetchCollection, useGetCollection } from 'state/nftMarket/hooks'
 
 const Items = lazy(() => import('./Items'))
-const Traits = lazy(() => import('./Traits'))
 const IndividualNFTPageRouter = lazy(() => import('./IndividualNFTPage'))
 
 const Collection = () => {

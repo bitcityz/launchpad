@@ -1,4 +1,4 @@
-import { MenuItemsType, DropdownMenuItemType } from '@metaxiz/uikit'
+import { MenuItemsType } from '@metaxiz/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { airdropBaseUrl, nftsBaseUrl } from 'views/Nft/market/constants'
 
@@ -52,7 +52,13 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   //   ],
   // },
   {
-    label: t('NFT'),
+    label: 'MEXI BOXS',
+    href: `/boxes`,
+    icon: 'Nft',
+    items: [],
+  },
+  {
+    label: 'MARKETPLACE',
     href: `${nftsBaseUrl}`,
     icon: 'Nft',
     items: [
@@ -67,12 +73,12 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
     ],
   },
   {
-    label: t('Airdrops'),
+    label: t('AIRDROPS'),
     href: `${airdropBaseUrl}`,
     icon: 'Nft',
     items: [
       {
-        label: t('Airdrops'),
+        label: t('AIRDROPS'),
         href: `${airdropBaseUrl}`,
       },
     ],

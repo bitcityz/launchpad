@@ -14,7 +14,7 @@ import { useErc721CollectionContract, useNftMarketContract } from 'hooks/useCont
 import { useAppDispatch } from 'state'
 import { removeUserNft, fetchUserNfts } from 'state/nftMarket/reducer'
 import { useGetCollections } from 'state/nftMarket/hooks'
-import { NftLocation, NftToken } from 'state/nftMarket/types'
+import { NftToken } from 'state/nftMarket/types'
 import { useGetLowestPriceFromNft } from 'views/Nft/market/hooks/useGetLowestPrice'
 import SellStage from './SellStage'
 import SetPriceStage from './SetPriceStage'

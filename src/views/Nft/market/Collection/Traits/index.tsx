@@ -27,7 +27,7 @@ const Traits = () => {
         {collectionAddress === pancakeBunniesAddress ? (
           <PancakeBunniesTraits collectionAddress={collectionAddress} />
         ) : (
-          <CollectionTraits collectionAddress={collectionAddress} />
+          <CollectionTraits />
         )}
       </Container>
     </>

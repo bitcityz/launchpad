@@ -20,7 +20,7 @@ interface CollectionNftsProps {
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   const { totalSupply, numberTokensListed, address: collectionAddress } = collection
   const [page, setPage] = useState(0)
-  const [skip, setSkip] = useState(REQUEST_SIZE)
+  const [skip] = useState(REQUEST_SIZE)
   const [nfts, setNfts] = useState<NftToken[]>([])
   const [isFetchingFilteredNfts, setIsFetchingFilteredNfts] = useState(false)
   const { t } = useTranslation()
@@ -46,7 +46,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
   useEffect(() => {
     const fetchMarket = async () => {
       setIsLoading(true)
-      const asked = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip).catch(console.log)
+      const asked = await nftMarketContract.viewAsksByCollection(collectionAddress, page, skip)
       if (!asked) {
         setIsLoading(false)
         return

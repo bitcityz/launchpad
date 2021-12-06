@@ -11,12 +11,10 @@ import { SortType } from '../../types'
 import { StyledSortButton, TableWrapper } from './styles'
 import useGetCollectionDistribution from '../../hooks/useGetCollectionDistribution'
 
-interface CollectionTraitsProps {
-  collectionAddress: string
-}
+interface CollectionTraitsProps {}
 
-const CollectionTraits: React.FC<CollectionTraitsProps> = ({ collectionAddress }) => {
-  const { data, isFetching } = useGetCollectionDistribution(collectionAddress)
+const CollectionTraits: React.FC<CollectionTraitsProps> = () => {
+  const { data, isFetching } = useGetCollectionDistribution()
   const [raritySort, setRaritySort] = useState<Record<string, SortType>>({})
   const { t } = useTranslation()
 

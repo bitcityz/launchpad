@@ -1,7 +1,6 @@
 import React, { lazy } from 'react'
-import { Router, Redirect, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from '@metaxiz/uikit'
-import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useUserAgent from 'hooks/useUserAgent'
@@ -10,7 +9,6 @@ import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import { DatePickerPortal } from 'components/DatePicker'
-import { nftsBaseUrl } from 'views/Nft/market/constants'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
@@ -23,8 +21,11 @@ import history from './routerHistory'
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
+const Boxes = lazy(() => import('./views/Boxes'))
+const Box = lazy(() => import('./views/Boxes/Box'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const NftMarket = lazy(() => import('./views/Nft/market'))
+const Airdrops = lazy(() => import('./views/Airdrops'))
 const NftHome = lazy(() => import('./views/Nft/market/Home'))
 
 // This config is required for number formatting
@@ -34,8 +35,6 @@ BigNumber.config({
 })
 
 const App: React.FC = () => {
-  const { account } = useWeb3React()
-
   usePollBlockNumber()
   useEagerConnect()
   useFetchProfile()
@@ -102,7 +101,13 @@ const App: React.FC = () => {
               <NftMarket />
             </Route>
             <Route path="/airdrops">
-              <NftMarket />
+              <Airdrops />
+            </Route>
+            <Route exact path="/boxes">
+              <Boxes />
+            </Route>
+            <Route path="/boxes/:box">
+              <Box />
             </Route>
 
             {/* <Route path="/pancake-squad">

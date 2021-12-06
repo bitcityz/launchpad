@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Button, Heading, Flex } from '@metaxiz/uikit'
+import { Button, Heading, Flex } from '@metaxiz/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
@@ -11,10 +11,6 @@ import { nftsBaseUrl } from 'views/Nft/market/constants'
 import useTheme from 'hooks/useTheme'
 import SearchBar from '../components/SearchBar'
 import Collections from './Collections'
-
-const Gradient = styled(Box)`
-  background: ${({ theme }) => theme.colors.gradients.cardHeader};
-`
 
 const StyledPageHeader = styled(PageHeader)`
   margin-bottom: -40px;

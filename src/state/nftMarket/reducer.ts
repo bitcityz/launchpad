@@ -5,8 +5,6 @@ import isEmpty from 'lodash/isEmpty'
 import {
   getNftsFromCollectionApi,
   getNftsMarketData,
-  getCollectionsApi,
-  getCollectionsSg,
   getUserActivity,
   combineCollectionData,
   getCollectionSg,

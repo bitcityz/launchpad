@@ -8,7 +8,7 @@ import { getBalanceAmount } from 'utils/formatBalance'
 import { farmsConfig } from 'config/constants'
 import useRefresh from 'hooks/useRefresh'
 import { deserializeToken } from 'state/user/hooks/helpers'
-import { fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, nonArchivedFarms } from '.'
+import { fetchFarmsPublicDataAsync, nonArchivedFarms } from '.'
 import { State, SerializedFarm, DeserializedFarmUserData, DeserializedFarm, DeserializedFarmsState } from '../types'
 
 const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData => {
@@ -49,8 +49,6 @@ export const usePollFarmsPublicData = (includeArchive = false) => {
 
   useEffect(() => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
-    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
-
     // dispatch(fetchFarmsPublicDataAsync(pids))
   }, [includeArchive, dispatch, slowRefresh])
 }
@@ -62,10 +60,6 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
 
   useEffect(() => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
-    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
-
-    // dispatch(fetchFarmsPublicDataAsync(pids))
-
     if (account) {
       // dispatch(fetchFarmUserDataAsync({ account, pids }))
     }

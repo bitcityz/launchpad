@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Flex, Text, NftIcon } from '@metaxiz/uikit'
-import { useTranslation } from 'contexts/Localization'
 import ExpandableCard from './ExpandableCard'
 
 interface PropertiesCardProps {

@@ -13,7 +13,6 @@ import StatBox, { StatBoxItem } from '../components/StatBox'
 import BannerHeader from '../components/BannerHeader'
 import AvatarImage from '../components/BannerHeader/AvatarImage'
 import TopBar from './TopBar'
-import LowestPriceStatBoxItem from './LowestPriceStatBoxItem'
 
 interface HeaderProps {
   collection: Collection
