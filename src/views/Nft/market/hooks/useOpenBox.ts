@@ -88,7 +88,7 @@ const useOpenBox = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: authorization,
+        authorization,
       },
       body: JSON.stringify({
         tokenId: new BigNumber(newestTokenId._hex).toString(),
