@@ -83,7 +83,7 @@ const useOpenBox = () => {
 
   const openBox = async (authorization) => {
     const balance = await nftContract.balanceOf(account)
-    const newestTokenId = await nftContract.tokenByIndex(new BigNumber(balance._hex).toNumber() - 1)
+    const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
     fetch(`https://testnet-api.metafight.io/user/open-box`, {
       method: 'POST',
       headers: {
