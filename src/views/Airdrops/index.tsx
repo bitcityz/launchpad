@@ -4,10 +4,9 @@ import { Flex } from '@metaxiz/uikit'
 // import { useWeb3React } from '@web3-react/core'
 import mefiBoxUrl from './images/airdropic1.png'
 import Rectangle41Url from './images/Rectangle41.png'
-import LOGOUrl from './images/logo.png'
+import LOGOUrl from './images/logo1.png'
 import Ellipse7OUrl from './images/Ellipse7.png'
 import Vector3Url from './images/Vector3.png'
-import btnBackgroundUrl from './components/VerticalCard/images/Group 5 1.png'
 
 const BoxesStyed = styled.div`
   background: #e9f2f6;
