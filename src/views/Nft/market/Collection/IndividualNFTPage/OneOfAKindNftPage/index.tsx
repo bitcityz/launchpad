@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { DEFAULT_TOKEN_DECIMAL } from 'config'
+import { DEFAULT_TOKEN_DECIMAL, DEAD_SELLER } from 'config'
 import { Flex } from '@metaxiz/uikit'
 // import sum from 'lodash/sum'
 import BigNumber from 'bignumber.js'
@@ -51,16 +51,18 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   }, [nftContract])
   useEffect(() => {
     const fetchNftData = async () => {
-      const foundInMarket = await nftMarketContract._askDetails(collectionAddress, tokenId)
-      const { price, seller } = foundInMarket
-      if (seller === account) {
+      const owner = await nftContract.ownerOf(tokenId)
+      const checkedMarket = await nftMarketContract._askDetails(collectionAddress, tokenId)
+      const { price, seller } = checkedMarket
+      const foundInMarket = DEAD_SELLER !== seller
+      if (seller === account || owner === account) {
         setIsOwnNft(true)
       } else {
         setIsOwnNft(false)
       }
       const metadata = await getNftApi(collectionAddress, tokenId)
       nftMarketContract.totalOrderPerhash(metadata.hash).then(setTotalOrders)
-      if (foundInMarket) {
+      if (checkedMarket) {
         setNft({
           tokenId,
           collectionAddress,
@@ -81,7 +83,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             tradeVolumeBNB: '0',
             metadataUrl: '',
             totalTrades: '0',
-            isTradable: true,
+            isTradable: !foundInMarket,
             otherId: '56',
           },
         })
@@ -91,7 +93,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     if (account) {
       fetchNftData()
     }
-  }, [userNfts, collectionAddress, tokenId, userNftsInitializationState, account, nftMarketContract])
+  }, [userNfts, collectionAddress, tokenId, userNftsInitializationState, account, nftMarketContract, nftContract])
 
   useEffect(() => {
     const fetchNftData = async () => {

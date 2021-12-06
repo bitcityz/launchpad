@@ -87,9 +87,13 @@ export default {
     56: '0x29fE7148636b7Ae0b1E53777b28dfbaA9327af8E',
     97: '0xe486De509c5381cbdBF3e71F57D7F1f7570f5c46',
   },
+  boxOpen: {
+    56: '',
+    97: '0xFB4D464C4a02f4ea8D51aDDAcfBccb1c5a66e91D',
+  },
   boxSale: {
     56: '',
-    97: '0xEac23Bf268c24eB1aAF88250c3B1b5AdC45E1066',
+    97: '0xA1B25B884717714f2e640E728191e14502f6166C',
   },
   pancakeSquad: {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',

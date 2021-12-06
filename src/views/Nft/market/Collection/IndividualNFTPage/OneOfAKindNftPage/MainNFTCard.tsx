@@ -3,6 +3,8 @@ import { Flex, Box, Card, CardBody, Text, Button, BinanceIcon, Skeleton, useModa
 import { useTranslation } from 'contexts/Localization'
 import { NftToken } from 'state/nftMarket/types'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
+import useOpenBox from '../../../hooks/useOpenBox'
+import useClaim from '../../../hooks/useClaim'
 import BuyModal from '../../../components/BuySellModals/BuyModal'
 import SellModal from '../../../components/BuySellModals/SellModal'
 import { nftsBaseUrl } from '../../../constants'
@@ -24,6 +26,8 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
   const [onPresentSellModal] = useModal(
     <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} />,
   )
+  const { handleOpenBox, newNfts, token } = useOpenBox()
+  const { handleClaim, loading } = useClaim(newNfts[0], token)
 
   const ownerButtons = (
     <Flex flexDirection={['column', 'column', 'row']}>
@@ -37,6 +41,18 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
+      {nft.marketData?.isTradable && (
+        <Button
+          disabled={nftIsProfilePic}
+          minWidth="168px"
+          mr="16px"
+          width={['100%', null, 'max-content']}
+          mt="24px"
+          onClick={newNfts.length ? handleClaim : handleOpenBox}
+        >
+          {loading ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
+        </Button>
+      )}
     </Flex>
   )
 

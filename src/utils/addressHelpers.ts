@@ -1,5 +1,6 @@
 import { ChainId } from '@pancakeswap/sdk'
 import addresses from 'config/constants/contracts'
+import collectionAddresses from 'config/constants/collectionMap'
 import { Address } from 'config/constants/types'
 
 export const getAddress = (address: Address): string => {
@@ -75,4 +76,10 @@ export const getPancakeSquadAddress = () => {
 }
 export const getBoxSaleAddress = () => {
   return getAddress(addresses.boxSale)
+}
+export const getBoxOpenAddress = () => {
+  return getAddress(addresses.boxOpen)
+}
+export const getBoxesAddress = () => {
+  return getAddress(collectionAddresses.boxes)
 }
