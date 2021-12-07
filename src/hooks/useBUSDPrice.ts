@@ -84,10 +84,10 @@ export const useBNBVsBusdPrice = (): number | undefined => {
   const [bnbBusdPrice, setBnbBusdPrice] = useState()
   useEffect(() => {
     const fetchBNBBusdPrice = async () => {
-      const res = await fetch('https://api.pancakeswap.info/api/v2/tokens/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c')
+      const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT').catch(err => err)
       if (res.ok) {
-        const { data } = await res.json()
-        setBnbBusdPrice(data.price)
+        const { price } = await res.json()
+        setBnbBusdPrice(price)
       } else {
         setBnbBusdPrice(undefined)
       }

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import ReactModal from 'react-modal'
 import { Text, Flex, Box, IconButton, CloseIcon } from '@metaxiz/uikit'
-import { useBoxSaleContract, useERC721 } from 'hooks/useContract'
+import { useBoxSaleContract } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
@@ -206,10 +206,8 @@ const BoxNft: React.FC = () => {
   const { callWithGasPrice } = useCallWithGasPrice()
 
   const { handleOpenBox, newNfts, token } = useOpenBox()
-  console.log({
-    newNfts
-  })
-  const { loading, isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
+
+  const { isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
   const checkout = async () => {
     const tx = await callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
       value: getValueAsEthersBn(price).toString(),
@@ -246,9 +244,7 @@ const BoxNft: React.FC = () => {
   const bnbBusdPrice = useBNBVsBusdPrice()
 
   const priceInUsd = bnbBusdPrice * parseFloat(price)
-  console.log({
-    isApproving, isApproved, isConfirming
-  })
+
   useEffect(() => {
     boxSaleContract.boxs(BOXMAP[box].id).then((item) => {
       setRemaining(new BigNumber(item.remain._hex).toString())

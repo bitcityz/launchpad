@@ -1,18 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useBoxOpenContract, useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useToast from 'hooks/useToast'
-import { ToastDescriptionWithTx } from 'components/Toast'
 import { useTranslation } from 'contexts/Localization'
+import { get } from 'utils/http'
 
 const useClaim = (meta = {collectionAddress: null, tokenId: null}, token) => {
   const openBoxContract = useBoxOpenContract()
+  const [isApproved, setIsApproved] = useState(false)
   const history = useHistory()
   const { account } = useWeb3React()
-  const [loading, setLoading] = useState(false)
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
 
@@ -20,7 +20,13 @@ const useClaim = (meta = {collectionAddress: null, tokenId: null}, token) => {
   const nftContract = useERC721(collectionAddress)
   const { callWithGasPrice } = useCallWithGasPrice()
 
-  const { isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useApproveConfirmTransaction({
+  useEffect(() => {
+    if(meta && nftContract) {
+      nftContract.isApprovedForAll(account, openBoxContract.address).then(setIsApproved)
+    }
+  }, [meta, account, nftContract, openBoxContract])
+
+  const { isApproving, isConfirming, handleApprove, handleConfirm } = useApproveConfirmTransaction({
     onRequiresApproval: async () => {
       try {
         const approvedForContract = await nftContract.isApprovedForAll(account, openBoxContract.address)
@@ -44,6 +50,7 @@ const useClaim = (meta = {collectionAddress: null, tokenId: null}, token) => {
       toastSuccess('Claim successfuly')
       history.push(`/nfts/profile/${account}`)
     },
+    watched: meta
   })
 
   if (!meta) {
@@ -69,7 +76,7 @@ const useClaim = (meta = {collectionAddress: null, tokenId: null}, token) => {
     })
   }
 
-  return { loading, isApproving, isApproved, isConfirming, handleApprove, handleConfirm }
+  return { isApproving, isApproved, isConfirming, handleApprove, handleConfirm }
 }
 
 export default useClaim

@@ -1,5 +1,6 @@
-import React, { lazy } from 'react'
+import React, { lazy, useCallback, useState, useEffect } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
+import { useWeb3React } from '@web3-react/core'
 import { ResetCSS } from '@metaxiz/uikit'
 import BigNumber from 'bignumber.js'
 import useEagerConnect from 'hooks/useEagerConnect'
@@ -9,6 +10,9 @@ import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import { DatePickerPortal } from 'components/DatePicker'
+import { simpleRpcProvider } from 'utils/providers'
+import { signMessage } from 'utils/web3React'
+import useAuth from 'hooks/useAuth'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
@@ -41,6 +45,7 @@ const App: React.FC = () => {
   usePollCoreFarmData()
   useScrollOnRouteChange()
   useUserAgent()
+  useAuth()
 
   return (
     <Router history={history}>

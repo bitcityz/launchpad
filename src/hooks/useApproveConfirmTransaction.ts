@@ -79,6 +79,7 @@ interface ApproveConfirmTransaction {
   onRequiresApproval?: () => Promise<boolean>
   onSuccess: ({ state, receipt }: OnSuccessProps) => void
   onApproveSuccess?: ({ state, receipt }: OnSuccessProps) => void
+  watched?: any
 }
 
 const useApproveConfirmTransaction = ({
@@ -87,6 +88,7 @@ const useApproveConfirmTransaction = ({
   onRequiresApproval,
   onSuccess = noop,
   onApproveSuccess = noop,
+  watched
 }: ApproveConfirmTransaction) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
@@ -103,7 +105,7 @@ const useApproveConfirmTransaction = ({
         }
       })
     }
-  }, [account, handlePreApprove, dispatch])
+  }, [account, handlePreApprove, dispatch, watched])
 
   return {
     isApproving: state.approvalState === 'loading',
