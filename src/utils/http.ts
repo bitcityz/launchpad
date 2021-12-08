@@ -14,8 +14,6 @@ const attachHeaders = () => {
 }
 
 const handleErrors = async (response) => {
-  // eslint-disable-next-line no-debugger
-  debugger
   if ([200, 201].includes(response.status)) {
     return response.json()
   }

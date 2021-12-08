@@ -86,6 +86,7 @@ export const getNftsFromCollectionApi = async (
   return null
 }
 
+const isAbsoluteUrl = urlString => (urlString.indexOf('http://') === 0 || urlString.indexOf('https://') === 0)
 /**
  * Fetch a single NFT using the API
  * @param collectionAddress
@@ -99,16 +100,19 @@ export const getNftApi = async (
   const contract = getErc721Contract(collectionAddress)
   const hash = await contract.tokenHash(tokenId)
   const baseURI = await contract.baseURI()
+
   const res = await fetch(`${baseURI}${hash}`)
+  
   if (res.ok) {
     const json = await res.json()
+    const image = isAbsoluteUrl(json.image) ? json.image : `https://ipfsgw.metaxiz.com/ipfs/${json.image}`
     const result = {
       ...json,
       tokenId,
       hash,
       image: {
-        original: json.image,
-        thumbnail: json.image,
+        original: image,
+        thumbnail: image,
       },
       collection: COLLECTIONS[collectionAddress],
     }

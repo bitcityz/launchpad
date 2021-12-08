@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import ReactModal from 'react-modal'
-import { Text, Flex, Box, IconButton, CloseIcon } from '@metaxiz/uikit'
+import { Text, Flex, Box, IconButton, CloseIcon, AutoRenewIcon } from '@metaxiz/uikit'
 import { useBoxSaleContract } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -118,13 +118,13 @@ const CheckoutButtonStyled = styled.button`
   background: url('${BtnCheckout}');
   background-size: cover;
   font-size: 16px;
-  color: white;
+  color: ${({ disabled }) => disabled ? '#aeaeae' : 'white'};
   border: 0;
   outline: 0;
   cursor: pointer;
   padding: 8px;
   &:hover {
-    color: #fab820;
+    color: ${({ disabled }) => disabled ? '#aeaeae' : '#fab820'};
   }
   span {
     display: inline-block;
@@ -200,6 +200,8 @@ const BoxNft: React.FC = () => {
   const boxSaleContract = useBoxSaleContract()
   const [remaning, setRemaining] = useState('0')
   const [price, setPrice] = useState('0')
+  const [error, setError] = useState<string | undefined>()
+  const userToken = localStorage.getItem('token')
 
   const bnbBalance = useGetBnbBalance()
   const [isTxPending, setIsTxPending] = useState(false)
@@ -209,13 +211,18 @@ const BoxNft: React.FC = () => {
 
   const { isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
   const checkout = async () => {
-    const tx = await callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
-      value: getValueAsEthersBn(price).toString(),
-    })
-    setIsTxPending(true)
-    await tx.wait()
-    setIsTxPending(false)
-    setBoxGetReady(true)
+    try {
+      setError(undefined)
+      const tx = await callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
+        value: getValueAsEthersBn(price).toString(),
+      })
+      setIsTxPending(true)
+      await tx.wait()
+      setIsTxPending(false)
+      setBoxGetReady(true)
+    } catch (err) {
+      setError('Error encountered during contract execution')
+    }
   }
 
   const isEnoughBlance = Number(price) < new BigNumber(bnbBalance.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toNumber()
@@ -429,12 +436,15 @@ const BoxNft: React.FC = () => {
               alt="metaxiz box"
               src={BOXMAP[box].boxImage}
             />
-            {!isApproved && newNfts.length ?
-              <CheckoutButtonStyled onClick={handleApprove}>
-                {isApproving ? 'Loading' : 'Approve'}
+            {!userToken ?
+              <CheckoutButtonStyled disabled onClick={handleApprove}>
+                <Flex justifyContent="center">Signing{isApproving ? <AutoRenewIcon  ml="4px" spin color="white" /> : null}</Flex>
+              </CheckoutButtonStyled> : !isApproved && newNfts.length ?
+              <CheckoutButtonStyled disabled={isApproving} onClick={handleApprove}>
+                <Flex justifyContent="center">{isApproving ? 'Loading' : 'Approve'}{isApproving ? <AutoRenewIcon  ml="4px" spin color="white" /> : null}</Flex>
               </CheckoutButtonStyled> :
-              <CheckoutButtonStyled onClick={newNfts.length ? handleConfirm : handleOpenBox}>
-                {isConfirming ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
+              <CheckoutButtonStyled disabled={isConfirming} onClick={newNfts.length ? handleConfirm : handleOpenBox}>
+                <Flex justifyContent="center">{isConfirming ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}{isConfirming ? <AutoRenewIcon  ml="4px" spin color="white" /> : null}</Flex>
               </CheckoutButtonStyled>
             }
           </AutoColumn>
@@ -458,8 +468,9 @@ const BoxNft: React.FC = () => {
                   {new BigNumber(bnbBalance.balance._hex).div(DEFAULT_TOKEN_DECIMAL).toFixed(5)} BNB
                 </Text>
               </Flex>
+              <Text fontSize="13px" color="rgb(235 58 58)">{error}</Text>
               <CheckoutButtonStyled disabled={!isEnoughBlance || isTxPending} onClick={checkout}>
-                <span>{isTxPending ? 'Loading' : isEnoughBlance ? 'Check Out' : 'Insufficient balance'}</span>
+                <Flex justifyContent="center">{isTxPending ? 'Loading' : isEnoughBlance ? 'Check Out' : 'Insufficient balance'}{isTxPending ? <AutoRenewIcon  ml="4px" spin color="white" /> : null}</Flex>
               </CheckoutButtonStyled>
             </AutoColumn>
           </AutoColumn>

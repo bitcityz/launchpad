@@ -9,10 +9,12 @@ const useOpenBox = () => {
   const token = localStorage.getItem("token")
   const [newNfts, setNfts] = useState([])
   const nftContract = useERC721(getBoxesAddress())
+  const [isOpeningBox, setIsLoading] = useState(false)
 
   const openBox = async (authorization = token) => {
     const balance = await nftContract.balanceOf(account)
     const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
+    setIsLoading(true)
     fetch(`https://testnet-api.metafight.io/user/open-box`, {
       method: 'POST',
       headers: {
@@ -24,9 +26,8 @@ const useOpenBox = () => {
         contractAddress: getBoxesAddress(),
       }),
     }).then(async (res) => {
+      setIsLoading(false)
       if (res.status === 401) {
-        // eslint-disable-next-line no-debugger
-        debugger
         window.localStorage.removeItem('token')
       }
       if (res.ok) {
@@ -57,7 +58,7 @@ const useOpenBox = () => {
     }
   }
 
-  return { handleOpenBox, newNfts, token }
+  return { isOpeningBox, handleOpenBox, newNfts, token }
 }
 
 export default useOpenBox
