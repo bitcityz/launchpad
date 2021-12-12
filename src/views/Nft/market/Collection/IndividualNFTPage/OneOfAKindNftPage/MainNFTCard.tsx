@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Box, Card, CardBody, Text, Button, BinanceIcon, Skeleton, useModal } from '@metaxiz/uikit'
 import { useTranslation } from 'contexts/Localization'
+import { useHistory } from "react-router-dom"
 import { NftToken } from 'state/nftMarket/types'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import useOpenBox from '../../../hooks/useOpenBox'
@@ -18,6 +19,7 @@ interface MainNFTCardProps {
 
 const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePic }) => {
   const { t } = useTranslation()
+  const history = useHistory()
   const bnbBusdPrice = useBNBVsBusdPrice()
 
   const currentAskPriceAsNumber = nft.marketData?.currentAskPrice ? parseFloat(nft.marketData.currentAskPrice) : 0
@@ -26,8 +28,8 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
   const [onPresentSellModal] = useModal(
     <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} />,
   )
-  const { handleOpenBox, newNfts, token } = useOpenBox()
-  const { isApproving, isApproved, isConfirming, handleApprove, handleConfirm } = useClaim(newNfts[0], token)
+  const { handleOpenBox, newNfts, token, isOpeningBox } = useOpenBox()
+  const { isApproving, isApproved, isConfirming, handleApprove } = useClaim(newNfts, token, () => history.push('/profile'))
 
   const ownerButtons = (
     <Flex flexDirection={['column', 'column', 'row']}>
@@ -41,10 +43,11 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
-      {!isApproved && newNfts.length ?
+      {!isApproved ?
         <Button
           minWidth="168px"
           mr="16px"
+          disabled={isApproving}
           width={['100%', null, 'max-content']}
           mt="24px"
           onClick={handleApprove}
@@ -52,14 +55,14 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
           {isApproving ? 'Loading' : 'Approve'}
         </Button> :
         <Button
-          disabled={nftIsProfilePic}
+          disabled={isOpeningBox}
           minWidth="168px"
           mr="16px"
           width={['100%', null, 'max-content']}
           mt="24px"
-          onClick={newNfts.length ? handleConfirm : handleOpenBox}
+          onClick={handleOpenBox}
         >
-          {isConfirming ? 'Loading' : newNfts.length ? `Claim NFTs(${newNfts.length})` : 'Open Box'}
+          {isOpeningBox ? 'Opening' : 'Open Box'}
         </Button>
       }
     </Flex>

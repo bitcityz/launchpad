@@ -1,60 +1,87 @@
-import{ useCallback, useEffect } from 'react'
+import{ useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { simpleRpcProvider } from 'utils/providers'
 import { signMessage } from 'utils/web3React'
-import { get, post } from 'utils/http'
+import { post } from 'utils/http'
+
+const checkExistedAccount = async(account) => {
+  const res = await fetch(`https://testnet-auth-api.metafight.io/user-nonce?address=${account}`)
+  if (res.ok) {
+    const data = await res.json()
+    return data.nonce
+  }
+  return undefined
+}
+
+const loginAccount = async (userNonce, {account, library}) => {
+  const msg = `mefi- ${userNonce}`
+  const signature = await signMessage(library, account, msg)
+  const res = await fetch(`https://testnet-auth-api.metafight.io/user/authenticate`, {
+    body: JSON.stringify({
+      signature,
+      address: account
+    }),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  if (res.ok) {
+    const data = await res.json()
+    localStorage.setItem("token", data.token)
+    return data.token
+  }
+  
+  return undefined
+}
+
+const registerAccount = async ({account, library}) => {
+  const transactionCount = await simpleRpcProvider.getTransactionCount(account)
+  const msg = `mefi- ${transactionCount}`
+  const signature = await signMessage(library, account, msg)
+  const res = await post({
+    url: `https://testnet-auth-api.metafight.io/user`,
+    body: {
+      signature,
+      address: account,
+      nonce: transactionCount.toString(),
+    }
+  })
+  localStorage.setItem("token", res.token)
+  return res.token
+}
 
 const useAuth = () => {
   const { account, library } = useWeb3React()
   const token = localStorage.getItem("token")
 
-  const checkExistedAccount = useCallback(async() => {
-    const { nonce } = await get({
-      url: `https://testnet-auth-api.metafight.io/user-nonce?address=${account}`
-    })
-    return nonce
-  }, [account])
-
-  const loginAccount = useCallback(async (userNonce) => {
-    const msg = `mefi- ${userNonce}`
-    const signature = await signMessage(library, account, msg)
-    const res = await post({
-      url: `https://testnet-auth-api.metafight.io/user/authenticate`,
-      body: {
-        signature,
-        address: account,
-      }
-    })
-    localStorage.setItem("token", res.token)
-  }, [account, library])
-
-  const registerAccount = useCallback(async () => {
-    const transactionCount = await simpleRpcProvider.getTransactionCount(account)
-    const msg = `mefi- ${transactionCount}`
-    const signature = await signMessage(library, account, msg)
-    const res = await post({
-      url: `https://testnet-auth-api.metafight.io/user`,
-      body: {
-        signature,
-        address: account,
-        nonce: transactionCount.toString(),
-      }
-    })
-    localStorage.setItem("token", res.token)
-  }, [library, account])
-
   useEffect(() => {
     if (account && !token) {
-      checkExistedAccount()
+      checkExistedAccount(account)
       .then(nonce => {
         if (nonce) {
-          loginAccount(nonce)
+          loginAccount(nonce, {account, library})
         } else {
-          registerAccount()
+          registerAccount({account, library})
         }
       })
+      .catch(() => registerAccount({account, library}))
     }
-  }, [loginAccount, checkExistedAccount, registerAccount, account, token])
+  }, [account, token, library])
+}
+
+export const withAuth = (callback, {account, library}) => {
+  if (account && callback && library) {
+    checkExistedAccount(account)
+    .then(nonce => {
+      if (nonce) {
+        loginAccount(nonce, {account, library}).then(callback)
+      } else {
+        registerAccount({account, library}).then(callback)
+      }
+    })
+    .catch(() => registerAccount({account, library}).then(callback))
+  }
 }
 
 export default useAuth

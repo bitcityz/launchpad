@@ -24,12 +24,12 @@ export default {
       small: '/images/meta-fight-banner.png',
     },
   },
-  '0x3a568d34934ba67371dc5b34df7Ac79f795BA61c': {
+  '0x9b4db37d2BECf3602E5D27Ca8e5dA6C02825008f': {
     createdAt: '2021-10-07T00:00:00.000Z',
     creatorAddress: '0x0000000000000000000000000000000000000000',
     creatorFee: '0',
     description: '10,000 unique, randomly-generated Metaxiz NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    id: '0x3a568d34934ba67371dc5b34df7Ac79f795BA61c',
+    id: '0x9b4db37d2BECf3602E5D27Ca8e5dA6C02825008f',
     name: 'Meta fight',
     numberTokensListed: '4250',
     owner: '0x29fE7148636b7Ae0b1E53777b28dfbaA9327af8E',
@@ -42,7 +42,7 @@ export default {
     verified: true,
     whitelistChecker: '0x0000000000000000000000000000000000000000',
     active: true,
-    address: '0x3a568d34934ba67371dc5b34df7Ac79f795BA61c',
+    address: '0x9b4db37d2BECf3602E5D27Ca8e5dA6C02825008f',
     avatar: '/images/collections/logo_metaxiz.png',
     banner: {
       large: '/images/meta-fight-banner.png',

@@ -19,7 +19,6 @@ const handleErrors = async (response) => {
   }
   if (response.status === 401) {
     window.localStorage.removeItem(tokenKey)
-    window.location.href = '/'
   }
 
   const error = await response.json()

@@ -3,13 +3,18 @@ import { useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import { getBoxesAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
+import useToast from 'hooks/useToast'
+import { withAuth } from 'hooks/useAuthSign'
 
+let RETRY = 0
+const MAX_RETRY = 2
 const useOpenBox = () => {
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
   const token = localStorage.getItem("token")
   const [newNfts, setNfts] = useState([])
   const nftContract = useERC721(getBoxesAddress())
   const [isOpeningBox, setIsLoading] = useState(false)
+  const { toastError } = useToast()
 
   const openBox = async (authorization = token) => {
     const balance = await nftContract.balanceOf(account)
@@ -26,9 +31,14 @@ const useOpenBox = () => {
         contractAddress: getBoxesAddress(),
       }),
     }).then(async (res) => {
-      setIsLoading(false)
-      if (res.status === 401) {
-        window.localStorage.removeItem('token')
+      if (res.status === 401 || res.status === 400) {
+        RETRY ++
+        if (RETRY < MAX_RETRY) {
+          withAuth(openBox, { account, library })
+        }
+      }
+      if (res.status === 500) {
+        toastError('Error', 'Something went wrong!')
       }
       if (res.ok) {
         const data = await res.json()
@@ -47,6 +57,7 @@ const useOpenBox = () => {
           )
         })
         const nfts = await Promise.all(tasks)
+        setIsLoading(false)
         setNfts(nfts)
       }
     })
