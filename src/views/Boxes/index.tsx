@@ -19,6 +19,10 @@ import MotherBgSrc from './images/mother-bg.svg'
 import BackgroundSrc from './images/bg.svg'
 import HeaderBg from './images/header-bg.svg'
 
+import CommonSrc from './images/common.svg'
+import EpicSrc from './images/epic.svg'
+import LegendarySrc from './images/legendary.svg'
+
 const CardStyled = styled(Card)`
   background: url(${MotherBgSrc});
   >div {
@@ -29,6 +33,14 @@ const CardStyled = styled(Card)`
 const PageStyled = styled.div`
   background: url(${BackgroundSrc});
   background-size: cover;
+  .box {
+    position: absolute;
+  }
+  a {
+    &:hover .box {
+      animation: grkjUd 3s ease-in-out infinite;
+    }
+  }
 `
 
 const mainTicketAnimation = keyframes`
@@ -131,101 +143,117 @@ const Boxes: React.FC = () => {
         >
           <Link to="/boxes/common">
             <Card>
-              <CardBody>
-                <BackgroundImage
-                  height={320}
-                  width={320}
-                  style={{ borderRadius: '8px' }}
-                  src={CommonBoxSrc}
-                />
-                <Text mt="8px" fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
-                  COMMON BOX
-                </Text>
-                <Text fontSize="16px" color="textSubtle" mb="8px">
-                  Remaining Boxes:{boxes ? ` ${formatNumber(boxes[3].remaining)}` : <Skeleton />}
-                </Text>
-                <Text fontSize="16px" color="#7A6EAA" mt="16px">
-                  Price
-                </Text>
-                <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
-                  <BinanceIcon />{boxes ? ` ${boxes[3].price} BNB` : <Skeleton />}
-                </Text>
+              <CardBody p="0px">
+                <Flex p="16px">
+                  <BackgroundImage
+                    height={320}
+                    width={320}
+                    style={{ borderRadius: '8px' }}
+                    src={CommonBoxSrc}
+                  />
+                  <img className="box" src={CommonSrc} alt="common" />
+                </Flex>
+                
+                <Flex p="16px" flexDirection="column" background="#F4F3FF">
+                  <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
+                    COMMON BOX
+                  </Text>
+                  <Text fontSize="16px" color="textSubtle" mb="8px">
+                    Remaining boxes:{boxes ? ` ${formatNumber(boxes[3].remaining)}` : <Skeleton />}
+                  </Text>
+                  <Text fontSize="16px" color="#7A6EAA" mt="16px">
+                    Price
+                  </Text>
+                  <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
+                    <BinanceIcon />{boxes ? ` ${boxes[3].price} BNB` : <Skeleton />}
+                  </Text>
+                </Flex>
               </CardBody>
             </Card>
             
           </Link>
           <Link to="/boxes/epic">
             <Card>
-              <CardBody>
-                <BackgroundImage
-                  height={320}
-                  width={320}
-                  style={{ borderRadius: '8px' }}
-                  src={EpicBoxSrc}
-                />
-                <Text mt="8px" fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
+              <CardBody p="0px">
+                <Flex p="16px">
+                  <BackgroundImage
+                    height={320}
+                    width={320}
+                    style={{ borderRadius: '8px' }}
+                    src={EpicBoxSrc}
+                  />
+                  <img className="box" src={EpicSrc} alt="common" />
+                </Flex>
+                
+                <Flex p="16px" flexDirection="column" background="#F4F3FF">
+                  <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
                   EPIC BOX
-                </Text>
-                <Text fontSize="16px" color="textSubtle" mb="8px">
-                  Remaining Boxes:{boxes ? ` ${formatNumber(boxes[2].remaining)}` : <Skeleton />}
-                </Text>
-                <Text fontSize="16px" color="#7A6EAA" mt="16px">
-                  Price
-                </Text>
-                <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
-                  <BinanceIcon />{boxes ? ` ${boxes[2].price} BNB` : <Skeleton />}
-                </Text>
+                  </Text>
+                  <Text fontSize="16px" color="textSubtle" mb="8px">
+                    Remaining boxes:{boxes ? ` ${formatNumber(boxes[2].remaining)}` : <Skeleton />}
+                  </Text>
+                  <Text fontSize="16px" color="#7A6EAA" mt="16px">
+                    Price
+                  </Text>
+                  <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
+                    <BinanceIcon />{boxes ? ` ${boxes[2].price} BNB` : <Skeleton />}
+                  </Text>
+                </Flex>
               </CardBody>
             </Card>
             
           </Link>
           <Link to="/boxes/legendary">
             <Card>
-              <CardBody>
-                <BackgroundImage
-                  height={320}
-                  width={320}
-                  style={{ borderRadius: '8px' }}
-                  src={LegendaryBoxSrc}
-                />
-                <Text mt="8px" fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
+              <CardBody p="0px">
+                <Flex p="16px">
+                  <BackgroundImage
+                    height={320}
+                    width={320}
+                    style={{ borderRadius: '8px' }}
+                    src={LegendaryBoxSrc}
+                  />
+                  <img style={{left: 0, top : 0}} className="box" src={LegendarySrc} alt="common" />
+                </Flex>
+                
+                <Flex p="16px" flexDirection="column" background="#F4F3FF">
+                  <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
                   LEGENDARY BOX
-                </Text>
-                <Text fontSize="16px" color="textSubtle" mb="8px">
-                  Remaining Boxes:{boxes ? ` ${formatNumber(boxes[1].remaining)}` : <Skeleton />}
-                </Text>
-                <Text fontSize="16px" color="#7A6EAA" mt="16px">
-                  Price
-                </Text>
-                <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
-                  <BinanceIcon />{boxes ? ` ${boxes[1].price} BNB` : <Skeleton />}
-                </Text>
+                  </Text>
+                  <Text fontSize="16px" color="textSubtle" mb="8px">
+                    Remaining boxes:{boxes ? ` ${formatNumber(boxes[1].remaining)}` : <Skeleton />}
+                  </Text>
+                  <Text fontSize="16px" color="#7A6EAA" mt="16px">
+                    Price
+                  </Text>
+                  <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
+                    <BinanceIcon />{boxes ? ` ${boxes[1].price} BNB` : <Skeleton />}
+                  </Text>
+                </Flex>
               </CardBody>
             </Card>
             
           </Link>
           <Link to="/boxes/mother">
             <CardStyled>
-              <CardBody>
-                <BackgroundImage
-                  height={320}
-                  width={320}
-                  style={{ borderRadius: '8px' }}
-                  src={MotherBoxSrc}
-                />
-                <Text mt="8px" fontWeight="bold" fontSize="24px" color="#FFFF00" mb="8px">
-                  MOTHER BOX
-                </Text>
-                <Text fontSize="16px" color="white" mb="8px">
-                  Remaining Boxes:{boxes ? ` ${formatNumber(boxes[0].remaining)}` : <Skeleton />}
-                </Text>
-
-                <Text fontSize="16px" color="#7A6EAA" mt="16px">
-                  Price
-                </Text>
-                <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
-                  <BinanceIcon />{boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
-                </Text>
+              <CardBody p="0px">
+                <Flex height="274px">
+                  <img className="box" src={MotherBoxSrc} alt="common" />
+                </Flex>
+                <Flex p="16px" flexDirection="column">
+                  <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
+                    MOTHER BOX
+                  </Text>
+                  <Text fontSize="16px" color="textSubtle" mb="8px">
+                    Remaining boxes:{boxes ? ` ${formatNumber(boxes[0].remaining)}` : <Skeleton />}
+                  </Text>
+                  <Text fontSize="16px" color="#7A6EAA" mt="16px">
+                    Price
+                  </Text>
+                  <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
+                    <BinanceIcon />{boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
+                  </Text>
+                </Flex>
               </CardBody>
             </CardStyled>
             

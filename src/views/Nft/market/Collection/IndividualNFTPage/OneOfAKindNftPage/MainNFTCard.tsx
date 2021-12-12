@@ -29,7 +29,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
     <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} />,
   )
   const { handleOpenBox, newNfts, token, isOpeningBox } = useOpenBox()
-  const { isApproving, isApproved, isConfirming, handleApprove } = useClaim(newNfts, token, () => history.push('/profile'))
+  const { isApproving, isApproved, handleApprove } = useClaim(newNfts, token, () => history.push('/profile'))
 
   const ownerButtons = (
     <Flex flexDirection={['column', 'column', 'row']}>

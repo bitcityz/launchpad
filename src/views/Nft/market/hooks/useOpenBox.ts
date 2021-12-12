@@ -8,6 +8,8 @@ import { withAuth } from 'hooks/useAuthSign'
 
 let RETRY = 0
 const MAX_RETRY = 2
+const RETRY_STATUSES = [401, 400, 500]
+
 const useOpenBox = () => {
   const { account, library } = useWeb3React()
   const token = localStorage.getItem("token")
@@ -31,7 +33,7 @@ const useOpenBox = () => {
         contractAddress: getBoxesAddress(),
       }),
     }).then(async (res) => {
-      if (res.status === 401 || res.status === 400) {
+      if (RETRY_STATUSES.includes(res.status)) {
         RETRY ++
         if (RETRY < MAX_RETRY) {
           withAuth(openBox, { account, library })
