@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import useToast from 'hooks/useToast'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useParams } from 'react-router-dom'
-import { useBoxSaleContract, useERC721 } from 'hooks/useContract'
+import { useBoxSaleContract } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
@@ -14,15 +14,19 @@ import { ethers } from 'ethers'
 import { parseUnits } from 'ethers/lib/utils'
 import useOpenBox from 'views/Nft/market/hooks/useOpenBox'
 import useClaim from 'views/Nft/market/hooks/useClaim'
-import { getBoxesAddress } from 'utils/addressHelpers'
 
 // COMPONENTS
 import ExpandableCard from './components/ExpandableCard'
 
 // IMAGES
-import CommonBoxSrc from './images/common-box.svg'
-import EpicBoxSrc from './images/epic-box.svg'
-import LegendaryBoxSrc from './images/legendary-box.svg'
+import CommonBoxSrc from './images/common.svg'
+import EpicBoxSrc from './images/epic.svg'
+import LegendaryBoxSrc from './images/legendary.svg'
+import CommonBoxBgSrc from './images/common-box.svg'
+import EpicBoxBgSrc from './images/epic-box.svg'
+import LegendaryBoxBgSrc from './images/legendary-box.svg'
+import MotherBoxSrc from './images/mother.svg'
+import MotherBoxBgSrc from './images/mother-box.png'
 import MetaxizTokenSrc from './images/metaxiz-token.svg'
 
 const getValueAsEthersBn = (value: string) => {
@@ -43,8 +47,6 @@ const Box: React.FC = () => {
     epic: {percent: null}
   })
   const [isHeroesLoading, setIsHeroesLoading] = useState(false)
-
-  const nftContract = useERC721(getBoxesAddress())
 
   const boxSaleContract = useBoxSaleContract()
   const [remaning, setRemaining] = useState('0')
@@ -204,8 +206,9 @@ const Box: React.FC = () => {
                 }
               </BoxComponent>
             </Flex>
-            <Flex flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
-              <RoundedImage src={BOXMAP[box].src} width={440} height={440} />
+            <Flex style={{ position: 'relative'}} flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
+              <RoundedImage src={BOXMAP[box].background} width={440} height={440} />
+              <img style={{ position: 'absolute', width: '80%' }} src={BOXMAP[box].src} alt="box" />
             </Flex>
           </Flex>
         </CardBody>
@@ -271,24 +274,28 @@ const BOXMAP = {
     name: 'common box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
     src: CommonBoxSrc,
+    background: CommonBoxBgSrc
   },
   legendary: {
     id: 1,
     name: 'legendary box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
     src: LegendaryBoxSrc,
+    background: LegendaryBoxBgSrc
   },
   epic: {
     id: 2,
     name: 'epic box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
     src: EpicBoxSrc,
+    background: EpicBoxBgSrc
   },
   mother: {
     id: 0,
     name: 'mother box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: CommonBoxSrc,
+    src: MotherBoxSrc,
+    background: MotherBoxBgSrc
   },
 }
 

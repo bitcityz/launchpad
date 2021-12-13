@@ -10,8 +10,8 @@ import {
   ArrowForwardIcon,
   useMatchBreakpoints,
   Button,
-  Spinner,
 } from '@metaxiz/uikit'
+import { Spinner } from 'components/Spinner'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import { NftToken } from 'state/nftMarket/types'

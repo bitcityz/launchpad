@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button, Text, Modal, useModal, InjectedModalProps, Flex, ArrowForwardIcon, ArrowBackIcon } from '@metaxiz/uikit'
 import { AutoColumn } from 'components/Layout/Column'
-import { useHistory } from 'react-router-dom'
 import { useBoxOpenContract, useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
@@ -79,7 +79,10 @@ const useClaim = (nfts, token, callback) => {
                 <Text color="#6E6C8A">{hero.description}</Text>
               </Flex>
             </Flex>
-            <Button disabled={isLoading || isClaimed} onClick={hadleOnClick}>{isClaimed ? `Box id ${hero.tokenId} is being burned` : isLoading ? 'Claiming...' : 'Claim my heroes'}</Button>
+            {isClaimed ?
+              <Button as={Link} to={`/profile/${account.toLowerCase()}`}>View my heroes</Button> :
+              <Button disabled={isLoading} onClick={hadleOnClick}>{isLoading ? 'Claiming...' : 'Claim my heroes'}</Button>
+            }
           </AutoColumn>
         </AutoColumn>
       </Modal>
