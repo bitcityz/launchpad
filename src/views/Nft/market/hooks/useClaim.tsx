@@ -20,6 +20,7 @@ interface Props extends InjectedModalProps {
 const useClaim = (nfts, token, callback) => {
   const openBoxContract = useBoxOpenContract()
   const [isApproved, setIsApproved] = useState(false)
+  const { toastError } = useToast()
   const history = useHistory()
   const { account } = useWeb3React()
   const { toastSuccess } = useToast()
@@ -34,8 +35,10 @@ const useClaim = (nfts, token, callback) => {
     const [page, setPage] = useState(1)
     const hadleOnClick = async() => {
       setIsLoading(true)
-      await onClaim()
-      setIsClaimed(true)
+      const receipt = await onClaim()
+      if (receipt.status) {
+        setIsClaimed(true)
+      }
       setIsLoading(false)
     }
     const hero = heroes[page - 1]
@@ -96,9 +99,14 @@ const useClaim = (nfts, token, callback) => {
     ).then(async (res) => {
       if (res.ok) {
         const data = await res.json()
-        return callWithGasPrice(openBoxContract, 'claim', [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s])
+        const tx = await callWithGasPrice(openBoxContract, 'claim', [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s])
+        const receipt = await tx.wait()
+        return receipt
       }
       return null
+    }).catch(err => {
+      toastError("Error", err.data ? err?.data.message : err.message)
+      return err
     })
   }
 

@@ -21,6 +21,8 @@ import ExpandableCard from './components/ExpandableCard'
 
 // IMAGES
 import CommonBoxSrc from './images/common-box.svg'
+import EpicBoxSrc from './images/epic-box.svg'
+import LegendaryBoxSrc from './images/legendary-box.svg'
 import MetaxizTokenSrc from './images/metaxiz-token.svg'
 
 const getValueAsEthersBn = (value: string) => {
@@ -234,7 +236,7 @@ const Box: React.FC = () => {
                   Epic Hero
                 </Text>
                 {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.epic.percent} %
+                  {heroMap?.epic?.percent} %
                 </Text>}
               </Flex>
               <Flex justifyContent="space-between" alignItems="center" mb="16px">
@@ -242,7 +244,7 @@ const Box: React.FC = () => {
                   Legendary Hero
                 </Text>
                 {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.legendary.percent} %
+                  {heroMap?.legendary?.percent} %
                 </Text>}
               </Flex>
             </BoxComponent>
@@ -274,13 +276,13 @@ const BOXMAP = {
     id: 1,
     name: 'legendary box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: CommonBoxSrc,
+    src: LegendaryBoxSrc,
   },
   epic: {
     id: 2,
     name: 'epic box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: CommonBoxSrc,
+    src: EpicBoxSrc,
   },
   mother: {
     id: 0,
