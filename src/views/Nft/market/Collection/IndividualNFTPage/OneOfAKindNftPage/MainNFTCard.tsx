@@ -4,6 +4,7 @@ import { useTranslation } from 'contexts/Localization'
 import { useHistory } from "react-router-dom"
 import { NftToken } from 'state/nftMarket/types'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
+import { getBoxesAddress } from 'utils/addressHelpers'
 import useOpenBox from '../../../hooks/useOpenBox'
 import useClaim from '../../../hooks/useClaim'
 import BuyModal from '../../../components/BuySellModals/BuyModal'
@@ -22,6 +23,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
   const history = useHistory()
   const bnbBusdPrice = useBNBVsBusdPrice()
 
+  const isBox = nft.collectionAddress === getBoxesAddress()
   const currentAskPriceAsNumber = nft.marketData?.currentAskPrice ? parseFloat(nft.marketData.currentAskPrice) : 0
   const priceInUsd = bnbBusdPrice * currentAskPriceAsNumber
   const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
@@ -43,7 +45,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
-      {!isApproved ?
+      {isBox ? !isApproved ?
         <Button
           minWidth="168px"
           mr="16px"
@@ -63,7 +65,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
           onClick={handleOpenBox}
         >
           {isOpeningBox ? 'Opening' : 'Open Box'}
-        </Button>
+        </Button> : null
       }
     </Flex>
   )

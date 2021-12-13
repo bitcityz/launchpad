@@ -53,6 +53,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     const fetchNftData = async () => {
       const owner = await nftContract.ownerOf(tokenId)
       const checkedMarket = await nftMarketContract._askDetails(collectionAddress, tokenId)
+
       const { price, seller } = checkedMarket
       const foundInMarket = DEAD_SELLER !== seller
       if (seller === account || owner === account) {
@@ -83,7 +84,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
             tradeVolumeBNB: '0',
             metadataUrl: '',
             totalTrades: '0',
-            isTradable: !foundInMarket,
+            isTradable: foundInMarket,
             otherId: '56',
           },
         })
