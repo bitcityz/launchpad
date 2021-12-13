@@ -13,6 +13,8 @@ import GridPlaceholder from '../../components/GridPlaceholder'
 import { CollectibleLinkCard } from '../../components/CollectibleCard'
 import { REQUEST_SIZE } from '../config'
 
+const isAbsoluteUrl = urlString => (urlString.indexOf('http://') === 0 || urlString.indexOf('https://') === 0)
+
 interface CollectionNftsProps {
   collection: Collection
 }
@@ -86,7 +88,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
           tokenId: tokenId.toNumber(),
           collectionName: COLLECTIONS[collectionAddress].name,
           image: {
-            thumbnail: nftsDetails[index].image,
+            thumbnail: isAbsoluteUrl(nftsDetails[index].image) ? nftsDetails[index].image : `https://ipfsgw.metaxiz.com/ipfs/${nftsDetails[index].image}`,
           },
           count: 1,
           hash: nftsDetails[index].hash,

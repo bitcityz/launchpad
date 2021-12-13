@@ -150,7 +150,7 @@ export const getNftsFromDifferentCollectionsApi = async (
       updatedAt: res.updatedAt,
       hash: res.hash,
       image: {
-        original: res.image?.original,
+        original: isAbsoluteUrl(res.image?.original) ? res.image?.original : `https://ipfsgw.metaxiz.com/ipfs/${res.image?.original}`,
         thumbnail: res.image?.thumbnail,
       },
     }))

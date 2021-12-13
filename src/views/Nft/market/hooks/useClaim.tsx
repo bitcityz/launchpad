@@ -25,14 +25,13 @@ const useClaim = (nfts, token, callback) => {
   const { toastSuccess } = useToast()
   const { t } = useTranslation()
 
-  const [page, setPage] = useState(1)
-
   const nftContract = useERC721(getBoxesAddress())
   const { callWithGasPrice } = useCallWithGasPrice()
 
   const OpenedNftsModal: React.FC<Props> = ({ onClaim, onDismiss, nfts: heroes, callback: onClose }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isClaimed, setIsClaimed] = useState(false)
+    const [page, setPage] = useState(1)
     const hadleOnClick = async() => {
       setIsLoading(true)
       await onClaim()
@@ -40,6 +39,7 @@ const useClaim = (nfts, token, callback) => {
       setIsLoading(false)
     }
     const hero = heroes[page - 1]
+
     return (
       <Modal title="Heroes" maxWidth="420px !important" onDismiss={() => {
         onClose()
