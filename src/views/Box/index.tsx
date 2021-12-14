@@ -187,7 +187,7 @@ const Box: React.FC = () => {
                     mr="16px"
                     width={['100%', null, 'max-content']}
                     mt="24px"
-                    onClick={handleOpenBox}
+                    onClick={() => handleOpenBox()}
                   >
                     {isOpeningBox ? 'Opening' : 'Open Box'}
                     <NftIcon color="white" width="24px" ml="4px" />
