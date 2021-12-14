@@ -106,13 +106,12 @@ const Boxes: React.FC = () => {
     <PageStyled>
       <PageHeader height="377px" background={`url(${HeaderBg})`}>
         <Flex flexDirection="row">
-          <Flex flexDirection="column" width="50%">
-            <Flex>
-              <Heading as="h1" scale="xl" color="white" mb="24px">
-                MEFI BOX
-              </Heading>
-            </Flex>
-            <Text mt="56px" color="white">
+          <Flex flexDirection="column" width="40%">
+            <Text mb="16px" color="white">DEC 01-02-2022</Text>
+            <Heading as="h1" scale="xl" color="white" mb="32px">
+              MEFI BOX
+            </Heading>
+            <Text display="inline" mt="56px" color="#FFFF00">
               MEFI BOX contains various heroes with certain drop rates.The higher quality of the MEFI BOX is, the higher the drop ratefor the high-quality Heroes is.
             </Text>
           </Flex>
@@ -240,17 +239,17 @@ const Boxes: React.FC = () => {
                 <Flex height="274px">
                   <img className="box" src={MotherBoxSrc} alt="common" />
                 </Flex>
-                <Flex p="16px" flexDirection="column">
-                  <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
+                <Flex p="16px" flexDirection="column" background="rgba(16, 12, 69, 0.3)">
+                  <Text fontWeight="bold" fontSize="24px" color="#FFFF00" mb="8px">
                     MOTHER BOX
                   </Text>
-                  <Text fontSize="16px" color="textSubtle" mb="8px">
+                  <Text fontSize="16px" color="white" mb="8px">
                     Remaining boxes:{boxes ? ` ${formatNumber(boxes[0].remaining)}` : <Skeleton />}
                   </Text>
-                  <Text fontSize="16px" color="#7A6EAA" mt="16px">
+                  <Text fontSize="16px" color="white" mt="16px">
                     Price
                   </Text>
-                  <Text color="#3A3855" fontWeight="bold" fontSize="24px" mt="4px">
+                  <Text color="white" fontWeight="bold" fontSize="24px" mt="4px">
                     <BinanceIcon />{boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
                   </Text>
                 </Flex>

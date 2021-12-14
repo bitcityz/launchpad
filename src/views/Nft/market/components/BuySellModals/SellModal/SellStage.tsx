@@ -1,11 +1,12 @@
 import React from 'react'
-import { Flex, Grid, Text, Button, Link, BinanceIcon, LinkExternal, useModal } from '@metaxiz/uikit'
+import { Flex, Grid, Text, Button, Link, BinanceIcon, LinkExternal } from '@metaxiz/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { nftsBaseUrl, pancakeBunniesAddress } from 'views/Nft/market/constants'
 import { NftToken } from 'state/nftMarket/types'
 import { getBscScanLinkForNft } from 'utils'
-import EditProfileModal from 'views/Nft/market/Profile/components/EditProfileModal'
-import { useProfile } from 'state/profile/hooks'
+import { getBoxesAddress } from 'utils/addressHelpers'
+import useOpenBox from 'views/Nft/market/hooks/useOpenBox'
+import useClaim from 'views/Nft/market/hooks/useClaim'
 import { Divider, HorizontalDivider, RoundedImage } from '../shared/styles'
 
 interface SellStageProps {
@@ -22,14 +23,15 @@ const SellStage: React.FC<SellStageProps> = ({
   continueToNextStage,
   continueToTransferStage,
 }) => {
+  const { handleOpenBox, newNfts, token, isOpeningBox } = useOpenBox()
+  const { isApproving, isApproved, handleApprove } = useClaim(newNfts, token, () => null)
   const { t } = useTranslation()
-  const { hasProfile } = useProfile()
   const itemPageUrlId =
     nftToSell.collectionAddress.toLowerCase() === pancakeBunniesAddress.toLowerCase()
       ? nftToSell.attributes[0].value
       : nftToSell.tokenId
 
-  const [onEditProfileModal] = useModal(<EditProfileModal />, false)
+  const isBox = nftToSell.collectionAddress === getBoxesAddress()
 
   return (
     <>
@@ -93,11 +95,22 @@ const SellStage: React.FC<SellStageProps> = ({
         <Button mb="8px" variant="secondary" onClick={continueToTransferStage}>
           {t('Transfer')}
         </Button>
-        {hasProfile && (
-          <Button variant="secondary" onClick={onEditProfileModal}>
-            {t('Set as Profile Pic')}
-          </Button>
-        )}
+        {isBox ? !isApproved ?
+          <Button
+            disabled={isApproving}
+            mb="8px"
+            onClick={handleApprove}
+          >
+            {isApproving ? 'Loading' : 'Approve'}
+          </Button> :
+          <Button
+            disabled={isOpeningBox}
+            mb="8px"
+            onClick={() => handleOpenBox(nftToSell.tokenId)}
+          >
+            {isOpeningBox ? 'Opening' : 'Open Box'}
+          </Button> : null
+        }
       </Flex>
     </>
   )
