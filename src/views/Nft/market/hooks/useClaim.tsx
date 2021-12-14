@@ -80,7 +80,10 @@ const useClaim = (nfts, token, callback) => {
               </Flex>
             </Flex>
             {isClaimed ?
-              <Button as={Link} to={`/profile/${account.toLowerCase()}`}>View my heroes</Button> :
+              <Button onClick={() => {
+                onDismiss()
+                history.push(`/nfts/profile/${account}`)
+              }}>View my heroes</Button> :
               <Button disabled={isLoading} onClick={hadleOnClick}>{isLoading ? 'Claiming...' : 'Claim my heroes'}</Button>
             }
           </AutoColumn>
