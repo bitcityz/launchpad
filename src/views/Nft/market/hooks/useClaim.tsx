@@ -105,7 +105,13 @@ const useClaim = (nfts, token, callback) => {
     ).then(async (res) => {
       if (res.ok) {
         const data = await res.json()
-        const tx = await callWithGasPrice(openBoxContract, 'claim', [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s])
+        const claimingParams = [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s]
+        console.log({
+          claimingParams,
+          boxRes: data,
+          openBoxContract
+        })
+        const tx = await callWithGasPrice(openBoxContract, 'claim', claimingParams)
         const receipt = await tx.wait()
         return receipt
       }

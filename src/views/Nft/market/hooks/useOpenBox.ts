@@ -5,7 +5,6 @@ import { getBoxesAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import useToast from 'hooks/useToast'
 import { withAuth } from 'hooks/useAuthSign'
-import { ethersToBigNumber } from 'utils/bigNumber';
 
 let RETRY = 0
 const MAX_RETRY = 2
@@ -19,13 +18,14 @@ const useOpenBox = () => {
   const [isOpeningBox, setIsLoading] = useState(false)
   const { toastError } = useToast()
 
-  const openBox = async (authorization = token) => {
+  const openBox = async (authorization = token, boxId) => {
     const balance = await nftContract.balanceOf(account)
     if ( new BigNumber(balance._hex).toNumber() < 1) {
       return toastError('Error', 'You have no NFTs')
     }
     const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
     setIsLoading(true)
+    const boxTokenId = boxId || new BigNumber(newestTokenId._hex).toString()
     return fetch(`https://testnet-api.metafight.io/user/open-box`, {
       method: 'POST',
       headers: {
@@ -33,14 +33,14 @@ const useOpenBox = () => {
         authorization,
       },
       body: JSON.stringify({
-        tokenId: new BigNumber(newestTokenId._hex).toString(),
+        tokenId: boxTokenId,
         contractAddress: getBoxesAddress(),
       }),
     }).then(async (res) => {
       if (RETRY_STATUSES.includes(res.status)) {
         RETRY ++
         if (RETRY < MAX_RETRY) {
-          withAuth(openBox, { account, library })
+          withAuth(() => openBox(token, boxTokenId), { account, library })
         }
       }
       if (res.status === 500) {
@@ -69,9 +69,9 @@ const useOpenBox = () => {
     })
   }
 
-  const handleOpenBox = async () => {
+  const handleOpenBox = async (tokenId = null) => {
     if (token) {
-      openBox()
+      openBox(token, tokenId)
     }
   }
 

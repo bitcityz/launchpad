@@ -55,7 +55,6 @@ const Box: React.FC = () => {
   const [priceInMexi, setPriceInMexi] = useState<string|undefined>()
   const [isBought, setIsBought] = useState(false)
 
-  const bnbBalance = useGetBnbBalance()
   const bnbBusdPrice = useBNBVsBusdPrice()
 
   const [isBuying, setIsBuying] = useState(false)

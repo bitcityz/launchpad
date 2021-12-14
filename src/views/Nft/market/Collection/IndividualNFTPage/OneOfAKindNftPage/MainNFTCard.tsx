@@ -62,7 +62,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
           mr="16px"
           width={['100%', null, 'max-content']}
           mt="24px"
-          onClick={handleOpenBox}
+          onClick={() => handleOpenBox(nft.tokenId)}
         >
           {isOpeningBox ? 'Opening' : 'Open Box'}
         </Button> : null
