@@ -1,6 +1,6 @@
 export default {
   boxes: {
-    97: '0x9b4db37d2BECf3602E5D27Ca8e5dA6C02825008f',
+    97: '0x334C865645604248B4023583aDeDcC03E2D9ab73',
     56: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
   },
   heroes: {

@@ -5,6 +5,7 @@ import { getBoxesAddress } from 'utils/addressHelpers'
 import BigNumber from 'bignumber.js'
 import useToast from 'hooks/useToast'
 import { withAuth } from 'hooks/useAuthSign'
+import { ethersToBigNumber } from 'utils/bigNumber';
 
 let RETRY = 0
 const MAX_RETRY = 2
@@ -20,9 +21,12 @@ const useOpenBox = () => {
 
   const openBox = async (authorization = token) => {
     const balance = await nftContract.balanceOf(account)
+    if ( new BigNumber(balance._hex).toNumber() < 1) {
+      return toastError('Error', 'You have no NFTs')
+    }
     const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
     setIsLoading(true)
-    fetch(`https://testnet-api.metafight.io/user/open-box`, {
+    return fetch(`https://testnet-api.metafight.io/user/open-box`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

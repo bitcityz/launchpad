@@ -89,7 +89,7 @@ export default {
   },
   boxOpen: {
     56: '',
-    97: '0xB0BDD8860f7411D1dae52eA6f2F2a711671b7718',
+    97: '0x9fFf5B1BF844604fe0d8CaAC1553f9D8edCa6187',
   },
   boxSale: {
     56: '',
