@@ -3,36 +3,35 @@ import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import useToast from 'hooks/useToast'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useBoxSaleContract } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import { useWeb3React } from '@web3-react/core'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
-import { Text, Flex, CardBody, Card, BinanceIcon, Skeleton, Image, Box as BoxComponent, Button, Toggle, SearchIcon, NftIcon } from '@metaxiz/uikit'
+import { Text, Flex, BinanceIcon, Skeleton, Image, Box as BoxComponent, Button, Toggle, SearchIcon, NftIcon, Grid, Card, CardBody } from '@metaxiz/uikit'
 import Page from 'components/Layout/Page'
 import { ethers } from 'ethers'
 import { parseUnits } from 'ethers/lib/utils'
 import useOpenBox from 'views/Nft/market/hooks/useOpenBox'
 import useClaim from 'views/Nft/market/hooks/useClaim'
+import CommonBox from 'components/CommonBox'
+import LegendaryBox from 'components/LegendaryBox'
+import EpicBox from 'components/EpicBox'
+import MotherBox from 'components/MotherBox'
 
 // COMPONENTS
 import ExpandableCard from './components/ExpandableCard'
 
 // IMAGES
-import CommonBoxSrc from './images/common.svg'
-import EpicBoxSrc from './images/epic.svg'
-import LegendaryBoxSrc from './images/legendary.svg'
-import CommonBoxBgSrc from './images/common-box.svg'
-import EpicBoxBgSrc from './images/epic-box.svg'
-import LegendaryBoxBgSrc from './images/legendary-box.svg'
-import MotherBoxSrc from './images/mother.svg'
-import MotherBoxBgSrc from './images/mother-box.png'
 import MetaxizTokenSrc from './images/metaxiz-token.svg'
 
 const getValueAsEthersBn = (value: string) => {
   const valueAsFloat = parseFloat(value)
   return Number.isNaN(valueAsFloat) ? ethers.BigNumber.from(0) : parseUnits(value)
 }
+
+const BOXES = [0, 1, 2, 3]
 
 const Box: React.FC = () => {
   const { toastError } = useToast()
@@ -54,6 +53,25 @@ const Box: React.FC = () => {
   const [priceVsBNB, setPriceVsBNB] = useState<string|undefined>()
   const [priceInMexi, setPriceInMexi] = useState<string|undefined>()
   const [isBought, setIsBought] = useState(false)
+
+  const [boxes, setBoxes] = useState<any[] | undefined>()
+  const { account } = useWeb3React()
+
+  useEffect(() => {
+    if (account) {
+      const tasks = []
+      BOXES.forEach(id => {
+        tasks.push(boxSaleContract.boxs(id))
+      })
+      Promise.all(tasks).then(res => setBoxes(res.map(item => {
+        return {
+          price: new BigNumber(item.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
+          remaining: new BigNumber(item.remain._hex).toString(),
+          limit: new BigNumber(item.limit._hex).toString(),
+        }
+      })))
+    }
+  }, [boxSaleContract, account])
 
   const bnbBusdPrice = useBNBVsBusdPrice()
 
@@ -122,7 +140,7 @@ const Box: React.FC = () => {
       <Card mb="40px">
         <CardBody>
           <Flex flexDirection={['column-reverse', null, 'row']}>
-            <Flex flex="2">
+            <Flex flex="2" pr="16px">
               <BoxComponent>
                 <Text color="#0088FF">
                   METAFIGHT BOXES
@@ -179,7 +197,7 @@ const Box: React.FC = () => {
                     mt="24px"
                     onClick={handleApprove}
                   >
-                    {isApproving ? 'Loading' : 'Approve'}
+                    {isApproving ? 'Loading' : 'Approve to open'}
                   </Button> :
                   <Button
                     disabled={isOpeningBox}
@@ -205,10 +223,14 @@ const Box: React.FC = () => {
                 }
               </BoxComponent>
             </Flex>
-            <Flex style={{ position: 'relative'}} flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
+            <Flex flex="1">
+              {BOXMAP[box].box}
+            </Flex>
+            
+            {/* <Flex style={{ position: 'relative'}} flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
               <RoundedImage src={BOXMAP[box].background} width={440} height={440} />
               <img style={{ position: 'absolute', width: '80%' }} src={BOXMAP[box].src} alt="box" />
-            </Flex>
+            </Flex> */}
           </Flex>
         </CardBody>
       </Card>
@@ -253,7 +275,91 @@ const Box: React.FC = () => {
           }
         />
       </TwoColumnsContainer>
-      
+      <BoxComponent pt="56px" mb="52px">
+        <Text mb="8px">More boxes</Text>
+        <Grid
+          gridGap="16px"
+          gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)', null, 'repeat(4, 1fr)']}
+          alignItems="start"
+        >
+          <Link to="/boxes/common">
+            <Flex flexDirection="column">
+              <CommonBox />
+              <Card mt="8px" p="0px">
+                <CardBody p="0px">
+                  <Flex p="16px" flexDirection="column">
+                    <Text color="#905EFF">Metafight boxes</Text>
+                    <Text color="#3A3855" fontSize="20px">Common box</Text>
+                  </Flex>
+                  <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
+                    <Text>Price</Text>
+                    <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
+                      <BinanceIcon />{boxes ? ` ${boxes[3].price} BNB` : <Skeleton />}
+                    </Text>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Flex>
+          </Link>
+          <Link to="/boxes/legendary">
+            <Flex flexDirection="column">
+              <LegendaryBox />
+              <Card mt="8px" p="0px">
+                <CardBody p="0px">
+                  <Flex p="16px" flexDirection="column">
+                    <Text color="#905EFF">Metafight boxes</Text>
+                    <Text color="#3A3855" fontSize="20px">Legendary box</Text>
+                  </Flex>
+                  <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
+                    <Text>Price</Text>
+                    <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
+                      <BinanceIcon />{boxes ? ` ${boxes[1].price} BNB` : <Skeleton />}
+                    </Text>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Flex>
+          </Link>
+          <Link to="/boxes/epic">
+            <Flex flexDirection="column">
+              <EpicBox />
+              <Card mt="8px" p="0px">
+                <CardBody p="0px">
+                  <Flex p="16px" flexDirection="column">
+                    <Text color="#905EFF">Metafight boxes</Text>
+                    <Text color="#3A3855" fontSize="20px">Epic box</Text>
+                  </Flex>
+                  <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
+                    <Text>Price</Text>
+                    <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
+                      <BinanceIcon />{boxes ? ` ${boxes[2].price} BNB` : <Skeleton />}
+                    </Text>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Flex>
+          </Link>
+          <Link to="/boxes/mother">
+            <Flex flexDirection="column">
+              <MotherBox />
+              <Card mt="8px" p="0px">
+                <CardBody p="0px">
+                  <Flex p="16px" flexDirection="column">
+                    <Text color="#905EFF">Metafight boxes</Text>
+                    <Text color="#3A3855" fontSize="20px">Mother box</Text>
+                  </Flex>
+                  <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
+                    <Text>Price</Text>
+                    <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
+                      <BinanceIcon />{boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
+                    </Text>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Flex>
+          </Link>
+        </Grid>
+      </BoxComponent>
     </Page>
   )
 }
@@ -272,29 +378,25 @@ const BOXMAP = {
     id: 3,
     name: 'common box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: CommonBoxSrc,
-    background: CommonBoxBgSrc
+    box: <CommonBox />,
   },
   legendary: {
     id: 1,
     name: 'legendary box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: LegendaryBoxSrc,
-    background: LegendaryBoxBgSrc
+    box: <LegendaryBox />,
   },
   epic: {
     id: 2,
     name: 'epic box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: EpicBoxSrc,
-    background: EpicBoxBgSrc
+    box: <EpicBox />,
   },
   mother: {
     id: 0,
     name: 'mother box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    src: MotherBoxSrc,
-    background: MotherBoxBgSrc
+    box: <MotherBox />,
   },
 }
 
