@@ -56,8 +56,8 @@ const Home = () => {
             <Heading as="h1" scale="xxl" color="secondary" mb="24px">
               {t('NFT Market')}
             </Heading>
-            <Heading scale="lg" color="text">
-              {t('Buy and Sell NFTs on Binance Smart Chain')}
+            <Heading scale="md" color="text">
+              Here you can easily search and trade your NFTs in Metaxiz mixed-reality universe, where all metaverse game-world gather together.
             </Heading>
             {account && (
               <Button as={Link} to={`${nftsBaseUrl}/profile/${account.toLowerCase()}`} mt="32px">
@@ -65,7 +65,6 @@ const Home = () => {
               </Button>
             )}
           </div>
-          <SearchBar />
         </StyledHeaderInner>
       </StyledPageHeader>
       <PageSection

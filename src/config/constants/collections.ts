@@ -3,7 +3,7 @@ export default {
     createdAt: '2021-10-07T00:00:00.000Z',
     creatorAddress: '0x0000000000000000000000000000000000000000',
     creatorFee: '0',
-    description: '10,000 unique, randomly-generated Metaxiz NFTs from the mind of Chef Cecy Meade. Join the squad.',
+    description: "Create your “one of a kind” personalized NFT and conquer the world challenge with MetaFight’s Superheros alliance. Update our latest information about metaverse at Metaxiz's exclusive group. JOIN US NOW!!!!",
     id: '0xF6B195F036E4100F740CA80C81AC77dc7A29382c',
     name: 'Meta fight',
     numberTokensListed: '4250',
