@@ -1,10 +1,9 @@
 import React from 'react'
-import { Box, ChevronLeftIcon, Flex } from '@metaxiz/uikit'
+import { ChevronLeftIcon, Flex } from '@metaxiz/uikit'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
-import SearchBar from '../components/SearchBar'
 
 const BackLink = styled(RouterLink)`
   align-items: center;
@@ -22,9 +21,6 @@ const TopBar: React.FC = () => {
         <ChevronLeftIcon color="primary" width="24px" />
         {t('All Collections')}
       </BackLink>
-      <Box>
-        <SearchBar />
-      </Box>
     </Flex>
   )
 }

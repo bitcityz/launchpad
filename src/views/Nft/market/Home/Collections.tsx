@@ -24,26 +24,16 @@ const Collections = () => {
         })),
       )
     })
-  }, [totalVolumeBNBMap, nftMarketContract])
+  }, [nftMarketContract])
   return (
     <>
       <Flex alignItems="center" justifyContent="space-between" mb="32px">
         <Heading as="h3" scale="lg">
           {t('Hot Collections')}
         </Heading>
-        <Button
-          as={Link}
-          to={`${nftsBaseUrl}/collections/`}
-          variant="secondary"
-          scale="sm"
-          endIcon={<ChevronRightIcon color="primary" width="24px" />}
-        >
-          {t('View All')}
-        </Button>
       </Flex>
       <Grid gridGap="16px" gridTemplateColumns={['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} mb="64px">
         {Object.values(COLLECTIONS)
-          .slice(0, 5)
           .map((collection) => {
             return (
               <HotCollectionCard
@@ -62,6 +52,15 @@ const Collections = () => {
               </HotCollectionCard>
             )
           })}
+          <HotCollectionCard
+            disabled
+            bgSrc="/images/collections/no-collection-banner-sm.png"
+            collectionName={t('Coming Soon')}
+          >
+            <Text color="textDisabled" fontSize="12px">
+              {t('More Collections are on their way!')}
+            </Text>
+          </HotCollectionCard>
       </Grid>
     </>
   )

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
+import ReactPlayer from 'react-player'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import styled, { keyframes } from 'styled-components'
@@ -175,13 +176,14 @@ const Boxes: React.FC = () => {
             <Card>
               <CardBody p="0px">
                 <Flex p="16px">
-                  <BackgroundImage
+                  {/* <BackgroundImage
                     height={320}
                     width={320}
                     style={{ borderRadius: '8px' }}
                     src={EpicBoxSrc}
-                  />
-                  <img className="box" src={EpicSrc} alt="common" />
+                  /> */}
+                  {/* <img className="box" src={EpicSrc} alt="common" /> */}
+                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/common.mp4' />
                 </Flex>
                 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">

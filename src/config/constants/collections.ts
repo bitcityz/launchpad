@@ -18,10 +18,10 @@ export default {
     whitelistChecker: '0x0000000000000000000000000000000000000000',
     active: true,
     address: '0xF6B195F036E4100F740CA80C81AC77dc7A29382c',
-    avatar: '/images/collections/logo_metaxiz.png',
+    avatar: '/images/collections/hero-avatar.svg',
     banner: {
-      large: '/images/meta-fight-banner.png',
-      small: '/images/meta-fight-banner.png',
+      large: '/images/collections/hero-banner.svg',
+      small: '/images/collections/hero-banner.svg',
     },
   },
   '0x334C865645604248B4023583aDeDcC03E2D9ab73': {
@@ -30,7 +30,7 @@ export default {
     creatorFee: '0',
     description: 'Own these boxes for a chance of getting rare NFTs and valuable items.',
     id: '0x334C865645604248B4023583aDeDcC03E2D9ab73',
-    name: 'Land',
+    name: 'Boxes',
     numberTokensListed: '4250',
     owner: '0x29fE7148636b7Ae0b1E53777b28dfbaA9327af8E',
     symbol: 'PS',
@@ -43,10 +43,10 @@ export default {
     whitelistChecker: '0x0000000000000000000000000000000000000000',
     active: true,
     address: '0x334C865645604248B4023583aDeDcC03E2D9ab73',
-    avatar: '/images/collections/logo_metaxiz.png',
+    avatar: '/images/collections/box-avatar.svg',
     banner: {
-      large: '/images/meta-fight-banner.png',
-      small: '/images/meta-fight-banner.png',
+      large: '/images/collections/box-banner.svg',
+      small: '/images/collections/box-banner.svg',
     },
   },
 }

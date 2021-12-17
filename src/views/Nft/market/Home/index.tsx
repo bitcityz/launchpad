@@ -1,20 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Flex } from '@metaxiz/uikit'
-import { useWeb3React } from '@web3-react/core'
-import { Link } from 'react-router-dom'
+import { Heading, Flex } from '@metaxiz/uikit'
 import { useTranslation } from 'contexts/Localization'
 import PageHeader from 'components/PageHeader'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
-import { nftsBaseUrl } from 'views/Nft/market/constants'
 import useTheme from 'hooks/useTheme'
-import SearchBar from '../components/SearchBar'
 import Collections from './Collections'
+
+// IMAGES
+import HeaderSrc from './images/header.svg'
 
 const StyledPageHeader = styled(PageHeader)`
   margin-bottom: -40px;
   padding-bottom: 40px;
+  background-image: url(${HeaderSrc});
+  background-repeat: no-repeat;
+  background-size: cover;
 `
 
 const StyledHeaderInner = styled(Flex)`
@@ -44,7 +46,6 @@ const StyledHeaderInner = styled(Flex)`
 
 const Home = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
   const { theme } = useTheme()
 
   return (
@@ -53,30 +54,24 @@ const Home = () => {
       <StyledPageHeader>
         <StyledHeaderInner>
           <div>
-            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('NFT Market')}
+            <Heading as="h1" scale="xxl" color="white" mb="8px">
+              {t('NFT MARKET')}
             </Heading>
-            <Heading scale="md" color="text">
-              Here you can easily search and trade your NFTs in Metaxiz mixed-reality universe, where all metaverse game-world gather together.
+            <Heading scale="md" color="white">
+              Buy and sell NFTs on Binance Smart Chain
             </Heading>
-            {account && (
-              <Button as={Link} to={`${nftsBaseUrl}/profile/${account.toLowerCase()}`} mt="32px">
-                {t('Manage/Sell')}
-              </Button>
-            )}
           </div>
         </StyledHeaderInner>
       </StyledPageHeader>
       <PageSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        background={theme.colors.background}
+        innerProps={{ style: { margin: '0', width: '100%', paddingTop: 0 } }}
+        background="#E9F2F6"
         index={1}
         concaveDivider
-        dividerPosition="top"
       >
         <Collections />
-        {/* <Newest /> */}
       </PageSection>
+      {/* <Collections /> */}
     </>
   )
 }

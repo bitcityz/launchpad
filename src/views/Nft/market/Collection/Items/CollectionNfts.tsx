@@ -55,7 +55,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
       }
       const { tokenIds, askInfo } = asked
       const baseURI = await collectionContract.baseURI()
-      const apiRequestPromises: Promise<NftToken>[] = tokenIds.map(async (tokenId): Promise<NftToken> => {
+      const apiRequestPromises: Promise<any>[] = tokenIds.map(async (tokenId): Promise<any> => {
         const hash = await collectionContract.tokenHash(tokenId.toNumber())
         const res = await fetch(`${baseURI}${hash}`)
         if (res.ok) {
@@ -78,19 +78,24 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
         }
       })
       const nftsDetails = await Promise.all(apiRequestPromises)
+
       const marketData = tokenIds.map((tokenId, index) => {
+        const nftsDetail = nftsDetails[index]
+        console.log({
+          nftsDetail
+        })
         return {
           collection: {
             id: COLLECTIONS[collectionAddress].id,
           },
-          name: nftsDetails[index].name,
+          name: nftsDetail.name,
           collectionAddress,
           tokenId: tokenId.toNumber(),
-          collectionName: COLLECTIONS[collectionAddress].name,
+          collectionName: nftsDetail.collector,
           image: {
-            thumbnail: isAbsoluteUrl(nftsDetails[index].image) ? nftsDetails[index].image : `https://ipfsgw.metaxiz.com/ipfs/${nftsDetails[index].image}`,
+            thumbnail: isAbsoluteUrl(nftsDetail.image) ? nftsDetail.image : `https://ipfsgw.metaxiz.com/ipfs/${nftsDetail.image}`,
           },
-          count: 1,
+          backgroundColor: `#${nftsDetail.bg_color}`,
           hash: nftsDetails[index].hash,
           marketData: {
             collection: {
@@ -117,24 +122,23 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
     }
   }, [orderField, orderDirection, skip, collectionAddress, nftMarketContract, collectionContract, page])
 
-  const nftsToShow = nfts
   if (isLoading) {
     return <GridPlaceholder />
   }
-  if (!nftsToShow || nftsToShow?.length === 0) {
+  if (!nfts || nfts?.length === 0) {
     return <Text>No order yet!</Text>
   }
 
   const isNotLastPage =
     showOnlyNftsOnSale || orderField !== 'tokenId'
-      ? nftsToShow?.length < Number(numberTokensListed)
-      : nftsToShow?.length < Number(totalSupply)
+      ? nfts?.length < Number(numberTokensListed)
+      : nfts?.length < Number(totalSupply)
 
   return (
     <>
       <Flex p="16px">
         <Text bold>
-          {nftsToShow.length} {t('Results')}
+          {nfts.length} {t('Results')}
         </Text>
       </Flex>
       <Grid
@@ -142,7 +146,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
         gridTemplateColumns={['1fr', null, 'repeat(3, 1fr)', null, 'repeat(4, 1fr)']}
         alignItems="start"
       >
-        {nftsToShow.map((nft) => {
+        {nfts.map((nft) => {
           const currentAskPriceAsNumber = nft.marketData && parseFloat(nft.marketData.currentAskPrice)
 
           return (

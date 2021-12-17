@@ -15,17 +15,14 @@ export const CollectionAvatar = styled(ProfileAvatar)`
   left: 0;
   position: absolute;
   top: -32px;
-  border: 4px white solid;
 `
 
 const StyledHotCollectionCard = styled(Card)<{ disabled?: boolean }>`
   border-radius: 8px;
-  border-bottom-left-radius: 56px;
   transition: opacity 200ms;
 
   & > div {
     border-radius: 8px;
-    border-bottom-left-radius: 56px;
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
@@ -56,20 +53,23 @@ const HotCollectionCard: React.FC<HotCollectionCardProps> = ({
   children,
 }) => {
   const renderBody = () => (
-    <CardBody p="8px">
-      <StyledImage src={bgSrc} height={125} width={375} />
-      <Flex
-        position="relative"
-        height="65px"
-        justifyContent="center"
-        alignItems="flex-end"
-        py="8px"
-        flexDirection="column"
-      >
-        <CollectionAvatar src={avatarSrc} width={96} height={96} />
-        <Heading color={disabled ? 'textDisabled' : 'body'} as="h3" mb={children ? '8px' : '0'}>
-          {collectionName}
-        </Heading>
+    <CardBody p="0px">
+      <CardBody p="8px" pb="0px">
+        <StyledImage src={bgSrc} height={125} width={375} />
+        <Flex
+          position="relative"
+          justifyContent="center"
+          alignItems="flex-end"
+          py="8px"
+          flexDirection="column"
+        >
+          <CollectionAvatar src={avatarSrc} width={96} height={96} />
+          <Heading color={disabled ? 'textDisabled' : '#8550FF'} as="h3">
+            {collectionName}
+          </Heading>
+        </Flex>
+      </CardBody>
+      <Flex height="40px" pr="8px" justifyContent="flex-end" background="#F4F3FF">
         {children}
       </Flex>
     </CardBody>

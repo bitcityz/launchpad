@@ -114,11 +114,11 @@ export const SellingNftTag: React.FC<NftTagProps> = (props) => {
   )
 }
 
-export const StyledCollectibleCard = styled(Card)`
+export const StyledCollectibleCard = styled.div`
   border-radius: 8px;
   max-width: 320px;
   transition: opacity 200ms;
-
+  position: relative;
   & > div {
     border-radius: 8px;
   }

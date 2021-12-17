@@ -109,8 +109,10 @@ export interface NftToken {
   description: string
   collectionName: string
   collectionAddress: string
+  backgroundColor?: string
   image: Image
   hash?: string
+  rarity?: number
   attributes?: any
   createdAt?: string // API createdAt
   updatedAt?: string // API updatedAt

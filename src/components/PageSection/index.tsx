@@ -97,17 +97,6 @@ const PageSection: React.FC<PageSectionProps> = ({
       <BackgroundColor background={background} index={index} getPadding={getPadding} {...props}>
         <ChildrenWrapper {...innerProps}>{children}</ChildrenWrapper>
       </BackgroundColor>
-      {hasCurvedDivider && dividerPosition === 'bottom' && (
-        <CurvedDivider
-          svgFill={svgFill}
-          index={index}
-          concave={concaveDivider}
-          dividerPosition={dividerPosition}
-          dividerComponent={dividerComponent}
-          clipFill={clipFill}
-          dividerFill={dividerFill}
-        />
-      )}
     </Box>
   )
 }
