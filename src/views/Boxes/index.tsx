@@ -3,32 +3,29 @@ import { useWeb3React } from '@web3-react/core'
 import ReactPlayer from 'react-player'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Text, Grid, CardBody, BackgroundImage, Card, Skeleton, BinanceIcon, Heading, Flex } from '@metaxiz/uikit'
+import { Text, Grid, CardBody, Card, Skeleton, BinanceIcon, Heading, Flex } from '@metaxiz/uikit'
 import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
 import { useBoxSaleContract } from 'hooks/useContract'
-import { TicketPurchaseCard } from 'views/Lottery/svgs'
 
 // IMAGES
-import CommonBoxSrc from './images/common-box.svg'
-import EpicBoxSrc from './images/epic-box.svg'
-import LegendaryBoxSrc from './images/legendary-box.svg'
-import MotherBoxSrc from './images/mother-box.svg'
-import MotherBgSrc from './images/mother-bg.svg'
+import ClockIcon from './images/clock.svg'
+import PurchasedIcon from './images/purchased.svg'
+
 import BackgroundSrc from './images/bg.svg'
 import HeaderBg from './images/header-bg.svg'
 
-import CommonSrc from './images/common.svg'
-import EpicSrc from './images/epic.svg'
-import LegendarySrc from './images/legendary.svg'
+// import CommonSrc from './images/common.svg'
+// import EpicSrc from './images/epic.svg'
+// import LegendarySrc from './images/legendary.svg'
 
 const CardStyled = styled(Card)`
-  background: url(${MotherBgSrc});
   >div {
-    background: transparent
+    background: transparent;
   }
+  max-height: 469px;
 `
 
 const PageStyled = styled.div`
@@ -42,37 +39,28 @@ const PageStyled = styled.div`
       animation: grkjUd 3s ease-in-out infinite;
     }
   }
-`
-
-const mainTicketAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
+  video {
+    border-radius: 12px;
   }
-  50% {
-    transform: rotate(6deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }  
 `
 
-const TicketContainer = styled(Flex)`
-  animation: ${mainTicketAnimation} 3s ease-in-out infinite;
+const StyleClockCard = styled.div`
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#FFB743, #FDE972);
+  height: fit-content;
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin: 16px 8px;
 `
-
-const TicketSvgWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: rotate(-4deg);
-`
-
-const ButtonWrapper = styled.div`
-  z-index: 1;
-  position: absolute;
-  top: 50%;
-  left: 60%;
-  transform: translate(-50%, -50%) rotate(-4deg);
+const StylePurchasedCard = styled.div`
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#3E6FF9, #2EA9FF);
+  height: fit-content;
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin: 16px 8px;
 `
 
 const BOXES = [0, 1, 2, 3]
@@ -105,37 +93,33 @@ const Boxes: React.FC = () => {
 
   return (
     <PageStyled>
-      <PageHeader height="377px" background={`url(${HeaderBg})`}>
+      <PageHeader style={{
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat"
+      }} mt="48px" background={`url(${HeaderBg})`}>
         <Flex flexDirection="row">
-          <Flex flexDirection="column" width="40%">
+          <Flex flexDirection="column" width="50%">
             <Text mb="16px" color="white">DEC 01-02-2022</Text>
-            <Heading as="h1" scale="xl" color="white" mb="32px">
+            <Heading as="h1" scale="xl" color="white" mb="24px">
               MEFI BOX
             </Heading>
-            <Text display="inline" mt="56px" color="#FFFF00">
+            <Text display="inline" mt="24px" color="#FFFF00">
               MEFI BOX contains various heroes with certain drop rates.The higher quality of the MEFI BOX is, the higher the drop ratefor the high-quality Heroes is.
             </Text>
           </Flex>
           <Flex>
-            <TicketContainer
-              position="relative"
-              width={['240px', '288px']}
-              height={['94px', '113px']}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <ButtonWrapper>
-                <Text fontSize="14px">Available</Text>
-                <Text color="#3A3855" fontSize="24px">{`${totalRemaining.toLocaleString(undefined, {maximumFractionDigits:0})}/${totalSupply.toLocaleString(undefined, {maximumFractionDigits:0})}`}</Text>
-              </ButtonWrapper>
-              <TicketSvgWrapper>
-                <TicketPurchaseCard width="100%" />
-              </TicketSvgWrapper>
-            </TicketContainer>
+            <StyleClockCard>
+              <Text fontSize="14px">Time Remaining</Text>
+              <Text fontWeight="bold" color="#3A3855" fontSize="16px">{`${totalRemaining.toLocaleString(undefined, {maximumFractionDigits:0})}/${totalSupply.toLocaleString(undefined, {maximumFractionDigits:0})}`}</Text>
+            </StyleClockCard>
+            <StylePurchasedCard>
+              <Text fontSize="14px">Purchased</Text>
+              <Text fontWeight="bold" color="#3A3855" fontSize="16px">{`${totalRemaining.toLocaleString(undefined, {maximumFractionDigits:0})}/${totalSupply.toLocaleString(undefined, {maximumFractionDigits:0})}`}</Text>
+            </StylePurchasedCard>
           </Flex>
         </Flex>
       </PageHeader>
-      <Page>
+      <Page style={{ marginTop: 0}}>
         <Grid
           gridGap="16px"
           gridTemplateColumns={['1fr', null, 'repeat(3, 1fr)', null, 'repeat(4, 1fr)']}
@@ -145,13 +129,14 @@ const Boxes: React.FC = () => {
             <Card>
               <CardBody p="0px">
                 <Flex p="16px">
-                  <BackgroundImage
+                  {/* <BackgroundImage
                     height={320}
                     width={320}
                     style={{ borderRadius: '8px' }}
                     src={CommonBoxSrc}
                   />
-                  <img className="box" src={CommonSrc} alt="common" />
+                  <img className="box" src={CommonSrc} alt="common" /> */}
+                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/common.mp4' />
                 </Flex>
                 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
@@ -183,7 +168,7 @@ const Boxes: React.FC = () => {
                     src={EpicBoxSrc}
                   /> */}
                   {/* <img className="box" src={EpicSrc} alt="common" /> */}
-                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/common.mp4' />
+                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/epic.mp4' />
                 </Flex>
                 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
@@ -208,13 +193,14 @@ const Boxes: React.FC = () => {
             <Card>
               <CardBody p="0px">
                 <Flex p="16px">
-                  <BackgroundImage
+                  {/* <BackgroundImage
                     height={320}
                     width={320}
                     style={{ borderRadius: '8px' }}
                     src={LegendaryBoxSrc}
                   />
-                  <img style={{left: 0, top : 0}} className="box" src={LegendarySrc} alt="common" />
+                  <img style={{left: 0, top : 0}} className="box" src={LegendarySrc} alt="common" /> */}
+                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/legendary.mp4' />
                 </Flex>
                 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
@@ -238,10 +224,11 @@ const Boxes: React.FC = () => {
           <Link to="/boxes/mother">
             <CardStyled>
               <CardBody p="0px">
-                <Flex height="274px">
-                  <img className="box" src={MotherBoxSrc} alt="common" />
-                </Flex>
-                <Flex p="16px" flexDirection="column" background="rgba(16, 12, 69, 0.3)">
+                {/* <Flex height="274px">
+                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/mother.mp4' />
+                </Flex> */}
+                <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/mother.mp4' />
+                <Flex style={{ position: 'absolute', bottom: 0, width: '100%'}} p="16px" flexDirection="column" background="rgba(16, 12, 69, 0.3)">
                   <Text fontWeight="bold" fontSize="24px" color="#FFFF00" mb="8px">
                     MOTHER BOX
                   </Text>

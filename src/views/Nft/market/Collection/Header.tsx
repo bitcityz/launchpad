@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ collection }) => {
         <TopBar />
         <BannerHeader bannerImage={banner.large} avatar={<AvatarImage src={avatar} />} />
         <MarketPageTitle
-          title={collection.name}
+          title={collection.name.toUpperCase()}
           description={collection.description ? <Text color="textSubtle">{t(collection.description)}</Text> : null}
         >
           <StatBox>

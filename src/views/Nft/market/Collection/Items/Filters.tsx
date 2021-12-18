@@ -16,7 +16,6 @@ interface FiltersProps {
 }
 
 const GridContainer = styled(Grid)`
-  margin-bottom: 16px;
   padding: 0 16px;
   grid-gap: 8px 16px;
   grid-template-columns: 1fr 1fr;
@@ -90,14 +89,14 @@ const Filters: React.FC<FiltersProps> = ({ collection }) => {
   const uniqueTraitTypes = attrsByType ? Object.keys(attrsByType) : []
 
   return (
-    <GridContainer>
-      <SortByTitle fontSize="12px" textTransform="uppercase" color="textSubtle" fontWeight={600} mb="4px">
+    <Flex mt="8px" justifyContent="flex-end">
+      {/* <SortByTitle fontSize="12px" textTransform="uppercase" color="textSubtle" fontWeight={600} mb="4px">
         {t('Sort By')}
-      </SortByTitle>
+      </SortByTitle> */}
       <SortByControls>
         <SortSelect collectionAddress={address} />
       </SortByControls>
-      <ScrollableFlexContainer>
+      {/* <ScrollableFlexContainer>
         {uniqueTraitTypes.map((traitType) => {
           const attrs = attrsByType[traitType]
           const items: Item[] = attrs.map((attr) => ({
@@ -117,8 +116,8 @@ const Filters: React.FC<FiltersProps> = ({ collection }) => {
           )
         })}
         {!isEmpty(nftFilters) && <ClearAllButton collectionAddress={address} mb="4px" />}
-      </ScrollableFlexContainer>
-    </GridContainer>
+      </ScrollableFlexContainer> */}
+    </Flex>
   )
 }
 

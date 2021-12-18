@@ -81,9 +81,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
 
       const marketData = tokenIds.map((tokenId, index) => {
         const nftsDetail = nftsDetails[index]
-        console.log({
-          nftsDetail
-        })
+
         return {
           collection: {
             id: COLLECTIONS[collectionAddress].id,
@@ -142,7 +140,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection }) => {
         </Text>
       </Flex>
       <Grid
-        gridGap="16px"
+        gridGap="32px 16px"
         gridTemplateColumns={['1fr', null, 'repeat(3, 1fr)', null, 'repeat(4, 1fr)']}
         alignItems="start"
       >

@@ -72,17 +72,6 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
       },
     ],
   },
-  {
-    label: t('AIRDROPS'),
-    href: `${airdropBaseUrl}`,
-    icon: 'Nft',
-    items: [
-      {
-        label: t('AIRDROPS'),
-        href: `${airdropBaseUrl}`,
-      },
-    ],
-  },
   // {
   //   label: '',
   //   href: '/info',

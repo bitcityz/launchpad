@@ -1,9 +1,28 @@
 import React from 'react'
-import Select, { OptionProps } from 'components/Select/Select'
+import styled from 'styled-components'
+import { Flex } from '@metaxiz/uikit'
+import { OptionProps } from 'components/Select/Select'
 import { useTranslation } from 'contexts/Localization'
 import { useAppDispatch } from 'state'
 import { setOrdering } from 'state/nftMarket/reducer'
 import { useGetNftOrdering } from 'state/nftMarket/hooks'
+
+interface FilterProps {
+  isActive?: boolean
+  onClick?: () => void
+}
+
+const StyledFilter = styled.div<FilterProps>`
+  background: ${({ isActive }) => isActive ? '#24a5af' : '#4AC7D5'};
+  color: white;
+  padding: 8px 12px;
+  margin-left: 8px;
+  white-space: nowrap;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+`
 
 const SortSelect: React.FC<{ collectionAddress: string }> = ({ collectionAddress }) => {
   const dispatch = useAppDispatch()
@@ -21,16 +40,25 @@ const SortSelect: React.FC<{ collectionAddress: string }> = ({ collectionAddress
     { label: t('Token ID'), value: { field: 'tokenId', direction: 'asc' } },
   ]
 
-  const defaultOptionIndex = sortByItems.findIndex(
-    (option) => option.value.field === selectedOrder.field && option.value.direction === selectedOrder.direction,
-  )
+  // const defaultOptionIndex = sortByItems.findIndex(
+  //   (option) => option.value.field === selectedOrder.field && option.value.direction === selectedOrder.direction,
+  // )
+
+  // return (
+  //   <Select
+  //     options={sortByItems}
+  //     onOptionChange={handleChange}
+  //     defaultOptionIndex={defaultOptionIndex !== -1 ? defaultOptionIndex : undefined}
+  //   />
+  // )
 
   return (
-    <Select
-      options={sortByItems}
-      onOptionChange={handleChange}
-      defaultOptionIndex={defaultOptionIndex !== -1 ? defaultOptionIndex : undefined}
-    />
+    <Flex flex="wrap" justifyContent="flex-end" width="100%">
+      {sortByItems.map(item => <StyledFilter
+        isActive={selectedOrder.field === item.value.field && selectedOrder.direction === item.value.direction}
+        onClick={() => handleChange(item)}>{item.label}
+      </StyledFilter>)}
+    </Flex>
   )
 }
 

@@ -18,7 +18,7 @@ const CollectionWrapper: React.FC<CollectionWrapperProps> = ({ collection }) => 
   const nftFilters = useGetNftFilters(collection.address)
 
   return (
-    <Box py="32px">
+    <Box pb="32px">
       <Container px={[0, null, '24px']}>
         <Filters collection={collection} />
       </Container>
