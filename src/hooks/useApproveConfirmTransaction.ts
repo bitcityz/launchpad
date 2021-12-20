@@ -88,7 +88,7 @@ const useApproveConfirmTransaction = ({
   onRequiresApproval,
   onSuccess = noop,
   onApproveSuccess = noop,
-  watched
+  watched,
 }: ApproveConfirmTransaction) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()

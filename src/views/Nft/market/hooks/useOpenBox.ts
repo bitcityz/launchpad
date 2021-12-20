@@ -12,7 +12,7 @@ const RETRY_STATUSES = [401, 400, 500]
 
 const useOpenBox = () => {
   const { account, library } = useWeb3React()
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem('token')
   const [newNfts, setNfts] = useState([])
   const nftContract = useERC721(getBoxesAddress())
   const [isOpeningBox, setIsLoading] = useState(false)
@@ -20,7 +20,7 @@ const useOpenBox = () => {
 
   const openBox = async (authorization = token, boxId) => {
     const balance = await nftContract.balanceOf(account)
-    if ( new BigNumber(balance._hex).toNumber() < 1) {
+    if (new BigNumber(balance._hex).toNumber() < 1) {
       return toastError('Error', 'You have no NFTs')
     }
     const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
@@ -38,7 +38,7 @@ const useOpenBox = () => {
       }),
     }).then(async (res) => {
       if (RETRY_STATUSES.includes(res.status)) {
-        RETRY ++
+        RETRY++
         if (RETRY < MAX_RETRY) {
           withAuth(() => openBox(token, boxTokenId), { account, library })
         }

@@ -10,7 +10,21 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useWeb3React } from '@web3-react/core'
 import ReactPlayer from 'react-player'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
-import { Text, Flex, BinanceIcon, Skeleton, Image, Box as BoxComponent, Button, Toggle, SearchIcon, NftIcon, Grid, Card, CardBody } from '@metaxiz/uikit'
+import {
+  Text,
+  Flex,
+  BinanceIcon,
+  Skeleton,
+  Image,
+  Box as BoxComponent,
+  Button,
+  Toggle,
+  SearchIcon,
+  NftIcon,
+  Grid,
+  Card,
+  CardBody,
+} from '@metaxiz/uikit'
 import Page from 'components/Layout/Page'
 import { ethers } from 'ethers'
 import { parseUnits } from 'ethers/lib/utils'
@@ -33,8 +47,8 @@ const getValueAsEthersBn = (value: string) => {
 }
 
 const StyledPage = styled(Page)`
-  video{
-    border-radius: 12px
+  video {
+    border-radius: 12px;
   }
 `
 
@@ -47,18 +61,18 @@ const Box: React.FC = () => {
   const [isBNBUsed, setIsBNBUsed] = useState(true)
 
   const [heroMap, setHeroMap] = useState({
-    common: {percent: null},
-    rare: {percent: null},
-    legendary: {percent: null},
-    epic: {percent: null}
+    common: { percent: null },
+    rare: { percent: null },
+    legendary: { percent: null },
+    epic: { percent: null },
   })
   const [isHeroesLoading, setIsHeroesLoading] = useState(false)
 
   const boxSaleContract = useBoxSaleContract()
   const [remaning, setRemaining] = useState('0')
   const [path, setPath] = useState<string[]>([])
-  const [priceVsBNB, setPriceVsBNB] = useState<string|undefined>()
-  const [priceInMexi, setPriceInMexi] = useState<string|undefined>()
+  const [priceVsBNB, setPriceVsBNB] = useState<string | undefined>()
+  const [priceInMexi, setPriceInMexi] = useState<string | undefined>()
   const [isBought, setIsBought] = useState(false)
 
   const [boxes, setBoxes] = useState<any[] | undefined>()
@@ -67,16 +81,20 @@ const Box: React.FC = () => {
   useEffect(() => {
     if (account) {
       const tasks = []
-      BOXES.forEach(id => {
+      BOXES.forEach((id) => {
         tasks.push(boxSaleContract.boxs(id))
       })
-      Promise.all(tasks).then(res => setBoxes(res.map(item => {
-        return {
-          price: new BigNumber(item.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
-          remaining: new BigNumber(item.remain._hex).toString(),
-          limit: new BigNumber(item.limit._hex).toString(),
-        }
-      })))
+      Promise.all(tasks).then((res) =>
+        setBoxes(
+          res.map((item) => {
+            return {
+              price: new BigNumber(item.price._hex).div(DEFAULT_TOKEN_DECIMAL).toString(),
+              remaining: new BigNumber(item.remain._hex).toString(),
+              limit: new BigNumber(item.limit._hex).toString(),
+            }
+          }),
+        ),
+      )
     }
   }, [boxSaleContract, account])
 
@@ -91,7 +109,7 @@ const Box: React.FC = () => {
   const { isApproving, isApproved, handleApprove } = useClaim(newNfts, token, () => setIsBought(false))
 
   useEffect(() => {
-    const getPriceInMexi = async() => {
+    const getPriceInMexi = async () => {
       const mexiAddress = await boxSaleContract.MEXI()
       const wbnbAddress = await boxSaleContract.WBNB()
       const mexiPath = [mexiAddress, wbnbAddress]
@@ -126,13 +144,14 @@ const Box: React.FC = () => {
 
   const checkout = async () => {
     setIsBuying(true)
-    const promiseCall = isBNBUsed ? callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
-      value: getValueAsEthersBn(priceVsBNB).toString(),
-    }) :  callWithGasPrice(boxSaleContract, 'buyByMEXI', [BOXMAP[box].id, path ])
+    const promiseCall = isBNBUsed
+      ? callWithGasPrice(boxSaleContract, 'buy', [BOXMAP[box].id], {
+          value: getValueAsEthersBn(priceVsBNB).toString(),
+        })
+      : callWithGasPrice(boxSaleContract, 'buyByMEXI', [BOXMAP[box].id, path])
 
-    const tx = await promiseCall.catch(err => {
-
-      toastError("Error", err.data ? err?.data.message : err.message)
+    const tx = await promiseCall.catch((err) => {
+      toastError('Error', err.data ? err?.data.message : err.message)
       return err
     })
     if (tx.wait) {
@@ -149,9 +168,7 @@ const Box: React.FC = () => {
           <Flex flexDirection={['column-reverse', null, 'row']}>
             <Flex flex="2" pr="16px">
               <BoxComponent>
-                <Text color="#0088FF">
-                  METAFIGHT BOXES
-                </Text>
+                <Text color="#0088FF">METAFIGHT BOXES</Text>
                 <Text fontSize="40px" bold mt="12px">
                   {BOXMAP[box].name.toUpperCase()}
                 </Text>
@@ -162,30 +179,28 @@ const Box: React.FC = () => {
                   </Text>
                   <ToggleWrapper>
                     <Text mr="8px">Use BNB</Text>
-                    <Toggle
-                      checked={isBNBUsed}
-                      onChange={() => setIsBNBUsed(!isBNBUsed)}
-                      scale="md"
-                    />
+                    <Toggle checked={isBNBUsed} onChange={() => setIsBNBUsed(!isBNBUsed)} scale="md" />
                   </ToggleWrapper>
                 </Flex>
-                {isBNBUsed ? priceVsBNB ? (
-                  <Flex alignItems="center" mt="8px">
-                    <BinanceIcon width={18} height={18} mr="4px" />
-                    <Text fontSize="24px" bold mr="4px">
-                      {priceVsBNB}
-                    </Text>
-                    {bnbBusdPrice ? (
-                      <Text color="textSubtle">{`(~${priceInUsd.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })} USD)`}</Text>
-                    ) : (
-                      <Skeleton width="64px" />
-                    )}
-                  </Flex>
-                ) : (
-                  <Skeleton width="64px" />
+                {isBNBUsed ? (
+                  priceVsBNB ? (
+                    <Flex alignItems="center" mt="8px">
+                      <BinanceIcon width={18} height={18} mr="4px" />
+                      <Text fontSize="24px" bold mr="4px">
+                        {priceVsBNB}
+                      </Text>
+                      {bnbBusdPrice ? (
+                        <Text color="textSubtle">{`(~${priceInUsd.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })} USD)`}</Text>
+                      ) : (
+                        <Skeleton width="64px" />
+                      )}
+                    </Flex>
+                  ) : (
+                    <Skeleton width="64px" />
+                  )
                 ) : (
                   <Flex alignItems="center" mt="8px">
                     <img src={MetaxizTokenSrc} alt="token" width="auto" height="24px" />
@@ -194,29 +209,32 @@ const Box: React.FC = () => {
                     </Text>
                   </Flex>
                 )}
-                {isBought ?
-                  !isApproved ?
-                  <Button
-                    minWidth="168px"
-                    mr="16px"
-                    disabled={isApproving}
-                    width={['100%', null, 'max-content']}
-                    mt="24px"
-                    onClick={handleApprove}
-                  >
-                    {isApproving ? 'Loading' : 'Approve to open'}
-                  </Button> :
-                  <Button
-                    disabled={isOpeningBox}
-                    minWidth="168px"
-                    mr="16px"
-                    width={['100%', null, 'max-content']}
-                    mt="24px"
-                    onClick={() => handleOpenBox()}
-                  >
-                    {isOpeningBox ? 'Opening' : 'Open Box'}
-                    <NftIcon color="white" width="24px" ml="4px" />
-                  </Button> :
+                {isBought ? (
+                  !isApproved ? (
+                    <Button
+                      minWidth="168px"
+                      mr="16px"
+                      disabled={isApproving}
+                      width={['100%', null, 'max-content']}
+                      mt="24px"
+                      onClick={handleApprove}
+                    >
+                      {isApproving ? 'Loading' : 'Approve to open'}
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled={isOpeningBox}
+                      minWidth="168px"
+                      mr="16px"
+                      width={['100%', null, 'max-content']}
+                      mt="24px"
+                      onClick={() => handleOpenBox()}
+                    >
+                      {isOpeningBox ? 'Opening' : 'Open Box'}
+                      <NftIcon color="white" width="24px" ml="4px" />
+                    </Button>
+                  )
+                ) : (
                   <Button
                     minWidth="168px"
                     disabled={isBuying}
@@ -227,14 +245,14 @@ const Box: React.FC = () => {
                   >
                     {isBuying ? 'Loading...' : 'Purchase'}
                   </Button>
-                }
+                )}
               </BoxComponent>
             </Flex>
             <Flex flex="1">
               <ReactPlayer width="100%" playing muted loop url={BOXMAP[box].box} />
               {/* {BOXMAP[box].box} */}
             </Flex>
-            
+
             {/* <Flex style={{ position: 'relative'}} flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
               <RoundedImage src={BOXMAP[box].background} width={440} height={440} />
               <img style={{ position: 'absolute', width: '80%' }} src={BOXMAP[box].src} alt="box" />
@@ -244,40 +262,57 @@ const Box: React.FC = () => {
       </Card>
       <TwoColumnsContainer flexDirection={['column', 'column', 'row']}>
         <ExpandableCard
-          title='Details' icon={<SearchIcon width="24px" height="24px" />}
+          title="Details"
+          icon={<SearchIcon width="24px" height="24px" />}
           content={
             <BoxComponent p="24px">
               <Flex justifyContent="space-between" alignItems="center" mb="16px">
                 <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
                   Common Hero
                 </Text>
-                {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.common.percent} %
-                </Text>}
+                {isHeroesLoading ? (
+                  <Skeleton />
+                ) : (
+                  <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
+                    {heroMap?.common.percent} %
+                  </Text>
+                )}
               </Flex>
               <Flex justifyContent="space-between" alignItems="center" mb="16px">
                 <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
                   Rare Hero
                 </Text>
-                {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.rare.percent} %
-                </Text>}
+                {isHeroesLoading ? (
+                  <Skeleton />
+                ) : (
+                  <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
+                    {heroMap?.rare.percent} %
+                  </Text>
+                )}
               </Flex>
               <Flex justifyContent="space-between" alignItems="center" mb="16px">
                 <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
                   Epic Hero
                 </Text>
-                {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.epic?.percent} %
-                </Text>}
+                {isHeroesLoading ? (
+                  <Skeleton />
+                ) : (
+                  <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
+                    {heroMap?.epic?.percent} %
+                  </Text>
+                )}
               </Flex>
               <Flex justifyContent="space-between" alignItems="center" mb="16px">
                 <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
                   Legendary Hero
                 </Text>
-                {isHeroesLoading ? <Skeleton /> :<Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
-                  {heroMap?.legendary?.percent} %
-                </Text>}
+                {isHeroesLoading ? (
+                  <Skeleton />
+                ) : (
+                  <Text fontSize="12px" color="textSubtle" bold textTransform="uppercase">
+                    {heroMap?.legendary?.percent} %
+                  </Text>
+                )}
               </Flex>
             </BoxComponent>
           }
@@ -297,12 +332,15 @@ const Box: React.FC = () => {
                 <CardBody p="0px">
                   <Flex p="16px" flexDirection="column">
                     <Text color="#905EFF">Metafight boxes</Text>
-                    <Text color="#3A3855" fontSize="20px">Common box</Text>
+                    <Text color="#3A3855" fontSize="20px">
+                      Common box
+                    </Text>
                   </Flex>
                   <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
                     <Text>Price</Text>
                     <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
-                      <BinanceIcon />{boxes ? ` ${boxes[3].price} BNB` : <Skeleton />}
+                      <BinanceIcon />
+                      {boxes ? ` ${boxes[3].price} BNB` : <Skeleton />}
                     </Text>
                   </Flex>
                 </CardBody>
@@ -316,12 +354,15 @@ const Box: React.FC = () => {
                 <CardBody p="0px">
                   <Flex p="16px" flexDirection="column">
                     <Text color="#905EFF">Metafight boxes</Text>
-                    <Text color="#3A3855" fontSize="20px">Legendary box</Text>
+                    <Text color="#3A3855" fontSize="20px">
+                      Legendary box
+                    </Text>
                   </Flex>
                   <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
                     <Text>Price</Text>
                     <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
-                      <BinanceIcon />{boxes ? ` ${boxes[1].price} BNB` : <Skeleton />}
+                      <BinanceIcon />
+                      {boxes ? ` ${boxes[1].price} BNB` : <Skeleton />}
                     </Text>
                   </Flex>
                 </CardBody>
@@ -335,12 +376,15 @@ const Box: React.FC = () => {
                 <CardBody p="0px">
                   <Flex p="16px" flexDirection="column">
                     <Text color="#905EFF">Metafight boxes</Text>
-                    <Text color="#3A3855" fontSize="20px">Epic box</Text>
+                    <Text color="#3A3855" fontSize="20px">
+                      Epic box
+                    </Text>
                   </Flex>
                   <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
                     <Text>Price</Text>
                     <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
-                      <BinanceIcon />{boxes ? ` ${boxes[2].price} BNB` : <Skeleton />}
+                      <BinanceIcon />
+                      {boxes ? ` ${boxes[2].price} BNB` : <Skeleton />}
                     </Text>
                   </Flex>
                 </CardBody>
@@ -354,12 +398,15 @@ const Box: React.FC = () => {
                 <CardBody p="0px">
                   <Flex p="16px" flexDirection="column">
                     <Text color="#905EFF">Metafight boxes</Text>
-                    <Text color="#3A3855" fontSize="20px">Mother box</Text>
+                    <Text color="#3A3855" fontSize="20px">
+                      Mother box
+                    </Text>
                   </Flex>
                   <Flex p="16px" background="#F4F3FF" alignItems="center" justifyContent="space-between">
                     <Text>Price</Text>
                     <Text color="#3A3855" fontWeight="bold" fontSize="18px" mt="4px">
-                      <BinanceIcon />{boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
+                      <BinanceIcon />
+                      {boxes ? ` ${boxes[0].price} BNB` : <Skeleton />}
                     </Text>
                   </Flex>
                 </CardBody>

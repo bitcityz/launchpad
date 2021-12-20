@@ -56,13 +56,7 @@ const HotCollectionCard: React.FC<HotCollectionCardProps> = ({
     <CardBody p="0px">
       <CardBody p="8px" pb="0px">
         <StyledImage src={bgSrc} height={125} width={375} />
-        <Flex
-          position="relative"
-          justifyContent="center"
-          alignItems="flex-end"
-          py="8px"
-          flexDirection="column"
-        >
+        <Flex position="relative" justifyContent="center" alignItems="flex-end" py="8px" flexDirection="column">
           <CollectionAvatar src={avatarSrc} width={96} height={96} />
           <Heading color={disabled ? 'textDisabled' : '#8550FF'} as="h3">
             {collectionName}

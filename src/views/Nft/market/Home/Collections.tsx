@@ -33,34 +33,33 @@ const Collections = () => {
         </Heading>
       </Flex>
       <Grid gridGap="16px" gridTemplateColumns={['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} mb="64px">
-        {Object.values(COLLECTIONS)
-          .map((collection) => {
-            return (
-              <HotCollectionCard
-                key={collection.address}
-                bgSrc={collection.banner.small}
-                avatarSrc={collection.avatar}
-                collectionName={collection.name}
-                url={`${nftsBaseUrl}/collections/${collection.address}`}
-              >
-                <Flex alignItems="center">
-                  <Text fontSize="12px" color="textSubtle">
-                    {t('Volume')}
-                  </Text>
-                  <BNBAmountLabel amount={totalVolumeBNBMap[collection.address] || 0} />
-                </Flex>
-              </HotCollectionCard>
-            )
-          })}
-          <HotCollectionCard
-            disabled
-            bgSrc="/images/collections/no-collection-banner-sm.png"
-            collectionName={t('Coming Soon')}
-          >
-            <Text color="textDisabled" fontSize="12px">
-              {t('More Collections are on their way!')}
-            </Text>
-          </HotCollectionCard>
+        {Object.values(COLLECTIONS).map((collection) => {
+          return (
+            <HotCollectionCard
+              key={collection.address}
+              bgSrc={collection.banner.small}
+              avatarSrc={collection.avatar}
+              collectionName={collection.name}
+              url={`${nftsBaseUrl}/collections/${collection.address}`}
+            >
+              <Flex alignItems="center">
+                <Text fontSize="12px" color="textSubtle">
+                  {t('Volume')}
+                </Text>
+                <BNBAmountLabel amount={totalVolumeBNBMap[collection.address] || 0} />
+              </Flex>
+            </HotCollectionCard>
+          )
+        })}
+        <HotCollectionCard
+          disabled
+          bgSrc="/images/collections/no-collection-banner-sm.png"
+          collectionName={t('Coming Soon')}
+        >
+          <Text color="textDisabled" fontSize="12px">
+            {t('More Collections are on their way!')}
+          </Text>
+        </HotCollectionCard>
       </Grid>
     </>
   )

@@ -13,7 +13,7 @@ interface FilterProps {
 }
 
 const StyledFilter = styled.div<FilterProps>`
-  background: ${({ isActive }) => isActive ? '#24a5af' : '#4AC7D5'};
+  background: ${({ isActive }) => (isActive ? '#24a5af' : '#4AC7D5')};
   color: white;
   padding: 8px 12px;
   margin-left: 8px;
@@ -54,10 +54,14 @@ const SortSelect: React.FC<{ collectionAddress: string }> = ({ collectionAddress
 
   return (
     <Flex flex="wrap" justifyContent="flex-end" width="100%">
-      {sortByItems.map(item => <StyledFilter
-        isActive={selectedOrder.field === item.value.field && selectedOrder.direction === item.value.direction}
-        onClick={() => handleChange(item)}>{item.label}
-      </StyledFilter>)}
+      {sortByItems.map((item) => (
+        <StyledFilter
+          isActive={selectedOrder.field === item.value.field && selectedOrder.direction === item.value.direction}
+          onClick={() => handleChange(item)}
+        >
+          {item.label}
+        </StyledFilter>
+      ))}
     </Flex>
   )
 }

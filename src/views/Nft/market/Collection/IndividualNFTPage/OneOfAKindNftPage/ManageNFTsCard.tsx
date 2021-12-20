@@ -41,13 +41,7 @@ const CollectibleRow: React.FC<CollectibleRowProps> = ({ nft }) => {
   const modalVariant = nft.location === NftLocation.WALLET ? 'sell' : 'edit'
   const [onPresentModal] = useModal(<SellModal variant={modalVariant} nftToSell={nft} />)
   return (
-    <CollectibleRowContainer
-      gridTemplateColumns="96px 1fr"
-      px="16px"
-      pb="8px"
-      my="16px"
-      onClick={onPresentModal}
-    >
+    <CollectibleRowContainer gridTemplateColumns="96px 1fr" px="16px" pb="8px" my="16px" onClick={onPresentModal}>
       <SmallRoundedImage src={nft.image.thumbnail} width={64} height={64} mx="16px" />
       <Grid gridTemplateColumns="1fr 1fr">
         <Text bold>{nft.name}</Text>

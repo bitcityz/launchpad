@@ -15,17 +15,34 @@ const CollectibleCardBody: React.FC<CollectibleCardProps> = ({ nft, nftLocation,
 
   return (
     <Flex flexDirection="column" p="8px">
-      <Flex style={{ position: 'relative'}} p="16px" pb="0px">
+      <Flex style={{ position: 'relative' }} p="16px" pb="0px">
         <PreviewImage src={image.thumbnail} height={320} width={320} mb="8px" />
-        <div style={{ zIndex: -1, position: 'absolute', top: 0, left: 0, width: 120, height: 120, borderRadius: 21, background: backgroundColor}} />
+        <div
+          style={{
+            zIndex: -1,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: 120,
+            height: 120,
+            borderRadius: 21,
+            background: backgroundColor,
+          }}
+        />
       </Flex>
-      <Flex flexDirection="column" style={{ overflow: 'hidden', border: '1px solid #C3BED9', borderRadius: 12, boxShadow : "0px 2px rgb(14 14 44 / 40%)" }}>
+      <Flex
+        flexDirection="column"
+        style={{
+          overflow: 'hidden',
+          border: '1px solid #C3BED9',
+          borderRadius: 12,
+          boxShadow: '0px 2px rgb(14 14 44 / 40%)',
+        }}
+      >
         <Flex flexDirection="column" p="8px 8px">
-          {nft.collectionName && (
-            <CollectionLabel rarity={nft.rarity} label={nft.collectionName} />
-          )}
+          {nft.collectionName && <CollectionLabel rarity={nft.rarity} label={nft.collectionName} />}
           {nftLocation && <LocationTag nftLocation={nftLocation} />}
-          <Text fontSize="16px" fontWeight="600" >
+          <Text fontSize="16px" fontWeight="600">
             {name}
           </Text>
         </Flex>
@@ -37,7 +54,6 @@ const CollectibleCardBody: React.FC<CollectibleCardProps> = ({ nft, nftLocation,
           )}
         </Box>
       </Flex>
-      
     </Flex>
   )
 }

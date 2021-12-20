@@ -84,7 +84,7 @@ export const useBNBVsBusdPrice = (): number | undefined => {
   const [bnbBusdPrice, setBnbBusdPrice] = useState()
   useEffect(() => {
     const fetchBNBBusdPrice = async () => {
-      const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT').catch(err => err)
+      const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT').catch((err) => err)
       if (res.ok) {
         const { price } = await res.json()
         setBnbBusdPrice(price)

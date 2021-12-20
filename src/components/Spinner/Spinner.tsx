@@ -1,8 +1,8 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import PanIcon from "./mexi.png";
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import PanIcon from './mexi.png'
 // import PancakeIcon from "./PancakeIcon";
-import { SpinnerProps } from "./types";
+import { SpinnerProps } from './types'
 
 const rotate = keyframes`
   from {
@@ -11,7 +11,7 @@ const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
-`;
+`
 
 const float = keyframes`
 	0% {
@@ -23,11 +23,11 @@ const float = keyframes`
 	100% {
 		transform: translatey(0px);
 	}
-`;
+`
 
 const Container = styled.div`
   position: relative;
-`;
+`
 
 // const RotatingPancakeIcon = styled(PancakeIcon)`
 //   position: absolute;
@@ -38,10 +38,10 @@ const Container = styled.div`
 // `;
 
 const FloatingPanIcon = styled.img`
-  -webkit-animation:spin 4s linear infinite;
-  -moz-animation:spin 4s linear infinite;
-  animation:spin 4s linear infinite;
-`;
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+`
 
 const Spinner: React.FC<SpinnerProps> = ({ size = 128 }) => {
   return (
@@ -49,7 +49,7 @@ const Spinner: React.FC<SpinnerProps> = ({ size = 128 }) => {
       {/* <RotatingPancakeIcon width={`${size * 0.5}px`} /> */}
       <FloatingPanIcon src={PanIcon} width={`${size}px`} />
     </Container>
-  );
-};
+  )
+}
 
-export default Spinner;
+export default Spinner
