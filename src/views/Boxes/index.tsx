@@ -50,8 +50,16 @@ const StyleClockCard = styled.div`
   background: linear-gradient(#FFB743, #FDE972);
   height: fit-content;
   padding: 8px 16px;
+  padding-right: 32px;
   border-radius: 12px;
   margin: 16px 8px;
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 12px;
+  }
 `
 const StylePurchasedCard = styled.div`
   align-items: center;
@@ -59,8 +67,16 @@ const StylePurchasedCard = styled.div`
   background: linear-gradient(#3E6FF9, #2EA9FF);
   height: fit-content;
   padding: 8px 16px;
+  padding-right: 32px;
   border-radius: 12px;
   margin: 16px 8px;
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 12px;
+  }
 `
 
 const BOXES = [0, 1, 2, 3]
@@ -97,27 +113,32 @@ const Boxes: React.FC = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
       }} mt="48px" background={`url(${HeaderBg})`}>
-        <Flex flexDirection="row">
-          <Flex flexDirection="column" width="50%">
-            <Text mb="16px" color="white">DEC 01-02-2022</Text>
-            <Heading as="h1" scale="xl" color="white" mb="24px">
+        <Grid
+          gridGap="16px"
+          gridTemplateColumns={['1fr', null, 'repeat(2, 1fr)', null, 'repeat(2, 1fr)']}
+          alignItems="start">
+          <Flex flexDirection="column">
+            <Text color="white">DEC 01-02-2022</Text>
+            <Heading fontSize='24px' fontWeight="bold" as="h1" scale="xl" color="white" mb="16px">
               MEFI BOX
             </Heading>
-            <Text display="inline" mt="24px" color="#FFFF00">
-              MEFI BOX contains various heroes with certain drop rates.The higher quality of the MEFI BOX is, the higher the drop ratefor the high-quality Heroes is.
+            <Text fontSize="13px" display="inline" mt="24px" color="white">
+              <span style={{color: '#FECF34'}}>MEFI BOX</span> contains various heroes with certain drop rates.The higher quality of the <span style={{color: '#FECF34'}}>MEFI BOX</span> is, the higher the drop ratefor the high-quality Heroes is.
             </Text>
           </Flex>
           <Flex>
             <StyleClockCard>
+              <img className="icon" src={ClockIcon} alt="clock" />
               <Text fontSize="14px">Time Remaining</Text>
               <Text fontWeight="bold" color="#3A3855" fontSize="16px">{`${totalRemaining.toLocaleString(undefined, {maximumFractionDigits:0})}/${totalSupply.toLocaleString(undefined, {maximumFractionDigits:0})}`}</Text>
             </StyleClockCard>
             <StylePurchasedCard>
+              <img className="icon" src={PurchasedIcon} alt="clock" />
               <Text fontSize="14px">Purchased</Text>
               <Text fontWeight="bold" color="#3A3855" fontSize="16px">{`${totalRemaining.toLocaleString(undefined, {maximumFractionDigits:0})}/${totalSupply.toLocaleString(undefined, {maximumFractionDigits:0})}`}</Text>
             </StylePurchasedCard>
           </Flex>
-        </Flex>
+        </Grid>
       </PageHeader>
       <Page style={{ marginTop: 0}}>
         <Grid

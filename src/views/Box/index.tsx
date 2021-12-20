@@ -8,6 +8,7 @@ import { useBoxSaleContract } from 'hooks/useContract'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useWeb3React } from '@web3-react/core'
+import ReactPlayer from 'react-player'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
 import { Text, Flex, BinanceIcon, Skeleton, Image, Box as BoxComponent, Button, Toggle, SearchIcon, NftIcon, Grid, Card, CardBody } from '@metaxiz/uikit'
 import Page from 'components/Layout/Page'
@@ -30,6 +31,12 @@ const getValueAsEthersBn = (value: string) => {
   const valueAsFloat = parseFloat(value)
   return Number.isNaN(valueAsFloat) ? ethers.BigNumber.from(0) : parseUnits(value)
 }
+
+const StyledPage = styled(Page)`
+  video{
+    border-radius: 12px
+  }
+`
 
 const BOXES = [0, 1, 2, 3]
 
@@ -136,7 +143,7 @@ const Box: React.FC = () => {
   }
 
   return (
-    <Page>
+    <StyledPage>
       <Card mb="40px">
         <CardBody>
           <Flex flexDirection={['column-reverse', null, 'row']}>
@@ -224,7 +231,8 @@ const Box: React.FC = () => {
               </BoxComponent>
             </Flex>
             <Flex flex="1">
-              {BOXMAP[box].box}
+              <ReactPlayer width="100%" playing muted loop url={BOXMAP[box].box} />
+              {/* {BOXMAP[box].box} */}
             </Flex>
             
             {/* <Flex style={{ position: 'relative'}} flex="2" justifyContent={['center', null, 'flex-end']} alignItems="center">
@@ -360,7 +368,7 @@ const Box: React.FC = () => {
           </Link>
         </Grid>
       </BoxComponent>
-    </Page>
+    </StyledPage>
   )
 }
 
@@ -378,25 +386,25 @@ const BOXMAP = {
     id: 3,
     name: 'common box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    box: <CommonBox />,
+    box: '/videos/common.mp4',
   },
   legendary: {
     id: 1,
     name: 'legendary box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    box: <LegendaryBox />,
+    box: '/videos/common.mp4',
   },
   epic: {
     id: 2,
     name: 'epic box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    box: <EpicBox />,
+    box: '/videos/common.mp4',
   },
   mother: {
     id: 0,
     name: 'mother box',
     desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
-    box: <MotherBox />,
+    box: '/videos/common.mp4',
   },
 }
 
