@@ -43,10 +43,10 @@ export default {
     whitelistChecker: '0x0000000000000000000000000000000000000000',
     active: true,
     address: '0x334C865645604248B4023583aDeDcC03E2D9ab73',
-    avatar: '/images/collections/box-avatar.svg',
+    avatar: '/images/collections/boxes-avatar.svg',
     banner: {
-      large: '/images/collections/box-banner.svg',
-      small: '/images/collections/box-banner.svg',
+      large: '/images/collections/boxes-banner.svg',
+      small: '/images/collections/boxes-banner.svg',
     },
   },
 }
