@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-  Button,
-  Text,
-  Modal,
-  useModal,
-  InjectedModalProps,
-  Flex,
-  ArrowForwardIcon,
-  ArrowBackIcon,
-} from '@mexi/uikit'
+import { Button, Text, Modal, useModal, InjectedModalProps, Flex, ArrowForwardIcon, ArrowBackIcon } from '@mexi/uikit'
 import { AutoColumn } from 'components/Layout/Column'
 import { useBoxOpenContract, useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
