@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useProfileForAddress } from 'state/profile/hooks'
-import { Box } from '@metaxiz/uikit'
+import { Box } from '@mexi/uikit'
 import Page from 'components/Layout/Page'
 import { Route, useParams } from 'react-router'
 import { nftsBaseUrl } from 'views/Nft/market/constants'

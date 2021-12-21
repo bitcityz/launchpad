@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Image, Flex } from '@metaxiz/uikit'
+import { Image, Flex } from '@mexi/uikit'
 
 // IMAGES
 import BgSrc from './background.png'

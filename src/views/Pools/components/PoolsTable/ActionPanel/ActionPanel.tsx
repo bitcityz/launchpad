@@ -12,7 +12,7 @@ import {
   Text,
   TimerIcon,
   useTooltip,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { BASE_BSC_SCAN_URL } from 'config'
 import { getBscScanLink } from 'utils'
 import { useBlock } from 'state/block/hooks'

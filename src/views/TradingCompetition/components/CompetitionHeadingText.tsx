@@ -1,4 +1,4 @@
-import { Heading } from '@metaxiz/uikit'
+import { Heading } from '@mexi/uikit'
 import styled, { DefaultTheme } from 'styled-components'
 
 const H1SizeStyles = (theme: DefaultTheme) => `

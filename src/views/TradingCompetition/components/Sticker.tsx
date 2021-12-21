@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 
 interface StickerProps {
   backgroundColor?: string

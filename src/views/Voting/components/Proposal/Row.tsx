@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Grid, Box } from '@metaxiz/uikit'
+import { Grid, Box } from '@mexi/uikit'
 
 export const AddressColumn = styled(Box).attrs({ alignItems: 'center' })`
   grid-area: address;

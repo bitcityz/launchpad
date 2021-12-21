@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Grid, Text, Button, Link, BinanceIcon, LinkExternal } from '@metaxiz/uikit'
+import { Flex, Grid, Text, Button, Link, BinanceIcon, LinkExternal } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { nftsBaseUrl, pancakeBunniesAddress } from 'views/Nft/market/constants'
 import { NftToken } from 'state/nftMarket/types'

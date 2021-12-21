@@ -10,7 +10,7 @@ import {
   ChartIcon,
   HistoryIcon,
   IconButton,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { useAppDispatch } from 'state'
 import { PredictionStatus } from 'state/types'
 import { useGetPredictionsStatus, useIsChartPaneOpen, useIsHistoryPaneOpen } from 'state/predictions/hooks'

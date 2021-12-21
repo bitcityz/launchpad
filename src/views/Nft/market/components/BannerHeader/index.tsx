@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Flex, Box, FlexProps } from '@metaxiz/uikit'
+import { Flex, Box, FlexProps } from '@mexi/uikit'
 import BannerImage from './BannerImage'
 
 interface BannerHeaderProps extends FlexProps {

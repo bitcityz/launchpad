@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ChevronDownIcon, ChevronUpIcon, Text } from '@metaxiz/uikit'
+import { ChevronDownIcon, ChevronUpIcon, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 
 export interface ExpandableSectionButtonProps {

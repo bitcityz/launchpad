@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Flex } from '@metaxiz/uikit'
+import { Text, Flex } from '@mexi/uikit'
 import styled from 'styled-components'
 import backgroundUrl from './images/Board 1.png'
 import availableUrl from './images/Icon_Avaiable 1.png'

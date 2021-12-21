@@ -14,7 +14,7 @@ import {
   Slider,
   Box,
   AutoRenewIcon,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { ethers } from 'ethers'
 import { parseUnits } from 'ethers/lib/utils'
 import { useWeb3React } from '@web3-react/core'

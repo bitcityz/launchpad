@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Heading, Skeleton, useMatchBreakpoints } from '@metaxiz/uikit'
+import { Flex, Heading, Skeleton, useMatchBreakpoints } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { Achievement } from 'state/types'
 import AchievementCard from './AchievementCard'

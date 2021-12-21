@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { ArrowUpIcon, ArrowDownIcon, Flex, FlexProps, Text, useTooltip, TooltipText, InfoIcon } from '@metaxiz/uikit'
+import { ArrowUpIcon, ArrowDownIcon, Flex, FlexProps, Text, useTooltip, TooltipText, InfoIcon } from '@mexi/uikit'
 import { BetPosition } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 

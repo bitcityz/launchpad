@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex, Text } from '@metaxiz/uikit'
+import { Box, Button, Flex, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { LandingBodyWrapper, StyledWaveContainer } from 'views/PancakeSquad/styles'
 import { useTheme } from 'styled-components'

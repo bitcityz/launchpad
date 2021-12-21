@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex, Link, Text } from '@metaxiz/uikit'
+import { Box, Button, Flex, Link, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { LandingBodyWrapper } from 'views/PancakeSquad/styles'
 import eventDescriptionConfigBuilder from './config'

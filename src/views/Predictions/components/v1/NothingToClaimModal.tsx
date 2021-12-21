@@ -12,7 +12,7 @@ import {
   ModalCloseButton,
   Button,
   AutoRenewIcon,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { getAllV1History } from './helpers'
 

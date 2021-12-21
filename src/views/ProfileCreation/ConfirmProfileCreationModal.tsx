@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Flex, Text } from '@metaxiz/uikit'
+import { Modal, Flex, Text } from '@mexi/uikit'
 import { ethers } from 'ethers'
 import { formatUnits } from '@ethersproject/units'
 import { useAppDispatch } from 'state'

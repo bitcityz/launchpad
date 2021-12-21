@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Text } from '@metaxiz/uikit'
+import { Box, Text } from '@mexi/uikit'
 import { PredictionUser } from 'state/types'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

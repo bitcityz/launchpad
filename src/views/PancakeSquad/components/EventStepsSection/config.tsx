@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@metaxiz/uikit'
+import { Button } from '@mexi/uikit'
 import { SaleStatusEnum, UserStatusEnum } from 'views/PancakeSquad/types'
 import ActivateProfileButton from '../Buttons/ActivateProfile'
 import BuyTicketsButtons from '../Buttons/BuyTickets'

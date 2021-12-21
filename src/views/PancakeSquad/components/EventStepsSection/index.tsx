@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Box, Button, Card, CardBody, Flex, Step, Stepper, Text } from '@metaxiz/uikit'
+import { Box, Button, Card, CardBody, Flex, Step, Stepper, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { StyledWaveContainer, LandingBodyWrapper } from 'views/PancakeSquad/styles'
 import useTheme from 'hooks/useTheme'

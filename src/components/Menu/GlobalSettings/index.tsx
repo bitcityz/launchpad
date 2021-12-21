@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, IconButton, CogIcon, useModal } from '@metaxiz/uikit'
+import { Flex, IconButton, CogIcon, useModal } from '@mexi/uikit'
 import SettingsModal from './SettingsModal'
 
 const GlobalSettings = () => {

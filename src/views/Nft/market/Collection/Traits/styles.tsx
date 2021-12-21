@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Image, Text } from '@metaxiz/uikit'
+import { Flex, Image, Text } from '@mexi/uikit'
 
 export const StyledSortButton = styled.button`
   border: none;

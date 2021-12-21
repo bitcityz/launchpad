@@ -1,5 +1,5 @@
 import React from 'react'
-import { Colors, Heading, TextProps } from '@metaxiz/uikit'
+import { Colors, Heading, TextProps } from '@mexi/uikit'
 import useTheme from 'hooks/useTheme'
 
 interface HeadingProps extends TextProps {

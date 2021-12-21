@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Modal } from '@metaxiz/uikit'
+import { Modal } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { LotteryStatus } from 'config/constants/types'
 import { useLottery } from 'state/lottery/hooks'

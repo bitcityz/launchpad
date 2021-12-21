@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Text, Flex, Link } from '@metaxiz/uikit'
+import { Text, Flex, Link } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getBscScanLink } from 'utils'

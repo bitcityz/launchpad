@@ -1,5 +1,5 @@
 import React from 'react'
-import { HistoryIcon, Button, useModal } from '@metaxiz/uikit'
+import { HistoryIcon, Button, useModal } from '@mexi/uikit'
 import TransactionsModal from './TransactionsModal'
 
 const Transactions = () => {

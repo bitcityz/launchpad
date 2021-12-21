@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Text } from '@metaxiz/uikit'
+import { Box, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import LineChartLoaderSVG from './LineChartLoaderSVG'
 import BarChartLoaderSVG from './BarChartLoaderSVG'

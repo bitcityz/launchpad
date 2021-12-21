@@ -1,5 +1,5 @@
 import React from 'react'
-import { Progress, ProgressProps } from '@metaxiz/uikit'
+import { Progress, ProgressProps } from '@mexi/uikit'
 
 interface RoundProgressProps extends ProgressProps {
   lockTimestamp: number

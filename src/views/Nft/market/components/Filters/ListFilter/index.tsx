@@ -13,7 +13,7 @@ import {
   CloseIcon,
   ArrowUpIcon,
   ArrowDownIcon,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import orderBy from 'lodash/orderBy'
 import { useAppDispatch } from 'state'
 import { filterNftsFromCollection } from 'state/nftMarket/reducer'

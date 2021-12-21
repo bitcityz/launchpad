@@ -10,7 +10,7 @@ import {
   Flex,
   ArrowForwardIcon,
   ArrowBackIcon,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { AutoColumn } from 'components/Layout/Column'
 import { useBoxOpenContract, useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'

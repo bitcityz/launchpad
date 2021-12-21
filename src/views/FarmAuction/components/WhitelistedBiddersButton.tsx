@@ -1,5 +1,5 @@
 import React from 'react'
-import { useModal, Button, Skeleton } from '@metaxiz/uikit'
+import { useModal, Button, Skeleton } from '@mexi/uikit'
 import WhitelistedBiddersModal from './WhitelistedBiddersModal'
 import useWhitelistedAddresses from '../hooks/useWhitelistedAddresses'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, BinanceIcon, Text } from '@metaxiz/uikit'
+import { Flex, BinanceIcon, Text } from '@mexi/uikit'
 import { multiplyPriceByAmount } from 'utils/prices'
 
 const ActivityPrice = ({ bnbBusdPrice, price }) => {

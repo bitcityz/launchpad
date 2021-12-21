@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from '@metaxiz/uikit'
+import { Box } from '@mexi/uikit'
 import Container from '../Layout/Container'
 import { PageHeaderProps } from './types'
 

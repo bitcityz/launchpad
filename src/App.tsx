@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
-import { ResetCSS } from '@metaxiz/uikit'
+import { ResetCSS } from '@mexi/uikit'
 import BigNumber from 'bignumber.js'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useUserAgent from 'hooks/useUserAgent'

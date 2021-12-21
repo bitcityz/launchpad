@@ -24,7 +24,7 @@ import {
   Grid,
   Card,
   CardBody,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import Page from 'components/Layout/Page'
 import { ethers } from 'ethers'
 import { parseUnits } from 'ethers/lib/utils'

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Heading } from '@metaxiz/uikit'
+import { Flex, Heading } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 
 export interface TimerProps {

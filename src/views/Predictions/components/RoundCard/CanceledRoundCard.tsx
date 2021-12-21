@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, Text, Flex, BlockIcon, LinkExternal } from '@metaxiz/uikit'
+import { Card, CardBody, Text, Flex, BlockIcon, LinkExternal } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { NodeRound, BetPosition } from 'state/types'
 import useTheme from 'hooks/useTheme'

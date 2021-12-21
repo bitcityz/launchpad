@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { Link } from 'react-router-dom'
 

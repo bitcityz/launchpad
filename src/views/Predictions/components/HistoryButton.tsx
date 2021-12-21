@@ -1,6 +1,6 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { AutoRenewIcon, HistoryIcon, IconButton } from '@metaxiz/uikit'
+import { AutoRenewIcon, HistoryIcon, IconButton } from '@mexi/uikit'
 import { useAppDispatch } from 'state'
 import { setHistoryPaneState } from 'state/predictions'
 import { useGetIsFetchingHistory } from 'state/predictions/hooks'

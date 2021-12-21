@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex, Image } from '@metaxiz/uikit'
+import { Flex, Image } from '@mexi/uikit'
 
 export const RoundedImage = styled(Image)`
   border-radius: ${({ theme }) => theme.radii.small};

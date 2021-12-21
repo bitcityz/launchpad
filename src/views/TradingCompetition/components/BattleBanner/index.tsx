@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Heading, Image } from '@metaxiz/uikit'
+import { Flex, Text, Heading, Image } from '@mexi/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'

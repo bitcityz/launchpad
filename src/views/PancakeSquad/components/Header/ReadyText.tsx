@@ -1,4 +1,4 @@
-import { CheckmarkIcon, Flex, FlexProps, Text } from '@metaxiz/uikit'
+import { CheckmarkIcon, Flex, FlexProps, Text } from '@mexi/uikit'
 import React from 'react'
 
 type ReadyTextProps = {

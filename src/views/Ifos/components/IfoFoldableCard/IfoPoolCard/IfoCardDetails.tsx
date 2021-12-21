@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Flex, Box, Skeleton } from '@metaxiz/uikit'
+import { Text, Flex, Box, Skeleton } from '@mexi/uikit'
 import { PublicIfoData } from 'views/Ifos/types'
 import { useTranslation } from 'contexts/Localization'
 import { Ifo, PoolIds } from 'config/constants/types'

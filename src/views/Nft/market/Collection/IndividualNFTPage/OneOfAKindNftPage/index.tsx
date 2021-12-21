@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { DEFAULT_TOKEN_DECIMAL, DEAD_SELLER } from 'config'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 // import sum from 'lodash/sum'
 import BigNumber from 'bignumber.js'
 import Page from 'components/Layout/Page'

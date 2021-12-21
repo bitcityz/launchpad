@@ -10,7 +10,7 @@ import {
   ButtonMenuItem,
   HelpIcon,
   useTooltip,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import useToast from 'hooks/useToast'

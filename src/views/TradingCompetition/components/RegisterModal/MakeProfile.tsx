@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Heading, Text } from '@metaxiz/uikit'
+import { Button, Heading, Text } from '@mexi/uikit'
 import { useWeb3React } from '@web3-react/core'
 import history from 'routerHistory'
 import { useTranslation } from 'contexts/Localization'

@@ -1,4 +1,4 @@
-import { Image } from '@metaxiz/uikit'
+import { Image } from '@mexi/uikit'
 import styled from 'styled-components'
 
 const DesktopImage = styled(Image)`

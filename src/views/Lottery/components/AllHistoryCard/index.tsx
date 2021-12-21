@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import { Card, Text, Skeleton, CardHeader, Box } from '@metaxiz/uikit'
+import { Card, Text, Skeleton, CardHeader, Box } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { useAppDispatch } from 'state'
 import { useLottery } from 'state/lottery/hooks'

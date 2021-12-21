@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { Button, Grid, Text, Flex, Box, BinanceIcon, useModal, Skeleton } from '@metaxiz/uikit'
+import { Button, Grid, Text, Flex, Box, BinanceIcon, useModal, Skeleton } from '@mexi/uikit'
 import { formatNumber } from 'utils/formatBalance'
 import { ContextApi } from 'contexts/Localization/types'
 import { useTranslation } from 'contexts/Localization'

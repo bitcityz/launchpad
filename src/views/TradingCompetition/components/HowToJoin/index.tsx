@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Heading } from '@metaxiz/uikit'
+import { Flex, Text, Heading } from '@mexi/uikit'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

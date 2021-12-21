@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text, Flex } from '@metaxiz/uikit'
+import { Heading, Text, Flex } from '@mexi/uikit'
 import styled from 'styled-components'
 import truncateHash from 'utils/truncateHash'
 import { LeaderboardDataItem } from '../../../types'

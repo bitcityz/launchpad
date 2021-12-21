@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
-import { Box, BoxProps, Text, Input } from '@metaxiz/uikit'
+import { Box, BoxProps, Text, Input } from '@mexi/uikit'
 import styled from 'styled-components'
 import { isAddress } from 'utils'
 import { useTranslation } from 'contexts/Localization'

@@ -1,4 +1,4 @@
-import { Card, CardBody, Flex, Heading, Image, ProfileAvatar } from '@metaxiz/uikit'
+import { Card, CardBody, Flex, Heading, Image, ProfileAvatar } from '@mexi/uikit'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'

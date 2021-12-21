@@ -10,7 +10,7 @@ import {
   ArrowForwardIcon,
   useMatchBreakpoints,
   Button,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { Spinner } from 'components/Spinner'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'

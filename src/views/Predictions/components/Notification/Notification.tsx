@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, CardBody, Heading } from '@metaxiz/uikit'
+import { Card, CardBody, Heading } from '@mexi/uikit'
 
 interface NotificationProps {
   title: string

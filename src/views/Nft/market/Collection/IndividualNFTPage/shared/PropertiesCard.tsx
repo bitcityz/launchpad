@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Text, NftIcon } from '@metaxiz/uikit'
+import { Box, Flex, Text, NftIcon } from '@mexi/uikit'
 import ExpandableCard from './ExpandableCard'
 
 interface PropertiesCardProps {

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Card, CardBody } from '@metaxiz/uikit'
+import { Heading, Card, CardBody } from '@mexi/uikit'
 
 interface HowToCardProps {
   number?: number

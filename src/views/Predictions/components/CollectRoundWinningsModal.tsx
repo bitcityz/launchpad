@@ -15,7 +15,7 @@ import {
   Box,
   ModalCloseButton,
   Skeleton,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { useAppDispatch } from 'state'
 import { REWARD_RATE } from 'state/predictions/config'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, Skeleton } from '@metaxiz/uikit'
+import { Flex, Heading, Skeleton } from '@mexi/uikit'
 import getTimePeriods from 'utils/getTimePeriods'
 import Timer from './Timer'
 import useNextEventCountdown from '../../hooks/useNextEventCountdown'

@@ -10,7 +10,7 @@ import {
   InjectedModalProps,
   Heading,
   Button,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import styled from 'styled-components'
 import usePrevious from 'hooks/usePreviousValue'
 import { TokenList } from '@uniswap/token-lists'

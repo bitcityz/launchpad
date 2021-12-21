@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Progress } from '@metaxiz/uikit'
+import { Progress } from '@mexi/uikit'
 import { differenceInSeconds } from 'date-fns'
 import { Auction, AuctionStatus } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'

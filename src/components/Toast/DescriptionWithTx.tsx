@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Text } from '@metaxiz/uikit'
+import { Link, Text } from '@mexi/uikit'
 import { getBscScanLink } from 'utils'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTranslation } from 'contexts/Localization'

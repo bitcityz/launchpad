@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { InjectedModalProps } from '@metaxiz/uikit'
+import { InjectedModalProps } from '@mexi/uikit'
 import { ethers } from 'ethers'
 import useTheme from 'hooks/useTheme'
 import { useTranslation } from 'contexts/Localization'

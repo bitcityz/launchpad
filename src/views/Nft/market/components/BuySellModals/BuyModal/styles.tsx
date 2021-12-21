@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Modal, Grid, Flex, Text, BinanceIcon, Skeleton } from '@metaxiz/uikit'
+import { Modal, Grid, Flex, Text, BinanceIcon, Skeleton } from '@mexi/uikit'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { BuyingStage } from './types'
 

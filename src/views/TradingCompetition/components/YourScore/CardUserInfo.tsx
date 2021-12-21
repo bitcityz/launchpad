@@ -12,7 +12,7 @@ import {
   BlockIcon,
   Button,
   useModal,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import { LIVE } from 'config/constants/trading-competition/easterPhases'

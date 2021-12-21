@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@metaxiz/uikit'
+import { Box } from '@mexi/uikit'
 import { PredictionUser } from 'state/types'
 import MobileRow from './MobileRow'
 

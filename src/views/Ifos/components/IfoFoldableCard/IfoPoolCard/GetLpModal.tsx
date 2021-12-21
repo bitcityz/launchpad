@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ModalBody, Text, Image, Button, Link, OpenNewIcon } from '@metaxiz/uikit'
+import { Modal, ModalBody, Text, Image, Button, Link, OpenNewIcon } from '@mexi/uikit'
 import { Token } from '@pancakeswap/sdk'
 import { BASE_URL } from 'config'
 import { useTranslation } from 'contexts/Localization'

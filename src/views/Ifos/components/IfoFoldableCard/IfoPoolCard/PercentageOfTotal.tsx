@@ -1,6 +1,6 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
-import { Text, TextProps } from '@metaxiz/uikit'
+import { Text, TextProps } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { BIG_ZERO } from 'utils/bigNumber'
 

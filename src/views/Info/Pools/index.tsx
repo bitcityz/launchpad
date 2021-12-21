@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Text, Heading, Card } from '@metaxiz/uikit'
+import { Text, Heading, Card } from '@mexi/uikit'
 import Page from 'components/Layout/Page'
 import PoolTable from 'views/Info/components/InfoTables/PoolsTable'
 import { useAllPoolData, usePoolDatas } from 'state/info/hooks'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Skeleton } from '@metaxiz/uikit'
+import { Flex, Skeleton } from '@mexi/uikit'
 
 export const SkeletonCardActions = () => {
   return <Skeleton height="48px" />

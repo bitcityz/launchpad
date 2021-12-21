@@ -12,7 +12,7 @@ import {
   ArrowBackIcon,
   Text,
   ArrowForwardIcon,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import styled from 'styled-components'

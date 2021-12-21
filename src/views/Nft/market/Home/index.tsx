@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Flex } from '@metaxiz/uikit'
+import { Heading, Flex } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import PageHeader from 'components/PageHeader'
 import PageSection from 'components/PageSection'

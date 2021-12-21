@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 import styled from 'styled-components'
 import { PageMeta } from 'components/Layout/Page'
 import Hero from './components/Hero'

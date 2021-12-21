@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@metaxiz/uikit'
+import { Grid } from '@mexi/uikit'
 import orderBy from 'lodash/orderBy'
 import { Collection } from 'state/nftMarket/types'
 import { CollectibleLinkCard } from '../../components/CollectibleCard'

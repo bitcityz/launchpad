@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'contexts/Localization'
 import styled from 'styled-components'
-import { Flex, Box, Text, Skeleton } from '@metaxiz/uikit'
+import { Flex, Box, Text, Skeleton } from '@mexi/uikit'
 import TeamPodiumIcon from './TeamPodiumIcon'
 import { PodiumBase } from '../../../svgs'
 import { TeamLeaderboardProps } from '../../../types'

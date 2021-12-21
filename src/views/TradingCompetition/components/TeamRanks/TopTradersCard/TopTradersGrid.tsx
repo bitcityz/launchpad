@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Skeleton } from '@metaxiz/uikit'
+import { Box, Skeleton } from '@mexi/uikit'
 import styled from 'styled-components'
 import { LeaderboardDataItem } from '../../../types'
 import GridItem from './GridItem'

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Flex, Text } from '@metaxiz/uikit'
+import { Box, Flex, Text } from '@mexi/uikit'
 import truncateHash from 'utils/truncateHash'
 import { Link } from 'react-router-dom'
 import { nftsBaseUrl } from '../constants'

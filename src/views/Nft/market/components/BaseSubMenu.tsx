@@ -1,4 +1,4 @@
-import { SubMenuItems } from '@metaxiz/uikit'
+import { SubMenuItems } from '@mexi/uikit'
 import styled from 'styled-components'
 
 const BaseSubMenu = styled(SubMenuItems)`

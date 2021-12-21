@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text, Button } from '@metaxiz/uikit'
+import { Flex, Text, Button } from '@mexi/uikit'
 import { Spinner } from 'components/Spinner'
 import { useTranslation } from 'contexts/Localization'
 import { StepIndicator } from './styles'

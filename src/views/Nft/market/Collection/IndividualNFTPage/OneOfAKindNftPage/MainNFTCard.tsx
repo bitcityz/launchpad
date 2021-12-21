@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Box, Card, CardBody, Text, Button, BinanceIcon, Skeleton, useModal } from '@metaxiz/uikit'
+import { Flex, Box, Card, CardBody, Text, Button, BinanceIcon, Skeleton, useModal } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { useHistory } from 'react-router-dom'
 import { NftToken } from 'state/nftMarket/types'

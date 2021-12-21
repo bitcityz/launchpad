@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import styled from 'styled-components'
 import btnBackgroundUrl from './images/Group 5 1.png'
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import BigNumber from 'bignumber.js'
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import { Collection } from 'state/nftMarket/types'
 import { formatNumber } from 'utils/formatBalance'
 import { useTranslation } from 'contexts/Localization'

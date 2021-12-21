@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'contexts/Localization'
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 
 const SafemoonWarning = () => {
   const { t } = useTranslation()

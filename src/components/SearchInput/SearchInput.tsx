@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Input } from '@metaxiz/uikit'
+import { Input } from '@mexi/uikit'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 import { useTranslation } from 'contexts/Localization'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'contexts/Localization'
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import { SVG, WonSlice, LostSlice, Wrapper, Info } from './PnlChartStyles'
 
 /**

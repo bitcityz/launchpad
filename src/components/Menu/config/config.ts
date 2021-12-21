@@ -1,4 +1,4 @@
-import { MenuItemsType } from '@metaxiz/uikit'
+import { MenuItemsType } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { airdropBaseUrl, nftsBaseUrl } from 'views/Nft/market/constants'
 

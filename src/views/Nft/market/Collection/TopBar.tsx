@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronLeftIcon, Flex } from '@metaxiz/uikit'
+import { ChevronLeftIcon, Flex } from '@mexi/uikit'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

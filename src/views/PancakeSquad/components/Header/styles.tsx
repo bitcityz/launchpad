@@ -1,4 +1,4 @@
-import { Box, Flex, lightColors, Text } from '@metaxiz/uikit'
+import { Box, Flex, lightColors, Text } from '@mexi/uikit'
 import styled from 'styled-components'
 
 export const StyledSquadHeaderContainer = styled(Flex)`

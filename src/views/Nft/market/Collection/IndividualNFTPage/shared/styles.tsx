@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Box, Flex, Grid, Image } from '@metaxiz/uikit'
+import { Box, Flex, Grid, Image } from '@mexi/uikit'
 
 export const TwoColumnsContainer = styled(Flex)`
   gap: 22px;

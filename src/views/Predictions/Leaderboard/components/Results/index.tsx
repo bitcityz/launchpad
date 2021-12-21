@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Grid, Flex, useMatchBreakpoints, AutoRenewIcon } from '@metaxiz/uikit'
+import { Box, Button, Grid, Flex, useMatchBreakpoints, AutoRenewIcon } from '@mexi/uikit'
 import { useAppDispatch } from 'state'
 import {
   useGetLeaderboardHasMoreResults,

@@ -11,7 +11,7 @@ import {
   HelpIcon,
   ButtonMenuItem,
   useTooltip,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
 import { getBalanceNumber } from 'utils/formatBalance'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BoxProps, Text } from '@metaxiz/uikit'
+import { BoxProps, Text } from '@mexi/uikit'
 import { NodeRound } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { getRoundPosition } from '../../helpers'

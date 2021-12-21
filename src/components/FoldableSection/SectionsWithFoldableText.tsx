@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Heading, Card, CardHeader, CardBody, Box, BoxProps } from '@metaxiz/uikit'
+import { Text, Heading, Card, CardHeader, CardBody, Box, BoxProps } from '@mexi/uikit'
 import FoldableText from './FoldableText'
 
 interface Props extends BoxProps {

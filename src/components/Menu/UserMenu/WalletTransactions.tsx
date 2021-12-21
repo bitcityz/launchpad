@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Box, Button, Flex, Text } from '@metaxiz/uikit'
+import { Box, Button, Flex, Text } from '@mexi/uikit'
 import { AppDispatch } from 'state'
 import { isTransactionRecent, useAllTransactions } from 'state/transactions/hooks'
 import { useTranslation } from 'contexts/Localization'

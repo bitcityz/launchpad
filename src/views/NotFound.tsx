@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Heading, Text, LogoIcon } from '@metaxiz/uikit'
+import { Button, Heading, Text, LogoIcon } from '@mexi/uikit'
 import { Link } from 'react-router-dom'
 import Page from 'components/Layout/Page'
 import { useTranslation } from 'contexts/Localization'

@@ -1,4 +1,4 @@
-import { EventStatus } from '@metaxiz/uikit'
+import { EventStatus } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import formatTimePeriod from 'utils/formatTimePeriod'
 import getTimePeriods from 'utils/getTimePeriods'

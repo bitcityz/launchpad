@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, LinkExternal, Image, Text, PrizeIcon, Skeleton } from '@metaxiz/uikit'
+import { Flex, LinkExternal, Image, Text, PrizeIcon, Skeleton } from '@mexi/uikit'
 import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
 import { PublicIfoData } from 'views/Ifos/types'

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 import { OptionProps } from 'components/Select/Select'
 import { useTranslation } from 'contexts/Localization'
 import { useAppDispatch } from 'state'

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card, Radio } from '@metaxiz/uikit'
+import { Card, Radio } from '@mexi/uikit'
 
 interface SelectionCardProps {
   name: string

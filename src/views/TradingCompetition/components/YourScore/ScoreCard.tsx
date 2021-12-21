@@ -11,7 +11,7 @@ import {
   LaurelRightIcon,
   CheckmarkCircleIcon,
   useModal,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { CLAIM, OVER } from 'config/constants/trading-competition/easterPhases'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useTranslation } from 'contexts/Localization'

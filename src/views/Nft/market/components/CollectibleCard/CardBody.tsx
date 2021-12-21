@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Text } from '@metaxiz/uikit'
+import { Box, Flex, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import CollectionLabel from '../CollectionLabel'

@@ -1,4 +1,4 @@
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import { Auction, AuctionStatus } from 'config/constants/types'
 import { useTranslation } from 'contexts/Localization'
 import React from 'react'

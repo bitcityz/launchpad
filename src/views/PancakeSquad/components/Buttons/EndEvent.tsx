@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Flex } from '@metaxiz/uikit'
+import { Button, Flex } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { SaleStatusEnum, UserStatusEnum } from '../../types'
 

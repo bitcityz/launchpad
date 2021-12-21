@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Modal, Box, Text, Flex, Input, OpenNewIcon, useMatchBreakpoints, Spinner } from '@metaxiz/uikit'
+import { Modal, Box, Text, Flex, Input, OpenNewIcon, useMatchBreakpoints, Spinner } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import { FarmAuctionBidderConfig } from 'config/constants/types'

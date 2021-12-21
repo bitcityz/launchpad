@@ -1,4 +1,4 @@
-import { FooterLinkType } from '@metaxiz/uikit'
+import { FooterLinkType } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 
 export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [

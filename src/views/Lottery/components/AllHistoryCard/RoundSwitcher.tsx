@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IconButton, ArrowForwardIcon, ArrowBackIcon, ArrowLastIcon, Flex, Heading, Input } from '@metaxiz/uikit'
+import { IconButton, ArrowForwardIcon, ArrowBackIcon, ArrowLastIcon, Flex, Heading, Input } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 
 const StyledInput = styled(Input)`

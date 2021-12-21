@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
-import { Flex, Text } from '@metaxiz/uikit'
+import { Flex, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { Ticket, UpdateTicketAction } from './useTicketsReducer'
 

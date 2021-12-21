@@ -1,4 +1,4 @@
-import { Flex, lightColors } from '@metaxiz/uikit'
+import { Flex, lightColors } from '@mexi/uikit'
 import styled, { keyframes } from 'styled-components'
 
 const flyingAnim = () => keyframes`

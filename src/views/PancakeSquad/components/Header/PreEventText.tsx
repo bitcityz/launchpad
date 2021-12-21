@@ -1,5 +1,5 @@
 import React from 'react'
-import { darkColors, Text } from '@metaxiz/uikit'
+import { darkColors, Text } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { SaleStatusEnum, UserStatusEnum } from '../../types'
 

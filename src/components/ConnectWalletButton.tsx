@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, useWalletModal } from '@metaxiz/uikit'
+import { Button, useWalletModal } from '@mexi/uikit'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 

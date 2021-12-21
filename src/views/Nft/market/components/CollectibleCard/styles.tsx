@@ -11,7 +11,7 @@ import {
   Text,
   WalletFilledIcon,
   Skeleton,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import styled from 'styled-components'
 

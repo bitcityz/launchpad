@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Flex, Text, ChevronUpIcon, ChevronDownIcon } from '@metaxiz/uikit'
+import { Flex, Text, ChevronUpIcon, ChevronDownIcon } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import PreviousBetsTable from './PreviousBetsTable'
 

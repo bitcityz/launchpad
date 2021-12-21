@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Flex, Grid, Box, Text, Button, BinanceIcon, ErrorIcon, useTooltip } from '@metaxiz/uikit'
+import { Flex, Grid, Box, Text, Button, BinanceIcon, ErrorIcon, useTooltip } from '@mexi/uikit'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { useTranslation } from 'contexts/Localization'
 import { NftToken } from 'state/nftMarket/types'

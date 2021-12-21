@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TextProps } from '@metaxiz/uikit'
+import { Text, TextProps } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { MarketEvent } from '../../utils/sortUserActivity'
 

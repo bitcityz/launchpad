@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 // import { useWeb3React } from '@web3-react/core'
 import mefiBoxUrl from './images/airdropic1.png'
 import Rectangle41Url from './images/Rectangle41.png'

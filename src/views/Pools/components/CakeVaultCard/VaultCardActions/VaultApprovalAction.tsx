@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, AutoRenewIcon, Skeleton } from '@metaxiz/uikit'
+import { Button, AutoRenewIcon, Skeleton } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { useVaultApprove } from '../../../hooks/useApprove'
 

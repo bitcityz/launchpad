@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from '@metaxiz/uikit'
+import { Button } from '@mexi/uikit'
 
 interface PercentageButtonProps {
   onClick: () => void

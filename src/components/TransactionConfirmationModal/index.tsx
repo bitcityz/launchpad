@@ -12,7 +12,7 @@ import {
   Link,
   Modal,
   InjectedModalProps,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { Spinner } from 'components/Spinner'
 import { registerToken } from 'utils/wallet'
 import { useTranslation } from 'contexts/Localization'

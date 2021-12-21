@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ChevronRightIcon, Flex, Grid, Heading, Text } from '@metaxiz/uikit'
+import { Button, ChevronRightIcon, Flex, Grid, Heading, Text } from '@mexi/uikit'
 import { Link } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'

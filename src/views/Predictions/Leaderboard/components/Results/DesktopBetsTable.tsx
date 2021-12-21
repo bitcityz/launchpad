@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, Text } from '@metaxiz/uikit'
+import { Box, Card, Text } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import PreviousBetsTable from '../PreviousBetsTable'
 

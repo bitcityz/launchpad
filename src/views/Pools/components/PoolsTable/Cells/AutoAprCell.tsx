@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, useMatchBreakpoints } from '@metaxiz/uikit'
+import { Text, useMatchBreakpoints } from '@mexi/uikit'
 import { DeserializedPool } from 'state/types'
 import { useCakeVault } from 'state/pools/hooks'
 import { useTranslation } from 'contexts/Localization'

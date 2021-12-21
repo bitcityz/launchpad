@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text } from '@metaxiz/uikit'
+import { Heading, Text } from '@mexi/uikit'
 import { NormalComponents, SpecialComponents } from 'react-markdown/src/ast-to-react'
 import styled from 'styled-components'
 

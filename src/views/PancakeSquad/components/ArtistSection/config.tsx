@@ -1,5 +1,5 @@
 import React from 'react'
-import { InstagramIcon, TwitterIcon } from '@metaxiz/uikit'
+import { InstagramIcon, TwitterIcon } from '@mexi/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 
 type ArtistConfigType = {

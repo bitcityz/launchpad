@@ -1,4 +1,4 @@
-import { Text } from '@metaxiz/uikit'
+import { Text } from '@mexi/uikit'
 import { Spinner } from 'components/Spinner'
 import React from 'react'
 import styled, { keyframes } from 'styled-components'

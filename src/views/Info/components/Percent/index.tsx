@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TextProps } from '@metaxiz/uikit'
+import { Text, TextProps } from '@mexi/uikit'
 
 export interface PercentProps extends TextProps {
   value: number | undefined

@@ -13,7 +13,7 @@ import {
   SubMenu,
   SubMenuItem,
   useModal,
-} from '@metaxiz/uikit'
+} from '@mexi/uikit'
 import { PredictionUser } from 'state/types'
 import { useGetProfileAvatar } from 'state/profile/hooks'
 import styled from 'styled-components'

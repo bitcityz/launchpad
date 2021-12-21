@@ -1,5 +1,5 @@
 import React from 'react'
-import { Svg, SvgProps } from '@metaxiz/uikit'
+import { Svg, SvgProps } from '@mexi/uikit'
 
 export const SlideSvgLight: React.FC<SvgProps> = (props) => {
   return (

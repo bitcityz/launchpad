@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex } from '@metaxiz/uikit'
+import { Flex } from '@mexi/uikit'
 import Footer from 'components/Menu/Footer'
 import { PageMeta } from 'components/Layout/Page'
 

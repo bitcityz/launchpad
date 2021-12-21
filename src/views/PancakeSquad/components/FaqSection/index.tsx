@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Heading, Card, CardHeader, CardBody } from '@metaxiz/uikit'
+import { Text, Heading, Card, CardHeader, CardBody } from '@mexi/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { LandingBodyWrapper } from 'views/PancakeSquad/styles'
 import FoldableText from 'components/FoldableSection/FoldableText'

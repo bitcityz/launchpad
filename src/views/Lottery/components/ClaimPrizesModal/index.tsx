@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { Heading, ModalContainer, ModalHeader, ModalTitle, ModalBody, ModalCloseButton } from '@metaxiz/uikit'
+import { Heading, ModalContainer, ModalHeader, ModalTitle, ModalBody, ModalCloseButton } from '@mexi/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { useTranslation } from 'contexts/Localization'
 import { delay } from 'lodash'

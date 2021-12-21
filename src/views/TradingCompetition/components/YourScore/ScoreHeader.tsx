@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NoProfileAvatarIcon, LaurelLeftIcon, LaurelRightIcon, Skeleton } from '@metaxiz/uikit'
+import { NoProfileAvatarIcon, LaurelLeftIcon, LaurelRightIcon, Skeleton } from '@mexi/uikit'
 import ProfileAvatarWithTeam from 'components/ProfileAvatarWithTeam'
 import { YourScoreProps } from '../../types'
 import Sticker from '../Sticker'
