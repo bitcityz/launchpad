@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box, Card, CardBody, Text, Button, BinanceIcon, Skeleton, useModal } from '@metaxiz/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { useHistory } from "react-router-dom"
+import { useHistory } from 'react-router-dom'
 import { NftToken } from 'state/nftMarket/types'
 import { useBNBVsBusdPrice } from 'hooks/useBUSDPrice'
 import { getBoxesAddress } from 'utils/addressHelpers'
@@ -45,28 +45,31 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
-      {isBox ? !isApproved ?
-        <Button
-          minWidth="168px"
-          mr="16px"
-          disabled={isApproving}
-          width={['100%', null, 'max-content']}
-          mt="24px"
-          onClick={handleApprove}
-        >
-          {isApproving ? 'Loading' : 'Approve'}
-        </Button> :
-        <Button
-          disabled={isOpeningBox}
-          minWidth="168px"
-          mr="16px"
-          width={['100%', null, 'max-content']}
-          mt="24px"
-          onClick={() => handleOpenBox(nft.tokenId)}
-        >
-          {isOpeningBox ? 'Opening' : 'Open Box'}
-        </Button> : null
-      }
+      {isBox ? (
+        !isApproved ? (
+          <Button
+            minWidth="168px"
+            mr="16px"
+            disabled={isApproving}
+            width={['100%', null, 'max-content']}
+            mt="24px"
+            onClick={handleApprove}
+          >
+            {isApproving ? 'Loading' : 'Approve'}
+          </Button>
+        ) : (
+          <Button
+            disabled={isOpeningBox}
+            minWidth="168px"
+            mr="16px"
+            width={['100%', null, 'max-content']}
+            mt="24px"
+            onClick={() => handleOpenBox(nft.tokenId)}
+          >
+            {isOpeningBox ? 'Opening' : 'Open Box'}
+          </Button>
+        )
+      ) : null}
     </Flex>
   )
 

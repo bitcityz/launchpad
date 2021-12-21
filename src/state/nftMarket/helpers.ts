@@ -86,7 +86,7 @@ export const getNftsFromCollectionApi = async (
   return null
 }
 
-const isAbsoluteUrl = urlString => (urlString.indexOf('http://') === 0 || urlString.indexOf('https://') === 0)
+const isAbsoluteUrl = (urlString) => urlString.indexOf('http://') === 0 || urlString.indexOf('https://') === 0
 /**
  * Fetch a single NFT using the API
  * @param collectionAddress
@@ -102,7 +102,7 @@ export const getNftApi = async (
   const baseURI = await contract.baseURI()
 
   const res = await fetch(`${baseURI}${hash}`)
-  
+
   if (res.ok) {
     const json = await res.json()
     const image = isAbsoluteUrl(json.image) ? json.image : `https://ipfsgw.metaxiz.com/ipfs/${json.image}`
@@ -150,7 +150,9 @@ export const getNftsFromDifferentCollectionsApi = async (
       updatedAt: res.updatedAt,
       hash: res.hash,
       image: {
-        original: isAbsoluteUrl(res.image?.original) ? res.image?.original : `https://ipfsgw.metaxiz.com/ipfs/${res.image?.original}`,
+        original: isAbsoluteUrl(res.image?.original)
+          ? res.image?.original
+          : `https://ipfsgw.metaxiz.com/ipfs/${res.image?.original}`,
         thumbnail: res.image?.thumbnail,
       },
     }))

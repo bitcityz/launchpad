@@ -95,22 +95,17 @@ const SellStage: React.FC<SellStageProps> = ({
         <Button mb="8px" variant="secondary" onClick={continueToTransferStage}>
           {t('Transfer')}
         </Button>
-        {isBox ? !isApproved ?
-          <Button
-            disabled={isApproving}
-            mb="8px"
-            onClick={handleApprove}
-          >
-            {isApproving ? 'Loading' : 'Approve'}
-          </Button> :
-          <Button
-            disabled={isOpeningBox}
-            mb="8px"
-            onClick={() => handleOpenBox(nftToSell.tokenId)}
-          >
-            {isOpeningBox ? 'Opening' : 'Open Box'}
-          </Button> : null
-        }
+        {isBox ? (
+          !isApproved ? (
+            <Button disabled={isApproving} mb="8px" onClick={handleApprove}>
+              {isApproving ? 'Loading' : 'Approve'}
+            </Button>
+          ) : (
+            <Button disabled={isOpeningBox} mb="8px" onClick={() => handleOpenBox(nftToSell.tokenId)}>
+              {isOpeningBox ? 'Opening' : 'Open Box'}
+            </Button>
+          )
+        ) : null}
       </Flex>
     </>
   )

@@ -19,7 +19,6 @@ const CardWrapper = styled.div`
 `
 
 const CollectibleLinkCard: React.FC<CollectibleCardProps> = ({ nft, nftLocation, currentAskPrice, ...props }) => {
-
   return (
     <ThumbWrapperOverflow>
       <CardWrapper>

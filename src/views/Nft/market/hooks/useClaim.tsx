@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { Button, Text, Modal, useModal, InjectedModalProps, Flex, ArrowForwardIcon, ArrowBackIcon } from '@metaxiz/uikit'
+import {
+  Button,
+  Text,
+  Modal,
+  useModal,
+  InjectedModalProps,
+  Flex,
+  ArrowForwardIcon,
+  ArrowBackIcon,
+} from '@metaxiz/uikit'
 import { AutoColumn } from 'components/Layout/Column'
 import { useBoxOpenContract, useERC721 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
@@ -33,7 +42,7 @@ const useClaim = (nfts, token, callback) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isClaimed, setIsClaimed] = useState(false)
     const [page, setPage] = useState(1)
-    const hadleOnClick = async() => {
+    const hadleOnClick = async () => {
       setIsLoading(true)
       const receipt = await onClaim()
       if (receipt.status) {
@@ -44,15 +53,24 @@ const useClaim = (nfts, token, callback) => {
     const hero = heroes[page - 1]
 
     return (
-      <Modal title="Heroes" maxWidth="420px !important" onDismiss={() => {
-        onClose()
-        onDismiss()
-      }}>
+      <Modal
+        title="Heroes"
+        maxWidth="420px !important"
+        onDismiss={() => {
+          onClose()
+          onDismiss()
+        }}
+      >
         <AutoColumn gap="lg">
           <AutoColumn gap="lg">
             <Flex flexDirection="row">
               <Flex mr="16px" flexDirection="column">
-                <img style={{ borderRadius: 8, height: "max-content", marginBottom: 16 }} width="100%" src={`https://ipfsgw.metaxiz.com/ipfs/${hero.image}`} alt="avatar" />
+                <img
+                  style={{ borderRadius: 8, height: 'max-content', marginBottom: 16 }}
+                  width="100%"
+                  src={`https://ipfsgw.metaxiz.com/ipfs/${hero.image}`}
+                  alt="avatar"
+                />
                 <PageButtons>
                   <Arrow
                     onClick={() => {
@@ -73,19 +91,30 @@ const useClaim = (nfts, token, callback) => {
                 </PageButtons>
               </Flex>
               <Flex flexDirection="column">
-                <Text fontSize="24px" color="#0088FF">{hero.name}</Text>
+                <Text fontSize="24px" color="#0088FF">
+                  {hero.name}
+                </Text>
                 <Text color="#6972A4">Belong to box Id: {hero.tokenId}</Text>
-                <Text mt="32px" color="#3A3855">Description</Text>
+                <Text mt="32px" color="#3A3855">
+                  Description
+                </Text>
                 <Text color="#6E6C8A">{hero.description}</Text>
               </Flex>
             </Flex>
-            {isClaimed ?
-              <Button onClick={() => {
-                onDismiss()
-                history.push(`/nfts/profile/${account}`)
-              }}>View my heroes</Button> :
-              <Button disabled={isLoading} onClick={hadleOnClick}>{isLoading ? 'Claiming...' : 'Claim my heroes'}</Button>
-            }
+            {isClaimed ? (
+              <Button
+                onClick={() => {
+                  onDismiss()
+                  history.push(`/nfts/profile/${account}`)
+                }}
+              >
+                View my heroes
+              </Button>
+            ) : (
+              <Button disabled={isLoading} onClick={hadleOnClick}>
+                {isLoading ? 'Claiming...' : 'Claim my heroes'}
+              </Button>
+            )}
           </AutoColumn>
         </AutoColumn>
       </Modal>
@@ -94,7 +123,9 @@ const useClaim = (nfts, token, callback) => {
 
   const handleClaim = async () => {
     return fetch(
-      `https://testnet-api.metafight.io/user/signature-open-box?tokenId=${nfts[0].tokenId}&contractAddress=${getBoxesAddress()}`,
+      `https://testnet-api.metafight.io/user/signature-open-box?tokenId=${
+        nfts[0].tokenId
+      }&contractAddress=${getBoxesAddress()}`,
       {
         method: 'GET',
         headers: {
@@ -102,24 +133,26 @@ const useClaim = (nfts, token, callback) => {
           authorization: token,
         },
       },
-    ).then(async (res) => {
-      if (res.ok) {
-        const data = await res.json()
-        const claimingParams = [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s]
-        console.log({
-          claimingParams,
-          boxRes: data,
-          openBoxContract
-        })
-        const tx = await callWithGasPrice(openBoxContract, 'claim', claimingParams)
-        const receipt = await tx.wait()
-        return receipt
-      }
-      return null
-    }).catch(err => {
-      toastError("Error", err.data ? err?.data.message : err.message)
-      return err
-    })
+    )
+      .then(async (res) => {
+        if (res.ok) {
+          const data = await res.json()
+          const claimingParams = [data.id, data.tokenId, data.nfts, data.hashs, data.sign.v, data.sign.r, data.sign.s]
+          console.log({
+            claimingParams,
+            boxRes: data,
+            openBoxContract,
+          })
+          const tx = await callWithGasPrice(openBoxContract, 'claim', claimingParams)
+          const receipt = await tx.wait()
+          return receipt
+        }
+        return null
+      })
+      .catch((err) => {
+        toastError('Error', err.data ? err?.data.message : err.message)
+        return err
+      })
   }
 
   const [onPresentModal] = useModal(<OpenedNftsModal onClaim={handleClaim} nfts={nfts} callback={callback} />)
@@ -131,10 +164,10 @@ const useClaim = (nfts, token, callback) => {
   }, [account, nftContract, openBoxContract])
 
   useEffect(() => {
-    if(nfts && nfts.length) {
+    if (nfts && nfts.length) {
       onPresentModal()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nfts])
 
   const { isApproving, isConfirming, handleApprove, handleConfirm } = useApproveConfirmTransaction({
@@ -151,9 +184,7 @@ const useClaim = (nfts, token, callback) => {
     },
     onApproveSuccess: async ({ receipt }) => {
       setIsApproved(true)
-      toastSuccess(
-        t('Contract approved - you can now put your NFT for sale!')
-      )
+      toastSuccess(t('Contract approved - you can now put your NFT for sale!'))
     },
     onConfirm: () => {
       return handleClaim()
@@ -162,11 +193,11 @@ const useClaim = (nfts, token, callback) => {
       toastSuccess('Claim successfuly')
       history.push(`/nfts/profile/${account}`)
     },
-    watched: nfts
+    watched: nfts,
   })
 
   if (!nfts) {
-    return {isApproving, isApproved}
+    return { isApproving, isApproved }
   }
 
   return { isApproving, isApproved, isConfirming, handleApprove, handleConfirm }
