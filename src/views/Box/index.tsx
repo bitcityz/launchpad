@@ -51,6 +51,7 @@ const StyledPage = styled(Page)`
     border-radius: 12px;
   }
 `
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const BOXES = [0, 1, 2, 3]
 
@@ -124,7 +125,7 @@ const Box: React.FC = () => {
   useEffect(() => {
     setIsHeroesLoading(true)
     const fetchStatic = async () => {
-      const res = await fetch(`https://testnet-api.metafight.io/boxs?name=${box.toUpperCase()}`)
+      const res = await fetch(`${REACT_APP_API_URL}/boxs?name=${box.toUpperCase()}`)
 
       if (res.ok) {
         const [data] = await res.json()

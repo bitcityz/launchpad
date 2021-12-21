@@ -176,6 +176,8 @@ const ModalStyle = styled(Modal)`
   }
 `
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 const getValueAsEthersBn = (value: string) => {
   const valueAsFloat = parseFloat(value)
   return Number.isNaN(valueAsFloat) ? ethers.BigNumber.from(0) : parseUnits(value)
@@ -261,7 +263,7 @@ const BoxNft: React.FC = () => {
 
   useEffect(() => {
     const fetchStatic = async () => {
-      const res = await fetch(`https://testnet-api.metafight.io/boxs?name=${box.toUpperCase()}`)
+      const res = await fetch(`${REACT_APP_API_URL}/boxs?name=${box.toUpperCase()}`)
 
       if (res.ok) {
         const [data] = await res.json()

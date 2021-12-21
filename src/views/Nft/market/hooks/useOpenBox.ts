@@ -10,6 +10,8 @@ let RETRY = 0
 const MAX_RETRY = 2
 const RETRY_STATUSES = [401, 400, 500]
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 const useOpenBox = () => {
   const { account, library } = useWeb3React()
   const token = localStorage.getItem('token')
@@ -26,7 +28,7 @@ const useOpenBox = () => {
     const newestTokenId = await nftContract.tokenOfOwnerByIndex(account, new BigNumber(balance._hex).toNumber() - 1)
     setIsLoading(true)
     const boxTokenId = boxId || new BigNumber(newestTokenId._hex).toString()
-    return fetch(`https://testnet-api.metafight.io/user/open-box`, {
+    return fetch(`${REACT_APP_API_URL}/user/open-box`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

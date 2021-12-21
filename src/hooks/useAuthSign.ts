@@ -4,8 +4,10 @@ import { simpleRpcProvider } from 'utils/providers'
 import { signMessage } from 'utils/web3React'
 import { post } from 'utils/http'
 
+const REACT_APP_AUTH_URL = process.env.REACT_APP_AUTH_URL
+
 const checkExistedAccount = async (account) => {
-  const res = await fetch(`https://testnet-auth-api.metafight.io/user-nonce?address=${account}`)
+  const res = await fetch(`${REACT_APP_AUTH_URL}/user-nonce?address=${account}`)
   if (res.ok) {
     const data = await res.json()
     return data.nonce
@@ -16,7 +18,7 @@ const checkExistedAccount = async (account) => {
 const loginAccount = async (userNonce, { account, library }) => {
   const msg = `mefi- ${userNonce}`
   const signature = await signMessage(library, account, msg)
-  const res = await fetch(`https://testnet-auth-api.metafight.io/user/authenticate`, {
+  const res = await fetch(`${REACT_APP_AUTH_URL}/user/authenticate`, {
     body: JSON.stringify({
       signature,
       address: account,
@@ -40,7 +42,7 @@ const registerAccount = async ({ account, library }) => {
   const msg = `mefi- ${transactionCount}`
   const signature = await signMessage(library, account, msg)
   const res = await post({
-    url: `https://testnet-auth-api.metafight.io/user`,
+    url: `${REACT_APP_AUTH_URL}/user`,
     body: {
       signature,
       address: account,

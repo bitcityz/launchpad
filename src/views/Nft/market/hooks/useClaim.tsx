@@ -17,6 +17,8 @@ interface Props extends InjectedModalProps {
   callback?: () => Promise<any>
 }
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 const useClaim = (nfts, token, callback) => {
   const openBoxContract = useBoxOpenContract()
   const [isApproved, setIsApproved] = useState(false)
@@ -114,9 +116,7 @@ const useClaim = (nfts, token, callback) => {
 
   const handleClaim = async () => {
     return fetch(
-      `https://testnet-api.metafight.io/user/signature-open-box?tokenId=${
-        nfts[0].tokenId
-      }&contractAddress=${getBoxesAddress()}`,
+      `${REACT_APP_API_URL}/user/signature-open-box?tokenId=${nfts[0].tokenId}&contractAddress=${getBoxesAddress()}`,
       {
         method: 'GET',
         headers: {
