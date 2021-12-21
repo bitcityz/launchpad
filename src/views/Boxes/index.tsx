@@ -79,6 +79,15 @@ const StylePurchasedCard = styled.div`
   }
 `
 
+const AbsoluteSkeleton = styled(Skeleton)`
+  position: absolute;
+`
+
+const PlayerWrapper = styled(Flex)`
+  min-height: 276px;
+  min-width: 274px;
+`
+
 const BOXES = [0, 1, 2, 3]
 
 const formatNumber = (numberAsString) => Number(numberAsString).toLocaleString(undefined, { maximumFractionDigits: 0 })
@@ -87,6 +96,10 @@ const Boxes: React.FC = () => {
   const [boxes, setBoxes] = useState<any[] | undefined>()
   const { account } = useWeb3React()
   const boxSaleContract = useBoxSaleContract()
+  const [isLoadingCommonBox, setIsLoadingCommonBox] = useState(true)
+  const [isLoadingEpicBox, setIsLoadingEpicBox] = useState(true)
+  const [isLoadingLegendaryBox, setIsLoadingLegendaryBox] = useState(true)
+  const [isLoadingMotherBox, setIsLoadingMotherBox] = useState(true)
 
   useEffect(() => {
     if (account) {
@@ -167,16 +180,18 @@ const Boxes: React.FC = () => {
           <Link to="/boxes/common">
             <Card>
               <CardBody p="0px">
-                <Flex p="16px">
-                  {/* <BackgroundImage
-                    height={320}
-                    width={320}
-                    style={{ borderRadius: '8px' }}
-                    src={CommonBoxSrc}
+                <PlayerWrapper p="16px">
+                  {isLoadingCommonBox && <AbsoluteSkeleton height="242px" width="242px" />}
+                  <ReactPlayer
+                    width="100%"
+                    height="100%"
+                    playing
+                    muted
+                    loop
+                    url="/videos/common.mp4"
+                    onReady={() => setIsLoadingCommonBox(false)}
                   />
-                  <img className="box" src={CommonSrc} alt="common" /> */}
-                  <ReactPlayer width="100%" height="100%" playing muted loop url="/videos/common.mp4" />
-                </Flex>
+                </PlayerWrapper>
 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
                   <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
@@ -199,16 +214,19 @@ const Boxes: React.FC = () => {
           <Link to="/boxes/epic">
             <Card>
               <CardBody p="0px">
-                <Flex p="16px">
-                  {/* <BackgroundImage
-                    height={320}
-                    width={320}
-                    style={{ borderRadius: '8px' }}
-                    src={EpicBoxSrc}
-                  /> */}
-                  {/* <img className="box" src={EpicSrc} alt="common" /> */}
-                  <ReactPlayer width="100%" height="100%" playing muted loop url="/videos/epic.mp4" />
-                </Flex>
+                <PlayerWrapper p="16px">
+                  {isLoadingEpicBox && <AbsoluteSkeleton height="242px" width="242px" />}
+
+                  <ReactPlayer
+                    width="100%"
+                    height="100%"
+                    playing
+                    muted
+                    loop
+                    url="/videos/epic.mp4"
+                    onReady={() => setIsLoadingEpicBox(false)}
+                  />
+                </PlayerWrapper>
 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
                   <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
@@ -231,16 +249,19 @@ const Boxes: React.FC = () => {
           <Link to="/boxes/legendary">
             <Card>
               <CardBody p="0px">
-                <Flex p="16px">
-                  {/* <BackgroundImage
-                    height={320}
-                    width={320}
-                    style={{ borderRadius: '8px' }}
-                    src={LegendaryBoxSrc}
+                <PlayerWrapper p="16px">
+                  {isLoadingLegendaryBox && <AbsoluteSkeleton height="242px" width="242px" />}
+
+                  <ReactPlayer
+                    width="100%"
+                    height="100%"
+                    playing
+                    muted
+                    loop
+                    url="/videos/legendary.mp4"
+                    onReady={() => setIsLoadingLegendaryBox(false)}
                   />
-                  <img style={{left: 0, top : 0}} className="box" src={LegendarySrc} alt="common" /> */}
-                  <ReactPlayer width="100%" height="100%" playing muted loop url="/videos/legendary.mp4" />
-                </Flex>
+                </PlayerWrapper>
 
                 <Flex p="16px" flexDirection="column" background="#F4F3FF">
                   <Text fontWeight="bold" fontSize="24px" color="#3A3855" mb="8px">
@@ -262,11 +283,18 @@ const Boxes: React.FC = () => {
           </Link>
           <Link to="/boxes/mother">
             <CardStyled>
-              <CardBody p="0px">
-                {/* <Flex height="274px">
-                  <ReactPlayer width="100%" height="100%" playing muted loop url='/videos/mother.mp4' />
-                </Flex> */}
-                <ReactPlayer width="100%" height="100%" playing muted loop url="/videos/mother.mp4" />
+              <CardBody p="0px" style={{ minHeight: '469px', minWidth: '274px' }}>
+                {isLoadingMotherBox && <AbsoluteSkeleton height="469px" width="274px" />}
+
+                <ReactPlayer
+                  width="100%"
+                  height="100%"
+                  playing
+                  muted
+                  loop
+                  url="/videos/mother.mp4"
+                  onReady={() => setIsLoadingMotherBox(false)}
+                />
                 <Flex
                   style={{ position: 'absolute', bottom: 0, width: '100%' }}
                   p="16px"
