@@ -33,6 +33,8 @@ export const AUCTION_BIDDERS_TO_FETCH = 500
 export const RECLAIM_AUCTIONS_TO_FETCH = 500
 export const AUCTION_WHITELISTED_BIDDERS_TO_FETCH = 500
 export const IPFS_GATEWAY = 'https://ipfs.io/ipfs'
+export const BASE_AUTH_URL = process.env.REACT_APP_AUTH_URL
+export const BASE_API_URL = process.env.REACT_APP_API_URL
 // In reality its 10000 because of fast refresh, a bit less here to cover for possible long request times
 export const PANCAKE_BUNNIES_UPDATE_FREQUENCY = 8000
 export const DEAD_SELLER = '0x0000000000000000000000000000000000000000'

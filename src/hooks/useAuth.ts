@@ -29,6 +29,7 @@ const useAuth = () => {
     (connectorID: ConnectorNames) => {
       const connector = connectorsByName[connectorID]
       if (connector) {
+        // connector.handleAccountsChanged = () => localStorage.removeItem('token')
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
             const hasSetup = await setupNetwork()

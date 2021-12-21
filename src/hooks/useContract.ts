@@ -15,7 +15,6 @@ import {
   getClaimRefundContract,
   getTradingCompetitionContract,
   getEasterNftContract,
-  getErc721Contract,
   getCakeVaultContract,
   getPredictionsContract,
   getChainlinkOracleContract,
@@ -26,12 +25,11 @@ import {
   getFarmAuctionContract,
   getBunnySpecialLotteryContract,
   getAnniversaryAchievementContract,
-  getNftMarketContract,
   getNftSaleContract,
   getPancakeSquadContract,
   getErc721CollectionContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress, getNftMarketAddress, getBoxSaleAddress, getBoxOpenAddress } from 'utils/addressHelpers'
+import { getMulticallAddress, getNftMarketAddress, getBoxSaleAddress, getBoxOpenAddress, getAirDropAddress } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
@@ -42,6 +40,7 @@ import ENS_PUBLIC_RESOLVER_ABI from 'config/abi/ens-public-resolver.json'
 import ENS_ABI from 'config/abi/ens-registrar.json'
 import BOX_SALE_ABI from 'config/abi/boxSale.json'
 import BOX_OPEN_ABI from 'config/abi/boxOpen.json'
+import AIRDROP_ABI from 'config/abi/airDrop.json'
 import { ERC20_BYTES32_ABI } from 'config/abi/erc20'
 import ERC20_ABI from 'config/abi/erc20.json'
 import ERC721_ABI from 'config/abi/erc721.json'
@@ -85,6 +84,10 @@ export const useBoxSaleContract = () => {
 
 export const useBoxOpenContract = () => {
   return useContract(getBoxOpenAddress(), BOX_OPEN_ABI)
+}
+
+export const useAirDropContract = () => {
+  return useContract(getAirDropAddress(), AIRDROP_ABI)
 }
 
 export const useCake = () => {

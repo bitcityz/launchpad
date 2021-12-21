@@ -83,3 +83,6 @@ export const getBoxOpenAddress = () => {
 export const getBoxesAddress = () => {
   return getAddress(collectionAddresses.boxes)
 }
+export const getAirDropAddress = () => {
+  return getAddress(addresses.airDrop)
+}

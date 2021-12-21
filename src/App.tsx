@@ -53,7 +53,8 @@ const App: React.FC = () => {
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
             <Route exact path="/">
-              <NftHome />
+              {/* <NftHome /> */}
+              <Airdrops />
             </Route>
             {/* <Route exact path="/farms/auction">
               <FarmAuction />
@@ -99,7 +100,7 @@ const App: React.FC = () => {
             </Route> */}
 
             {/* NFT */}
-            <Route path="/nfts">
+            {/* <Route path="/nfts">
               <NftMarket />
             </Route>
             <Route path="/airdrops">
@@ -110,7 +111,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/boxes/:box">
               <Box />
-            </Route>
+            </Route> */}
 
             {/* <Route path="/pancake-squad">
               <PancakeSquad />

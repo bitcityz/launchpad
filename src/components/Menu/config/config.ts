@@ -51,27 +51,27 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   //     },
   //   ],
   // },
-  {
-    label: 'MEXI BOXS',
-    href: `/boxes`,
-    icon: 'Nft',
-    items: [],
-  },
-  {
-    label: 'MARKETPLACE',
-    href: `${nftsBaseUrl}`,
-    icon: 'Nft',
-    items: [
-      {
-        label: t('Overview'),
-        href: `${nftsBaseUrl}`,
-      },
-      {
-        label: t('Collections'),
-        href: `${nftsBaseUrl}/collections`,
-      },
-    ],
-  },
+  // {
+  //   label: 'MEXI BOXS',
+  //   href: `/boxes`,
+  //   icon: 'Nft',
+  //   items: [],
+  // },
+  // {
+  //   label: 'MARKETPLACE',
+  //   href: `${nftsBaseUrl}`,
+  //   icon: 'Nft',
+  //   items: [
+  //     {
+  //       label: t('Overview'),
+  //       href: `${nftsBaseUrl}`,
+  //     },
+  //     {
+  //       label: t('Collections'),
+  //       href: `${nftsBaseUrl}/collections`,
+  //     },
+  //   ],
+  // },
   // {
   //   label: '',
   //   href: '/info',

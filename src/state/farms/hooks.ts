@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useWeb3React } from '@web3-react/core'
@@ -139,13 +139,15 @@ export const useLpTokenPrice = (symbol: string) => {
 // /!\ Deprecated , use the BUSD hook in /hooks
 
 export const usePriceCakeBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(251)
+  const [mexiPrice, setMexiPrice] = useState(new BigNumber(0))
+  useEffect(() => {
+    const fetchPrice = async() => {
+      const priceRes = await fetch(`https://api.pancakeswap.info/api/v2/tokens/0x70d8d5b3416888fd05e806195312dd2d9597d50c`)
+      const priceData = await priceRes.json()
+      setMexiPrice(new BigNumber(priceData.data.price))
+    }
+    fetchPrice()
+  }, [])
 
-  const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
-
-  const cakePriceBusd = useMemo(() => {
-    return new BigNumber(cakePriceBusdAsString)
-  }, [cakePriceBusdAsString])
-
-  return cakePriceBusd
+  return mexiPrice
 }
