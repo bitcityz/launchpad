@@ -63,9 +63,13 @@ const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     const decoded: any = token ? jwtDecode(token) : undefined
-    const isChangedAddress = account && decoded && decoded.user && decoded.user.address && decoded.user.address.toLowerCase() !== account.toLowerCase()
-
-    if ((account && !token) || (isChangedAddress)) {
+    const isValidToken = decoded?.user?.address
+    const isChangedAddress = account && decoded?.user?.address.toLowerCase() !== account.toLowerCase()
+    console.log({
+      isChangedAddress,
+      isValidToken
+    })
+    if ((account && !token) || isChangedAddress || isValidToken) {
       checkExistedAccount(account)
         .then((nonce) => {
           if (nonce) {
