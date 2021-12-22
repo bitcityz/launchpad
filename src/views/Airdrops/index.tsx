@@ -11,18 +11,24 @@ import usePrevious from 'hooks/usePreviousValue'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import mefiBoxUrl from './images/airdropic1.png'
 
+// IMAGES
+import BannerSrc from './images/banner.svg'
+import LogoSrc from './images/logo.svg'
+
 const StyedPage = styled(Page)`
-  background-img: url(${mefiBoxUrl});
-  background-size: cover;
-  .airdrop-card {
-    border-radius: 10px;
-    width: 650px;
-    height: 285px;
-    margin: 20px 0;
-    position: relative;
+  .banner {
+    border-radius: 12px;
   }
-  .mefi-box {
-    margin-top: 32px;
+  .contents {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #1d15369e;
+    padding: 16px;
+    display: flex;
+    0 0 12px 12px;
+    justify-content: space-between;
+    align-items: center;
   }
 `
 
@@ -86,11 +92,22 @@ const Boxes: React.FC = () => {
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
   return (
     <StyedPage>
-      <Flex flexDirection="column" alignItems="center">
-        <Text>Airdrop amount: {claimAbleAmount.toString()}</Text>
-        <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
-          {isLoading ? 'Claiming...' : 'Claim airdrop'}
-        </Button>
+      <Flex flexDirection="column" alignItems="center" style={{ position: 'relative'}}>
+        <img className='banner' src={BannerSrc} alt="banner" />
+        <Flex className='contents'>
+          <Flex>
+            <img className='logo' src={LogoSrc} alt='logo' />
+            <Flex flexDirection="column" ml="32px">
+              <Text fontWeight="bold" fontSize="22px" color="white">Metaxiz Airdrop</Text>
+              <Text color="white">Amount: {claimAbleAmount.toString()}</Text>
+            </Flex>
+            
+          </Flex>
+          
+          <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
+            {isLoading ? 'Claiming...' : 'Claim airdrop'}
+          </Button>
+        </Flex>
       </Flex>
     </StyedPage>
   )
