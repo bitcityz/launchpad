@@ -141,8 +141,10 @@ export const useLpTokenPrice = (symbol: string) => {
 export const usePriceCakeBusd = (): BigNumber => {
   const [mexiPrice, setMexiPrice] = useState(new BigNumber(0))
   useEffect(() => {
-    const fetchPrice = async() => {
-      const priceRes = await fetch(`https://api.pancakeswap.info/api/v2/tokens/0x70d8d5b3416888fd05e806195312dd2d9597d50c`)
+    const fetchPrice = async () => {
+      const priceRes = await fetch(
+        `https://api.pancakeswap.info/api/v2/tokens/0x70d8d5b3416888fd05e806195312dd2d9597d50c`,
+      )
       const priceData = await priceRes.json()
       setMexiPrice(new BigNumber(priceData.data.price))
     }

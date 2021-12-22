@@ -35,12 +35,14 @@ const Boxes: React.FC = () => {
   const [claimAbleAmount, setClaimAbleAmount] = useState(new BigNumber(0))
   const [isLoading, setIsLoading] = useState(false)
 
-  const authorization = localStorage.getItem("token")
+  const authorization = localStorage.getItem('token')
   const prevAccount = usePrevious(account)
   useEffect(() => {
     if (account) {
       airDropContract.isClaimed(account).then(setIsClaimed)
-      airDropContract.claimAmount().then(res => setClaimAbleAmount(new BigNumber(res._hex).div(DEFAULT_TOKEN_DECIMAL)))
+      airDropContract
+        .claimAmount()
+        .then((res) => setClaimAbleAmount(new BigNumber(res._hex).div(DEFAULT_TOKEN_DECIMAL)))
     }
   }, [airDropContract, account])
 
@@ -49,8 +51,8 @@ const Boxes: React.FC = () => {
       localStorage.removeItem('token')
     }
   }, [account, prevAccount])
-  
-  const handleClaim = useCallback(async() => {
+
+  const handleClaim = useCallback(async () => {
     try {
       setIsLoading(true)
       const res = await fetch(`${BASE_API_URL}/user/signature-claim-airdrop`, {
@@ -62,7 +64,13 @@ const Boxes: React.FC = () => {
       })
       const data = await res.json()
       if (res.ok) {
-        const tx = await callWithGasPrice(airDropContract, 'claim', [data.id, account, data.sign.v, data.sign.r, data.sign.s]).catch(err => {
+        const tx = await callWithGasPrice(airDropContract, 'claim', [
+          data.id,
+          account,
+          data.sign.v,
+          data.sign.r,
+          data.sign.s,
+        ]).catch((err) => {
           throw err.data
         })
         await tx.wait()
@@ -75,7 +83,6 @@ const Boxes: React.FC = () => {
     } catch (error: any) {
       toastError('Error', error.message)
     }
-    
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
   return (
     <StyedPage>

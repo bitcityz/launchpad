@@ -451,7 +451,7 @@ const BOXMAP = {
   mother: {
     id: 0,
     name: 'mother box',
-    desc: '10,000 unique, randomly-generated PancakeSwap NFTs from the mind of Chef Cecy Meade. Join the squad.',
+    desc: 'Own these boxes for a chance of getting rare NFTs and valuable items.',
     box: '/videos/common.mp4',
   },
 }

@@ -101,6 +101,6 @@ export default {
   },
   airDrop: {
     56: '',
-    97: '0x7eF8305bfA4FdA2B99d4EA34e06a3f22b1ddB8a5'
-  }
+    97: '0x7eF8305bfA4FdA2B99d4EA34e06a3f22b1ddB8a5',
+  },
 }

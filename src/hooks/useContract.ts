@@ -29,7 +29,13 @@ import {
   getPancakeSquadContract,
   getErc721CollectionContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress, getNftMarketAddress, getBoxSaleAddress, getBoxOpenAddress, getAirDropAddress } from 'utils/addressHelpers'
+import {
+  getMulticallAddress,
+  getNftMarketAddress,
+  getBoxSaleAddress,
+  getBoxOpenAddress,
+  getAirDropAddress,
+} from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
