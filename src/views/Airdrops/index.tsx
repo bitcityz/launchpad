@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Flex, Button, Text } from '@mexi/uikit'
+import { Flex, Button, Text, MetamaskIcon } from '@mexi/uikit'
 import { useWeb3React } from '@web3-react/core'
 import Page from 'components/Layout/Page'
+import tokens from 'config/constants/tokens'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { BASE_API_URL, DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useAirDropContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
+import { registerToken } from 'utils/wallet'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import backgroundUrl from './images/background-airdrop.png'
 
@@ -18,17 +20,34 @@ import LogoSrc from './images/mexi.svg'
 const StyledPage = styled(Page)`
   .banner {
     border-radius: 12px;
+    display: none;
   }
   .contents {
-    position: absolute;
     bottom: 0;
     width: 100%;
+    height: 80vh;
     background: #1d15369e;
     padding: 16px;
     display: flex;
-    border-radius: 0 0 12px 12px;
-    justify-content: space-between;
+    border-radius: 12px 12px;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    .contents {
+      height: auto;
+      border-radius: 0 0 12px 12px;
+      position: absolute;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .banner {
+      display: block;
+    }
+    img {
+      display: block;
+    }
   }
 `
 
@@ -92,6 +111,9 @@ const Boxes: React.FC = () => {
       toastError('Error', error.message)
     }
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
+
+  const isMetaMaskInScope = !!window.ethereum?.isMetaMask
+  const disabled = isClaimed || isLoading || !authorization
   return (
     <AirdropWrapper>
       <StyledPage>
@@ -107,14 +129,29 @@ const Boxes: React.FC = () => {
                 <Text color="white">Amount: {claimAbleAmount.toNumber().toLocaleString()}</Text>
               </Flex>
             </Flex>
+            <Flex flexDirection="column">
+              {account && isMetaMaskInScope && (
+                <Button
+                  mb="16px"
+                  variant="text"
+                  p="0"
+                  height="auto"
+                  onClick={() => registerToken(tokens.mexi.address, 'MEXI', 18)}
+                >
+                  <Text color="white">Add to Metamask</Text>
+                  <MetamaskIcon ml="4px" />
+                </Button>
+              )}
 
-            {account ? (
-              <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
-                {isLoading ? 'Claiming...' : 'Claim airdrop'}
-              </Button>
-            ) : (
-              <ConnectWalletButton />
-            )}
+              {account ? (
+                <Button style={{ background: disabled ? '#E9EAEB' : "linear-gradient(#9A38FF,#696FFF)"}} onClick={handleClaim} disabled={disabled}>
+                  {isLoading ? 'Claiming...' : 'Claim Airdrop'}
+                </Button>
+              ) : (
+                <ConnectWalletButton />
+              )}
+            </Flex>
+            
           </Flex>
         </Flex>
       </StyledPage>
