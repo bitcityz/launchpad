@@ -26,7 +26,7 @@ const StyedPage = styled(Page)`
     background: #1d15369e;
     padding: 16px;
     display: flex;
-    0 0 12px 12px;
+    border-radius: 0 0 12px 12px;
     justify-content: space-between;
     align-items: center;
   }
