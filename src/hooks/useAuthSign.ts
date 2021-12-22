@@ -4,11 +4,13 @@ import { simpleRpcProvider } from 'utils/providers'
 import { signMessage } from 'utils/web3React'
 import { post } from 'utils/http'
 import jwtDecode from "jwt-decode"
+import { BASE_API_URL } from 'config'
 
-const REACT_APP_AUTH_URL = process.env.REACT_APP_AUTH_URL
-
+console.log({
+  BASE_API_URL
+})
 const checkExistedAccount = async (account) => {
-  const res = await fetch(`${REACT_APP_AUTH_URL}/user-nonce?address=${account}`)
+  const res = await fetch(`${BASE_API_URL}/user-nonce?address=${account}`)
   if (res.ok) {
     const data = await res.json()
     return data.nonce
@@ -19,7 +21,7 @@ const checkExistedAccount = async (account) => {
 const loginAccount = async (userNonce, { account, library }) => {
   const msg = `mefi- ${userNonce}`
   const signature = await signMessage(library, account, msg)
-  const res = await fetch(`${REACT_APP_AUTH_URL}/user/authenticate`, {
+  const res = await fetch(`${BASE_API_URL}/user/authenticate`, {
     body: JSON.stringify({
       signature,
       address: account,
@@ -43,7 +45,7 @@ const registerAccount = async ({ account, library }) => {
   const msg = `mefi- ${transactionCount}`
   const signature = await signMessage(library, account, msg)
   const res = await post({
-    url: `${REACT_APP_AUTH_URL}/user`,
+    url: `${BASE_API_URL}/user`,
     body: {
       signature,
       address: account,

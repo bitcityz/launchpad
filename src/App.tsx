@@ -56,6 +56,9 @@ const App: React.FC = () => {
               {/* <NftHome /> */}
               <Airdrops />
             </Route>
+            <Route exact path="/airdrop">
+              <Airdrops />
+            </Route>
             {/* <Route exact path="/farms/auction">
               <FarmAuction />
             </Route>
