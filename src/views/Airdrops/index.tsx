@@ -7,13 +7,11 @@ import Page from 'components/Layout/Page'
 import { BASE_API_URL, DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useAirDropContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
-import usePrevious from 'hooks/usePreviousValue'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
-import mefiBoxUrl from './images/airdropic1.png'
 
 // IMAGES
 import BannerSrc from './images/banner.svg'
-import LogoSrc from './images/logo.svg'
+import LogoSrc from './images/mexi.svg'
 
 const StyedPage = styled(Page)`
   .banner {
@@ -42,7 +40,7 @@ const Boxes: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const authorization = localStorage.getItem('token')
-  const prevAccount = usePrevious(account)
+
   useEffect(() => {
     if (account) {
       airDropContract.isClaimed(account).then(setIsClaimed)
@@ -51,12 +49,6 @@ const Boxes: React.FC = () => {
         .then((res) => setClaimAbleAmount(new BigNumber(res._hex).div(DEFAULT_TOKEN_DECIMAL)))
     }
   }, [airDropContract, account])
-
-  useEffect(() => {
-    if (prevAccount && account && prevAccount !== account) {
-      localStorage.removeItem('token')
-    }
-  }, [account, prevAccount])
 
   const handleClaim = useCallback(async () => {
     try {
@@ -99,7 +91,7 @@ const Boxes: React.FC = () => {
             <img className='logo' src={LogoSrc} alt='logo' />
             <Flex flexDirection="column" ml="32px">
               <Text fontWeight="bold" fontSize="22px" color="white">Metaxiz Airdrop</Text>
-              <Text color="white">Amount: {claimAbleAmount.toString()}</Text>
+              <Text color="white">Amount: {claimAbleAmount.toNumber().toLocaleString()}</Text>
             </Flex>
             
           </Flex>

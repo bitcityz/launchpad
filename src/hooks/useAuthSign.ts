@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import { simpleRpcProvider } from 'utils/providers'
 import { signMessage } from 'utils/web3React'
 import { post } from 'utils/http'
+import jwtDecode from "jwt-decode"
 
 const REACT_APP_AUTH_URL = process.env.REACT_APP_AUTH_URL
 
@@ -53,12 +54,16 @@ const registerAccount = async ({ account, library }) => {
   return res.token
 }
 
+
 const useAuth = () => {
   const { account, library } = useWeb3React()
-  const token = localStorage.getItem('token')
 
   useEffect(() => {
-    if (account && !token) {
+    const token = localStorage.getItem('token')
+    const decoded: any = jwtDecode(token)
+    const isChangedAddress = account && decoded && decoded.user && decoded.user.address.toLowerCase() !== account.toLowerCase()
+
+    if ((account && !token) || (isChangedAddress)) {
       checkExistedAccount(account)
         .then((nonce) => {
           if (nonce) {
@@ -68,8 +73,8 @@ const useAuth = () => {
           }
         })
         .catch(() => registerAccount({ account, library }))
-    }
-  }, [account, token, library])
+    
+  }}, [account, library])
 }
 
 export const withAuth = (callback, { account, library }) => {
