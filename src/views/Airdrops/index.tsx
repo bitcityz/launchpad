@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Flex, Button, Text } from '@mexi/uikit'
 import { useWeb3React } from '@web3-react/core'
 import Page from 'components/Layout/Page'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import { BASE_API_URL, DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useAirDropContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
@@ -96,9 +97,10 @@ const Boxes: React.FC = () => {
             
           </Flex>
           
-          <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
+          {account ? <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
             {isLoading ? 'Claiming...' : 'Claim airdrop'}
-          </Button>
+          </Button> : 
+          <ConnectWalletButton />}
         </Flex>
       </Flex>
     </StyedPage>

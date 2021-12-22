@@ -60,7 +60,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    const decoded: any = jwtDecode(token)
+    const decoded: any = token ? jwtDecode(token) : undefined
     const isChangedAddress = account && decoded && decoded.user && decoded.user.address && decoded.user.address.toLowerCase() !== account.toLowerCase()
 
     if ((account && !token) || (isChangedAddress)) {
