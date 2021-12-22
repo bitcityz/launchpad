@@ -64,7 +64,7 @@ const useAuth = () => {
     const token = localStorage.getItem('token')
     const decoded: any = token ? jwtDecode(token) : undefined
     const isValidToken = decoded?.user?.address
-    const isChangedAddress = account && decoded?.user?.address.toLowerCase() !== account.toLowerCase()
+    const isChangedAddress = account && isValidToken?.toLowerCase() !== account.toLowerCase()
     console.log({
       isChangedAddress,
       isValidToken
