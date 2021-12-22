@@ -9,12 +9,13 @@ import { BASE_API_URL, DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useAirDropContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import backgroundUrl from './images/background-airdrop.png'
 
 // IMAGES
 import BannerSrc from './images/banner.svg'
 import LogoSrc from './images/mexi.svg'
 
-const StyedPage = styled(Page)`
+const StyledPage = styled(Page)`
   .banner {
     border-radius: 12px;
   }
@@ -29,6 +30,14 @@ const StyedPage = styled(Page)`
     justify-content: space-between;
     align-items: center;
   }
+`
+
+const AirdropWrapper = styled.div`
+  background-image: url(${backgroundUrl});
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: -49px;
+  background-position: bottom center;
 `
 
 const Boxes: React.FC = () => {
@@ -84,30 +93,32 @@ const Boxes: React.FC = () => {
     }
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
   return (
-    <StyedPage>
-      <Flex flexDirection="column" alignItems="center" style={{ position: 'relative' }}>
-        <img className="banner" src={BannerSrc} alt="banner" />
-        <Flex className="contents">
-          <Flex>
-            <img className="logo" src={LogoSrc} alt="logo" />
-            <Flex flexDirection="column" ml="32px">
-              <Text fontWeight="bold" fontSize="22px" color="white">
-                Metaxiz Airdrop
-              </Text>
-              <Text color="white">Amount: {claimAbleAmount.toNumber().toLocaleString()}</Text>
+    <AirdropWrapper>
+      <StyledPage>
+        <Flex flexDirection="column" alignItems="center" style={{ position: 'relative' }}>
+          <img className="banner" src={BannerSrc} alt="banner" />
+          <Flex className="contents">
+            <Flex>
+              <img className="logo" src={LogoSrc} alt="logo" />
+              <Flex flexDirection="column" ml="32px">
+                <Text fontWeight="bold" fontSize="22px" color="white">
+                  Metaxiz Airdrop
+                </Text>
+                <Text color="white">Amount: {claimAbleAmount.toNumber().toLocaleString()}</Text>
+              </Flex>
             </Flex>
-          </Flex>
 
-          {account ? (
-            <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
-              {isLoading ? 'Claiming...' : 'Claim airdrop'}
-            </Button>
-          ) : (
-            <ConnectWalletButton />
-          )}
+            {account ? (
+              <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
+                {isLoading ? 'Claiming...' : 'Claim airdrop'}
+              </Button>
+            ) : (
+              <ConnectWalletButton />
+            )}
+          </Flex>
         </Flex>
-      </Flex>
-    </StyedPage>
+      </StyledPage>
+    </AirdropWrapper>
   )
 }
 
