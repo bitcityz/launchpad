@@ -23,6 +23,14 @@ export const mainnetTokens = {
   ),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
   bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
+  mexi: new Token(
+    MAINNET,
+    '0x70D8d5B3416888fD05e806195312DD2D9597d50C',
+    18,
+    'MEXI',
+    'Metaxiz Token',
+    'https://metaxiz.com/',
+  ),
   cake: new Token(
     MAINNET,
     '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
