@@ -2564,10 +2564,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@mexi/uikit@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npmjs.org/@mexi/uikit/-/uikit-0.0.2.tgz#1768bea7293ee772db5e2dc242956344d3157631"
-  integrity sha512-oLh9sLCmhd3e9NwJqCNa/mBWRNNPELStWIxLCfEoyojSiDA1uuljknmu31yhU1zc9q8XqdBSAb9tf2Hr5fjRjQ==
+"@mexi/uikit@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@mexi/uikit/-/uikit-0.0.3.tgz#210c0d2038c9bedccca12785da180a27a62157db"
+  integrity sha512-eOvMOtFZLkBasVf/+86yQlEWzIv0iIaqN/vhrmd+GWVq3rRq0XE/68qKgjZxnB9+wFpAL1tNNxSzQFsCfNoYbA==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

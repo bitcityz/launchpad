@@ -3,11 +3,11 @@ import { useWeb3React } from '@web3-react/core'
 import { simpleRpcProvider } from 'utils/providers'
 import { signMessage } from 'utils/web3React'
 import { post } from 'utils/http'
-import jwtDecode from "jwt-decode"
+import jwtDecode from 'jwt-decode'
 import { BASE_API_URL } from 'config'
 
 console.log({
-  BASE_API_URL
+  BASE_API_URL,
 })
 const checkExistedAccount = async (account) => {
   const res = await fetch(`${BASE_API_URL}/user-nonce?address=${account}`)
@@ -56,7 +56,6 @@ const registerAccount = async ({ account, library }) => {
   return res.token
 }
 
-
 const useAuth = () => {
   const { account, library } = useWeb3React()
 
@@ -67,7 +66,7 @@ const useAuth = () => {
     const isChangedAddress = account && isValidToken?.toLowerCase() !== account.toLowerCase()
     console.log({
       isChangedAddress,
-      isValidToken
+      isValidToken,
     })
     if ((account && !token) || isChangedAddress || isValidToken) {
       checkExistedAccount(account)
@@ -79,8 +78,8 @@ const useAuth = () => {
           }
         })
         .catch(() => registerAccount({ account, library }))
-    
-  }}, [account, library])
+    }
+  }, [account, library])
 }
 
 export const withAuth = (callback, { account, library }) => {

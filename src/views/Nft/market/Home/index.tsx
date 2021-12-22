@@ -6,6 +6,7 @@ import PageHeader from 'components/PageHeader'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import useTheme from 'hooks/useTheme'
+import { useLocation } from 'react-router-dom'
 import Collections from './Collections'
 
 // IMAGES
@@ -17,6 +18,7 @@ const StyledPageHeader = styled(PageHeader)`
   background-image: url(${HeaderSrc});
   background-repeat: no-repeat;
   background-size: cover;
+  margin-top: ${(props) => (props.path !== '/' ? '48px' : null)};
 `
 
 const StyledHeaderInner = styled(Flex)`
@@ -48,10 +50,11 @@ const Home = () => {
   const { t } = useTranslation()
   const { theme } = useTheme()
 
+  const location = useLocation()
   return (
     <>
       <PageMeta />
-      <StyledPageHeader>
+      <StyledPageHeader path={location.pathname}>
         <StyledHeaderInner>
           <div>
             <Heading as="h1" scale="xxl" color="white" mb="8px">

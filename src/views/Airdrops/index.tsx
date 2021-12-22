@@ -85,22 +85,26 @@ const Boxes: React.FC = () => {
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
   return (
     <StyedPage>
-      <Flex flexDirection="column" alignItems="center" style={{ position: 'relative'}}>
-        <img className='banner' src={BannerSrc} alt="banner" />
-        <Flex className='contents'>
+      <Flex flexDirection="column" alignItems="center" style={{ position: 'relative' }}>
+        <img className="banner" src={BannerSrc} alt="banner" />
+        <Flex className="contents">
           <Flex>
-            <img className='logo' src={LogoSrc} alt='logo' />
+            <img className="logo" src={LogoSrc} alt="logo" />
             <Flex flexDirection="column" ml="32px">
-              <Text fontWeight="bold" fontSize="22px" color="white">Metaxiz Airdrop</Text>
+              <Text fontWeight="bold" fontSize="22px" color="white">
+                Metaxiz Airdrop
+              </Text>
               <Text color="white">Amount: {claimAbleAmount.toNumber().toLocaleString()}</Text>
             </Flex>
-            
           </Flex>
-          
-          {account ? <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
-            {isLoading ? 'Claiming...' : 'Claim airdrop'}
-          </Button> : 
-          <ConnectWalletButton />}
+
+          {account ? (
+            <Button onClick={handleClaim} disabled={isClaimed || isLoading || !authorization}>
+              {isLoading ? 'Claiming...' : 'Claim airdrop'}
+            </Button>
+          ) : (
+            <ConnectWalletButton />
+          )}
         </Flex>
       </Flex>
     </StyedPage>

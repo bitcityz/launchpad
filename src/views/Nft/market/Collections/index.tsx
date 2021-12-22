@@ -136,7 +136,7 @@ const Collectible = () => {
 
   return (
     <>
-      <PageHeader>
+      <PageHeader mt="48px">
         <Heading as="h1" scale="xxl" color="secondary">
           {t('Collections')}
         </Heading>
