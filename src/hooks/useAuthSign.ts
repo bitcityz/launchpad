@@ -44,6 +44,9 @@ let RETRY = 0
 const MAX_RETRY = 2
 
 const checkIfValidToken = token => {
+  console.log({
+    token
+  })
   const decoded: any = token ? jwtDecode(token) : undefined
   return decoded?.user?.address
 }
@@ -80,12 +83,16 @@ const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    const decoded: any = token ? jwtDecode(token) : undefined
+    console.log({
+      token
+    })
+    const decoded: any = token || token !== 'undefined' ? jwtDecode(token) : undefined
     const isValidToken = decoded?.user?.address
     const isChangedAddress = account && isValidToken?.toLowerCase() !== account.toLowerCase()
     console.log({
       isChangedAddress,
       isValidToken,
+      decoded
     })
     if (account && (!token || isChangedAddress || isValidToken)) {
       checkExistedAccount(account)
