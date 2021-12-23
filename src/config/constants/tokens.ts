@@ -1768,6 +1768,14 @@ export const testnetTokens = {
     'Wrapped BNB',
     'https://www.binance.com/',
   ),
+  mexi: new Token(
+    TESTNET,
+    '0xc18c2f01779862e9721ed4deb9762e0495ed7ffb',
+    18,
+    'MEXI',
+    'Metaxiz Token',
+    'https://metaxiz.com/',
+  ),
   cake: new Token(
     TESTNET,
     '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
