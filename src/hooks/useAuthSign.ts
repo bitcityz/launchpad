@@ -65,6 +65,7 @@ const registerAccount = async ({ account, library }) => {
   })
   if (!checkIfValidToken(res.token)) {
     console.log('Retry registerAccount', RETRY)
+    localStorage.removeItem('token')
     RETRY++
     if (RETRY < MAX_RETRY) {
       return registerAccount({ account, library })
