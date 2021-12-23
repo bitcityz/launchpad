@@ -86,7 +86,8 @@ const useAuth = () => {
     console.log({
       token
     })
-    const decoded: any = token || token !== 'undefined' ? jwtDecode(token) : undefined
+
+    const decoded: any = token && token !== 'undefined' ? jwtDecode(token) : undefined
     const isValidToken = decoded?.user?.address
     const isChangedAddress = account && isValidToken?.toLowerCase() !== account.toLowerCase()
     console.log({

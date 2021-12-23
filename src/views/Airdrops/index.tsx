@@ -144,14 +144,17 @@ const Boxes: React.FC = () => {
               )}
 
               {account ? (
-                <Button style={{ background: disabled ? '#E9EAEB' : "linear-gradient(#9A38FF,#696FFF)"}} onClick={handleClaim} disabled={disabled}>
+                <Button
+                  style={{ background: disabled ? '#E9EAEB' : 'linear-gradient(#9A38FF,#696FFF)' }}
+                  onClick={handleClaim}
+                  disabled={disabled}
+                >
                   {isLoading ? 'Claiming...' : 'Claim Airdrop'}
                 </Button>
               ) : (
                 <ConnectWalletButton />
               )}
             </Flex>
-            
           </Flex>
         </Flex>
       </StyledPage>
