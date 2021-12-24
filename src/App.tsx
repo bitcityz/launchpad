@@ -11,23 +11,26 @@ import { useFetchProfile } from 'state/profile/hooks'
 import { DatePickerPortal } from 'components/DatePicker'
 import useAuth from 'hooks/useAuthSign'
 import GlobalStyle from './style/Global'
-import Menu from './components/Menu'
+// import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import { ToastListener } from './contexts/ToastsContext'
 import PageLoader from './components/Loader/PageLoader'
 import EasterEgg from './components/EasterEgg'
 import GlobalCheckClaimStatus from './components/GlobalCheckClaimStatus'
 import history from './routerHistory'
+import { Footer, Header } from './bitcityz/components'
 // Views included in the main bundle
 
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
-const Boxes = lazy(() => import('./views/Boxes'))
-const Box = lazy(() => import('./views/Box'))
+const Home = lazy(() => import('./bitcityz/scenes/home/home'))
+const LaunchPool = lazy(() => import('./bitcityz/scenes/launch_pool/launchpool'))
+// const Boxes = lazy(() => import('./views/Boxes'))
+// const Box = lazy(() => import('./views/Box'))
 const NotFound = lazy(() => import('./views/NotFound'))
-const NftMarket = lazy(() => import('./views/Nft/market'))
-const Airdrops = lazy(() => import('./views/Airdrops'))
-const NftHome = lazy(() => import('./views/Nft/market/Home'))
+// const NftMarket = lazy(() => import('./views/Nft/market'))
+// const Airdrops = lazy(() => import('./views/Airdrops'))
+// const NftHome = lazy(() => import('./views/Nft/market/Home'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -49,17 +52,17 @@ const App: React.FC = () => {
       <ResetCSS />
       <GlobalStyle />
       <GlobalCheckClaimStatus excludeLocations={[]} />
-      <Menu>
-        <SuspenseWithChunkError fallback={<PageLoader />}>
-          <Switch>
-            <Route exact path="/">
-              {/* <NftHome /> */}
-              <Airdrops />
-            </Route>
-            <Route exact path="/airdrop">
-              <Airdrops />
-            </Route>
-            {/* <Route exact path="/farms/auction">
+      <Header />
+      <SuspenseWithChunkError fallback={<PageLoader />}>
+        <Switch>
+          <Route exact path="/">
+            {/* <NftHome /> */}
+            <Home />
+          </Route>
+          <Route exact path="/launchpool">
+            <LaunchPool />
+          </Route>
+          {/* <Route exact path="/farms/auction">
               <FarmAuction />
             </Route>
             <Route path="/farms">
@@ -102,8 +105,8 @@ const App: React.FC = () => {
               <Proposal />
             </Route> */}
 
-            {/* NFT */}
-            {/* <Route path="/nfts">
+          {/* NFT */}
+          {/* <Route path="/nfts">
               <NftMarket />
             </Route>
             <Route path="/airdrops">
@@ -116,17 +119,17 @@ const App: React.FC = () => {
               <Box />
             </Route> */}
 
-            {/* <Route path="/pancake-squad">
+          {/* <Route path="/pancake-squad">
               <PancakeSquad />
             </Route> */}
 
-            {/* Info pages */}
-            {/* <Route path="/info">
+          {/* Info pages */}
+          {/* <Route path="/info">
               <Info />
             </Route> */}
 
-            {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            {/* <Route exact strict path="/swap" component={Swap} />
+          {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
+          {/* <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact strict path="/find" component={PoolFinder} />
@@ -141,8 +144,8 @@ const App: React.FC = () => {
             <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
             <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
 
-            {/* Redirect */}
-            {/* <Route path="/pool">
+          {/* Redirect */}
+          {/* <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
             <Route path="/staking">
@@ -158,11 +161,11 @@ const App: React.FC = () => {
               <Redirect to={`${nftsBaseUrl}/profile/${account?.toLowerCase() || ''}`} />
             </Route> */}
 
-            {/* 404 */}
-            <Route component={NotFound} />
-          </Switch>
-        </SuspenseWithChunkError>
-      </Menu>
+          {/* 404 */}
+          <Route component={NotFound} />
+        </Switch>
+      </SuspenseWithChunkError>
+      <Footer />
       <EasterEgg iterations={2} />
       <ToastListener />
       <DatePickerPortal />
