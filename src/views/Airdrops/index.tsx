@@ -63,8 +63,10 @@ const Boxes: React.FC = () => {
   const { account } = useWeb3React()
   const { toastError } = useToast()
   const airDropContract = useAirDropContract()
+  const oldAirDropContract = useAirDropContract('0xcDF58F490f79AF8D0eee87cC19C703a903EB4ff9')
   const { callWithGasPrice } = useCallWithGasPrice()
   const [isClaimed, setIsClaimed] = useState()
+  const [isOldClaimed, setIsOldClaimed] = useState()
   const [claimAbleAmount, setClaimAbleAmount] = useState(new BigNumber(0))
   const [isLoading, setIsLoading] = useState(false)
 
@@ -73,11 +75,12 @@ const Boxes: React.FC = () => {
   useEffect(() => {
     if (account) {
       airDropContract.isClaimed(account).then(setIsClaimed)
+      oldAirDropContract.isClaimed(account).then(setIsOldClaimed)
       airDropContract
         .claimAmount()
         .then((res) => setClaimAbleAmount(new BigNumber(res._hex).div(DEFAULT_TOKEN_DECIMAL)))
     }
-  }, [airDropContract, account])
+  }, [airDropContract, account, oldAirDropContract])
 
   const handleClaim = useCallback(async () => {
     try {
@@ -113,7 +116,7 @@ const Boxes: React.FC = () => {
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
 
   const isMetaMaskInScope = !!window.ethereum?.isMetaMask
-  const disabled = isClaimed || isLoading || !authorization
+  const disabled = (isOldClaimed || isClaimed) || isLoading || !authorization
   return (
     <AirdropWrapper>
       <StyledPage>

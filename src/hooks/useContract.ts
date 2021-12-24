@@ -92,8 +92,8 @@ export const useBoxOpenContract = () => {
   return useContract(getBoxOpenAddress(), BOX_OPEN_ABI)
 }
 
-export const useAirDropContract = () => {
-  return useContract(getAirDropAddress(), AIRDROP_ABI)
+export const useAirDropContract = (address = getAirDropAddress()) => {
+  return useContract(address, AIRDROP_ABI)
 }
 
 export const useCake = () => {
