@@ -43,9 +43,9 @@ const loginAccount = async (userNonce, { account, library }) => {
 let RETRY = 0
 const MAX_RETRY = 2
 
-const checkIfValidToken = token => {
+const checkIfValidToken = (token) => {
   console.log({
-    token
+    token,
   })
   const decoded: any = token ? jwtDecode(token) : undefined
   return decoded?.user?.address
@@ -62,7 +62,7 @@ const registerAccount = async ({ account, library }) => {
       address: account,
       nonce: transactionCount.toString(),
     },
-  }).catch(err => {
+  }).catch((err) => {
     console.log(err)
     return err
   })
@@ -84,7 +84,7 @@ const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     console.log({
-      token
+      token,
     })
 
     const decoded: any = token && token !== 'undefined' ? jwtDecode(token) : undefined
@@ -93,7 +93,7 @@ const useAuth = () => {
     console.log({
       isChangedAddress,
       isValidToken,
-      decoded
+      decoded,
     })
     if (account && (!token || isChangedAddress || isValidToken)) {
       checkExistedAccount(account)

@@ -116,7 +116,7 @@ const Boxes: React.FC = () => {
   }, [toastError, account, airDropContract, callWithGasPrice, authorization])
 
   const isMetaMaskInScope = !!window.ethereum?.isMetaMask
-  const disabled = (isOldClaimed || isClaimed) || isLoading || !authorization
+  const disabled = isOldClaimed || isClaimed || isLoading || !authorization
   return (
     <AirdropWrapper>
       <StyledPage>
