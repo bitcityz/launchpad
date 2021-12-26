@@ -21,6 +21,14 @@ export const mainnetTokens = {
     'Wrapped BNB',
     'https://www.binance.com/',
   ),
+  bctz: new Token(
+    MAINNET,
+    '0x5017ae3d04e29b67b33cf96a86980717a773a783',
+    18,
+    'BCTX',
+    'BitcityZ',
+    'https://pancakeswap.finance/',
+  ),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
   bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
   mexi: new Token(
@@ -1767,6 +1775,14 @@ export const testnetTokens = {
     'WBNB',
     'Wrapped BNB',
     'https://www.binance.com/',
+  ),
+  bctz: new Token(
+    TESTNET,
+    '0x5017ae3d04e29b67b33cf96a86980717a773a783',
+    18,
+    'BCTX',
+    'BitcityZ',
+    'https://pancakeswap.finance/',
   ),
   mexi: new Token(
     TESTNET,

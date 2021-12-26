@@ -86,3 +86,6 @@ export const getBoxesAddress = () => {
 export const getAirDropAddress = () => {
   return getAddress(addresses.airDrop)
 }
+export const getLaunchPoolAddress = () => {
+  return getAddress(addresses.launchPool)
+}

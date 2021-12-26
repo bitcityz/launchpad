@@ -35,6 +35,7 @@ import {
   getBoxSaleAddress,
   getBoxOpenAddress,
   getAirDropAddress,
+  getLaunchPoolAddress,
 } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
@@ -290,4 +291,8 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 
 export function useMulticallContract(): Contract | null {
   return useContract(getMulticallAddress(), multiCallAbi, false)
+}
+
+export function useLaunchPoolContract(): Contract | null {
+  return useContract(getLaunchPoolAddress(), launchPoolAbi, true)
 }
