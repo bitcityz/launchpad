@@ -107,4 +107,8 @@ export default {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',
     97: '0xa8B9861222Ee5321B7052642695269E18cbD07AA',
   },
+  ticket: {
+    56: '0xbe64d1ba6328e31a9da2e3743ae1ca7a3d6b5204',
+    97: '0xbe64d1ba6328e31a9da2e3743ae1ca7a3d6b5204',
+  },
 }

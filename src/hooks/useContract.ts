@@ -53,6 +53,7 @@ import ERC20_ABI from 'config/abi/erc20.json'
 import ERC721_ABI from 'config/abi/erc721.json'
 import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
+import launchPoolAbi from '../config/abi/launchPool.json'
 import { getContract } from '../utils'
 
 /**

@@ -45,7 +45,7 @@ const App: React.FC = () => {
   usePollCoreFarmData()
   useScrollOnRouteChange()
   useUserAgent()
-  useAuth()
+  // useAuth()
 
   return (
     <Router history={history}>

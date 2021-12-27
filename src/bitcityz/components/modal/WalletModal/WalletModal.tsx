@@ -58,10 +58,20 @@ function WalletModal(props) {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <a href="/" className="flex items-center text-[#2CE7FF] text-sm text-shadow">
+              <a
+                href={`https://testnet.bscscan.com/address/${account}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center text-[#2CE7FF] text-sm text-shadow"
+              >
                 View Smart contract <img src={linkSqare} className="ml-[6px]" alt="" />
               </a>
-              <a href="/" className="flex items-center text-[#2CE7FF] text-sm text-shadow">
+              <a
+                href={`https://testnet.bscscan.com/address/${account}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center text-[#2CE7FF] text-sm text-shadow"
+              >
                 View Smart contract <img src={linkSqare} className="ml-[6px]" alt="" />
               </a>
             </div>

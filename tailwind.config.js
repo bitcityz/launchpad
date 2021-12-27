@@ -11,6 +11,7 @@ module.exports = {
       primary65: '#006e65',
       primary28: '#002c28',
       skyblue: '#7BF5FB',
+      disabled: 'rgba(158, 158, 158, 0.3)',
     },
   },
   plugins: [],
