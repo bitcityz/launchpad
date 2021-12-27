@@ -40,13 +40,7 @@ export const useApprovePool = (lpContract: Contract) => {
       console.error(e)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
-  }, [
-    lpContract,
-    t,
-    toastError,
-    toastSuccess,
-    callWithGasPrice,
-  ])
+  }, [lpContract, t, toastError, toastSuccess, callWithGasPrice])
 
   return { handleApprove, requestedApproval }
 }

@@ -809,16 +809,12 @@ input,
   max-width: 430px;
 }
 
-.max-w-\[547px\] {
-  max-width: 547px;
-}
-
-.max-w-\[300px\] {
-  max-width: 300px;
-}
-
 .max-w-\[350px\] {
   max-width: 350px;
+}
+
+.max-w-\[547px\] {
+  max-width: 547px;
 }
 
 .flex-1 {
@@ -1225,16 +1221,6 @@ input,
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-
-.py-14 {
-  padding-top: 3.5rem;
-  padding-bottom: 3.5rem;
-}
-
-.px-24 {
-  padding-left: 6rem;
-  padding-right: 6rem;
 }
 
 .pt-\[84px\] {
