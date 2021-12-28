@@ -2,10 +2,8 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'Metaxiz',
-  description:
-    'Meta Fight’s gameplay is designed to revolve around the combination between your personal skills and teawork, Challenge yourself with a wide variety of game modes: Discover & Fighting, coming with monthly updates and attractive rewards.',
-  image: 'https://pancakeswap.finance/images/hero.png',
+  title: 'BitcityZ',
+  description: '',
 }
 
 export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
@@ -33,106 +31,106 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
   switch (basePath) {
     case '/':
       return {
-        title: `${t('Home')} | ${t('Metaxiz')}`,
+        title: `${t('Home')} | ${t('BitcityZ')}`,
       }
-    case '/swap':
+    case '/launchpool':
       return {
-        title: `${t('Exchange')} | ${t('Metaxiz')}`,
+        title: `${t('Launchpool')} | ${t('BitcityZ')}`,
       }
     case '/add':
       return {
-        title: `${t('Add Liquidity')} | ${t('Metaxiz')}`,
+        title: `${t('Add Liquidity')} | ${t('BitcityZ')}`,
       }
     case '/remove':
       return {
-        title: `${t('Remove Liquidity')} | ${t('Metaxiz')}`,
+        title: `${t('Remove Liquidity')} | ${t('BitcityZ')}`,
       }
     case '/liquidity':
       return {
-        title: `${t('Liquidity')} | ${t('Metaxiz')}`,
+        title: `${t('Liquidity')} | ${t('BitcityZ')}`,
       }
     case '/find':
       return {
-        title: `${t('Import Pool')} | ${t('Metaxiz')}`,
+        title: `${t('Import Pool')} | ${t('BitcityZ')}`,
       }
     case '/competition':
       return {
-        title: `${t('Trading Battle')} | ${t('Metaxiz')}`,
+        title: `${t('Trading Battle')} | ${t('BitcityZ')}`,
       }
     case '/prediction':
       return {
-        title: `${t('Prediction')} | ${t('Metaxiz')}`,
+        title: `${t('Prediction')} | ${t('BitcityZ')}`,
       }
     case '/prediction/leaderboard':
       return {
-        title: `${t('Leaderboard')} | ${t('Metaxiz')}`,
+        title: `${t('Leaderboard')} | ${t('BitcityZ')}`,
       }
     case '/farms':
       return {
-        title: `${t('Farms')} | ${t('Metaxiz')}`,
+        title: `${t('Farms')} | ${t('BitcityZ')}`,
       }
     case '/farms/auction':
       return {
-        title: `${t('Farm Auctions')} | ${t('Metaxiz')}`,
+        title: `${t('Farm Auctions')} | ${t('BitcityZ')}`,
       }
     case '/pools':
       return {
-        title: `${t('Pools')} | ${t('Metaxiz')}`,
+        title: `${t('Pools')} | ${t('BitcityZ')}`,
       }
     case '/lottery':
       return {
-        title: `${t('Lottery')} | ${t('Metaxiz')}`,
+        title: `${t('Lottery')} | ${t('BitcityZ')}`,
       }
     case '/ifo':
       return {
-        title: `${t('Initial Farm Offering')} | ${t('Metaxiz')}`,
+        title: `${t('Initial Farm Offering')} | ${t('BitcityZ')}`,
       }
     case '/teams':
       return {
-        title: `${t('Leaderboard')} | ${t('Metaxiz')}`,
+        title: `${t('Leaderboard')} | ${t('BitcityZ')}`,
       }
     case '/voting':
       return {
-        title: `${t('Voting')} | ${t('Metaxiz')}`,
+        title: `${t('Voting')} | ${t('BitcityZ')}`,
       }
     case '/voting/proposal':
       return {
-        title: `${t('Proposals')} | ${t('Metaxiz')}`,
+        title: `${t('Proposals')} | ${t('BitcityZ')}`,
       }
     case '/voting/proposal/create':
       return {
-        title: `${t('Make a Proposal')} | ${t('Metaxiz')}`,
+        title: `${t('Make a Proposal')} | ${t('BitcityZ')}`,
       }
     case '/info':
       return {
-        title: `${t('Overview')} | ${t('Metaxiz Info & Analytics')}`,
+        title: `${t('Overview')} | ${t('BitcityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/pools':
       return {
-        title: `${t('Pools')} | ${t('Metaxiz Info & Analytics')}`,
+        title: `${t('Pools')} | ${t('BitcityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/tokens':
       return {
-        title: `${t('Tokens')} | ${t('Metaxiz Info & Analytics')}`,
+        title: `${t('Tokens')} | ${t('BitcityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/nfts':
       return {
-        title: `${t('Overview')} | ${t('Metaxiz')}`,
+        title: `${t('Overview')} | ${t('BitcityZ')}`,
       }
     case '/nfts/collections':
       return {
-        title: `${t('Collections')} | ${t('Metaxiz')}`,
+        title: `${t('Collections')} | ${t('BitcityZ')}`,
       }
     case '/nfts/profile':
       return {
-        title: `${t('Your Profile')} | ${t('Metaxiz')}`,
+        title: `${t('Your Profile')} | ${t('BitcityZ')}`,
       }
     case '/pancake-squad':
       return {
-        title: `${t('Pancake Squad')} | ${t('Metaxiz')}`,
+        title: `${t('Pancake Squad')} | ${t('BitcityZ')}`,
       }
     default:
       return null
