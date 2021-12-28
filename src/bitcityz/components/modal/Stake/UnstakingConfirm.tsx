@@ -4,6 +4,7 @@ import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
+import { Spinner } from '../../spinner'
 import useUnstakePool from '../../../scenes/launch_pool/hooks/useUnstakePool'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
@@ -59,6 +60,7 @@ function UnstakingConfirm({ onClose, pool }) {
       className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
     >
+        {pendingTx && <Spinner />}
       <div
         className="modal p-14 bg-no-repeat bg-center"
         role="dialog"

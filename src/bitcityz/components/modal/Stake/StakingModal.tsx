@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import useStakePool from '../../../scenes/launch_pool/hooks/useStakePool'
+import { Spinner } from '../../spinner'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
@@ -38,16 +39,6 @@ function StakingModal({ onClose, pool }) {
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
-      // if (isRemovingStake) {
-      //   // unstaking
-      //   await onUnstake(stakeAmount, stakingToken.decimals)
-      //   toastSuccess(
-      //     `${t('Unstaked')}!`,
-      //     t('Your %symbol% earnings have also been harvested to your wallet!', {
-      //       symbol: earningToken.symbol,
-      //     }),
-      //   )
-      // } else {
       // staking
       await onStake(stakeAmount, 18)
       toastSuccess(
@@ -56,11 +47,10 @@ function StakingModal({ onClose, pool }) {
           symbol: tokenName,
         }),
       )
-      // }
+
       setPendingTx(false)
       onClose()
     } catch (e) {
-      console.log(e)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       setPendingTx(false)
     }
@@ -71,6 +61,7 @@ function StakingModal({ onClose, pool }) {
       className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
     >
+        {pendingTx && <Spinner />}
       <div
         className="modal p-14 bg-no-repeat bg-center bg-contain min-w-[744px] min-h-[354px]"
         role="dialog"

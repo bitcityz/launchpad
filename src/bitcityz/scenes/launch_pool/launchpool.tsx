@@ -4,10 +4,13 @@ import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { multicallv2 } from 'utils/multicall'
 import { useWeb3React } from '@web3-react/core'
-import { useTokenContract } from 'hooks/useContract'
-import { getLaunchPoolAddress } from 'utils/addressHelpers'
+import { useTokenContract} from 'hooks/useContract'
+import { getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
+import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import PoolList from './components/PoolList'
+import { Spinner } from '../../components'
+import bgFantasy from '../../assets/images/bg-fantasy.png'
 
 const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 const POOLS = [0, 1, 2]
@@ -16,11 +19,12 @@ function LaunchPool() {
 
   const { account } = useWeb3React()
   const launchPoolAddress = getLaunchPoolAddress()
+  const ticketAddress = getTicketAddress()
 
   const [pools, setPools] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
   const [balance, setBalance] = useState(new BigNumber(0))
-
   const userCalls = useMemo(
     () =>
       POOLS.map((id) => {
@@ -35,6 +39,14 @@ function LaunchPool() {
         return { address: launchPoolAddress, name: 'poolInfo', params: [id] }
       }),
     [launchPoolAddress],
+  )
+
+  const ticketCalls = useMemo(
+    () =>
+      POOLS.map((id) => {
+        return { address: ticketAddress, name: 'types', params: [id] }
+      }),
+    [ticketAddress],
   )
 
   useEffect(() => {
@@ -55,7 +67,9 @@ function LaunchPool() {
         userInfos = await multicallv2(launchPoolABI, userCalls)
       }
       const poolInfos = await multicallv2(launchPoolABI, poolCalls)
-      console.log(poolInfos)
+      
+      const ticketInfos = await multicallv2(launchPoolTicketABI, ticketCalls)
+
       const data = poolInfos.map((pool, index) => {
         const info = userInfos ? userInfos[index] : null
         return {
@@ -68,19 +82,26 @@ function LaunchPool() {
           minLockingAmount: new BigNumber(pool.minLockingAmount._hex).toString(),
           isApproved,
           balance,
+          ticketHash: ticketInfos[index].hash
         }
       })
       setPools(data)
+      setIsLoading(false)
     }
     initialData()
-  }, [account, userCalls, poolCalls, isApproved, balance])
-
+  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance])
   return (
-    <div className="bg-[#050e21] bg-no-repeat bg-top">
-      <div className="layout-container">
-        <PoolList pools={pools} account={account} />
+    <>
+      {isLoading && <Spinner />}
+      <div
+        className="bg-[#050e21] bg-bottom bg-contain bg-no-repeat pb-[240px]"
+        style={{ backgroundImage: `url(${bgFantasy})` }}
+      >
+        <div className="layout-container">
+          <PoolList pools={pools} account={account} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

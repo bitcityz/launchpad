@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
 import { useWalletModal } from '@mexi/uikit'
@@ -8,7 +8,7 @@ import { useTranslation } from 'contexts/Localization'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import getTimePeriods from 'utils/getTimePeriods'
 import BigNumber from 'bignumber.js'
-
+import { useTicketContract } from 'hooks/useContract'
 import StakingAction from './StakingAction'
 
 import bgCardPink from '../../../assets/images/bg-lauchpool-card-pink.png'
@@ -18,13 +18,39 @@ import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
 function CardPool({ pool, account }) {
-  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
+  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
   const unlockTime = +lockingTime + +startTime
-  const secondsRemaining = isAfter(unlockTime, new Date()) ? differenceInSeconds(unlockTime, new Date()) : 0
+  const secondsRemaining = isAfter(unlockTime*1000, new Date()) ? differenceInSeconds(unlockTime*1000, new Date()) : 0
   const { days, hours, minutes } = getTimePeriods(secondsRemaining)
+
+  const ticketContract = useTicketContract()
+
+  const [ticket, setTicket] = useState(0)
+
+  useEffect(() => {
+    if (account) {
+      ticketContract.balanceOf(account).then(resp => {
+          const totalTicket = new BigNumber(resp._hex).toNumber()
+          if (totalTicket > 0) {
+            for (let i = 0; i < totalTicket; i++) {
+                ticketContract.tokenOfOwnerByIndex(account, i).then(res => {
+                    const tokenId = new BigNumber(res._hex).toNumber()
+                    ticketContract.tokenHash(tokenId).then(r => {
+                        console.log(ticketHash)
+                        if (r === ticketHash) {
+                            setTicket(val => val + 1)
+                        }
+                    })
+                })
+            }
+          }
+    })
+    }
+  }, [ account, ticketContract, ticketHash])
+
 
   return (
     <div className="relative p-6">
@@ -48,7 +74,7 @@ function CardPool({ pool, account }) {
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            {name} tickets: 0
+            {name} tickets: {ticket}
           </button>
         </div>
         <div className="flex-1 flex flex-col">

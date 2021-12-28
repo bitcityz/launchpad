@@ -4,7 +4,6 @@ import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 import { useWeb3React } from '@web3-react/core'
 import { useLocation, Link } from 'react-router-dom'
-
 import WalletModal from '../modal/WalletModal/WalletModal'
 
 import HomeHeader from '../../scenes/home/components/HomeHeader'
