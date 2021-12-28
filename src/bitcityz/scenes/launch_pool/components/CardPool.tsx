@@ -50,6 +50,8 @@ function CardPool({ pool, account, setUpdatePool }) {
           }
         }
       })
+    } else {
+      setTicket(0)
     }
   }, [account, ticketContract, ticketHash])
 
