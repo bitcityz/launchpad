@@ -6,7 +6,7 @@ import UnstakingConfirm from 'bitcityz/components/modal/Stake/UnstakingConfirm'
 import { useERC20 } from 'hooks/useContract'
 import { useApprovePool } from '../hooks/useApprove'
 
-function StakingAction({ pool }) {
+function StakingAction({ pool, setUpdatePool }) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
   const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
@@ -68,8 +68,10 @@ function StakingAction({ pool }) {
           >
             Stake BCTZ
           </button>
-          {showStakingModal && <StakingModal pool={pool} onClose={_handleCloseModal} />}
-          {showUnstakingConfirm && <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} />}
+          {showStakingModal && <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} />}
+          {showUnstakingConfirm && (
+            <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} setUpdatePool={setUpdatePool} />
+          )}
         </div>
       )}
     </>

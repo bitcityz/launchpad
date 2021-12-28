@@ -9,7 +9,7 @@ import { Spinner } from '../../spinner'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function StakingModal({ onClose, pool }) {
+function StakingModal({ onClose, pool, setUpdatePool }) {
   const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
   const { onStake } = useStakePool(id)
   const { t } = useTranslation()
@@ -49,6 +49,7 @@ function StakingModal({ onClose, pool }) {
       )
 
       setPendingTx(false)
+      setUpdatePool(true)
       onClose()
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
@@ -61,7 +62,7 @@ function StakingModal({ onClose, pool }) {
       className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
     >
-        {pendingTx && <Spinner />}
+      {pendingTx && <Spinner />}
       <div
         className="modal p-14 bg-no-repeat bg-center bg-contain min-w-[744px] min-h-[354px]"
         role="dialog"

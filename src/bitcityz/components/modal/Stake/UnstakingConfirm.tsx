@@ -9,7 +9,7 @@ import useUnstakePool from '../../../scenes/launch_pool/hooks/useUnstakePool'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function UnstakingConfirm({ onClose, pool }) {
+function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
   const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
   const { onUnstake } = useUnstakePool(id)
   const { t } = useTranslation()
@@ -48,6 +48,7 @@ function UnstakingConfirm({ onClose, pool }) {
         }),
       )
       setPendingTx(false)
+      setUpdatePool(true)
       onClose()
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
@@ -60,7 +61,7 @@ function UnstakingConfirm({ onClose, pool }) {
       className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
     >
-        {pendingTx && <Spinner />}
+      {pendingTx && <Spinner />}
       <div
         className="modal p-14 bg-no-repeat bg-center"
         role="dialog"

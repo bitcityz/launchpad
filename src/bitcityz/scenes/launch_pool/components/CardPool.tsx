@@ -17,13 +17,16 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account }) {
-  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } = pool
+function CardPool({ pool, account, setUpdatePool }) {
+  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } =
+    pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
   const unlockTime = +lockingTime + +startTime
-  const secondsRemaining = isAfter(unlockTime*1000, new Date()) ? differenceInSeconds(unlockTime*1000, new Date()) : 0
+  const secondsRemaining = isAfter(unlockTime * 1000, new Date())
+    ? differenceInSeconds(unlockTime * 1000, new Date())
+    : 0
   const { days, hours, minutes } = getTimePeriods(secondsRemaining)
 
   const ticketContract = useTicketContract()
@@ -32,25 +35,23 @@ function CardPool({ pool, account }) {
 
   useEffect(() => {
     if (account) {
-      ticketContract.balanceOf(account).then(resp => {
-          const totalTicket = new BigNumber(resp._hex).toNumber()
-          if (totalTicket > 0) {
-            for (let i = 0; i < totalTicket; i++) {
-                ticketContract.tokenOfOwnerByIndex(account, i).then(res => {
-                    const tokenId = new BigNumber(res._hex).toNumber()
-                    ticketContract.tokenHash(tokenId).then(r => {
-                        console.log(ticketHash)
-                        if (r === ticketHash) {
-                            setTicket(val => val + 1)
-                        }
-                    })
-                })
-            }
+      ticketContract.balanceOf(account).then((resp) => {
+        const totalTicket = new BigNumber(resp._hex).toNumber()
+        if (totalTicket > 0) {
+          for (let i = 0; i < totalTicket; i++) {
+            ticketContract.tokenOfOwnerByIndex(account, i).then((res) => {
+              const tokenId = new BigNumber(res._hex).toNumber()
+              ticketContract.tokenHash(tokenId).then((r) => {
+                if (r === ticketHash) {
+                  setTicket((val) => val + 1)
+                }
+              })
+            })
           }
-    })
+        }
+      })
     }
-  }, [ account, ticketContract, ticketHash])
-
+  }, [account, ticketContract, ticketHash])
 
   return (
     <div className="relative p-6">
@@ -60,7 +61,7 @@ function CardPool({ pool, account }) {
           background: 'linear-gradient(114.49deg, rgba(255, 255, 255, 0.33) -21.49%, rgba(255, 255, 255, 0) 111.75%)',
         }}
       />
-      <div className="flex gap-x-6 relative z-10">
+      <div className="flex gap-x-6 relative">
         <div className="flex flex-col gap-y-5">
           <div className="relative">
             <img src={id === 0 ? bgCardPink : id === 1 ? bgCardBlue : bgCardGreen} alt="" />
@@ -130,7 +131,7 @@ function CardPool({ pool, account }) {
                 Connect wallet
               </button>
             ) : (
-              <StakingAction pool={pool} />
+              <StakingAction pool={pool} setUpdatePool={setUpdatePool} />
             )}
           </div>
         </div>

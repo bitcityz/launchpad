@@ -4,7 +4,7 @@ import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { multicallv2 } from 'utils/multicall'
 import { useWeb3React } from '@web3-react/core'
-import { useTokenContract} from 'hooks/useContract'
+import { useTokenContract } from 'hooks/useContract'
 import { getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
@@ -25,6 +25,7 @@ function LaunchPool() {
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
   const [balance, setBalance] = useState(new BigNumber(0))
+  const [updatePool, setUpdatePool] = useState(false)
   const userCalls = useMemo(
     () =>
       POOLS.map((id) => {
@@ -67,7 +68,7 @@ function LaunchPool() {
         userInfos = await multicallv2(launchPoolABI, userCalls)
       }
       const poolInfos = await multicallv2(launchPoolABI, poolCalls)
-      
+
       const ticketInfos = await multicallv2(launchPoolTicketABI, ticketCalls)
 
       const data = poolInfos.map((pool, index) => {
@@ -82,14 +83,14 @@ function LaunchPool() {
           minLockingAmount: new BigNumber(pool.minLockingAmount._hex).toString(),
           isApproved,
           balance,
-          ticketHash: ticketInfos[index].hash
+          ticketHash: ticketInfos[index].hash,
         }
       })
       setPools(data)
       setIsLoading(false)
     }
     initialData()
-  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance])
+  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance, updatePool])
   return (
     <>
       {isLoading && <Spinner />}
@@ -98,7 +99,7 @@ function LaunchPool() {
         style={{ backgroundImage: `url(${bgFantasy})` }}
       >
         <div className="layout-container">
-          <PoolList pools={pools} account={account} />
+          <PoolList pools={pools} account={account} setUpdatePool={setUpdatePool} />
         </div>
       </div>
     </>
