@@ -588,10 +588,6 @@ input,
   z-index: 10;
 }
 
-.z-0 {
-  z-index: 0;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -773,10 +769,6 @@ input,
   height: 42px;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .min-h-\[354px\] {
   min-height: 354px;
 }
@@ -795,10 +787,6 @@ input,
 
 .w-\[24px\] {
   width: 24px;
-}
-
-.w-screen {
-  width: 100vw;
 }
 
 .min-w-\[744px\] {
