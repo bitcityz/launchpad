@@ -54,6 +54,13 @@
     @apply relative flex-row items-center w-auto h-auto;
     background-image: initial;
   }
+  .tab {
+    @apply h-[62px] transition-all rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm font-semibold text-[#F5F5F5] text-shadow flex flex-col items-center justify-center;
+  }
+  .tab-active {
+    @apply !text-[#2CE7FF];
+    background-color: rgba(44, 231, 255, 0.3);
+  }
 }
 
 ::-webkit-scrollbar-corner {
