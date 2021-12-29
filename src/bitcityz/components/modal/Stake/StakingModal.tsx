@@ -64,13 +64,13 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
     >
       {pendingTx && <Spinner />}
       <div
-        className="modal p-14 bg-no-repeat bg-center bg-contain min-w-[744px] min-h-[354px]"
+        className="modal px-8 md:px-14 py-14 bg-no-repeat bg-center"
         role="dialog"
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
-        style={{ backgroundImage: `url(${bgStaking})` }}
+        style={{ backgroundImage: `url(${bgStaking})`, backgroundSize: '100% 100%' }}
       >
-        <h6 className="text-[#F5F5F5] text-[28px] font-bold text-center">Stake in {name} Pool</h6>
+        <h6 className="text-[#F5F5F5] text-xl md:text-[28px] font-bold text-center">Stake in {name} Pool</h6>
         <p className="text-[#F5F5F5] text-center mt-3">
           Required:{' '}
           <span className="text-skyblue text-shadow font-semibold">
@@ -81,23 +81,23 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
           </span>
         </p>
         <p className="text-[#F5F5F5] text-center mt-1">
-          Lock-up Time: <span className="text-skyblue text-shadow font-semibold">7 days</span>
+          Lock-up Time: <span className="text-skyblue text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
         </p>
-        <div className="mt-7 max-w-[430px] mx-auto flex items-center gap-x-2">
+        <div className="mt-7 max-w-[300px] md:max-w-[430px] mx-auto flex items-center gap-x-2">
           <div className="bg-white text-right px-4 py-3 rounded-[20px] flex items-center gap-x-2 flex-1">
             <input
               type="text"
               value={stakeAmount}
               pattern="^[0-9]*[.,]?[0-9]{0,18}$"
               onChange={handleChange}
-              className="bg-transparent border-none text-[#9E9E9E] font-semibold flex-1 text-right pt-[1px]"
+              className="bg-transparent border-none text-[#9E9E9E] font-semibold flex-1 text-right pt-[1px] max-w-[145px] md:max-w-max"
               placeholder="0.00"
             />
             <span className="text-[#212121] font-semibold">BCTZ</span>
           </div>
           <button
             type="button"
-            className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[44px] px-10 shadow-blue"
+            className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[44px] px-5 md:px-10 shadow-blue"
             onClick={handleSelectMax}
           >
             Max
@@ -115,14 +115,14 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         <div className="flex justify-center gap-x-6 items-center mt-5">
           <button
             type="button"
-            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-[#7BF5FB] px-10 font-semibold min-w-[200px]"
+            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-[#7BF5FB] px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
             type="button"
-            className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[44px] px-10 shadow-blue min-w-[200px]"
+            className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
             onClick={handleConfirmClick}
           >
             Confirm

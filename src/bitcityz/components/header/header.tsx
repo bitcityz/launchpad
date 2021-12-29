@@ -13,6 +13,7 @@ import '../../assets/index.css'
 import bg from '../../assets/images/bg-header.png'
 import logo from '../../assets/images/logo.svg'
 import walletSvg from '../../assets/images/wallet.svg'
+import icMenu from '../../assets/images/ic-menu.svg'
 
 function Header() {
   const [showWalletModal, setShowWalletModal] = useState(false)
@@ -23,6 +24,7 @@ function Header() {
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
   const { account } = useWeb3React()
+  const [showMenu, setShowMenu] = useState(false)
 
   const truncateAddress = (address) => {
     if (!address || address.length < 10) return address
@@ -44,25 +46,42 @@ function Header() {
     setShowWalletModal(false)
   }
 
+  const _handleShowMenu = () => {
+    setShowMenu(isShow => !isShow)
+  }
+
+  const _handleCloseMenu = () => {
+    setShowMenu(false)
+  }
+
   return (
     <>
       {showWalletModal && <WalletModal onClose={_handleCloseModal} />}
       <header
-        className="bg-cover bg-center bg-no-repeat relative bg-[#050e21]"
-        style={{ backgroundImage: `url(${bg})` }}
+        className="relative"
       >
-        <nav className="layout-container h-[70px] flex items-center">
-          <Link to="/">
-            <img src={logo} className="mr-8" alt="" />
-          </Link>
-          <ul className="flex items-center gap-x-4 list-none">
+        <nav className={`layout-container mobile-menu xl:desktop-menu ${
+                showMenu  ? 'h-screen' : 'h-[55px]'
+              }`}>
+            <div className="flex items-center justify-between">
+                <Link to="/" onClick={_handleCloseMenu}>
+                <img src={logo} className="mr-8" alt="" />
+            </Link>
+            
+            <button type="button" className="bg-transparent border-none ml-auto xl:hidden" onClick={_handleShowMenu}>
+                <img src={icMenu} alt=""  />
+            </button>
+            </div>
+          <ul className={`xl:flex xl:flex-row xl:mt-0 flex flex-col gap-y-4 mt-8 justify-center items-center gap-x-4 list-none ${
+                      showMenu  ? '' : 'hidden'
+                    }`}>
             <li>
               <a href="aa" className="text-sm text-[#F5F5F5] font-semibold">
                 Launchpad
               </a>
             </li>
             <li>
-              <Link to="/launchpool" className="text-sm text-[#F5F5F5] font-semibold">
+              <Link to="/launchpool" className="text-sm text-[#F5F5F5] font-semibold" onClick={_handleCloseMenu}>
                 Launchpool
               </Link>
             </li>
@@ -81,7 +100,9 @@ function Header() {
             <button
               type="button"
               onClick={onPresentConnectModal}
-              className="ml-auto text-[#212121] text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4"
+              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-[#212121] mt-4 text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4 ${
+                showMenu  ? '' : 'hidden xl:flex'
+              }`}
             >
               <img src={walletSvg} className="mr-3" alt="" />
               <span>Connect wallet</span>
@@ -90,7 +111,9 @@ function Header() {
             <button
               onClick={() => _handleShowWalletModal()}
               type="button"
-              className="ml-auto text-[#212121] text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4"
+              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-[#212121] mt-4 text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4 ${
+                showMenu  ? '' : 'hidden xl:flex'
+              }`}
             >
               <img src={walletSvg} className="mr-3" alt="" />
               <span>{truncateAddress(account)}</span>

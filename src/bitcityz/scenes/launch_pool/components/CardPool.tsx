@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
-import { useWalletModal } from '@mexi/uikit'
+import { useWalletModal, Skeleton } from '@mexi/uikit'
 import useAuth from 'hooks/useAuth'
 import { isAfter, differenceInSeconds } from 'date-fns'
 import { useTranslation } from 'contexts/Localization'
@@ -17,7 +17,7 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account, setUpdatePool }) {
+function CardPool({ pool, account, isLoading, setUpdatePool }) {
   const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } =
     pool
   const { login, logout } = useAuth()
@@ -63,10 +63,11 @@ function CardPool({ pool, account, setUpdatePool }) {
           background: 'linear-gradient(114.49deg, rgba(255, 255, 255, 0.33) -21.49%, rgba(255, 255, 255, 0) 111.75%)',
         }}
       />
-      <div className="flex gap-x-6 relative">
+      <div className="flex flex-col gap-y-6 md:flex-row md:gap-x-6 relative">
+        <h6 className="text-xl font-bold text-[#F5F5F5] text-center leading-6 md:hidden">{name} Pass-ticket</h6>
         <div className="flex flex-col gap-y-5">
           <div className="relative">
-            <img src={id === 0 ? bgCardPink : id === 1 ? bgCardBlue : bgCardGreen} alt="" />
+            <img src={id === 0 ? bgCardPink : id === 1 ? bgCardBlue : bgCardGreen} className="max-w-none w-full xl:max-w-full" alt="" />
             <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <span className="font-bold text-2xl text-skyblue text-shadow">{name}</span>
               <span className="font-bold text-xs text-skyblue text-shadow">PASS TICKET</span>
@@ -81,9 +82,9 @@ function CardPool({ pool, account, setUpdatePool }) {
           </button>
         </div>
         <div className="flex-1 flex flex-col">
-          <h6 className="text-xl font-bold text-[#F5F5F5] leading-6">Mayor Pass-ticket</h6>
-          <div className="grid grid-cols-3 gap-x-5 gap-y-4 mt-6">
-            <div>
+          <h6 className="text-xl font-bold text-[#F5F5F5] leading-6 hidden md:block">{name} Pass-ticket</h6>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-4 md:mt-6">
+            <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Required: </p>
               <p className="text-skyblue font-semibold text-shadow mt-[10px]">
                 &gt;={' '}
@@ -93,7 +94,7 @@ function CardPool({ pool, account, setUpdatePool }) {
                 BCTZ
               </p>
             </div>
-            <div>
+            <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Staking: </p>
               <p className="text-skyblue font-semibold text-shadow mt-[10px]">
                 {Number(amount).toLocaleString('en', {
@@ -102,17 +103,17 @@ function CardPool({ pool, account, setUpdatePool }) {
                 BCTZ
               </p>
             </div>
-            <div>
+            <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Lock-up Time:</p>
               <p className="text-skyblue font-semibold text-shadow mt-[10px]">{(lockingTime / 3600).toFixed(2)} days</p>
             </div>
-            <div>
+            <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Remaining unlock</p>
-              <p className="text-skyblue font-semibold text-shadow mt-[10px]">
+              <p className="text-skyblue font-semibold text-shadow mt-[10px] text-right md:text-left">
                 {days} days : {hours} hours : {minutes} mins
               </p>
             </div>
-            <div className="flex items-end">
+            <div className="flex justify-center items-end md:justify-start">
               <a
                 href="https://testnet.bscscan.com/address/0xa8B9861222Ee5321B7052642695269E18cbD07AA"
                 target="_blank"
@@ -123,7 +124,7 @@ function CardPool({ pool, account, setUpdatePool }) {
               </a>
             </div>
           </div>
-          <div className="flex items-end justify-end flex-1">
+          <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
             {!account ? (
               <button
                 type="button"
@@ -132,9 +133,13 @@ function CardPool({ pool, account, setUpdatePool }) {
               >
                 Connect wallet
               </button>
-            ) : (
-              <StakingAction pool={pool} setUpdatePool={setUpdatePool} />
-            )}
+            ) : [
+                (isLoading ? (
+                    <Skeleton width="100%" height="42px" />
+                ): (
+                    <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />
+                ))
+            ]}
           </div>
         </div>
       </div>

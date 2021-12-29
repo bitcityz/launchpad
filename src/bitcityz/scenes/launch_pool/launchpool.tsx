@@ -63,6 +63,7 @@ function LaunchPool() {
 
   useEffect(() => {
     const initialData = async () => {
+      setIsLoading(true)
       let userInfos
       if (account) {
         userInfos = await multicallv2(launchPoolABI, userCalls)
@@ -95,11 +96,11 @@ function LaunchPool() {
     <>
       {isLoading && <Spinner />}
       <div
-        className="bg-[#050e21] bg-bottom bg-contain bg-no-repeat pb-[240px]"
+        className="bg-bottom bg-contain bg-no-repeat pb-[240px]"
         style={{ backgroundImage: `url(${bgFantasy})` }}
       >
         <div className="layout-container">
-          <PoolList pools={pools} account={account} setUpdatePool={setUpdatePool} />
+          <PoolList pools={pools} account={account} isLoading={isLoading} setUpdatePool={setUpdatePool} />
         </div>
       </div>
     </>

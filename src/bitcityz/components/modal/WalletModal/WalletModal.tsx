@@ -16,7 +16,7 @@ function WalletModal(props) {
 
   return (
     <div
-      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
+      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[9999]"
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
     >
       <div
@@ -45,7 +45,7 @@ function WalletModal(props) {
         </header>
 
         <section className="modal-body px-4 py-6" id="modalDescription">
-          <div className="w-[486px] flex flex-col gap-y-5">
+          <div className=" md:w-[486px] flex flex-col gap-y-5">
             <div className="py-2 text-center cursor-pointer">
               <span className="flex items-center">
                 <input

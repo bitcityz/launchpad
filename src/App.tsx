@@ -10,6 +10,7 @@ import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import { DatePickerPortal } from 'components/DatePicker'
 import useAuth from 'hooks/useAuthSign'
+import { Container } from 'bitcityz/components/container/container'
 import GlobalStyle from './style/Global'
 // import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
@@ -52,17 +53,18 @@ const App: React.FC = () => {
       <ResetCSS />
       <GlobalStyle />
       <GlobalCheckClaimStatus excludeLocations={[]} />
-      <Header />
-      <SuspenseWithChunkError fallback={<PageLoader />}>
-        <Switch>
-          <Route exact path="/">
-            {/* <NftHome /> */}
-            <Home />
-          </Route>
-          <Route exact path="/launchpool">
-            <LaunchPool />
-          </Route>
-          {/* <Route exact path="/farms/auction">
+      <Container>
+        <Header />
+        <SuspenseWithChunkError fallback={<PageLoader />}>
+          <Switch>
+            <Route exact path="/">
+              {/* <NftHome /> */}
+              <Home />
+            </Route>
+            <Route exact path="/launchpool">
+              <LaunchPool />
+            </Route>
+            {/* <Route exact path="/farms/auction">
               <FarmAuction />
             </Route>
             <Route path="/farms">
@@ -105,8 +107,8 @@ const App: React.FC = () => {
               <Proposal />
             </Route> */}
 
-          {/* NFT */}
-          {/* <Route path="/nfts">
+            {/* NFT */}
+            {/* <Route path="/nfts">
               <NftMarket />
             </Route>
             <Route path="/airdrops">
@@ -119,17 +121,17 @@ const App: React.FC = () => {
               <Box />
             </Route> */}
 
-          {/* <Route path="/pancake-squad">
+            {/* <Route path="/pancake-squad">
               <PancakeSquad />
             </Route> */}
 
-          {/* Info pages */}
-          {/* <Route path="/info">
+            {/* Info pages */}
+            {/* <Route path="/info">
               <Info />
             </Route> */}
 
-          {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-          {/* <Route exact strict path="/swap" component={Swap} />
+            {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
+            {/* <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact strict path="/find" component={PoolFinder} />
@@ -144,8 +146,8 @@ const App: React.FC = () => {
             <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
             <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
 
-          {/* Redirect */}
-          {/* <Route path="/pool">
+            {/* Redirect */}
+            {/* <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
             <Route path="/staking">
@@ -161,11 +163,12 @@ const App: React.FC = () => {
               <Redirect to={`${nftsBaseUrl}/profile/${account?.toLowerCase() || ''}`} />
             </Route> */}
 
-          {/* 404 */}
-          <Route component={NotFound} />
-        </Switch>
-      </SuspenseWithChunkError>
-      <Footer />
+            {/* 404 */}
+            <Route component={NotFound} />
+          </Switch>
+        </SuspenseWithChunkError>
+        <Footer />
+      </Container>
       <EasterEgg iterations={2} />
       <ToastListener />
       <DatePickerPortal />

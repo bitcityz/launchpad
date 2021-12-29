@@ -16,9 +16,9 @@ function Footer() {
       className="bg-cover bg-center bg-no-repeat pt-[84px] bg-[#050e21]"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="layout-container grid grid-cols-2 gap-7">
+      <div className="layout-container grid md:grid-cols-2 gap-7">
         <div>
-          <h6 className="text-2xl text-[#2CE7FF] font-bold">Subscribe to our newsletter for development news!</h6>
+          <h6 className="text-xl md:text-2xl text-[#2CE7FF] font-bold">Subscribe to our newsletter for development news!</h6>
           <div className="flex items-center mt-4">
             <input
               type="text"
@@ -27,7 +27,7 @@ function Footer() {
             />
             <button
               type="button"
-              className="bg-[#2CE7FF] shadow-blue rounded-[10px] py-[7px] px-9 text-[#212121] font-semibold border-none ml-[11px]"
+              className="bg-[#2CE7FF] shadow-blue rounded-[10px] py-[7px] px-4 md:px-9 text-[#212121] font-semibold border-none ml-[11px]"
             >
               Subscribe
             </button>

@@ -32,7 +32,7 @@ ReactDOM.render(
     <Blocklist>
       <Providers>
         <Updaters />
-        <App />
+            <App />
       </Providers>
     </Blocklist>
   </React.StrictMode>,
