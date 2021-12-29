@@ -67,7 +67,11 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
         <h6 className="text-xl font-bold text-[#F5F5F5] text-center leading-6 md:hidden">{name} Pass-ticket</h6>
         <div className="flex flex-col gap-y-5">
           <div className="relative">
-            <img src={id === 0 ? bgCardPink : id === 1 ? bgCardBlue : bgCardGreen} className="max-w-none w-full xl:max-w-full" alt="" />
+            <img
+              src={id === 0 ? bgCardPink : id === 1 ? bgCardBlue : bgCardGreen}
+              className="max-w-none w-full xl:max-w-full"
+              alt=""
+            />
             <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <span className="font-bold text-2xl text-skyblue text-shadow">{name}</span>
               <span className="font-bold text-xs text-skyblue text-shadow">PASS TICKET</span>
@@ -133,13 +137,15 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
               >
                 Connect wallet
               </button>
-            ) : [
-                (isLoading ? (
-                    <Skeleton width="100%" height="42px" />
-                ): (
-                    <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />
-                ))
-            ]}
+            ) : (
+              [
+                isLoading ? (
+                  <Skeleton width="100%" height="42px" />
+                ) : (
+                  <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />
+                ),
+              ]
+            )}
           </div>
         </div>
       </div>

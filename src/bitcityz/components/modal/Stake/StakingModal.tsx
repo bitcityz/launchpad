@@ -81,7 +81,8 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
           </span>
         </p>
         <p className="text-[#F5F5F5] text-center mt-1">
-          Lock-up Time: <span className="text-skyblue text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
+          Lock-up Time:{' '}
+          <span className="text-skyblue text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
         </p>
         <div className="mt-7 max-w-[300px] md:max-w-[430px] mx-auto flex items-center gap-x-2">
           <div className="bg-white text-right px-4 py-3 rounded-[20px] flex items-center gap-x-2 flex-1">

@@ -95,10 +95,7 @@ function LaunchPool() {
   return (
     <>
       {isLoading && <Spinner />}
-      <div
-        className="bg-bottom bg-contain bg-no-repeat pb-[240px]"
-        style={{ backgroundImage: `url(${bgFantasy})` }}
-      >
+      <div className="bg-bottom bg-contain bg-no-repeat pb-[240px]" style={{ backgroundImage: `url(${bgFantasy})` }}>
         <div className="layout-container">
           <PoolList pools={pools} account={account} isLoading={isLoading} setUpdatePool={setUpdatePool} />
         </div>

@@ -18,7 +18,9 @@ function Footer() {
     >
       <div className="layout-container grid md:grid-cols-2 gap-7">
         <div>
-          <h6 className="text-xl md:text-2xl text-[#2CE7FF] font-bold">Subscribe to our newsletter for development news!</h6>
+          <h6 className="text-xl md:text-2xl text-[#2CE7FF] font-bold">
+            Subscribe to our newsletter for development news!
+          </h6>
           <div className="flex items-center mt-4">
             <input
               type="text"
