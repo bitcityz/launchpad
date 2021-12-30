@@ -35,6 +35,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
 
   useEffect(() => {
     if (account) {
+      setTicket(0)
       ticketContract.balanceOf(account).then((resp) => {
         const totalTicket = new BigNumber(resp._hex).toNumber()
         if (totalTicket > 0) {

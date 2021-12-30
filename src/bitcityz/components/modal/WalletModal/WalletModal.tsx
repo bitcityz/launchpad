@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useAuth from 'hooks/useAuth'
 import { useWeb3React } from '@web3-react/core'
 
@@ -14,10 +14,17 @@ function WalletModal(props) {
   const { login, logout } = useAuth()
   const { onClose } = props
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
   return (
     <div
       className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[9999]"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.98)' }}
     >
       <div
         className="modal bg-[#212121] rounded-2xl flex flex-col px-3"

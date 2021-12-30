@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getFullDisplayBalance, formatNumber } from 'utils/formatBalance'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
@@ -36,6 +36,13 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
     [setStakeAmount],
   )
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
@@ -59,8 +66,8 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
 
   return (
     <div
-      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
+      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[9999]"
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.98)' }}
     >
       {pendingTx && <Spinner />}
       <div

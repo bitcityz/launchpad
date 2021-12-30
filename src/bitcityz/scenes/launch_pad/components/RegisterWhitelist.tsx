@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import '../../../assets/index.css'
 
@@ -14,7 +14,7 @@ import twitterBlack from '../../../assets/images/twitter-black.svg'
 import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 
-function UpcomingPool() {
+function RegisterWhitelist() {
   return (
     <div className="mt-14 flex flex-col gap-y-8">
       <div className="relative px-6 py-5">
@@ -27,8 +27,11 @@ function UpcomingPool() {
           }}
         />
         <div className="relative z-10">
-          <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-            Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          <h6 className="flex items-center justify-between">
+            <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+              Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+            </span>
+            <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
             <img src={gfxLogo} alt="" />
@@ -46,29 +49,28 @@ function UpcomingPool() {
                 <img src={mediumBlack} alt="" />
                 <img src={telegramBlack} alt="" />
               </div>
+              <a href="/" className="text-skyblue underline text-sm font-medium mt-4 inline-block">
+                More detail
+              </a>
               <div className="mt-4">
                 <p className="flex justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
                 <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">05/11/2021 10 am (UTC)</span>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">16/11/2021 2 pm (UTC)</span>
+                  <span className="text-[#BFBFBF]">Register Whitelist</span>
+                  <span className="text-[#F5F5F5] font-semibold">3d : 18h : 20m : 0s</span>
                 </p>
               </div>
             </div>
-            <div className="ml-auto flex flex-col">
+            <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(GFX/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">GFX = 0.05 BUSD</p>
               <button
                 type="button"
-                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
               >
-                More Details
+                Register Whitelist
               </button>
             </div>
           </div>
@@ -84,8 +86,11 @@ function UpcomingPool() {
           }}
         />
         <div className="relative z-10">
-          <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-            Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          <h6 className="flex items-center justify-between">
+            <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+              Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+            </span>
+            <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
             <img src={swapLogo} alt="" />
@@ -103,29 +108,28 @@ function UpcomingPool() {
                 <img src={mediumBlack} alt="" />
                 <img src={telegramBlack} alt="" />
               </div>
+              <a href="/" className="text-skyblue underline text-sm font-medium mt-4 inline-block">
+                More detail
+              </a>
               <div className="mt-4">
                 <p className="flex justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
                 <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">05/11/2021 10 am (UTC)</span>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">16/11/2021 2 pm (UTC)</span>
+                  <span className="text-[#BFBFBF]">Register Whitelist</span>
+                  <span className="text-[#F5F5F5] font-semibold">3d : 18h : 20m : 0s</span>
                 </p>
               </div>
             </div>
-            <div className="ml-auto flex flex-col">
+            <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(HCT/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">HCT = 0.01 BUSD</p>
               <button
                 type="button"
-                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
               >
-                More Details
+                Register Whitelist
               </button>
             </div>
           </div>
@@ -141,8 +145,11 @@ function UpcomingPool() {
           }}
         />
         <div className="relative z-10">
-          <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-            Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          <h6 className="flex items-center justify-between">
+            <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+              Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+            </span>
+            <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
             <img src={kalaoLogo} alt="" />
@@ -160,29 +167,28 @@ function UpcomingPool() {
                 <img src={mediumBlack} alt="" />
                 <img src={telegramBlack} alt="" />
               </div>
+              <a href="/" className="text-skyblue underline text-sm font-medium mt-4 inline-block">
+                More detail
+              </a>
               <div className="mt-4">
                 <p className="flex justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
                 <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">05/11/2021 10 am (UTC)</span>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">16/11/2021 2 pm (UTC)</span>
+                  <span className="text-[#BFBFBF]">Register Whitelist</span>
+                  <span className="text-[#F5F5F5] font-semibold">3d : 18h : 20m : 0s</span>
                 </p>
               </div>
             </div>
-            <div className="ml-auto flex flex-col">
+            <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(KLO/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">KLO = 0.03 BUSD</p>
               <button
                 type="button"
-                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
               >
-                More Details
+                Register Whitelist
               </button>
             </div>
           </div>
@@ -192,4 +198,4 @@ function UpcomingPool() {
   )
 }
 
-export default UpcomingPool
+export default RegisterWhitelist

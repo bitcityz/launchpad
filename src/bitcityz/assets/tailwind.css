@@ -46,7 +46,7 @@
   }
 
   .mobile-menu {
-    @apply py-4 flex flex-col justify-start w-screen bg-cover bg-center bg-no-repeat bg-[#050e21] fixed z-[999] left-0 top-0;
+    @apply py-4 flex flex-col justify-start w-screen bg-cover bg-center bg-no-repeat bg-[#050e21] fixed z-[98] left-0 top-0;
     background-image: url('./images/bg-header.png');
   }
 

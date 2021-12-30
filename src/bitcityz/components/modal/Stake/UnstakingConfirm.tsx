@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getFullDisplayBalance, formatNumber } from 'utils/formatBalance'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
@@ -56,10 +56,17 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
     }
   }
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
   return (
     <div
-      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-50"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
+      className="modal-backdrop fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center z-[9999]"
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.98)' }}
     >
       {pendingTx && <Spinner />}
       <div
@@ -71,8 +78,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
       >
         <h6 className="text-[#F5F5F5] text-xl md:text-[28px] font-bold text-center">Unstake in {name} Pool</h6>
         <p className="text-[#F5F5F5] text-center mt-3 max-w-[300px] md:max-w-[350px] mx-auto">
-          Every time you stake and unstake {tokenName} tokens, the contract will automagically harvest {tokenName}{' '}
-          rewards for you!
+          When you unstake {tokenName} tokens, the contract will harvest rewards automatically for you!
         </p>
         <div className="flex justify-center gap-x-6 items-center mt-5">
           <button
