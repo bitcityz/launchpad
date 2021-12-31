@@ -88,6 +88,7 @@ function LaunchPool() {
         }
       })
       setPools(data)
+      setUpdatePool(false)
       setIsLoading(false)
     }
     initialData()

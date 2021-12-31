@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import '../../../assets/index.css'
+
+import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 import swapLogo from '../../../assets/images/logo-swap.png'
@@ -15,6 +17,13 @@ import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 
 function RegisterWhitelist() {
+    const [showRegisterModal, setShowRegisterModal] = useState(false)
+    const _handleCloseConfirm = () => {
+        setShowRegisterModal(false)
+    }
+    const _handleShowRegisterModal = () => {
+        setShowRegisterModal(true)
+    }
   return (
     <div className="mt-14 flex flex-col gap-y-8">
       <div className="relative px-6 py-5">
@@ -69,6 +78,7 @@ function RegisterWhitelist() {
               <button
                 type="button"
                 className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+                onClick={_handleShowRegisterModal}
               >
                 Register Whitelist
               </button>
@@ -128,6 +138,7 @@ function RegisterWhitelist() {
               <button
                 type="button"
                 className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+                onClick={_handleShowRegisterModal}
               >
                 Register Whitelist
               </button>
@@ -187,6 +198,7 @@ function RegisterWhitelist() {
               <button
                 type="button"
                 className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+                onClick={_handleShowRegisterModal}
               >
                 Register Whitelist
               </button>
@@ -194,6 +206,7 @@ function RegisterWhitelist() {
           </div>
         </div>
       </div>
+      {showRegisterModal && <RegisterModal onClose={_handleCloseConfirm} />}
     </div>
   )
 }

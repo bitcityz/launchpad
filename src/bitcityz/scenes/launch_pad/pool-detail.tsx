@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import '../../assets/index.css'
-import UpcomingPool from './components/UpcomingPool'
-import RegisterWhitelist from './components/RegisterWhitelist'
-import InProgress from './components/InProgress'
-import Completed from './components/Completed'
+import PoolCardDetail from './components/pool_detail/PoolCardDetail'
+import About from './components/pool_detail/About'
+import Detail from './components/pool_detail/Detail'
+import WhiteList from './components/pool_detail/WhiteList'
+import Allocation from './components/pool_detail/Allocation'
 
-import textSvg from '../../assets/images/launchpad.svg'
 import line1 from '../../assets/images/line1.svg'
 import line2 from '../../assets/images/line2.svg'
 import calendarAdd from '../../assets/images/calendar-add.svg'
@@ -17,25 +17,22 @@ import activityActiveSvg from '../../assets/images/activity-active.svg'
 import editActiveSvg from '../../assets/images/edit-active.svg'
 import taskSquareActive from '../../assets/images/task-square-active.svg'
 
-function LaunchPad() {
+function PoolDetail() {
   const [tabIndex, setTabIndex] = useState(1)
   const _handleChangeTab = (index) => {
     setTabIndex(index)
   }
   return (
-    <div className="bg-[#050e21]  py-[110px]">
+    <div className="bg-[#050e21] py-[110px] ">
       <div className="layout-container">
-        <div className="text-center">
-          <img src={textSvg} className="mx-auto" alt="" />
-          <h2 className="text-center text-[#F5F5F5] font-bold text-[32px]">Launchpad</h2>
-          <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6">
-            Stake <span className="font-semibold">3 pools</span> at the same time. Get more opportunities to own hidden
-            gems
-          </p>
+        <div className="relative px-6 py-7">
+          <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />
+          <PoolCardDetail />
         </div>
-        <div className="text-center">
-          <img src={line1} className="mt-14 w-full h-auto" alt="" />
-          <div className="grid grid-cols-4 gap-x-8">
+        <div className="relative px-6 pt-2 pb-6 mt-[30px]">
+          <div className="rounded-2xl absolute top-0 left-0 w-full h-full bg-linear-1" />
+          <img src={line1} className="w-full h-auto" alt="" />
+          <div className="grid grid-cols-4 gap-x-8 relative">
             <button
               type="button"
               className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
@@ -46,7 +43,7 @@ function LaunchPad() {
               ) : (
                 <img src={calendarAdd} className="ml-1" alt="" />
               )}
-              Upcoming
+              About project
             </button>
             <button
               type="button"
@@ -58,7 +55,7 @@ function LaunchPad() {
               ) : (
                 <img src={editSvg} className="ml-1" alt="" />
               )}
-              Register Whitelist
+              Pool details
             </button>
             <button
               type="button"
@@ -70,7 +67,7 @@ function LaunchPad() {
               ) : (
                 <img src={activitySvg} className="ml-1" alt="" />
               )}
-              In progress
+              Whitelist
             </button>
             <button
               type="button"
@@ -82,18 +79,19 @@ function LaunchPad() {
               ) : (
                 <img src={taskSquare} className="ml-1" alt="" />
               )}
-              Completed
+              Your allocation
             </button>
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
+
+          {tabIndex === 1 && <About />}
+          {tabIndex === 2 && <Detail />}
+          {tabIndex === 3 && <WhiteList />}
+          {tabIndex === 4 && <Allocation />}
         </div>
-        {tabIndex === 1 && <UpcomingPool />}
-        {tabIndex === 2 && <RegisterWhitelist />}
-        {tabIndex === 3 && <InProgress />}
-        {tabIndex === 4 && <Completed />}
       </div>
     </div>
   )
 }
 
-export default LaunchPad
+export default PoolDetail

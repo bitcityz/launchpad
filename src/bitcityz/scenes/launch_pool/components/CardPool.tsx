@@ -54,7 +54,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
     } else {
       setTicket(0)
     }
-  }, [account, ticketContract, ticketHash])
+  }, [account, ticketContract, ticketHash, amount])
 
   return (
     <div className="relative p-6">

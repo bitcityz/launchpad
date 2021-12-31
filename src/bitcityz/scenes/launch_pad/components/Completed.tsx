@@ -14,7 +14,7 @@ import twitterBlack from '../../../assets/images/twitter-black.svg'
 import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 
-function InProgress() {
+function Completed() {
   return (
     <div className="mt-14 flex flex-col gap-y-8">
       <div className="relative px-6 py-5">
@@ -55,29 +55,19 @@ function InProgress() {
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
                 <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Swap process</span>
+                  <span className="text-[#BFBFBF]">Claim process</span>
                   <div className="flex items-center gap-x-2">
                     <div className="w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
-                      <div className="w-1/12 bg-[#1890FF] h-2 rounded-[100px]" />
+                      <div className="w-full bg-[#1890FF] h-2 rounded-[100px]" />
                     </div>
-                    <span className="text-white font-semibold">5%</span>
+                    <span className="text-white font-semibold">100%</span>
                   </div>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Pool closes</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">November 18 2021 - 2pm (UTC)</span>
                 </p>
               </div>
             </div>
             <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(GFX/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">GFX = 0.05 BUSD</p>
-              <button
-                type="button"
-                className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
-              >
-                Joined
-              </button>
             </div>
           </div>
         </div>
@@ -120,24 +110,19 @@ function InProgress() {
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
                 <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Swap process</span>
+                  <span className="text-[#BFBFBF]">Claim process</span>
                   <div className="flex items-center gap-x-2">
                     <div className="w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
-                      <div className="w-1/12 bg-[#1890FF] h-2 rounded-[100px]" />
+                      <div className="w-0 bg-[#1890FF] h-2 rounded-[100px]" />
                     </div>
-                    <span className="text-white font-semibold">5%</span>
+                    <span className="text-white font-semibold">0%</span>
                   </div>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Pool closes</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">November 18 2021 - 2pm (UTC)</span>
                 </p>
               </div>
             </div>
             <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(HCT/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">HCT = 0.01 BUSD</p>
-              <p className="text-skyblue text-shadow font-semibold  mt-auto">You aren’t in whitelist</p>
             </div>
           </div>
         </div>
@@ -179,25 +164,12 @@ function InProgress() {
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">10,000 BUSD</span>
                 </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Swap process</span>
-                  <div className="flex items-center gap-x-2">
-                    <div className="w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
-                      <div className="w-1/12 bg-[#1890FF] h-2 rounded-[100px]" />
-                    </div>
-                    <span className="text-white font-semibold">5%</span>
-                  </div>
-                </p>
-                <p className="flex justify-between items-center mt-2">
-                  <span className="text-[#BFBFBF]">Pool closes</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">November 18 2021 - 2pm (UTC)</span>
-                </p>
               </div>
             </div>
             <div className="ml-auto flex flex-col items-end">
               <p className="text-[#F5F5F5] leading-5 font-semibold">(KLO/BUSD)</p>
               <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">KLO = 0.03 BUSD</p>
-              <p className="text-skyblue text-shadow font-semibold  mt-auto">You aren’t in whitelist</p>
+              <p className="text-skyblue text-shadow font-semibold  mt-auto">You did not join the pool</p>
             </div>
           </div>
         </div>
@@ -206,4 +178,4 @@ function InProgress() {
   )
 }
 
-export default InProgress
+export default Completed

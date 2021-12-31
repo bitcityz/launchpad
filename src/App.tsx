@@ -27,6 +27,7 @@ import { Footer, Header } from './bitcityz/components'
 const Home = lazy(() => import('./bitcityz/scenes/home/home'))
 const LaunchPool = lazy(() => import('./bitcityz/scenes/launch_pool/launchpool'))
 const LaunchPad = lazy(() => import('./bitcityz/scenes/launch_pad/launchpad'))
+const PoolDetail = lazy(() => import('./bitcityz/scenes/launch_pad/pool-detail'))
 // const Boxes = lazy(() => import('./views/Boxes'))
 // const Box = lazy(() => import('./views/Box'))
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -67,6 +68,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/launchpad">
               <LaunchPad />
+            </Route>
+            <Route exact path="/launchpad/:id">
+              <PoolDetail />
             </Route>
             {/* <Route exact path="/farms/auction">
               <FarmAuction />

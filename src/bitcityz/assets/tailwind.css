@@ -55,10 +55,10 @@
     background-image: initial;
   }
   .tab {
-    @apply h-[62px] transition-all rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm font-semibold text-[#F5F5F5] text-shadow flex flex-col items-center justify-center;
+    @apply h-[62px] transition-all rounded-xl w-full text-sm font-semibold text-[#F5F5F5] flex flex-col items-center justify-center;
   }
   .tab-active {
-    @apply !text-[#2CE7FF];
+    @apply !text-[#2CE7FF] border-[1px] border-solid border-[#2CE7FF] text-shadow;
     background-color: rgba(44, 231, 255, 0.3);
   }
 }
@@ -218,5 +218,40 @@
     border-width: 3px 3px 0;
     border-style: solid;
     border-color: #002c28 transparent transparent;
+  }
+
+  .bg-linear {
+    background: linear-gradient(114.49deg, rgba(255, 255, 255, 0.165) -21.49%, rgba(255, 255, 255, 0) 111.75%);
+    opacity: 0.5;
+    backdrop-filter: blur(140px);
+  }
+  .bg-linear-1 {
+    background: linear-gradient(114.49deg, rgba(255, 255, 255, 0.33) -21.49%, rgba(255, 255, 255, 0) 111.75%);
+    opacity: 0.3;
+    backdrop-filter: blur(140px);
+  }
+
+  .timeline-after {
+    content: '';
+    width: 22px;
+    height: 22px;
+    border: 1px solid #ffffff;
+    background-color: #c4c4c4;
+    position: absolute;
+    border-radius: 999px;
+    top: 0;
+    left: 0;
+  }
+  .timeline-after-active {
+    background-color: #2ce7ff !important;
+  }
+  .timeline-before {
+    content: '';
+    width: 2px;
+    height: 65px;
+    background-color: #f5f5f5;
+    position: absolute;
+    top: 25%;
+    left: 10px;
   }
 }
