@@ -31,7 +31,9 @@ function InProgress() {
             Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={gfxLogo} alt="" />
+            <div>
+              <img src={gfxLogo} alt="" />
+            </div>
             <div className="flex-1">
               <div className="flex items-start gap-x-3">
                 <img src={gLogo} alt="" />
@@ -96,7 +98,9 @@ function InProgress() {
             Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={swapLogo} alt="" />
+            <div>
+              <img src={swapLogo} alt="" />
+            </div>
             <div className="flex-1">
               <div className="flex items-start gap-x-3">
                 <img src={sLogo} alt="" />
@@ -156,7 +160,9 @@ function InProgress() {
             Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={kalaoLogo} alt="" />
+            <div>
+              <img src={kalaoLogo} alt="" />
+            </div>
             <div className="flex-1">
               <div className="flex items-start gap-x-3">
                 <img src={kLogo} alt="" />

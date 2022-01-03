@@ -47,22 +47,22 @@ function Detail() {
       </div>
       <h6 className="text-[#F5F5F5] text-xl font-bold mt-7">Timeline</h6>
       <ul className="list-none mt-5">
-          <li className='relative pl-8 after:timeline-after before:timeline-before'>
-              <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Close)</p>
-              <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
-          </li>
-          <li className='relative pl-8 mt-7 after:timeline-after before:timeline-before'>
-              <p className="text-[#9E9E9E] font-semibold leading-5">Publish mayor pool whitelist (Close)</p>
-              <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
-          </li>
-          <li className='relative pl-8 mt-7 after:timeline-after after:timeline-after-active before:timeline-before'>
-              <p className="text-skyblue font-semibold leading-5">Join mayor pool (Opening)</p>
-              <p className="text-skyblue leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
-          </li>
-          <li className='relative pl-8 mt-7 after:timeline-after'>
-              <p className="text-[#9E9E9E] font-semibold leading-5">Claim tokens (Incoming)</p>
-              <p className="text-[#9E9E9E] leading-5">30 mins after listing</p>
-          </li>
+        <li className="relative pl-8 after:timeline-after before:timeline-before">
+          <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Close)</p>
+          <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
+        </li>
+        <li className="relative pl-8 mt-7 after:timeline-after before:timeline-before">
+          <p className="text-[#9E9E9E] font-semibold leading-5">Publish mayor pool whitelist (Close)</p>
+          <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
+        </li>
+        <li className="relative pl-8 mt-7 after:timeline-after after:timeline-after-active before:timeline-before">
+          <p className="text-skyblue font-semibold leading-5">Join mayor pool (Opening)</p>
+          <p className="text-skyblue leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
+        </li>
+        <li className="relative pl-8 mt-7 after:timeline-after">
+          <p className="text-[#9E9E9E] font-semibold leading-5">Claim tokens (Incoming)</p>
+          <p className="text-[#9E9E9E] leading-5">30 mins after listing</p>
+        </li>
       </ul>
     </div>
   )

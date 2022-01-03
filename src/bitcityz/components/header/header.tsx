@@ -3,7 +3,7 @@ import { useWalletModal } from '@mexi/uikit'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 import { useWeb3React } from '@web3-react/core'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link, NavLink } from 'react-router-dom'
 import WalletModal from '../modal/WalletModal/WalletModal'
 
 import HomeHeader from '../../scenes/home/components/HomeHeader'
@@ -73,14 +73,24 @@ function Header() {
             }`}
           >
             <li>
-              <Link to="/launchpad" className="text-sm text-[#F5F5F5] font-semibold" onClick={_handleCloseMenu}>
+              <NavLink
+                to="/launchpad"
+                activeClassName="text-skyblue"
+                className="text-sm text-[#F5F5F5] font-semibold"
+                onClick={_handleCloseMenu}
+              >
                 Launchpad
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/launchpool" className="text-sm text-[#F5F5F5] font-semibold" onClick={_handleCloseMenu}>
+              <NavLink
+                to="/launchpool"
+                activeClassName="text-skyblue"
+                className="text-sm text-[#F5F5F5] font-semibold"
+                onClick={_handleCloseMenu}
+              >
                 Launchpool
-              </Link>
+              </NavLink>
             </li>
             <li>
               <a href="aa" className="text-sm text-[#F5F5F5] font-semibold">

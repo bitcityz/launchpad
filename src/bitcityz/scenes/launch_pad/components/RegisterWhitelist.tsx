@@ -17,13 +17,13 @@ import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 
 function RegisterWhitelist() {
-    const [showRegisterModal, setShowRegisterModal] = useState(false)
-    const _handleCloseConfirm = () => {
-        setShowRegisterModal(false)
-    }
-    const _handleShowRegisterModal = () => {
-        setShowRegisterModal(true)
-    }
+  const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const _handleCloseConfirm = () => {
+    setShowRegisterModal(false)
+  }
+  const _handleShowRegisterModal = () => {
+    setShowRegisterModal(true)
+  }
   return (
     <div className="mt-14 flex flex-col gap-y-8">
       <div className="relative px-6 py-5">
@@ -43,7 +43,9 @@ function RegisterWhitelist() {
             <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={gfxLogo} alt="" />
+            <div>
+              <img src={gfxLogo} alt="" />
+            </div>
             <div>
               <div className="flex items-start gap-x-3">
                 <img src={gLogo} alt="" />
@@ -103,7 +105,9 @@ function RegisterWhitelist() {
             <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={swapLogo} alt="" />
+            <div>
+              <img src={swapLogo} alt="" />
+            </div>
             <div>
               <div className="flex items-start gap-x-3">
                 <img src={sLogo} alt="" />
@@ -163,7 +167,9 @@ function RegisterWhitelist() {
             <span className="text-skyblue text-shadow text-xl font-bold">Register whitelist</span>
           </h6>
           <div className="mt-5 flex gap-x-[30px]">
-            <img src={kalaoLogo} alt="" />
+            <div>
+              <img src={kalaoLogo} alt="" />
+            </div>
             <div>
               <div className="flex items-start gap-x-3">
                 <img src={kLogo} alt="" />

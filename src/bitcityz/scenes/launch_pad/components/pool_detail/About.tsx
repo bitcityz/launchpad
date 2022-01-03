@@ -38,26 +38,26 @@ function About() {
       <h6 className="text-[#F5F5F5] mt-1">Open World, revenue generating assets from empire building</h6>
       <h6 className="text-[#F5F5F5] mt-1">System Requirements</h6>
       <h6 className="text-[#F5F5F5] mt-5">Token infomation</h6>
-        <p className="grid gap-x-8 mt-3" style={{gridTemplateColumns: "150px auto"}}>
-            <span className="text-[#9E9E9E]">Name</span>
-            <span className="font-semibold text-[#F5F5F5]">GFX</span>
-        </p>
-        <p className="grid gap-x-8 mt-3" style={{gridTemplateColumns: "150px auto"}}>
-            <span className="text-[#9E9E9E]">Contract address </span>
-            <span className="font-semibold text-[#F5F5F5]">TBA</span>
-        </p>
-        <p className="grid gap-x-8 mt-3" style={{gridTemplateColumns: "150px auto"}}>
-            <span className="text-[#9E9E9E]">Total supply</span>
-            <span className="font-semibold text-[#F5F5F5]">76,500,000</span>
-        </p>
-        <p className="grid gap-x-8 mt-3" style={{gridTemplateColumns: "150px auto"}}>
-            <span className="text-[#9E9E9E]">Decimals</span>
-            <span className="font-semibold text-[#F5F5F5]">18</span>
-        </p>
-        <p className="grid gap-x-8 mt-3" style={{gridTemplateColumns: "150px auto"}}>
-            <span className="text-[#9E9E9E]">Symbol</span>
-            <span className="font-semibold text-[#F5F5F5]">GFX</span>
-        </p>
+      <p className="grid gap-x-8 mt-3" style={{ gridTemplateColumns: '150px auto' }}>
+        <span className="text-[#9E9E9E]">Name</span>
+        <span className="font-semibold text-[#F5F5F5]">GFX</span>
+      </p>
+      <p className="grid gap-x-8 mt-3" style={{ gridTemplateColumns: '150px auto' }}>
+        <span className="text-[#9E9E9E]">Contract address </span>
+        <span className="font-semibold text-[#F5F5F5]">TBA</span>
+      </p>
+      <p className="grid gap-x-8 mt-3" style={{ gridTemplateColumns: '150px auto' }}>
+        <span className="text-[#9E9E9E]">Total supply</span>
+        <span className="font-semibold text-[#F5F5F5]">76,500,000</span>
+      </p>
+      <p className="grid gap-x-8 mt-3" style={{ gridTemplateColumns: '150px auto' }}>
+        <span className="text-[#9E9E9E]">Decimals</span>
+        <span className="font-semibold text-[#F5F5F5]">18</span>
+      </p>
+      <p className="grid gap-x-8 mt-3" style={{ gridTemplateColumns: '150px auto' }}>
+        <span className="text-[#9E9E9E]">Symbol</span>
+        <span className="font-semibold text-[#F5F5F5]">GFX</span>
+      </p>
     </div>
   )
 }
