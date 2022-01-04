@@ -37,6 +37,7 @@ import {
   getAirDropAddress,
   getLaunchPoolAddress,
   getTicketAddress,
+  getIdoAddress,
 } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts
@@ -56,6 +57,7 @@ import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import launchPoolAbi from '../config/abi/launchPool.json'
 import launchPoolTicketAbi from '../config/abi/launchPoolTicket.json'
+import bitcityIdoAbi from '../config/abi/bitcityIdo.json'
 import { getContract } from '../utils'
 
 /**
@@ -302,4 +304,7 @@ export function useLaunchPoolContract(): Contract | null {
 
 export function useTicketContract(): Contract | null {
   return useContract(getTicketAddress(), launchPoolTicketAbi, true)
+}
+export function useIdoContract(): Contract | null {
+  return useContract(getIdoAddress(), bitcityIdoAbi, true)
 }

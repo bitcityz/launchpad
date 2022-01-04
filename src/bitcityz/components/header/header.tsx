@@ -75,7 +75,7 @@ function Header() {
             <li>
               <NavLink
                 to="/launchpad"
-                activeClassName="text-skyblue"
+                activeClassName="!text-skyblue text-shadow"
                 className="text-sm text-[#F5F5F5] font-semibold"
                 onClick={_handleCloseMenu}
               >
@@ -85,7 +85,7 @@ function Header() {
             <li>
               <NavLink
                 to="/launchpool"
-                activeClassName="text-skyblue"
+                activeClassName="!text-skyblue text-shadow"
                 className="text-sm text-[#F5F5F5] font-semibold"
                 onClick={_handleCloseMenu}
               >

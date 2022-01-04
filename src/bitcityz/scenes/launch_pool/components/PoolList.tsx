@@ -6,7 +6,7 @@ function PoolList(props) {
   const { pools, account, isLoading, setUpdatePool } = props
   return (
     <div className="flex flex-col gap-y-8">
-      {pools.map((pool) => {
+      {pools.length > 0 && pools.map((pool) => {
         return (
           <CardPool key={pool.id} pool={pool} account={account} isLoading={isLoading} setUpdatePool={setUpdatePool} />
         )

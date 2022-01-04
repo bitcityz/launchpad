@@ -30,51 +30,43 @@ function StakingAction({ pool, setUpdatePool, isLoading }) {
   }
   return (
     <>
-      {isLoading ? (
-        <Skeleton width="100%" height="42px" />
-      ) : (
-        [
-          !isApproved ? (
-            <button
-              type="button"
-              className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[42px] px-10 shadow-blue min-w-[186px]"
-              onClick={handleApprove}
-            >
-              Approve contract
-            </button>
-          ) : (
-            <div className="flex justify-center md:justify-end items-center w-full gap-x-5">
-              <button
-                type="button"
-                className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
-                  amount !== '0'
-                    ? 'bg-skyblue shadow-blue text-black'
-                    : 'pointer-events-none text-[#F5F5F5] bg-disabled '
-                }`}
-                onClick={() => _handleShowUnstakeConfirm()}
-              >
-                Unstake
-              </button>
-              <button
-                type="button"
-                className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
-                  amount === '0'
-                    ? 'bg-skyblue shadow-blue text-black'
-                    : 'pointer-events-none text-[#F5F5F5] bg-disabled '
-                }`}
-                onClick={() => _handleShowStakingModal()}
-              >
-                Stake BCTZ
-              </button>
-              {showStakingModal && (
-                <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} />
-              )}
-              {showUnstakingConfirm && (
-                <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} setUpdatePool={setUpdatePool} />
-              )}
-            </div>
-          ),
-        ]
+      {isLoading && <Skeleton width="100%" height="42px" />}
+
+      {!isApproved && !isLoading && (
+        <button
+          type="button"
+          className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[42px] px-10 shadow-blue min-w-[186px]"
+          onClick={handleApprove}
+        >
+          Approve contract
+        </button>
+      )}
+
+      {isApproved && !isLoading && (
+        <div className="flex justify-center md:justify-end items-center w-full gap-x-5">
+          <button
+            type="button"
+            className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
+              amount !== '0' ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+            }`}
+            onClick={() => _handleShowUnstakeConfirm()}
+          >
+            Unstake
+          </button>
+          <button
+            type="button"
+            className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
+              amount === '0' ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+            }`}
+            onClick={() => _handleShowStakingModal()}
+          >
+            Stake BCTZ
+          </button>
+          {showStakingModal && <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} />}
+          {showUnstakingConfirm && (
+            <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} setUpdatePool={setUpdatePool} />
+          )}
+        </div>
       )}
     </>
   )

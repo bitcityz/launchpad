@@ -92,3 +92,6 @@ export const getLaunchPoolAddress = () => {
 export const getTicketAddress = () => {
   return getAddress(addresses.ticket)
 }
+export const getIdoAddress = () => {
+  return getAddress(addresses.ido)
+}

@@ -130,7 +130,8 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
             </div>
           </div>
           <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
-            {!account ? (
+            {isLoading && <Skeleton width="100%" height="42px" />}
+            {!account && !isLoading && (
               <button
                 type="button"
                 className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[42px] px-10 shadow-blue"
@@ -138,15 +139,8 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
               >
                 Connect wallet
               </button>
-            ) : (
-              [
-                isLoading ? (
-                  <Skeleton width="100%" height="42px" />
-                ) : (
-                  <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />
-                ),
-              ]
             )}
+            {account && !isLoading && <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />}
           </div>
         </div>
       </div>
