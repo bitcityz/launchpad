@@ -51,24 +51,25 @@ function PoolDetail() {
         const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
         setPools(poolLst)
         const data = await idoContract.poolInfo(id)
-        const idoInfo = data.map((el) => {
-            console.log(el)
-            return {
-                id: id,
-                idoToken: el.idoToken,
-                idoToken2Buy: el.idoToken2Buy,
-                token2IDOtoken: el.token2IDOtoken,
-                minAmount: el.minAmount,
-                maxAmount: el.maxAmount,
-                totalAmount: el.totalAmount,
-                remainAmount: el.remainAmount,
-                idoUnlock: el.idoUnlock,
-                keyType: el.keyType,
-                startTime: el.startTime,
-                endTime: el.endTime,
-                status: el.status,
-              }
-        })
+        data.each()
+        // const idoInfo = data.map((el) => {
+        //     console.log(el)
+        //     return {
+        //         id: id,
+        //         idoToken: el.idoToken,
+        //         idoToken2Buy: el.idoToken2Buy,
+        //         token2IDOtoken: el.token2IDOtoken,
+        //         minAmount: el.minAmount,
+        //         maxAmount: el.maxAmount,
+        //         totalAmount: el.totalAmount,
+        //         remainAmount: el.remainAmount,
+        //         idoUnlock: el.idoUnlock,
+        //         keyType: el.keyType,
+        //         startTime: el.startTime,
+        //         endTime: el.endTime,
+        //         status: el.status,
+        //       }
+        // })
         setIdoPool(data)
       }
       initData()
