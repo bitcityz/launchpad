@@ -74,7 +74,7 @@ function IdoCard({ ido, pools }) {
           <div className="ml-auto flex flex-col items-end">
             <p className="text-[#F5F5F5] leading-5 font-semibold">(GFX/BUSD)</p>
             <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">GFX = 0.05 BUSD</p>
-            <Link to="/launchpad/1" className="bg-skyblue mt-auto rounded-[20px] flex items-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue">
+            <Link to={`/launchpad/${ido.id}`} className="bg-skyblue mt-auto rounded-[20px] flex items-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue">
             More Details
             </Link>
           </div>

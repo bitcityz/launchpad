@@ -1,5 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../../assets/index.css'
+import BigNumber from 'bignumber.js'
+
+import { useWalletModal } from '@mexi/uikit'
+import { isAfter } from 'date-fns'
+import { useWeb3React } from '@web3-react/core'
+import useAuth from 'hooks/useAuth'
+import { useTranslation } from 'contexts/Localization'
+import { useTicketContract } from 'hooks/useContract'
+import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
+import useTokenSymbol from '../../hooks/useTokenSymbol'
+
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
 import swapLogo from '../../../../assets/images/logo-swap.png'
 import sLogo from '../../../../assets/images/logo-s.png'
@@ -12,11 +23,57 @@ import twitterBlack from '../../../../assets/images/twitter-black.svg'
 import mediumBlack from '../../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../../assets/images/telegram-black.svg'
 
-function PoolCardDetail() {
+function PoolCardDetail({ idoPool, pools }) {
+  const { account } = useWeb3React()
+  const { login, logout } = useAuth()
+  const [idoName, setIdoName] = useState('')
+  const { t } = useTranslation()
+  const { onPresentConnectModal } = useWalletModal(login, logout, t)
+
+  const tokenSymbol = useTokenSymbol(idoPool.idoToken)
+  const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [ticket, setTicket] = useState(0)
+  const [ticketId, setTicketId] = useState(0)
+  const ticketContract = useTicketContract()
+
+  const _handleShowRegisterModal = () => {
+    setShowRegisterModal(true)
+  }
+
+  const _handleCloseConfirm = () => {
+    setShowRegisterModal(false)
+  }
+
+  useEffect(() => {
+    const pool = pools.filter((r) => {
+      return r.hash === idoPool.keyType
+    })
+    setIdoName(pool[0].name)
+
+    if (account) {
+      ticketContract.balanceOf(account).then((resp) => {
+        const totalTicket = new BigNumber(resp._hex).toNumber()
+        if (totalTicket > 0) {
+          for (let i = 0; i < totalTicket; i++) {
+            ticketContract.tokenOfOwnerByIndex(account, i).then((res) => {
+              const tokenId = new BigNumber(res._hex).toNumber()
+              ticketContract.tokenHash(tokenId).then((r) => {
+                if (r === pool[0].hash) {
+                  setTicket((val) => val + 1)
+                  setTicketId(tokenId)
+                }
+              })
+            })
+          }
+        }
+      })
+    }
+  }, [pools, idoPool, account, ticketContract])
+
   return (
     <div className="relative">
       <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-        Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+        {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
       </h6>
       <div className="mt-5 flex gap-x-[30px]">
         <img src={kalaoLogo} alt="" />
@@ -37,10 +94,32 @@ function PoolCardDetail() {
           </div>
         </div>
         <div className="ml-auto flex flex-col items-end">
-          <p className="text-[#F5F5F5] leading-5 font-semibold">(KLO/BUSD)</p>
-          <p className="text-shadow font-semibold text-skyblue mt-auto">Upcoming project</p>
+          <p className="text-[#F5F5F5] leading-5 font-semibold">({tokenSymbol}/BUSD)</p>
+          {isAfter(idoPool.startTime * 1000, new Date()) && (
+            <p className="text-shadow font-semibold text-skyblue mt-auto">Upcoming project</p>
+          )}
+
+          {!account && !isAfter(idoPool.startTime*1000, new Date()) && isAfter(idoPool.endTime*1000, new Date()) && (
+            <button
+              type="button"
+              className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+              onClick={onPresentConnectModal}
+            >
+              Connect wallet
+            </button>
+          )}
+          {account && !isAfter(idoPool.startTime*1000, new Date()) && isAfter(idoPool.endTime*1000, new Date()) && (
+            <button
+              type="button"
+              className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+              onClick={_handleShowRegisterModal}
+            >
+              Register Whitelist
+            </button>
+          )}
         </div>
       </div>
+      {showRegisterModal && <RegisterModal onClose={_handleCloseConfirm} ido={idoPool} idoName={idoName} ticket={ticket} ticketId={ticketId} />}
     </div>
   )
 }

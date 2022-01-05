@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import '../../assets/index.css'
 
-import { getIdoAddress, getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
+import { getIdoAddress, getTicketAddress } from 'utils/addressHelpers'
+import { useWeb3React } from '@web3-react/core'
 import { multicallv2 } from 'utils/multicall'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
@@ -27,6 +28,7 @@ import taskSquareActive from '../../assets/images/task-square-active.svg'
 const POOLS = [0, 1, 2]
 
 function LaunchPad() {
+    const { account } = useWeb3React()
   const [tabIndex, setTabIndex] = useState(1)
   const [pools, setPools] = useState([])
   const _handleChangeTab = (index) => {
@@ -60,7 +62,24 @@ function LaunchPad() {
 
       const idoInfos = await multicallv2(bitcityIdoABI, calls)
       setPools(poolLst)
-      setIdos(idoInfos)
+      const data = idoInfos.map((ido, index) => {
+        return {
+          id: index,
+          idoToken: ido.idoToken,
+          idoToken2Buy: ido.idoToken2Buy,
+          token2IDOtoken: ido.token2IDOtoken,
+          minAmount: ido.minAmount,
+          maxAmount: ido.maxAmount,
+          totalAmount: ido.totalAmount,
+          remainAmount: ido.remainAmount,
+          idoUnlock: ido.idoUnlock,
+          keyType: ido.keyType,
+          startTime: ido.startTime,
+          endTime: ido.endTime,
+          status: ido.status,
+        }
+      })
+      setIdos(data)
       setIsLoading(false)
     }
     initialData()
@@ -133,7 +152,7 @@ function LaunchPad() {
           <img src={line2} className="w-full h-auto" alt="" />
         </div>
         {tabIndex === 1 && <UpcomingPool idos={idos} pools={pools} />}
-        {tabIndex === 2 && <RegisterWhitelist idos={idos} />}
+        {tabIndex === 2 && <RegisterWhitelist idos={idos} pools={pools} account={account} />}
         {tabIndex === 3 && <InProgress />}
         {tabIndex === 4 && <Completed />}
       </div>
