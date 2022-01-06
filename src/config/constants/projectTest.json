@@ -1,0 +1,22 @@
+{
+  "about_project": {
+    "introduction": "The Sin City native game is a 3D action thriller game, which albeit fictional, is set and modelled after some of the most controversial crime cities across the world. The play-to-earn game will be laced with violence and gore bidding to become the ultimate Kingpin whilst building your empire. This will be built with realistic imagery along with voice & text chat features with intent to pull players into an augmented reality space. Ultimate aim of gamers will be to conquer & control Sin City and be designated as the ultimate Kingpin, until the next conquerors emerge.",
+    "play_to_earn_model": "The play-to-earn model is very much instigated as head-to-head contests. Where users will gang battle to win SIN tokens. The play-to-earn model is fully recyclable where commissions on NFT sales go back into a rewards pool, for users to earn whilst they play.",
+    "project_info": "Highlight Features</br>Faction, team driven.</br>Play to Earn</br>Earn NFTs to improve your in-game character</br>Open World, revenue generating assets from empire building</br>System Requirements",
+    "token_info": {
+      "name": "IDO",
+      "contract_address": "TBA",
+      "total_supply": 76500000,
+      "decimals": 18,
+      "symbol": "IDO"
+    }
+  },
+  "pool_detail": {
+    "token_distribution": "Claim",
+    "swap_amount": 2178058,
+    "access_type": "Mayor pass-ticket",
+    "price_per_token": 0.0278,
+    "total_capital_raise": 10000,
+    "claim_policy": "20% at TGE, 40% at month 4, 40% at month 8"
+  }
+}

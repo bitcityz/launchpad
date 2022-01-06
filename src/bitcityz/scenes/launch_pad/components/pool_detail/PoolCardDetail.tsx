@@ -51,6 +51,7 @@ function PoolCardDetail({ idoPool, pools }) {
     setIdoName(pool[0].name)
 
     if (account) {
+      setTicket(0)
       ticketContract.balanceOf(account).then((resp) => {
         const totalTicket = new BigNumber(resp._hex).toNumber()
         if (totalTicket > 0) {
@@ -99,7 +100,7 @@ function PoolCardDetail({ idoPool, pools }) {
             <p className="text-shadow font-semibold text-skyblue mt-auto">Upcoming project</p>
           )}
 
-          {!account && !isAfter(idoPool.startTime*1000, new Date()) && isAfter(idoPool.endTime*1000, new Date()) && (
+          {!account && !isAfter(idoPool.startTime * 1000, new Date()) && isAfter(idoPool.endTime * 1000, new Date()) && (
             <button
               type="button"
               className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
@@ -108,7 +109,7 @@ function PoolCardDetail({ idoPool, pools }) {
               Connect wallet
             </button>
           )}
-          {account && !isAfter(idoPool.startTime*1000, new Date()) && isAfter(idoPool.endTime*1000, new Date()) && (
+          {account && !isAfter(idoPool.startTime * 1000, new Date()) && isAfter(idoPool.endTime * 1000, new Date()) && (
             <button
               type="button"
               className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
@@ -119,7 +120,15 @@ function PoolCardDetail({ idoPool, pools }) {
           )}
         </div>
       </div>
-      {showRegisterModal && <RegisterModal onClose={_handleCloseConfirm} ido={idoPool} idoName={idoName} ticket={ticket} ticketId={ticketId} />}
+      {showRegisterModal && (
+        <RegisterModal
+          onClose={_handleCloseConfirm}
+          ido={idoPool}
+          idoName={idoName}
+          ticket={ticket}
+          ticketId={ticketId}
+        />
+      )}
     </div>
   )
 }
