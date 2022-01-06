@@ -28,7 +28,7 @@ import taskSquareActive from '../../assets/images/task-square-active.svg'
 const POOLS = [0, 1, 2]
 
 function LaunchPad() {
-    const { account } = useWeb3React()
+  const { account } = useWeb3React()
   const [tabIndex, setTabIndex] = useState(1)
   const [pools, setPools] = useState([])
   const _handleChangeTab = (index) => {

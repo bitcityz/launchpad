@@ -17,7 +17,6 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido }) {
   const ticketQty = 1
   const [pendingTx, setPendingTx] = useState(false)
 
-
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
@@ -31,10 +30,7 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido }) {
       // register whitelist
       console.log(ido)
       await onRegister(ido.id, ticketId)
-      toastSuccess(
-        `${t('Registed')}!`,
-        t('You have successfully registered for the whitelist'),
-      )
+      toastSuccess(`${t('Registed')}!`, t('You have successfully registered for the whitelist'))
 
       setPendingTx(false)
       onClose()
@@ -69,7 +65,7 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido }) {
               type="text"
               value={ticketQty}
               pattern="^[0-9]*[.,]?[0-9]{0,18}$"
-            readOnly
+              readOnly
               className="bg-transparent border-none max-w-[50px] text-[#9E9E9E] font-semibold flex-1 text-right pt-[1px]"
               placeholder="0.00"
             />
@@ -98,8 +94,8 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido }) {
           <button
             type="button"
             className={` rounded-[20px] border-none  text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10  md:min-w-[200px] ${
-                ticket > 0 ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
-              }`}
+              ticket > 0 ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+            }`}
             onClick={handleConfirmClick}
           >
             Confirm

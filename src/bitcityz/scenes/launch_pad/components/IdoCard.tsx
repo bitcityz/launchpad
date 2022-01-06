@@ -17,14 +17,14 @@ import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 
 function IdoCard({ ido, pools }) {
-    const [idoName, setIdoName] = useState([])
+  const [idoName, setIdoName] = useState([])
 
-    useEffect(() => {
-        const pool = pools.filter(r => {
-            return r.hash === ido.keyType
-        })
-        setIdoName(pool[0].name)
-    }, [pools, ido])
+  useEffect(() => {
+    const pool = pools.filter((r) => {
+      return r.hash === ido.keyType
+    })
+    setIdoName(pool[0].name)
+  }, [pools, ido])
   return (
     <div className="relative px-6 py-5">
       <div
@@ -57,25 +57,31 @@ function IdoCard({ ido, pools }) {
             <div className="mt-4">
               <p className="flex justify-between items-center">
                 <span className="text-[#BFBFBF]">Total capital raise</span>
-                <span className="text-[#F5F5F5] font-semibold">{Number(formatEther(ido.totalAmount)).toLocaleString('en', {
-                  maximumFractionDigits: 0,
-                })} BUSD</span>
+                <span className="text-[#F5F5F5] font-semibold">
+                  {Number(formatEther(ido.totalAmount)).toLocaleString('en', {
+                    maximumFractionDigits: 0,
+                  })}{' '}
+                  BUSD
+                </span>
               </p>
               <p className="flex justify-between items-center mt-2">
                 <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                <span className="text-[#F5F5F5] font-semibold">{format(ido.startTime*1000, 'Pp')} (UTC)</span>
+                <span className="text-[#F5F5F5] font-semibold">{format(ido.startTime * 1000, 'Pp')} (UTC)</span>
               </p>
               <p className="flex justify-between items-center mt-2">
                 <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTime*1000, 'Pp')} (UTC)</span>
+                <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTime * 1000, 'Pp')} (UTC)</span>
               </p>
             </div>
           </div>
           <div className="ml-auto flex flex-col items-end">
             <p className="text-[#F5F5F5] leading-5 font-semibold">(GFX/BUSD)</p>
             <p className="text-shadow font-semibold leading-5 mt-2 text-[#2CE7FF]">GFX = 0.05 BUSD</p>
-            <Link to={`/launchpad/${ido.id}`} className="bg-skyblue mt-auto rounded-[20px] flex items-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue">
-            More Details
+            <Link
+              to={`/launchpad/${ido.id}`}
+              className="bg-skyblue mt-auto rounded-[20px] flex items-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+            >
+              More Details
             </Link>
           </div>
         </div>

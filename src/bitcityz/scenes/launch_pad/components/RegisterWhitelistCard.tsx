@@ -111,7 +111,10 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 <img src={mediumBlack} alt="" />
                 <img src={telegramBlack} alt="" />
               </div>
-              <NavLink to={`/launchpad/${ido.id}`} className="text-skyblue underline text-sm font-medium mt-4 inline-block">
+              <NavLink
+                to={`/launchpad/${ido.id}`}
+                className="text-skyblue underline text-sm font-medium mt-4 inline-block"
+              >
                 More detail
               </NavLink>
               <div className="mt-4">
@@ -157,7 +160,9 @@ function RegisterWhitelistCard({ ido, pools, account }) {
           </div>
         </div>
       </div>
-      {showRegisterModal && <RegisterModal onClose={_handleCloseConfirm} ido={ido} idoName={idoName} ticket={ticket} ticketId={ticketId} />}
+      {showRegisterModal && (
+        <RegisterModal onClose={_handleCloseConfirm} ido={ido} idoName={idoName} ticket={ticket} ticketId={ticketId} />
+      )}
     </>
   )
 }
