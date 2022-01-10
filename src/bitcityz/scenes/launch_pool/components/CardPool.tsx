@@ -17,7 +17,7 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account, isLoading, setUpdatePool }) {
+function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress }) {
   const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } =
     pool
   const { login, logout } = useAuth()
@@ -120,7 +120,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool }) {
             </div>
             <div className="flex justify-center items-end md:justify-start">
               <a
-                href="https://testnet.bscscan.com/address/0xa8B9861222Ee5321B7052642695269E18cbD07AA"
+                href={`https://testnet.bscscan.com/address/${launchPoolAddress}`}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center underline text-[#2CE7FF] text-sm text-shadow"

@@ -101,7 +101,13 @@ function LaunchPool() {
       <LaunchpoolHeader />
       <div className="bg-bottom bg-contain bg-no-repeat pb-[240px]" style={{ backgroundImage: `url(${bgFantasy})` }}>
         <div className="layout-container">
-          <PoolList pools={pools} account={account} isLoading={isLoading} setUpdatePool={setUpdatePool} />
+          <PoolList
+            pools={pools}
+            account={account}
+            isLoading={isLoading}
+            setUpdatePool={setUpdatePool}
+            launchPoolAddress={launchPoolAddress}
+          />
         </div>
       </div>
     </>
