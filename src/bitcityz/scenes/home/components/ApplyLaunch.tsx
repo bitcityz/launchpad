@@ -4,7 +4,7 @@ import '../../../assets/index.css'
 
 function ApplyLaunch(props) {
   return (
-    <div className="layout-container mt-[73px]">
+    <div className="mt-[73px]">
       <h5 className="text-[#F5F5F5] text-[32px] text-center">
         Launch your project on <span className="text-skyblue">BitcityZ</span> now!
       </h5>
@@ -17,12 +17,15 @@ function ApplyLaunch(props) {
         crypto space. If you think you are one of these projects, apply below!
       </p>
       <div className="text-center">
-        <button
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeGkn_Szv_UCAQ2xQk0PHUp9gC7QFFzH0cCcyaY1qkFOc7reg/viewform"
+          target="_blank"
+          rel="noreferrer"
           type="button"
-          className="bg-skyblue mt-8 rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+          className="bg-skyblue mt-8 flex items-center justify-center mx-auto max-w-[202px] rounded-[20px] border-none text-black font-semibold h-[44px] shadow-blue"
         >
           Apply to launch
-        </button>
+        </a>
       </div>
     </div>
   )

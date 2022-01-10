@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import '../../../assets/index.css'
 import { format } from 'date-fns'
 import { formatEther } from 'ethers/lib/utils'
-import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
 import idoCollection from '../../../config/constants/idoList'
 
-import Social from './Social'
+import Social from '../../launch_pad/components/Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 
-function IdoCard({ ido, pools }) {
-  const [idoName, setIdoName] = useState([])
+function UpcomingPoolCard({ project, poolName }) {
   const [idoInfo, setIdoInfo] = useState(null)
-
   useEffect(() => {
-    setIdoInfo(idoCollection[ido.idoToken])
-  }, [ido])
-
-  useEffect(() => {
-    const pool = pools.filter((r) => {
-      return r.hash === ido.keyType
-    })
-    setIdoName(pool[0].name)
-  }, [pools, ido])
+    setIdoInfo(idoCollection[project.idoToken])
+  }, [project])
   return (
     <div className="relative px-6 py-5">
       <div
@@ -34,7 +26,7 @@ function IdoCard({ ido, pools }) {
       />
       <div className="relative z-10">
         <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-          {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          {poolName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -64,7 +56,7 @@ function IdoCard({ ido, pools }) {
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
-                    {(Number(formatEther(ido.totalAmount)) * idoInfo?.price).toLocaleString('en', {
+                    {(Number(formatEther(project.totalAmount)) * idoInfo?.price).toLocaleString('en', {
                       maximumFractionDigits: 0,
                     })}{' '}
                     {idoInfo?.currencyPair}
@@ -72,15 +64,17 @@ function IdoCard({ ido, pools }) {
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">{format(ido.startTime * 1000, 'Pp')} (UTC)</span>
+                  <span className="text-[#F5F5F5] font-semibold">{format(project.startTime * 1000, 'Pp')} (UTC)</span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTime * 1000, 'Pp')} (UTC)</span>
+                  <span className="text-[#F5F5F5] font-semibold ml-8">
+                    {format(project.endTime * 1000, 'Pp')} (UTC)
+                  </span>
                 </p>
               </div>
               <Link
-                to={`/launchpad/${ido.id}`}
+                to={`/launchpad/${project.id}`}
                 className="bg-skyblue mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
               >
                 More Details
@@ -93,4 +87,4 @@ function IdoCard({ ido, pools }) {
   )
 }
 
-export default IdoCard
+export default UpcomingPoolCard

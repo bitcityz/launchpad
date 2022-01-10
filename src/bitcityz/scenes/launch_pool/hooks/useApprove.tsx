@@ -4,13 +4,14 @@ import { ethers, Contract } from 'ethers'
 import { useAppDispatch } from 'state'
 import { updateUserAllowance } from 'state/actions'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useSousChef, useCakeVaultContract } from 'hooks/useContract'
+import { useCake, useTokenContract, useCakeVaultContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { getLaunchPoolAddress } from 'utils/addressHelpers'
 import useLastUpdated from 'hooks/useLastUpdated'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
+const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 export const useApprovePool = (lpContract: Contract) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const { toastSuccess, toastError } = useToast()
@@ -76,24 +77,23 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
   return { handleApprove, requestedApproval }
 }
 
-export const useCheckVaultApprovalStatus = () => {
-  const [isVaultApproved, setIsVaultApproved] = useState(false)
+export const useCheckApprovalStatus = () => {
+  const [isAllowanceApproved, setIsAllowanceApproved] = useState(false)
   const { account } = useWeb3React()
-  const cakeContract = useCake()
-  const cakeVaultContract = useCakeVaultContract()
-  const { lastUpdated, setLastUpdated } = useLastUpdated()
+  const erc20Contract = useTokenContract(bctz)
+  const launchPoolAddress = getLaunchPoolAddress()
   useEffect(() => {
     const checkApprovalStatus = async () => {
       try {
-        const currentAllowance = await cakeContract.allowance(account, cakeVaultContract.address)
-        setIsVaultApproved(currentAllowance.gt(0))
+        const currentAllowance = await erc20Contract.allowance(account, launchPoolAddress)
+        setIsAllowanceApproved(currentAllowance.gt(0))
       } catch (error) {
-        setIsVaultApproved(false)
+        setIsAllowanceApproved(false)
       }
     }
 
     checkApprovalStatus()
-  }, [account, cakeContract, cakeVaultContract, lastUpdated])
+  }, [account, erc20Contract, launchPoolAddress])
 
-  return { isVaultApproved, setLastUpdated }
+  return { isAllowanceApproved }
 }

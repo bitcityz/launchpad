@@ -37,8 +37,11 @@ function LaunchPad() {
 
   const ticketAddress = getTicketAddress()
   const idoAddress = getIdoAddress()
-  const [idos, setIdos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [upcoming, setUpcoming] = useState([])
+  const [registerWhitlis, setRegisterWhitelist] = useState([])
+  const [inprogress, setInprogress] = useState([])
+  const [completed, setCompleted] = useState([])
 
   const idoCalls = useMemo(() => {
     return [{ address: idoAddress, name: 'poolLength' }]
@@ -62,24 +65,27 @@ function LaunchPad() {
 
       const idoInfos = await multicallv2(bitcityIdoABI, calls)
       setPools(poolLst)
-      const data = idoInfos.map((ido, index) => {
-        return {
-          id: index,
-          idoToken: ido.idoToken,
-          idoToken2Buy: ido.idoToken2Buy,
-          token2IDOtoken: ido.token2IDOtoken,
-          minAmount: ido.minAmount,
-          maxAmount: ido.maxAmount,
-          totalAmount: ido.totalAmount,
-          remainAmount: ido.remainAmount,
-          idoUnlock: ido.idoUnlock,
-          keyType: ido.keyType,
-          startTime: ido.startTime,
-          endTime: ido.endTime,
-          status: ido.status,
+
+      const upcomingPr = []
+      const whitelistPr = []
+      const inprogressPr = []
+      const completedPr = []
+      idoInfos.forEach((ido, index) => {
+        if (Number(ido.status._hex) === 0) {
+          upcomingPr.push({ id: index, ...ido })
+        } else if (Number(ido.status._hex) === 1) {
+          whitelistPr.push({ id: index, ...ido })
+        } else if (Number(ido.status._hex) === 2) {
+          inprogressPr.push({ id: index, ...ido })
+        } else {
+          completedPr.push({ id: index, ...ido })
         }
       })
-      setIdos(data)
+
+      setUpcoming(upcomingPr)
+      setRegisterWhitelist(whitelistPr)
+      setInprogress(inprogressPr)
+      setCompleted(completedPr)
       setIsLoading(false)
     }
     initialData()
@@ -99,7 +105,7 @@ function LaunchPad() {
         </div>
         <div className="text-center">
           <img src={line1} className="mt-14 w-full h-auto" alt="" />
-          <div className="grid grid-cols-4 gap-x-8">
+          <div className="grid mobile-tab md:grid-cols-4 gap-x-8 relative">
             <button
               type="button"
               className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
@@ -151,10 +157,10 @@ function LaunchPad() {
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
         </div>
-        {tabIndex === 1 && <UpcomingPool idos={idos} pools={pools} />}
-        {tabIndex === 2 && <RegisterWhitelist idos={idos} pools={pools} account={account} />}
-        {tabIndex === 3 && <InProgress />}
-        {tabIndex === 4 && <Completed />}
+        {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} />}
+        {tabIndex === 2 && <RegisterWhitelist idos={upcoming} pools={pools} account={account} />}
+        {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} setIsLoading={setIsLoading} />}
+        {tabIndex === 4 && <Completed idos={completed} pools={pools} account={account} />}
       </div>
     </div>
   )

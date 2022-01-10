@@ -11,7 +11,7 @@ import btczIcon from '../../../assets/images/ic-btcz.svg'
 
 function Performance(props) {
   return (
-    <div className="layout-container">
+    <div>
       <div className="text-center pt-[110px]">
         <img src={performance} className="mx-auto" alt="" />
         <h2 className="text-center text-[#F5F5F5] font-bold text-[32px] text-shadow">Performance</h2>
@@ -28,15 +28,15 @@ function Performance(props) {
               <img src={discordLight} alt="" />
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-x-7 mt-8">
-            <div className="pr-7 border-r-[1px] border-solid border-[#C4C4C4]">
+          <div className="grid gap-y-3 md:gap-y-0 md:grid-cols-4 md:gap-x-7 mt-8">
+            <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left">Current Price</p>
               <h6 className="flex justify-between items-center mt-4">
                 <p className="text-[#F5F5F5] font-bold text-2xl">$ 100.56</p>{' '}
                 <span className="text-[#00DE09] text-xs font-semibold"> 3.148%</span>
               </h6>
             </div>
-            <div className="pr-7 border-r-[1px] border-solid border-[#C4C4C4]">
+            <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left flex justify-between">
                 Market Cap: <span className="font-semibold text-sm">$300,3M</span>
               </p>
@@ -47,7 +47,7 @@ function Performance(props) {
                 </span>
               </p>
             </div>
-            <div className="pr-7 border-r-[1px] border-solid border-[#C4C4C4]">
+            <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left flex justify-between">
                 Raised: <span className="font-semibold text-sm">$300,3M</span>
               </p>
@@ -55,7 +55,7 @@ function Performance(props) {
                 IDO Price: <span className="font-semibold text-sm">$1</span>
               </p>
             </div>
-            <div className="pr-7">
+            <div className="md:pr-7">
               <p className="text-[#F5F5F5] text-left flex justify-between">
                 IDO ROI <span className="font-semibold text-sm">298,96x</span>
               </p>
@@ -70,8 +70,8 @@ function Performance(props) {
           </div>
         </div>
         <div className="mt-8">
-          <div>
-            <table className="w-full border-collapse rounded-xl">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse rounded-xl min-w-[800px]">
               <thead className="bg-[#030303] rounded-tl-xl rounded-tr-xl">
                 <tr>
                   <th className="p-6 whitespace-nowrap text-left text-sm text-[#F5F5F5] font-semibold leading-[18px]">

@@ -9,6 +9,7 @@ import { getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import PoolList from './components/PoolList'
+import LaunchpoolHeader from './components/LaunchpoolHeader'
 import { Spinner } from '../../components'
 import bgFantasy from '../../assets/images/bg-fantasy.png'
 
@@ -26,6 +27,7 @@ function LaunchPool() {
   const [isApproved, setIsApproved] = useState(false)
   const [balance, setBalance] = useState(new BigNumber(0))
   const [updatePool, setUpdatePool] = useState(false)
+
   const userCalls = useMemo(
     () =>
       POOLS.map((id) => {
@@ -96,6 +98,7 @@ function LaunchPool() {
   return (
     <>
       {isLoading && <Spinner />}
+      <LaunchpoolHeader />
       <div className="bg-bottom bg-contain bg-no-repeat pb-[240px]" style={{ backgroundImage: `url(${bgFantasy})` }}>
         <div className="layout-container">
           <PoolList pools={pools} account={account} isLoading={isLoading} setUpdatePool={setUpdatePool} />

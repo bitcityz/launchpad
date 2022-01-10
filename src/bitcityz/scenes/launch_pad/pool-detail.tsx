@@ -5,14 +5,14 @@ import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
 import { getIdoAddress, getTicketAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
-import { useIdoContract } from 'hooks/useContract'
-import { useSingleCallResult } from 'state/multicall/hooks'
+import idoCollection from '../../config/constants/idoList'
 
 import PoolCardDetail from './components/pool_detail/PoolCardDetail'
 import About from './components/pool_detail/About'
 import Detail from './components/pool_detail/Detail'
 import WhiteList from './components/pool_detail/WhiteList'
 import Allocation from './components/pool_detail/Allocation'
+import { Spinner } from '../../components'
 
 import line1 from '../../assets/images/line1.svg'
 import line2 from '../../assets/images/line2.svg'
@@ -33,7 +33,9 @@ function PoolDetail() {
   const idoAddress = getIdoAddress()
   const [idoPool, setIdoPool] = useState(null)
   const [pools, setPools] = useState([])
-  const idoContract = useIdoContract()
+  const [isLoading, setIsLoading] = useState(true)
+
+  const [idoInfo, setIdoInfo] = useState(null)
 
   const ticketCalls = useMemo(
     () =>
@@ -48,6 +50,7 @@ function PoolDetail() {
   }
 
   useEffect(() => {
+    setIsLoading(true)
     const initData = async () => {
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
       setPools(poolLst)
@@ -72,21 +75,24 @@ function PoolDetail() {
         }
       })
       setIdoPool(data[0])
+      setIdoInfo(idoCollection[data[0].idoToken])
+      setIsLoading(false)
     }
     initData()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="bg-[#050e21] py-[110px] ">
+      {isLoading && <Spinner />}
       <div className="layout-container">
         <div className="relative px-6 py-7">
           <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />
-          {idoPool && <PoolCardDetail idoPool={idoPool} pools={pools} />}
+          {idoPool && <PoolCardDetail idoPool={idoPool} idoInfo={idoInfo} pools={pools} />}
         </div>
         <div className="relative px-6 pt-2 pb-6 mt-[30px]">
           <div className="rounded-2xl absolute top-0 left-0 w-full h-full bg-linear-1" />
           <img src={line1} className="w-full h-auto" alt="" />
-          <div className="grid grid-cols-4 gap-x-8 relative">
+          <div className="grid mobile-tab md:grid-cols-4 gap-x-8 relative">
             <button
               type="button"
               className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
@@ -138,9 +144,9 @@ function PoolDetail() {
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
 
-          {tabIndex === 1 && <About />}
+          {tabIndex === 1 && <About idoInfo={idoInfo} />}
           {tabIndex === 2 && <Detail />}
-          {tabIndex === 3 && <WhiteList />}
+          {tabIndex === 3 && <WhiteList idoPool={idoPool} setIsLoading={setIsLoading} />}
           {tabIndex === 4 && <Allocation />}
         </div>
       </div>
