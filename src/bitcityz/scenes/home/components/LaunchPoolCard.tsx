@@ -17,8 +17,8 @@ function LaunchPoolCard({ pool }) {
   const { account } = useWeb3React()
 
   useEffect(() => {
+    setTicket(0)
     if (account) {
-      setTicket(0)
       ticketContract.balanceOf(account).then((resp) => {
         const totalTicket = new BigNumber(resp._hex).toNumber()
         if (totalTicket > 0) {
@@ -34,8 +34,6 @@ function LaunchPoolCard({ pool }) {
           }
         }
       })
-    } else {
-      setTicket(0)
     }
   }, [account, ticketContract, pool])
   return (
