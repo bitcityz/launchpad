@@ -79,6 +79,7 @@ interface ApproveConfirmTransaction {
   onRequiresApproval?: () => Promise<boolean>
   onSuccess: ({ state, receipt }: OnSuccessProps) => void
   onApproveSuccess?: ({ state, receipt }: OnSuccessProps) => void
+  onError: ({ state, receipt }: OnSuccessProps) => void
   watched?: any
 }
 
@@ -89,6 +90,7 @@ const useApprove = ({
   onSuccess = noop,
   onApproveSuccess = noop,
   watched,
+  onError = noop,
 }: ApproveConfirmTransaction) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
@@ -125,7 +127,13 @@ const useApprove = ({
         }
       } catch (error) {
         dispatch({ type: 'approve_error' })
-        toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
+        onError({ state, receipt: error })
+        if (error.code !== 4001) {
+          toastError(
+            t('Error'),
+            t('Please try again. Confirm the transaction and make sure you are paying enough gas!'),
+          )
+        }
       }
     },
     handleConfirm: async (params = {}) => {
@@ -139,7 +147,13 @@ const useApprove = ({
         }
       } catch (error) {
         dispatch({ type: 'confirm_error' })
-        toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
+        onError({ state, receipt: error })
+        if (error.code !== 4001) {
+          toastError(
+            t('Error'),
+            t('Please try again. Confirm the transaction and make sure you are paying enough gas!'),
+          )
+        }
       }
     },
   }

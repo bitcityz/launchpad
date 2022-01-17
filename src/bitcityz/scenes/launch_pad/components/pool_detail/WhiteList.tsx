@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../../../assets/index.css'
 import { useIdoContract } from 'hooks/useContract'
 import truncateHash from 'utils/truncateHash'
+import { Skeleton } from '@mexi/uikit'
 
 import Pagination from '../../../../components/pagination/Pagination'
 
@@ -13,17 +14,18 @@ function WhiteList({ idoPool, setIsLoading }) {
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(true)
   const idoContract = useIdoContract()
 
   useEffect(() => {
-    setIsLoading(true)
     const getListWhitelist = async () => {
       const resp = await idoContract.getWhitelist(idoPool.id)
       setAllWhitelist(resp)
-      setIsLoading(false)
+      // setIsLoading(false)
+      setLoading(false)
     }
     getListWhitelist()
-  }, [idoContract, idoPool, setIsLoading])
+  }, [idoContract, idoPool])
 
   useEffect(() => {
     const generateDataByPage = (pageIndex) => {
@@ -74,7 +76,15 @@ function WhiteList({ idoPool, setIsLoading }) {
             <span className="text-[#F5F5F5] font-semibold">No</span>
             <span className="text-[#F5F5F5] font-semibold">Wallet Address</span>
           </div>
-          {whitelist.length > 0 &&
+          {loading ? (
+            <div className="flex flex-col gap-y-2 mt-2">
+              <Skeleton width="100%" height="52px" />
+              <Skeleton width="100%" height="52px" />
+              <Skeleton width="100%" height="52px" />
+              <Skeleton width="100%" height="52px" />
+            </div>
+          ) : (
+            whitelist.length > 0 &&
             whitelist.map((address, index) => {
               return (
                 <div
@@ -88,7 +98,8 @@ function WhiteList({ idoPool, setIsLoading }) {
                   <span className="text-[#F5F5F5] font-semibold">{truncateHash(address, 8, 8)}</span>
                 </div>
               )
-            })}
+            })
+          )}
         </div>
       </div>
       <div className="mt-5">

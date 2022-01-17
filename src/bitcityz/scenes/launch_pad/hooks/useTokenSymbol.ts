@@ -1,10 +1,19 @@
+import { useEffect, useState } from 'react'
 import { useTokenContract } from 'hooks/useContract'
-import { useSingleCallResult } from 'state/multicall/hooks'
 
-function useTokenSymbol(address: string): string | undefined {
-  const contract = useTokenContract(address, false)
-  const symbol: string = useSingleCallResult(contract, 'symbol')?.result?.[0]
-  return address && symbol ? symbol : undefined
+const useTokenSymbol = (tokenAddress) => {
+  const erc20Contract = useTokenContract(tokenAddress)
+  const [symbol, setSymbol] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    if (tokenAddress) {
+      erc20Contract.symbol().then((res) => {
+        setSymbol(res)
+        setIsLoading(false)
+      })
+    }
+  }, [erc20Contract, tokenAddress])
+  return { symbol, isLoading }
 }
 
 export default useTokenSymbol

@@ -4,6 +4,7 @@ import '../../../assets/index.css'
 import { format } from 'date-fns'
 import { formatEther } from 'ethers/lib/utils'
 import { Link } from 'react-router-dom'
+import useTokenSymbol from '../../launch_pad/hooks/useTokenSymbol'
 import idoCollection from '../../../config/constants/idoList'
 
 import Social from '../../launch_pad/components/Social'
@@ -12,6 +13,8 @@ import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.
 
 function UpcomingPoolCard({ project, poolName }) {
   const [idoInfo, setIdoInfo] = useState(null)
+  const { symbol: idoTokenBuySymbol } = useTokenSymbol(project.idoToken2Buy)
+  const { symbol: idoTokenSymbol } = useTokenSymbol(project.idoToken)
   useEffect(() => {
     setIdoInfo(idoCollection[project.idoToken])
   }, [project])
@@ -39,13 +42,17 @@ function UpcomingPoolCard({ project, poolName }) {
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                   {idoInfo?.name}{' '}
                   <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                    ({idoInfo?.symbol}/{idoInfo?.currencyPair})
+                    ({idoTokenSymbol}/{idoTokenBuySymbol})
                   </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoInfo?.symbol}{' '}
+                  {idoTokenSymbol}{' '}
                   <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {idoInfo?.symbol} = {idoInfo?.price} {idoInfo?.currencyPair}
+                    {idoTokenSymbol} ={' '}
+                    {Number(formatEther(project.tokenBuy2IDOtoken)).toLocaleString('en', {
+                      maximumFractionDigits: 4,
+                    })}{' '}
+                    {idoTokenBuySymbol}
                   </span>
                 </p>
               </div>
@@ -56,20 +63,22 @@ function UpcomingPoolCard({ project, poolName }) {
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
-                    {(Number(formatEther(project.totalAmount)) * idoInfo?.price).toLocaleString('en', {
-                      maximumFractionDigits: 0,
+                    {(
+                      Number(formatEther(project.totalAmount)) * Number(formatEther(project.tokenBuy2IDOtoken))
+                    ).toLocaleString('en', {
+                      maximumFractionDigits: 4,
                     })}{' '}
-                    {idoInfo?.currencyPair}
+                    {idoTokenBuySymbol}
                   </span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">{format(project.startTime * 1000, 'Pp')} (UTC)</span>
+                  <span className="text-[#BFBFBF]">Whitelist registration start</span>
+                  <span className="text-[#F5F5F5] font-semibold">{format(project.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
+                  <span className="text-[#BFBFBF]">Whitelist registration end</span>
                   <span className="text-[#F5F5F5] font-semibold ml-8">
-                    {format(project.endTime * 1000, 'Pp')} (UTC)
+                    {format(project.endTimeWL * 1000, 'Pp')} (UTC)
                   </span>
                 </p>
               </div>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../../../../assets/index.css'
-import { formatNumber } from 'utils/formatBalance'
+import { Skeleton } from '@mexi/uikit'
+import useTokenInfo from '../../hooks/useTokenInfo'
 
-function About({ idoInfo }) {
+function About({ idoPool, idoInfo }) {
+  const { symbol, name, totalSupply, decimals, isLoading } = useTokenInfo(idoPool?.idoToken)
   return (
     <div className="pt-5 relative">
       <h6 className="text-[#F5F5F5]">Introduction</h6>
@@ -19,25 +21,46 @@ function About({ idoInfo }) {
       <h6 className="text-[#F5F5F5] mt-5">Token infomation</h6>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Name</span>
-        <span className="font-semibold text-[#F5F5F5]">{idoInfo?.name}</span>
+        {isLoading ? (
+          <Skeleton width="150px" height="16px" />
+        ) : (
+          <span className="font-semibold text-[#F5F5F5]">{name}</span>
+        )}
       </p>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Contract address </span>
         <span className="font-semibold text-[#F5F5F5] break-words max-w-[calc(100vw-200px)] md:max-w-full">
-          {idoInfo?.address}
+          {idoPool?.idoToken}
         </span>
       </p>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Total supply</span>
-        <span className="font-semibold text-[#F5F5F5]">{formatNumber(Number(idoInfo?.totalSupply), 0, 0)}</span>
+
+        {isLoading ? (
+          <Skeleton width="200px" height="16px" />
+        ) : (
+          <span className="font-semibold text-[#F5F5F5]">
+            {Number(totalSupply).toLocaleString('en', {
+              maximumFractionDigits: 4,
+            })}{' '}
+          </span>
+        )}
       </p>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Decimals</span>
-        <span className="font-semibold text-[#F5F5F5]">{idoInfo?.decimals}</span>
+        {isLoading ? (
+          <Skeleton width="50px" height="16px" />
+        ) : (
+          <span className="font-semibold text-[#F5F5F5]">{decimals}</span>
+        )}
       </p>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Symbol</span>
-        <span className="font-semibold text-[#F5F5F5]">{idoInfo?.symbol}</span>
+        {isLoading ? (
+          <Skeleton width="100px" height="16px" />
+        ) : (
+          <span className="font-semibold text-[#F5F5F5]">{symbol}</span>
+        )}
       </p>
     </div>
   )

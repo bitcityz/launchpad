@@ -2,7 +2,7 @@ import React from 'react'
 
 import '../../../assets/index.css'
 
-function ApplyLaunch(props) {
+function ApplyLaunch() {
   return (
     <div className="mt-[73px]">
       <h5 className="text-[#F5F5F5] text-[32px] text-center">

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import '../../../assets/index.css'
 import { NavLink } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils'
-import { format } from 'date-fns'
 import { useIdoContract } from 'hooks/useContract'
+import { Skeleton } from '@mexi/uikit'
+import useTokenSymbol from '../hooks/useTokenSymbol'
+import useAccountClaimPercent from '../../../hooks/useAccountClaimPercent'
 
 import idoCollection from '../../../config/constants/idoList'
 import Social from './Social'
@@ -14,26 +16,26 @@ import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.
 function CompletedCard({ ido, pools, account }) {
   const [idoInfo, setIdoInfo] = useState(null)
   const [isBuyer, setIsBuyer] = useState(false)
-  const [isInWhitelist, setIsInWhitelist] = useState(false)
+  const [idoName, setIdoName] = useState('')
+  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
+  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
+  const { claimPercent, isLoading: claimPercentLoading, setIsUpdate } = useAccountClaimPercent(account)
 
-  const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
 
   useEffect(() => {
+    const pool = pools.filter((r) => {
+      return r.hash === ido.keyType
+    })
+    setIdoName(pool[0].name)
+  }, [pools, ido])
+
+  useEffect(() => {
     setIdoInfo(idoCollection[ido.idoToken])
-    const totalAmount = Number(formatEther(ido.totalAmount))
-    const remainAmount = Number(formatEther(ido.remainAmount))
-    const result = ((totalAmount - remainAmount) * 100) / totalAmount
-    setPercent(result)
   }, [ido])
 
   useEffect(() => {
     if (account) {
-      const checkAccountInWhiteList = async () => {
-        const response = await idoContract.isWhitelist(account, ido.id)
-        setIsInWhitelist(response)
-      }
-      checkAccountInWhiteList()
       const checkAccountJoined = async () => {
         const response = await idoContract.isBuyer(account, ido.id)
         setIsBuyer(response)
@@ -53,7 +55,7 @@ function CompletedCard({ ido, pools, account }) {
       />
       <div className="relative z-10">
         <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-          Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -65,15 +67,27 @@ function CompletedCard({ ido, pools, account }) {
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                   {idoInfo?.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                    ({idoInfo?.symbol}/{idoInfo?.currencyPair})
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="150px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                      ({idoTokenSymbol}/{idoTokenBuySymbol})
+                    </span>
+                  )}
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoInfo?.symbol}{' '}
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {idoInfo?.symbol} = {idoInfo?.price} {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="150px" height="16px" />
+                  ) : (
+                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                      {idoTokenSymbol} ={' '}
+                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -88,25 +102,31 @@ function CompletedCard({ ido, pools, account }) {
               <div className="flex-1">
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
-                  <span className="text-[#F5F5F5] font-semibold">
-                    {(Number(formatEther(ido.totalAmount)) * idoInfo?.price).toLocaleString('en', {
-                      maximumFractionDigits: 0,
-                    })}{' '}
-                    {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="200px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] font-semibold">
+                      {(
+                        Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
+                      ).toLocaleString('en', {
+                        maximumFractionDigits: 0,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF]">Claim process</span>
                   <div className="flex flex-1 w-full items-center justify-end gap-x-2">
                     <div className="flex-1 md:max-w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
-                      <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${percent}%` }} />
+                      <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
                     </div>
-                    <span className="text-white font-semibold">{percent}%</span>
+                    <span className="text-white font-semibold">{claimPercent}%</span>
                   </div>
                 </div>
               </div>
               <div className="mt-5 md:mt-auto md:min-w-[120px]">
-                {account && !isInWhitelist && (
+                {account && !isBuyer && (
                   <p className="text-skyblue text-shadow font-semibold">You did not join the pool</p>
                 )}
               </div>

@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-import HubspotForm from 'react-hubspot-form'
-
 import '../../assets/index.css'
 import telegramIcon from '../../assets/images/telegram.svg'
 import twitterIcon from '../../assets/images/twitter.svg'

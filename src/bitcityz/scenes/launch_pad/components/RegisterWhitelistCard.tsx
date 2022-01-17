@@ -7,10 +7,11 @@ import getTimePeriods from 'utils/getTimePeriods'
 import { formatEther } from 'ethers/lib/utils'
 import '../../../assets/index.css'
 import { NavLink } from 'react-router-dom'
-import { useWalletModal } from '@mexi/uikit'
+import { useWalletModal, Skeleton } from '@mexi/uikit'
 
 import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 import { useTicketContract, useIdoContract } from 'hooks/useContract'
+import useTokenSymbol from '../hooks/useTokenSymbol'
 import idoCollection from '../../../config/constants/idoList'
 import Social from './Social'
 
@@ -29,6 +30,8 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   const [ticketId, setTicketId] = useState(0)
   const ticketContract = useTicketContract()
   const idoContract = useIdoContract()
+  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
+  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
 
   const secondsRemaining = isAfter(ido.endTimeWL * 1000, new Date())
     ? differenceInSeconds(ido.endTimeWL * 1000, new Date())
@@ -100,7 +103,6 @@ function RegisterWhitelistCard({ ido, pools, account }) {
             <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
               {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
             </span>
-            {/* <span className="text-skyblue text-shadow text-sm md:text-xl font-bold">Register whitelist</span> */}
           </h6>
           <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
             <div>
@@ -112,15 +114,27 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 <div className="flex-1">
                   <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                     {idoInfo?.name}{' '}
-                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                      ({idoInfo?.symbol}/{idoInfo?.currencyPair})
-                    </span>
+                    {idoTokenBuyLoading ? (
+                      <Skeleton width="150px" height="16px" />
+                    ) : (
+                      <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                        ({idoTokenSymbol}/{idoTokenBuySymbol})
+                      </span>
+                    )}
                   </p>
                   <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                    {idoInfo?.symbol}{' '}
-                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                      {idoInfo?.symbol} = {idoInfo?.price} {idoInfo?.currencyPair}
-                    </span>
+                    {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
+                    {idoTokenBuyLoading ? (
+                      <Skeleton width="150px" height="16px" />
+                    ) : (
+                      <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                        {idoTokenSymbol} ={' '}
+                        {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                          maximumFractionDigits: 4,
+                        })}{' '}
+                        {idoTokenBuySymbol}
+                      </span>
+                    )}
                   </p>
                 </div>
               </div>
@@ -135,12 +149,18 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 <div className="flex-1">
                   <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                     <span className="text-[#BFBFBF]">Total capital raise</span>
-                    <span className="text-[#F5F5F5] font-semibold">
-                      {(Number(formatEther(ido.totalAmount)) * idoInfo?.price).toLocaleString('en', {
-                        maximumFractionDigits: 0,
-                      })}{' '}
-                      {idoInfo?.currencyPair}
-                    </span>
+                    {idoTokenBuyLoading ? (
+                      <Skeleton width="200px" height="16px" />
+                    ) : (
+                      <span className="text-[#F5F5F5] font-semibold">
+                        {(
+                          Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
+                        ).toLocaleString('en', {
+                          maximumFractionDigits: 0,
+                        })}{' '}
+                        {idoTokenBuySymbol}
+                      </span>
+                    )}
                   </p>
                   <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
                     <span className="text-[#BFBFBF]">Register Whitelist</span>

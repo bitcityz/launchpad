@@ -1,8 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import '../../../../assets/index.css'
+import { formatEther } from 'ethers/lib/utils'
+import { getTicketAddress } from 'utils/addressHelpers'
+import { multicallv2 } from 'utils/multicall'
+import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
+import useTokenInfo from '../../hooks/useTokenInfo'
+import useTokenSymbol from '../../hooks/useTokenSymbol'
 import tokenURI from '../../../../assets/images/tokenURI.png'
 
-function Detail() {
+const POOLS = [0, 1, 2]
+function Detail({ idoPool }) {
+  const { symbol: idoTokenBuySymbol } = useTokenSymbol(idoPool.idoToken2Buy)
+  const [accessType, setAccessType] = useState('')
+  const ticketAddress = getTicketAddress()
+  const { symbol } = useTokenInfo(idoPool?.idoToken)
+  const poolCalls = useMemo(
+    () =>
+      POOLS.map((id) => {
+        return { address: ticketAddress, name: 'types', params: [id] }
+      }),
+    [ticketAddress],
+  )
+
+  useEffect(() => {
+    const initData = async () => {
+      const pools = await multicallv2(launchPoolTicketABI, poolCalls)
+      const pool = pools.filter((r) => {
+        return r.hash === idoPool.keyType
+      })
+      setAccessType(pool[0].name)
+    }
+    initData()
+  }, [poolCalls, idoPool])
+
   return (
     <div className="pt-5 relative">
       <div className="flex flex-col md:flex-row items-start md:gap-x-9">
@@ -14,19 +44,41 @@ function Detail() {
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Swap Amount:</span>
-            <span className="font-semibold text-[#F5F5F5]">2,178,058 GFX</span>
+            <span className="font-semibold text-[#F5F5F5]">
+              {(Number(formatEther(idoPool.totalAmount)) - Number(formatEther(idoPool.remainAmount))).toLocaleString(
+                'en',
+                {
+                  maximumFractionDigits: 4,
+                },
+              )}{' '}
+              {symbol}
+            </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Access type:</span>
-            <span className="font-semibold text-[#F5F5F5]">Mayor pass-ticket</span>
+            <span className="font-semibold text-[#F5F5F5]">{accessType} pass-ticket</span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>
-            <span className="font-semibold text-[#F5F5F5]">1 GRX = 0.0278 BUSD</span>
+            <span className="font-semibold text-[#F5F5F5]">
+              1 {symbol} ={' '}
+              {Number(formatEther(idoPool.token2IDOtoken)).toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
+              {idoTokenBuySymbol}
+            </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Total capital raise:</span>
-            <span className="font-semibold text-[#F5F5F5]">10,000 BUSD</span>
+            <span className="font-semibold text-[#F5F5F5]">
+              {(Number(formatEther(idoPool.totalAmount)) * Number(formatEther(idoPool.token2IDOtoken))).toLocaleString(
+                'en',
+                {
+                  maximumFractionDigits: 4,
+                },
+              )}{' '}
+              {idoTokenBuySymbol}
+            </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Claim policy:</span>

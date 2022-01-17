@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
+import { Skeleton } from '@mexi/uikit'
 import { formatEther } from 'ethers/lib/utils'
 import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
+import useTokenSymbol from '../hooks/useTokenSymbol'
 import idoCollection from '../../../config/constants/idoList'
 
 import Social from './Social'
@@ -12,6 +14,8 @@ import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.
 function IdoCard({ ido, pools }) {
   const [idoName, setIdoName] = useState([])
   const [idoInfo, setIdoInfo] = useState(null)
+  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
+  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
 
   useEffect(() => {
     setIdoInfo(idoCollection[ido.idoToken])
@@ -46,15 +50,28 @@ function IdoCard({ ido, pools }) {
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                   {idoInfo?.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                    ({idoInfo?.symbol}/{idoInfo?.currencyPair})
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="150px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                      ({idoTokenSymbol}/{idoTokenBuySymbol})
+                    </span>
+                  )}
                 </p>
+
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoInfo?.symbol}{' '}
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {idoInfo?.symbol} = {idoInfo?.price} {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="100px" height="16px" />
+                  ) : (
+                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                      {idoTokenSymbol} ={' '}
+                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -63,20 +80,26 @@ function IdoCard({ ido, pools }) {
               <div className="flex-1">
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
-                  <span className="text-[#F5F5F5] font-semibold">
-                    {(Number(formatEther(ido.totalAmount)) * idoInfo?.price).toLocaleString('en', {
-                      maximumFractionDigits: 0,
-                    })}{' '}
-                    {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="200px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] font-semibold">
+                      {(
+                        Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
+                      ).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold">{format(ido.startTime * 1000, 'Pp')} (UTC)</span>
+                  <span className="text-[#BFBFBF]">Whitelist registration start</span>
+                  <span className="text-[#F5F5F5] font-semibold">{format(ido.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration starts</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTime * 1000, 'Pp')} (UTC)</span>
+                  <span className="text-[#BFBFBF]">Whitelist registration end</span>
+                  <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
               </div>
               <Link

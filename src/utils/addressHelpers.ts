@@ -95,3 +95,6 @@ export const getTicketAddress = () => {
 export const getIdoAddress = () => {
   return getAddress(addresses.ido)
 }
+export const getIdoUnlockAddress = () => {
+  return getAddress(addresses.idoUnlock)
+}

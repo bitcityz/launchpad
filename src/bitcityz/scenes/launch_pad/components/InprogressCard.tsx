@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
+import { ethers } from 'ethers'
+import BigNumber from 'bignumber.js'
+import { getIdoAddress } from 'utils/addressHelpers'
 import { NavLink } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils'
 import { format } from 'date-fns'
-import { useIdoContract } from 'hooks/useContract'
+import { useIdoContract, useTokenContract } from 'hooks/useContract'
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
-import { useWalletModal } from '@mexi/uikit'
+import { useWalletModal, Skeleton } from '@mexi/uikit'
 import useToast from 'hooks/useToast'
-import useStakePool from '../hooks/useJoinpool'
+import useApprove from '../hooks/useApprove'
+import useTokenSymbol from '../hooks/useTokenSymbol'
 
 import idoCollection from '../../../config/constants/idoList'
 import Social from './Social'
@@ -20,8 +25,12 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
   const [idoInfo, setIdoInfo] = useState(null)
   const [isBuyer, setIsBuyer] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
-  const { onJoinPool } = useStakePool()
-  const { toastSuccess, toastError } = useToast()
+  const [idoName, setIdoName] = useState('')
+  const { toastSuccess } = useToast()
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const erc20Contract = useTokenContract(ido.idoToken2Buy)
+  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
+  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
 
   const { login, logout } = useAuth()
   const { t } = useTranslation()
@@ -29,20 +38,45 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
 
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
+  const idoAddress = getIdoAddress()
 
-  const handleJoinPoolClick = async () => {
-    setIsLoading(true)
-    try {
-      // join pool
-      await onJoinPool(ido.id)
-      toastSuccess(`${t('Joined')}!`, t('Join pool successful!'))
+  const { isApproved, handleApprove, handleConfirm } = useApprove({
+    onRequiresApproval: async () => {
+      try {
+        const response = await erc20Contract.allowance(account, idoAddress)
+        return response && new BigNumber(response._hex).isGreaterThan(0)
+      } catch (error) {
+        return false
+      }
+    },
+    onApprove: () => {
+      setIsLoading(true)
+      return callWithGasPrice(erc20Contract, 'approve', [idoAddress, ethers.constants.MaxUint256])
+    },
+    onApproveSuccess: async () => {
+      setIsLoading(false)
+      toastSuccess(t('Contract approved - you can now join pool!'))
+    },
+    onConfirm: () => {
+      setIsLoading(true)
+      return callWithGasPrice(idoContract, 'buy', [ido.id])
+    },
+    onSuccess: async () => {
+      setIsLoading(false)
+      setIsBuyer(true)
+      toastSuccess(`${t('Registed')}!`, t('You have successfully join pool'))
+    },
+    onError: async () => {
+      setIsLoading(false)
+    },
+  })
 
-      setIsLoading(false)
-    } catch (e) {
-      toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
-      setIsLoading(false)
-    }
-  }
+  useEffect(() => {
+    const pool = pools.filter((r) => {
+      return r.hash === ido.keyType
+    })
+    setIdoName(pool[0].name)
+  }, [pools, ido])
 
   useEffect(() => {
     setIdoInfo(idoCollection[ido.idoToken])
@@ -78,7 +112,7 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
       />
       <div className="relative z-10">
         <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-          Mayor pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -90,15 +124,27 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                   {idoInfo?.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                    ({idoInfo?.symbol}/{idoInfo?.currencyPair})
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="150px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                      ({idoTokenSymbol}/{idoTokenBuySymbol})
+                    </span>
+                  )}
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoInfo?.symbol}{' '}
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {idoInfo?.symbol} = {idoInfo?.price} {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="150px" height="16px" />
+                  ) : (
+                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                      {idoTokenSymbol} ={' '}
+                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -113,12 +159,18 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
               <div className="flex-1">
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
-                  <span className="text-[#F5F5F5] font-semibold">
-                    {(Number(formatEther(ido.totalAmount)) * idoInfo?.price).toLocaleString('en', {
-                      maximumFractionDigits: 0,
-                    })}{' '}
-                    {idoInfo?.currencyPair}
-                  </span>
+                  {idoTokenBuyLoading ? (
+                    <Skeleton width="200px" height="16px" />
+                  ) : (
+                    <span className="text-[#F5F5F5] font-semibold">
+                      {(
+                        Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
+                      ).toLocaleString('en', {
+                        maximumFractionDigits: 0,
+                      })}{' '}
+                      {idoTokenBuySymbol}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF]">Swap process</span>
@@ -144,15 +196,26 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
                   Connect wallet
                 </button>
               )}
-              {account && !isBuyer && isInWhitelist && (
+              {account && isApproved && !isBuyer && isInWhitelist && (
                 <button
                   type="button"
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-10 shadow-blue"
-                  onClick={handleJoinPoolClick}
+                  onClick={handleConfirm}
                 >
                   Join pool
                 </button>
               )}
+
+              {account && !isApproved && !isBuyer && isInWhitelist && (
+                <button
+                  type="button"
+                  className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-10 shadow-blue"
+                  onClick={handleApprove}
+                >
+                  Approve
+                </button>
+              )}
+
               {account && isBuyer && isInWhitelist && (
                 <button
                   type="button"

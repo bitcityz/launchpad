@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers, Contract } from 'ethers'
-import { useAppDispatch } from 'state'
-import { updateUserAllowance } from 'state/actions'
 import { useTranslation } from 'contexts/Localization'
 import { useCake, useTokenContract, useCakeVaultContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { getLaunchPoolAddress } from 'utils/addressHelpers'
-import useLastUpdated from 'hooks/useLastUpdated'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
@@ -17,7 +14,6 @@ export const useApprovePool = (lpContract: Contract) => {
   const { toastSuccess, toastError } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
   const { t } = useTranslation()
-  const { account } = useWeb3React()
 
   const handleApprove = useCallback(async () => {
     try {

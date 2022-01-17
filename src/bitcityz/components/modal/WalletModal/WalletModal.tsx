@@ -11,7 +11,7 @@ import whiteWalletSvg from '../../../assets/images/white-wallet.svg'
 
 function WalletModal(props) {
   const { account } = useWeb3React()
-  const { login, logout } = useAuth()
+  const { logout } = useAuth()
   const { onClose } = props
 
   useEffect(() => {

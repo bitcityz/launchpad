@@ -9,9 +9,9 @@ import { useApprovePool } from '../hooks/useApprove'
 function StakingAction({ pool, setUpdatePool, isLoading }) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
-  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
+  const { amount, lockingToken, isApproved } = pool
   const stakingTokenContract = useERC20(lockingToken || '')
-  const { handleApprove, requestedApproval } = useApprovePool(stakingTokenContract)
+  const { handleApprove } = useApprovePool(stakingTokenContract)
 
   const _handleShowStakingModal = () => {
     setShowStakingModal(true)

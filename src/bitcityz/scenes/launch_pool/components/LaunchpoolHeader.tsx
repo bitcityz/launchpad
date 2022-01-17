@@ -4,7 +4,7 @@ import '../../../assets/index.css'
 
 import textSvg from '../../../assets/images/launchpool.svg'
 
-function LaunchpoolHeader(props) {
+function LaunchpoolHeader() {
   return (
     <div className="layout-container text-center py-[110px]">
       <img src={textSvg} className="mx-auto" alt="" />

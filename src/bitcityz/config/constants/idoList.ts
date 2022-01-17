@@ -1,6 +1,6 @@
 export default {
   '0xeaDb0801Cfa7425febC1f7a42D883b3FDC63816b': {
-    website: 'https://knightwar.io/',
+    website: 'https://bitcityz.com/home',
     telegram: 'https://t.me/BitCityZSocial',
     twitter: 'https://twitter.com/BitCityZ_social',
     medium: 'https://medium.com/@bitcityz.social',

@@ -4,7 +4,7 @@ import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
 import textSvg from '../../../assets/images/text.svg'
 
-function HomeHeader(props) {
+function HomeHeader() {
   return (
     <div className="text-center py-[110px]">
       <img src={textSvg} className="mx-auto" alt="" />

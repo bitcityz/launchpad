@@ -8,6 +8,7 @@ import { useTokenContract } from 'hooks/useContract'
 import { getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
+import useGetBalanceOf from '../../hooks/useGetBalanceOf'
 import PoolList from './components/PoolList'
 import LaunchpoolHeader from './components/LaunchpoolHeader'
 import { Spinner } from '../../components'
@@ -25,8 +26,10 @@ function LaunchPool() {
   const [pools, setPools] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
-  const [balance, setBalance] = useState(new BigNumber(0))
+  // const [balance, setBalance] = useState(new BigNumber(0))
   const [updatePool, setUpdatePool] = useState(false)
+
+  const { balance } = useGetBalanceOf(account)
 
   const userCalls = useMemo(
     () =>
@@ -57,9 +60,9 @@ function LaunchPool() {
       erc20Contract.allowance(account, launchPoolAddress).then((res) => {
         setIsApproved(res && new BigNumber(res._hex).isGreaterThan(0))
       })
-      erc20Contract.balanceOf(account).then((res) => {
-        setBalance(res)
-      })
+      // erc20Contract.balanceOf(account).then((res) => {
+      //   setBalance(res)
+      // })
     }
   }, [erc20Contract, account, launchPoolAddress])
 

@@ -18,8 +18,7 @@ import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
 function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress }) {
-  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance, ticketHash } =
-    pool
+  const { id, amount, minLockingAmount, name, startTime, lockingTime, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)

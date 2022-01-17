@@ -57,7 +57,13 @@ function LaunchPad() {
 
   useEffect(() => {
     const initialData = async () => {
-      const idoList = await multicallv2(bitcityIdoABI, idoCalls)
+      const poolLength = await multicallv2(bitcityIdoABI, idoCalls)
+      const totalPool = Number(poolLength[0][0]._hex)
+      const idoList = []
+      for (let i = 0; i < totalPool; i++) {
+        idoList.push(i)
+      }
+
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
       const calls = idoList.map((data, index) => {
         return { address: idoAddress, name: 'poolInfo', params: [index] }
@@ -158,7 +164,7 @@ function LaunchPad() {
           <img src={line2} className="w-full h-auto" alt="" />
         </div>
         {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} />}
-        {tabIndex === 2 && <RegisterWhitelist idos={upcoming} pools={pools} account={account} />}
+        {tabIndex === 2 && <RegisterWhitelist idos={registerWhitlis} pools={pools} account={account} />}
         {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} setIsLoading={setIsLoading} />}
         {tabIndex === 4 && <Completed idos={completed} pools={pools} account={account} />}
       </div>

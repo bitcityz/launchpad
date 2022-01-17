@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'contexts/Localization'
 import { getIdoAddress } from 'utils/addressHelpers'
 import useToast from 'hooks/useToast'
 import { useTicketContract, useIdoContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useApprove from '../../../scenes/launch_pad/hooks/useApprove'
-import useStakePool from '../../../scenes/launch_pool/hooks/useStakePool'
-import useRegisterWhitelist from '../../../scenes/launch_pad/hooks/useRegisterWhitelist'
 import { Spinner } from '../../spinner'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
@@ -15,12 +13,11 @@ const NOT_ON_IDO = '0x0000000000000000000000000000000000000000'
 function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhitelist }) {
   const { t } = useTranslation()
 
-  const { onRegister } = useRegisterWhitelist()
   const ticketContract = useTicketContract()
   const idoContract = useIdoContract()
   const idoAddress = getIdoAddress()
 
-  const { toastSuccess, toastError } = useToast()
+  const { toastSuccess } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
 
   const ticketQty = 1
@@ -33,7 +30,7 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhite
     }
   }, [])
 
-  const { isApproving, isApproved, isConfirmed, isConfirming, handleApprove, handleConfirm } = useApprove({
+  const { isApproved, handleApprove, handleConfirm } = useApprove({
     onRequiresApproval: async () => {
       try {
         const response = await ticketContract.getApproved(ticketId)
@@ -59,6 +56,9 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhite
       setUpdateWhitelist(true)
       onClose()
       toastSuccess(`${t('Registed')}!`, t('You have successfully registered for the whitelist'))
+    },
+    onError: async () => {
+      setPendingTx(false)
     },
   })
 

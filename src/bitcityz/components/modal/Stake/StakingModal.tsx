@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { getFullDisplayBalance, formatNumber } from 'utils/formatBalance'
+import { getFullDisplayBalance } from 'utils/formatBalance'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
@@ -10,7 +10,7 @@ import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
 function StakingModal({ onClose, pool, setUpdatePool }) {
-  const { id, amount, lockingToken, minLockingAmount, name, startTime, lockingTime, isApproved, balance } = pool
+  const { id, minLockingAmount, name, lockingTime, balance } = pool
   const { onStake } = useStakePool(id)
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
