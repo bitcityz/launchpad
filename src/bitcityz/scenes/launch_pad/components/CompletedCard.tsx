@@ -115,15 +115,17 @@ function CompletedCard({ ido, pools, account }) {
                     </span>
                   )}
                 </div>
-                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Claim process</span>
-                  <div className="flex flex-1 w-full items-center justify-end gap-x-2">
-                    <div className="flex-1 md:max-w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
-                      <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
+                {account && isBuyer && (
+                  <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
+                    <span className="text-[#BFBFBF]">Claim process</span>
+                    <div className="flex flex-1 w-full items-center justify-end gap-x-2">
+                      <div className="flex-1 md:max-w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
+                        <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
+                      </div>
+                      <span className="text-white font-semibold">{claimPercent}%</span>
                     </div>
-                    <span className="text-white font-semibold">{claimPercent}%</span>
                   </div>
-                </div>
+                )}
               </div>
               <div className="mt-5 md:mt-auto md:min-w-[120px]">
                 {account && !isBuyer && (
