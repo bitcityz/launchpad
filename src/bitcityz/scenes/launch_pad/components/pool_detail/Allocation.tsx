@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import '../../../../assets/index.css'
 import { formatEther } from 'ethers/lib/utils'
 import { Skeleton } from '@mexi/uikit'
-import { useIdoUnlockContract } from 'hooks/useContract'
+import { useIdoUnlockContract, useIdoContract } from 'hooks/useContract'
 import useAccountClaimPercent from '../../../../hooks/useAccountClaimPercent'
 
 import AllocationCard from './AllocationCard'
 
 function Allocation({ idoPool, account }) {
   const idoUnlockContract = useIdoUnlockContract(idoPool.idoUnlock)
+  const idoContract = useIdoContract()
+  const [isBuyer, setIsBuyer] = useState(false)
   const [claimTimes, setClaimTimes] = useState([])
   const [loading, setLoading] = useState(true)
   const totalToken = Number(formatEther(idoPool.amount)) * Number(formatEther(idoPool.token2IDOtoken))
@@ -18,6 +20,16 @@ function Allocation({ idoPool, account }) {
     isLoading: claimPercentLoading,
     setIsUpdate,
   } = useAccountClaimPercent(account, idoPool.idoUnlock)
+
+  useEffect(() => {
+    if (account) {
+      const checkAccountJoined = async () => {
+        const response = await idoContract.isBuyer(account, idoPool.id)
+        setIsBuyer(response)
+      }
+      checkAccountJoined()
+    }
+  }, [account, idoPool, idoContract])
 
   useEffect(() => {
     const initData = async () => {
@@ -94,6 +106,7 @@ function Allocation({ idoPool, account }) {
               <Skeleton width="100%" height="32px" />
             </div>
           ) : (
+            isBuyer &&
             claimTimes.length > 0 &&
             claimTimes.map((claim) => {
               return (
