@@ -3,10 +3,9 @@ import '../../../../assets/index.css'
 import { useIdoUnlockContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
-import { Skeleton } from '@mexi/uikit'
 
-function AllocationCard({ claim, totalToken, accountClaimIndex, setIsUpdate }) {
-  const idoUnlockContract = useIdoUnlockContract()
+function AllocationCard({ claim, totalToken, accountClaimIndex, setIsUpdate, idoUnlock }) {
+  const idoUnlockContract = useIdoUnlockContract(idoUnlock)
   const [unlockPercent, setUnlockPercent] = useState(0)
   const { toastSuccess, toastError } = useToast()
   const [pendingTx, setPendingTx] = useState(false)

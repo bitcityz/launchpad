@@ -4,22 +4,16 @@ import '../../../assets/index.css'
 import { NavLink } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils'
 import { useIdoContract } from 'hooks/useContract'
-import { Skeleton } from '@mexi/uikit'
-import useTokenSymbol from '../hooks/useTokenSymbol'
 import useAccountClaimPercent from '../../../hooks/useAccountClaimPercent'
 
-import idoCollection from '../../../config/constants/idoList'
 import Social from './Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 
 function CompletedCard({ ido, pools, account }) {
-  const [idoInfo, setIdoInfo] = useState(null)
   const [isBuyer, setIsBuyer] = useState(false)
   const [idoName, setIdoName] = useState('')
-  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
-  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
-  const { claimPercent, isLoading: claimPercentLoading, setIsUpdate } = useAccountClaimPercent(account)
+  const { claimPercent } = useAccountClaimPercent(account, ido.idoUnlock)
 
   const idoContract = useIdoContract()
 
@@ -29,10 +23,6 @@ function CompletedCard({ ido, pools, account }) {
     })
     setIdoName(pool[0].name)
   }, [pools, ido])
-
-  useEffect(() => {
-    setIdoInfo(idoCollection[ido.idoToken])
-  }, [ido])
 
   useEffect(() => {
     if (account) {
@@ -59,39 +49,31 @@ function CompletedCard({ ido, pools, account }) {
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
-            <img src={idoInfo?.logo.large} className="w-full md:w-auto" alt="" />
+            <img src={ido.baseInfo.logo.large} className="w-full md:w-auto" alt="" />
           </div>
           <div className="flex-1 text-center md:text-left">
             <div className="flex items-start gap-x-3">
-              <img src={idoInfo?.logo.small} alt="" />
+              <img src={ido.baseInfo.logo.small} alt="" />
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
-                  {idoInfo?.name}{' '}
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="150px" height="16px" />
-                  ) : (
-                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                      ({idoTokenSymbol}/{idoTokenBuySymbol})
-                    </span>
-                  )}
+                  {ido.baseInfo.name}{' '}
+                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                    ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
+                  </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="150px" height="16px" />
-                  ) : (
-                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                      {idoTokenSymbol} ={' '}
-                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
-                        maximumFractionDigits: 4,
-                      })}{' '}
-                      {idoTokenBuySymbol}
-                    </span>
-                  )}
+                  <span>{ido.baseInfo.symbol}</span>
+                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                    {ido.baseInfo.symbol} ={' '}
+                    {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                      maximumFractionDigits: 4,
+                    })}{' '}
+                    {ido.baseInfo.currencyPair}
+                  </span>
                 </p>
               </div>
             </div>
-            <Social idoInfo={idoInfo} />
+            <Social idoInfo={ido.baseInfo} />
             <NavLink
               to={`/launchpad/${ido.id}`}
               className="text-skyblue underline text-sm font-medium mt-4 inline-block"
@@ -102,18 +84,15 @@ function CompletedCard({ ido, pools, account }) {
               <div className="flex-1">
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="200px" height="16px" />
-                  ) : (
-                    <span className="text-[#F5F5F5] font-semibold">
-                      {(
-                        Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
-                      ).toLocaleString('en', {
+                  <span className="text-[#F5F5F5] font-semibold">
+                    {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
+                      'en',
+                      {
                         maximumFractionDigits: 0,
-                      })}{' '}
-                      {idoTokenBuySymbol}
-                    </span>
-                  )}
+                      },
+                    )}{' '}
+                    {ido.baseInfo.currencyPair}
+                  </span>
                 </div>
                 {account && isBuyer && (
                   <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">

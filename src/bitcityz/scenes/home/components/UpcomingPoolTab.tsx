@@ -9,7 +9,7 @@ import line1 from '../../../assets/images/line1.svg'
 import line2 from '../../../assets/images/line2.svg'
 import oceanProtocolActive from '../../../assets/images/ocean-protocol-active.svg'
 
-function UpcomingPoolTab({ pools, projects }) {
+function UpcomingPoolTab({ pools, projects, listPool }) {
   const [tab, setTab] = useState('')
   const [upcomingPr, setUpcomingPr] = useState([])
   const [poolName, setPoolName] = useState('')
@@ -37,7 +37,7 @@ function UpcomingPoolTab({ pools, projects }) {
       const upcoming = []
       projects.forEach((ido, index) => {
         if (Number(ido.status._hex) === 0) {
-          upcoming.push({ id: index, ...ido })
+          upcoming.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         }
       })
 
@@ -48,7 +48,7 @@ function UpcomingPoolTab({ pools, projects }) {
     }
 
     initData()
-  }, [tab, projects])
+  }, [tab, projects, listPool])
   return (
     <div>
       <div className="text-center pt-[110px]">

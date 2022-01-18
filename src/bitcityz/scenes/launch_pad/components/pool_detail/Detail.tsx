@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import '../../../../assets/index.css'
+import { format } from 'date-fns'
 import { formatEther } from 'ethers/lib/utils'
 import { getTicketAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
-import useTokenInfo from '../../hooks/useTokenInfo'
-import useTokenSymbol from '../../hooks/useTokenSymbol'
 import tokenURI from '../../../../assets/images/tokenURI.png'
 
 const POOLS = [0, 1, 2]
 function Detail({ idoPool }) {
-  const { symbol: idoTokenBuySymbol } = useTokenSymbol(idoPool.idoToken2Buy)
   const [accessType, setAccessType] = useState('')
   const ticketAddress = getTicketAddress()
-  const { symbol } = useTokenInfo(idoPool?.idoToken)
   const poolCalls = useMemo(
     () =>
       POOLS.map((id) => {
@@ -51,7 +48,7 @@ function Detail({ idoPool }) {
                   maximumFractionDigits: 4,
                 },
               )}{' '}
-              {symbol}
+              {idoPool.baseInfo.symbol}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
@@ -61,11 +58,11 @@ function Detail({ idoPool }) {
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>
             <span className="font-semibold text-[#F5F5F5]">
-              1 {symbol} ={' '}
+              1 {idoPool.baseInfo.symbol} ={' '}
               {Number(formatEther(idoPool.token2IDOtoken)).toLocaleString('en', {
                 maximumFractionDigits: 4,
               })}{' '}
-              {idoTokenBuySymbol}
+              {idoPool.baseInfo.currencyPair}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
@@ -77,32 +74,64 @@ function Detail({ idoPool }) {
                   maximumFractionDigits: 4,
                 },
               )}{' '}
-              {idoTokenBuySymbol}
+              {idoPool.baseInfo.currencyPair}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Claim policy:</span>
-            <span className="font-semibold text-[#F5F5F5]">20% at TGE, 40% at month 4, 40% at month 8</span>
+            <span className="font-semibold text-[#F5F5F5]">{idoPool.baseInfo.claimPolicy}</span>
           </p>
         </div>
       </div>
       <h6 className="text-[#F5F5F5] text-xl font-bold mt-7">Timeline</h6>
       <ul className="list-none mt-5">
-        <li className="relative pl-8 after:timeline-after before:mobile-timeline-before before:timeline-before md:before:pc-timeline-before">
-          <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Close)</p>
-          <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
+        <li
+          className={`relative pl-8 after:timeline-after before:mobile-timeline-before before:timeline-before md:before:pc-timeline-before ${
+            Number(idoPool.status._hex) === 1 ? 'after:timeline-after-active' : ''
+          }`}
+        >
+          {Number(idoPool.status._hex) > 1 && (
+            <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Close)</p>
+          )}
+          {Number(idoPool.status._hex) < 1 && (
+            <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Incoming)</p>
+          )}
+          {Number(idoPool.status._hex) === 1 && (
+            <p className="text-skyblue font-semibold leading-5">Register mayor pool whitelist (Opening)</p>
+          )}
+          <p className={`leading-5 ${idoPool.status === 1 ? 'text-skyblue' : 'text-[#9E9E9E]'}`}>
+            Open: {format(idoPool.startTimeWL * 1000, 'Pp')} (UTC) - Close: {format(idoPool.endTimeWL * 1000, 'Pp')} UTC
+          </p>
         </li>
-        <li className="relative pl-8 mt-7 after:timeline-after before:mobile-timeline-before before:timeline-before md:before:pc-timeline-before">
-          <p className="text-[#9E9E9E] font-semibold leading-5">Publish mayor pool whitelist (Close)</p>
-          <p className="text-[#9E9E9E] leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
+        <li
+          className={`relative pl-8 mt-7 after:timeline-after before:mobile-timeline-before before:timeline-before md:before:pc-timeline-before ${
+            Number(idoPool.status._hex) === 2 ? 'after:timeline-after-active' : ''
+          }`}
+        >
+          {Number(idoPool.status._hex) === 2 && (
+            <p className="text-skyblue font-semibold leading-5">Join mayor pool (Opening)</p>
+          )}
+          {Number(idoPool.status._hex) > 2 && (
+            <p className="text-[#9E9E9E] font-semibold leading-5">Join mayor pool (Closed)</p>
+          )}
+          <p className={`leading-5 ${idoPool.status === 2 ? 'text-skyblue' : 'text-[#9E9E9E]'}`}>
+            Open: {format(idoPool.endTimeWL * 1000, 'Pp')} (UTC) - Close: {format(idoPool.endTime * 1000, 'Pp')} UTC
+          </p>
         </li>
-        <li className="relative pl-8 mt-7 after:timeline-after after:timeline-after-active before:mobile-timeline-before before:timeline-before md:before:pc-timeline-before">
-          <p className="text-skyblue font-semibold leading-5">Join mayor pool (Opening)</p>
-          <p className="text-skyblue leading-5">Open: 01/10/2021 09:00 am UTC - Close: 06/10/2021 09:00 am UTC</p>
-        </li>
-        <li className="relative pl-8 mt-7 after:timeline-after">
-          <p className="text-[#9E9E9E] font-semibold leading-5">Claim tokens (Incoming)</p>
-          <p className="text-[#9E9E9E] leading-5">30 mins after listing</p>
+        <li
+          className={`relative pl-8 mt-7 after:timeline-after ${
+            Number(idoPool.status._hex) === 3 ? 'after:timeline-after-active' : ''
+          }`}
+        >
+          {Number(idoPool.status._hex) === 3 && (
+            <p className=" text-skyblue font-semibold leading-5">Claim tokens (Opening)</p>
+          )}
+          {Number(idoPool.status._hex) !== 3 && (
+            <div>
+              <p className="text-[#9E9E9E] font-semibold leading-5">Claim tokens (Incoming)</p>
+              <p className="text-[#9E9E9E] leading-5">30 mins after listing</p>
+            </div>
+          )}
         </li>
       </ul>
     </div>

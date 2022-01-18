@@ -6,6 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { multicallv2 } from 'utils/multicall'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
+import useGetPools from '../../hooks/useGetPools'
 
 import UpcomingPool from './components/UpcomingPool'
 import RegisterWhitelist from './components/RegisterWhitelist'
@@ -31,6 +32,7 @@ function LaunchPad() {
   const { account } = useWeb3React()
   const [tabIndex, setTabIndex] = useState(1)
   const [pools, setPools] = useState([])
+  const { listPool } = useGetPools()
   const _handleChangeTab = (index) => {
     setTabIndex(index)
   }
@@ -43,10 +45,6 @@ function LaunchPad() {
   const [inprogress, setInprogress] = useState([])
   const [completed, setCompleted] = useState([])
 
-  const idoCalls = useMemo(() => {
-    return [{ address: idoAddress, name: 'poolLength' }]
-  }, [idoAddress])
-
   const ticketCalls = useMemo(
     () =>
       POOLS.map((id) => {
@@ -57,15 +55,8 @@ function LaunchPad() {
 
   useEffect(() => {
     const initialData = async () => {
-      const poolLength = await multicallv2(bitcityIdoABI, idoCalls)
-      const totalPool = Number(poolLength[0][0]._hex)
-      const idoList = []
-      for (let i = 0; i < totalPool; i++) {
-        idoList.push(i)
-      }
-
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
-      const calls = idoList.map((data, index) => {
+      const calls = listPool.map((data, index) => {
         return { address: idoAddress, name: 'poolInfo', params: [index] }
       })
 
@@ -78,13 +69,13 @@ function LaunchPad() {
       const completedPr = []
       idoInfos.forEach((ido, index) => {
         if (Number(ido.status._hex) === 0) {
-          upcomingPr.push({ id: index, ...ido })
+          upcomingPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         } else if (Number(ido.status._hex) === 1) {
-          whitelistPr.push({ id: index, ...ido })
+          whitelistPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         } else if (Number(ido.status._hex) === 2) {
-          inprogressPr.push({ id: index, ...ido })
+          inprogressPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         } else {
-          completedPr.push({ id: index, ...ido })
+          completedPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         }
       })
 
@@ -95,7 +86,7 @@ function LaunchPad() {
       setIsLoading(false)
     }
     initialData()
-  }, [idoCalls, ticketCalls, idoAddress])
+  }, [ticketCalls, idoAddress, listPool])
 
   return (
     <div className="bg-[#050e21]  py-[110px]">

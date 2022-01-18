@@ -7,6 +7,7 @@ import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
 import { multicallv2 } from 'utils/multicall'
 import useGetBalanceOf from '../../hooks/useGetBalanceOf'
+import useGetPools from '../../hooks/useGetPools'
 
 import Summary from './components/Summary'
 import UpcomingPoolTab from './components/UpcomingPoolTab'
@@ -24,6 +25,7 @@ function Home() {
   const [pools, setPools] = useState([])
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const { listPool } = useGetPools()
 
   const launchPoolAddress = getLaunchPoolAddress()
 
@@ -52,10 +54,6 @@ function Home() {
     [ticketAddress],
   )
 
-  const idoCalls = useMemo(() => {
-    return [{ address: idoAddress, name: 'poolLength' }]
-  }, [idoAddress])
-
   const fetchIDOData = useCallback(async () => {
     const idoDataCalls = ['investorsLength', 'projectsLength'].map((method) => ({
       address: idoAddress,
@@ -74,13 +72,7 @@ function Home() {
   useEffect(() => {
     setIsLoading(true)
     const getTotalFundRaised = async () => {
-      const poolLength = await multicallv2(bitcityIdoABI, idoCalls)
-      const totalPool = Number(poolLength[0][0]._hex)
-      const idoList = []
-      for (let i = 0; i < totalPool; i++) {
-        idoList.push(i)
-      }
-      const calls = idoList.map((data, index) => {
+      const calls = listPool.map((data, index) => {
         return { address: idoAddress, name: 'poolInfo', params: [index] }
       })
 
@@ -97,7 +89,7 @@ function Home() {
       setIsLoading(false)
     }
     getTotalFundRaised()
-  }, [idoAddress, idoCalls])
+  }, [idoAddress, listPool])
 
   useEffect(() => {
     const initialData = async () => {
@@ -129,7 +121,7 @@ function Home() {
           totalProjects={totalProjects}
           totalInvestors={totalInvestors}
         />
-        <UpcomingPoolTab pools={pools} projects={projects} />
+        <UpcomingPoolTab pools={pools} projects={projects} listPool={listPool} />
         <LaunchPool pools={pools} />
         {/* <Performance /> */}
         <ApplyLaunch />

@@ -310,6 +310,6 @@ export function useTicketContract(): Contract | null {
 export function useIdoContract(): Contract | null {
   return useContract(getIdoAddress(), bitcityIdoAbi, true)
 }
-export function useIdoUnlockContract(): Contract | null {
-  return useContract(getIdoUnlockAddress(), idoUnlockAbi, true)
+export function useIdoUnlockContract(address): Contract | null {
+  return useContract(address, idoUnlockAbi, true)
 }

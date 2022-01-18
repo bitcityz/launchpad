@@ -11,26 +11,20 @@ import { useIdoContract, useTokenContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
-import { useWalletModal, Skeleton } from '@mexi/uikit'
+import { useWalletModal } from '@mexi/uikit'
 import useToast from 'hooks/useToast'
 import useApprove from '../hooks/useApprove'
-import useTokenSymbol from '../hooks/useTokenSymbol'
-
-import idoCollection from '../../../config/constants/idoList'
 import Social from './Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 
 function InprogressCard({ ido, pools, account, setIsLoading }) {
-  const [idoInfo, setIdoInfo] = useState(null)
   const [isBuyer, setIsBuyer] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [idoName, setIdoName] = useState('')
   const { toastSuccess } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
   const erc20Contract = useTokenContract(ido.idoToken2Buy)
-  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(ido.idoToken2Buy)
-  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(ido.idoToken)
 
   const { login, logout } = useAuth()
   const { t } = useTranslation()
@@ -79,7 +73,6 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
   }, [pools, ido])
 
   useEffect(() => {
-    setIdoInfo(idoCollection[ido.idoToken])
     const totalAmount = Number(formatEther(ido.totalAmount))
     const remainAmount = Number(formatEther(ido.remainAmount))
     const result = ((totalAmount - remainAmount) * 100) / totalAmount
@@ -116,39 +109,31 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
-            <img src={idoInfo?.logo.large} className="w-full md:w-auto" alt="" />
+            <img src={ido.baseInfo.logo.large} className="w-full md:w-auto" alt="" />
           </div>
           <div className="flex-1 text-center md:text-left">
             <div className="flex items-start gap-x-3">
-              <img src={idoInfo?.logo.small} alt="" />
+              <img src={ido.baseInfo.logo.small} alt="" />
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
-                  {idoInfo?.name}{' '}
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="150px" height="16px" />
-                  ) : (
-                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                      ({idoTokenSymbol}/{idoTokenBuySymbol})
-                    </span>
-                  )}
+                  {ido.baseInfo.name}{' '}
+                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                    ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
+                  </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoTokenLoading ? <Skeleton width="50px" height="16px" /> : <span>{idoTokenSymbol}</span>}
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="150px" height="16px" />
-                  ) : (
-                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                      {idoTokenSymbol} ={' '}
-                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
-                        maximumFractionDigits: 4,
-                      })}{' '}
-                      {idoTokenBuySymbol}
-                    </span>
-                  )}
+                  <span>{ido.baseInfo.symbol}</span>
+                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                    {ido.baseInfo.symbol} ={' '}
+                    {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                      maximumFractionDigits: 4,
+                    })}{' '}
+                    {ido.baseInfo.currencyPair}
+                  </span>
                 </p>
               </div>
             </div>
-            <Social idoInfo={idoInfo} />
+            <Social idoInfo={ido.baseInfo} />
             <NavLink
               to={`/launchpad/${ido.id}`}
               className="text-skyblue underline text-sm font-medium mt-4 inline-block"
@@ -159,18 +144,15 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
               <div className="flex-1">
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
-                  {idoTokenBuyLoading ? (
-                    <Skeleton width="200px" height="16px" />
-                  ) : (
-                    <span className="text-[#F5F5F5] font-semibold">
-                      {(
-                        Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
-                      ).toLocaleString('en', {
+                  <span className="text-[#F5F5F5] font-semibold">
+                    {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
+                      'en',
+                      {
                         maximumFractionDigits: 0,
-                      })}{' '}
-                      {idoTokenBuySymbol}
-                    </span>
-                  )}
+                      },
+                    )}{' '}
+                    {ido.baseInfo.currencyPair}
+                  </span>
                 </div>
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF]">Swap process</span>

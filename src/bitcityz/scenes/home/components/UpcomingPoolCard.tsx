@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import '../../../assets/index.css'
 import { format } from 'date-fns'
 import { formatEther } from 'ethers/lib/utils'
 import { Link } from 'react-router-dom'
-import useTokenSymbol from '../../launch_pad/hooks/useTokenSymbol'
-import idoCollection from '../../../config/constants/idoList'
 
 import Social from '../../launch_pad/components/Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 
 function UpcomingPoolCard({ project, poolName }) {
-  const [idoInfo, setIdoInfo] = useState(null)
-  const { symbol: idoTokenBuySymbol } = useTokenSymbol(project.idoToken2Buy)
-  const { symbol: idoTokenSymbol } = useTokenSymbol(project.idoToken)
-  useEffect(() => {
-    setIdoInfo(idoCollection[project.idoToken])
-  }, [project])
   return (
     <div className="relative px-6 py-5">
       <div
@@ -33,31 +25,31 @@ function UpcomingPoolCard({ project, poolName }) {
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
-            <img src={idoInfo?.logo.large} className="w-full md:w-auto" alt="" />
+            <img src={project.baseInfo.logo.large} className="w-full md:w-auto" alt="" />
           </div>
           <div className="flex-1">
             <div className="flex items-start gap-x-3">
-              <img src={idoInfo?.logo.small} alt="" />
+              <img src={project.baseInfo.logo.small} alt="" />
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
-                  {idoInfo?.name}{' '}
+                  {project.baseInfo.name}{' '}
                   <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                    ({idoTokenSymbol}/{idoTokenBuySymbol})
+                    ({project.baseInfo.symbol}/{project.baseInfo.currencyPair})
                   </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {idoTokenSymbol}{' '}
+                  {project.baseInfo.symbol}{' '}
                   <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {idoTokenSymbol} ={' '}
+                    {project.baseInfo.symbol} ={' '}
                     {Number(formatEther(project.tokenBuy2IDOtoken)).toLocaleString('en', {
                       maximumFractionDigits: 4,
                     })}{' '}
-                    {idoTokenBuySymbol}
+                    {project.baseInfo.currencyPair}
                   </span>
                 </p>
               </div>
             </div>
-            <Social idoInfo={idoInfo} />
+            <Social idoInfo={project.baseInfo} />
             <div className="mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
@@ -68,7 +60,7 @@ function UpcomingPoolCard({ project, poolName }) {
                     ).toLocaleString('en', {
                       maximumFractionDigits: 4,
                     })}{' '}
-                    {idoTokenBuySymbol}
+                    {project.baseInfo.currencyPair}
                   </span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">

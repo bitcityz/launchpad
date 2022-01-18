@@ -13,7 +13,6 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 import useToast from 'hooks/useToast'
 import useApprove from '../../hooks/useApprove'
-import useTokenSymbol from '../../hooks/useTokenSymbol'
 import useAccountClaimPercent from '../../../../hooks/useAccountClaimPercent'
 
 import Social from '../Social'
@@ -21,7 +20,7 @@ import Social from '../Social'
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
 import inWhitelistSvg from '../../../../assets/images/iswhitelist.svg'
 
-function PoolCardDetail({ idoPool, pools, idoInfo, setIsLoading, account }) {
+function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
   const { login, logout } = useAuth()
   const [idoName, setIdoName] = useState('')
   const [updateWhitelist, setUpdateWhitelist] = useState(false)
@@ -41,9 +40,7 @@ function PoolCardDetail({ idoPool, pools, idoInfo, setIsLoading, account }) {
   const erc20Contract = useTokenContract(idoPool.idoToken2Buy)
   const idoAddress = getIdoAddress()
 
-  const { symbol: idoTokenBuySymbol, isLoading: idoTokenBuyLoading } = useTokenSymbol(idoPool.idoToken2Buy)
-  const { symbol: idoTokenSymbol, isLoading: idoTokenLoading } = useTokenSymbol(idoPool.idoToken)
-  const { claimPercent, isLoading: claimPercentLoading, setIsUpdate } = useAccountClaimPercent(account)
+  const { claimPercent } = useAccountClaimPercent(account, idoPool.idoUnlock)
 
   const { isApproved, handleApprove, handleConfirm } = useApprove({
     onRequiresApproval: async () => {
@@ -140,23 +137,23 @@ function PoolCardDetail({ idoPool, pools, idoInfo, setIsLoading, account }) {
         {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
       </h6>
       <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
-        <img src={idoInfo?.logo.large} alt="" />
+        <img src={idoPool.baseInfo.logo.large} alt="" />
         <div className="flex-1">
           <div className="flex items-start gap-x-3">
-            <img src={idoInfo?.logo.small} alt="" />
+            <img src={idoPool.baseInfo.logo.small} alt="" />
             <div className="flex-1">
               <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
-                {idoInfo?.name}{' '}
+                {idoPool.baseInfo.name}{' '}
                 <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
-                  ({idoTokenSymbol}/{idoTokenBuySymbol})
+                  ({idoPool.baseInfo.symbol}/{idoPool.baseInfo.currencyPair})
                 </span>
               </p>
-              <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1">{idoTokenSymbol}</p>
-              <p className="text-sm text-[#BFBFBF]">{idoInfo?.shortDescription}</p>
+              <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1">{idoPool.baseInfo.symbol}</p>
+              <p className="text-sm text-[#BFBFBF]">{idoPool.baseInfo.shortDescription}</p>
             </div>
           </div>
           <div className="flex flex-col gap-y-5 md:gap-y-0 items-center md:flex-row md:flex-wrap md:justify-between mt-4">
-            <Social idoInfo={idoInfo} />
+            <Social idoInfo={idoPool.baseInfo} />
             <div className="w-full md:w-auto order-3 md:-order-none">
               {Number(idoPool.status._hex) === 0 && (
                 <p className="text-shadow font-semibold text-skyblue mt-auto">Upcoming project</p>
