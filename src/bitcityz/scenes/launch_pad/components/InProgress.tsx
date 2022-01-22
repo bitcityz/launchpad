@@ -4,11 +4,11 @@ import '../../../assets/index.css'
 
 import InprogressCard from './InprogressCard'
 
-function InProgress({ idos, pools, account, setIsLoading }) {
+function InProgress({ idos, pools, account }) {
   return (
     <div className="mt-14 flex flex-col gap-y-8">
       {idos.map((ido) => {
-        return <InprogressCard key={ido.id} ido={ido} pools={pools} account={account} setIsLoading={setIsLoading} />
+        return <InprogressCard key={ido.id} ido={ido} pools={pools} account={account} />
       })}
     </div>
   )

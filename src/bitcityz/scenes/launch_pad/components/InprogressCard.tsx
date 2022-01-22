@@ -18,10 +18,11 @@ import Social from './Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 
-function InprogressCard({ ido, pools, account, setIsLoading }) {
+function InprogressCard({ ido, pools, account }) {
   const [isBuyer, setIsBuyer] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [idoName, setIdoName] = useState('')
+  const [pendingTx, setPendingTx] = useState(false)
   const { toastSuccess } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
   const erc20Contract = useTokenContract(ido.idoToken2Buy)
@@ -44,24 +45,24 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
       }
     },
     onApprove: () => {
-      setIsLoading(true)
+      setPendingTx(true)
       return callWithGasPrice(erc20Contract, 'approve', [idoAddress, ethers.constants.MaxUint256])
     },
     onApproveSuccess: async () => {
-      setIsLoading(false)
+      setPendingTx(false)
       toastSuccess(t('Contract approved - you can now join pool!'))
     },
     onConfirm: () => {
-      setIsLoading(true)
+      setPendingTx(true)
       return callWithGasPrice(idoContract, 'buy', [ido.id])
     },
     onSuccess: async () => {
-      setIsLoading(false)
+      setPendingTx(false)
       setIsBuyer(true)
       toastSuccess(`${t('Registed')}!`, t('You have successfully join pool'))
     },
     onError: async () => {
-      setIsLoading(false)
+      setPendingTx(false)
     },
   })
 
@@ -178,7 +179,7 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
                   Connect wallet
                 </button>
               )}
-              {account && isApproved && !isBuyer && isInWhitelist && (
+              {account && isApproved && !isBuyer && isInWhitelist && !pendingTx && (
                 <button
                   type="button"
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-10 shadow-blue"
@@ -188,13 +189,36 @@ function InprogressCard({ ido, pools, account, setIsLoading }) {
                 </button>
               )}
 
-              {account && !isApproved && !isBuyer && isInWhitelist && (
+              {account && !isApproved && !isBuyer && isInWhitelist && !pendingTx && (
                 <button
                   type="button"
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-10 shadow-blue"
                   onClick={handleApprove}
                 >
                   Approve
+                </button>
+              )}
+
+              {pendingTx && (
+                <button
+                  type="button"
+                  className="flex items-center justify-center mt-5 md:mt-auto h-[44px] w-[151px] font-semibold rounded-[20px] text-black pointer-events-none bg-[#9E9E9E] transition ease-in-out duration-150 cursor-not-allowed"
+                  disabled
+                >
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Waiting...
                 </button>
               )}
 

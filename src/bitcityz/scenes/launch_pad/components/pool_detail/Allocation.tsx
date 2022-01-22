@@ -108,6 +108,7 @@ function Allocation({ idoPool, account }) {
           ) : (
             isBuyer &&
             claimTimes.length > 0 &&
+            Number(idoPool.status._hex) === 3 &&
             claimTimes.map((claim) => {
               return (
                 <AllocationCard

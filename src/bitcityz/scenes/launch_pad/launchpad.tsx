@@ -156,7 +156,7 @@ function LaunchPad() {
         </div>
         {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} />}
         {tabIndex === 2 && <RegisterWhitelist idos={registerWhitlis} pools={pools} account={account} />}
-        {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} setIsLoading={setIsLoading} />}
+        {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} />}
         {tabIndex === 4 && <Completed idos={completed} pools={pools} account={account} />}
       </div>
     </div>

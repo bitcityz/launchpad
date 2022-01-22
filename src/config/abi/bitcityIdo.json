@@ -28,6 +28,16 @@
     "inputs": [
       { "indexed": false, "internalType": "address", "name": "_user", "type": "address" },
       { "indexed": false, "internalType": "uint256", "name": "_pid", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "_tokenAmount", "type": "uint256" }
+    ],
+    "name": "Refund",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "_user", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "_pid", "type": "uint256" },
       { "indexed": false, "internalType": "uint256", "name": "_tokenId", "type": "uint256" }
     ],
     "name": "Whitelist",
@@ -82,6 +92,7 @@
     "name": "getPool",
     "outputs": [
       { "internalType": "contract IERC20", "name": "idoToken", "type": "address" },
+      { "internalType": "contract IERC20", "name": "idoToken2Buy", "type": "address" },
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
       { "internalType": "uint256", "name": "totalAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "status", "type": "uint256" }
@@ -187,6 +198,13 @@
     "stateMutability": "view",
     "type": "function"
   },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+    "name": "refund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [
@@ -196,6 +214,16 @@
       { "internalType": "bool", "name": "_isOverWhitelist", "type": "bool" }
     ],
     "name": "set",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "_status", "type": "uint256" }
+    ],
+    "name": "setIDOSatus",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

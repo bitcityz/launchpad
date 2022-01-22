@@ -14,6 +14,7 @@ import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 import useToast from 'hooks/useToast'
 import useApprove from '../../hooks/useApprove'
 import useAccountClaimPercent from '../../../../hooks/useAccountClaimPercent'
+import useRefund from '../../hooks/useRefund'
 
 import Social from '../Social'
 
@@ -29,7 +30,7 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
   const idoContract = useIdoContract()
-  const { toastSuccess } = useToast()
+  const { toastSuccess, toastError } = useToast()
 
   const [showRegisterModal, setShowRegisterModal] = useState(false)
   const [ticket, setTicket] = useState(0)
@@ -39,6 +40,9 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
   const { callWithGasPrice } = useCallWithGasPrice()
   const erc20Contract = useTokenContract(idoPool.idoToken2Buy)
   const idoAddress = getIdoAddress()
+
+  const [pendingTx, setPendingTx] = useState(false)
+  const { onRefund } = useRefund(idoPool.id)
 
   const { claimPercent } = useAccountClaimPercent(account, idoPool.idoUnlock)
 
@@ -75,6 +79,20 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
 
   const _handleShowRegisterModal = () => {
     setShowRegisterModal(true)
+  }
+
+  const handleRefundClick = async () => {
+    setPendingTx(true)
+    try {
+      // refund
+      await onRefund()
+      setIsBuyer(false)
+      toastSuccess(`${t('Refund')}!`, t('You are refund successful!'))
+      setPendingTx(false)
+    } catch (e) {
+      toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
+      setPendingTx(false)
+    }
   }
 
   const _handleCloseConfirm = () => {
@@ -204,6 +222,37 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
                   className="bg-[#9E9E9E] mt-auto rounded-[20px] border-none text-black pointer-events-none font-semibold h-[44px] w-full md:px-14"
                 >
                   Joined
+                </button>
+              )}
+              {account && isBuyer && claimPercent === 0 && Number(idoPool.status._hex) === 3 && !pendingTx && (
+                <button
+                  type="button"
+                  className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:px-14 shadow-blue"
+                  onClick={handleRefundClick}
+                >
+                  Refund
+                </button>
+              )}
+              {account && isBuyer && claimPercent === 0 && Number(idoPool.status._hex) === 3 && pendingTx && (
+                <button
+                  type="button"
+                  className="flex items-center justify-center w-full h-[44px] md:w-[167px] font-semibold rounded-[20px] text-black pointer-events-none bg-[#9E9E9E] transition ease-in-out duration-150 cursor-not-allowed"
+                  disabled
+                >
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Waiting...
                 </button>
               )}
               {account && !isInWhitelist && Number(idoPool.status._hex) === 2 && (
