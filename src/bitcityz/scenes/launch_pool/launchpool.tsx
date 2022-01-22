@@ -110,6 +110,7 @@ function LaunchPool() {
             isLoading={isLoading}
             setUpdatePool={setUpdatePool}
             launchPoolAddress={launchPoolAddress}
+            setIsApproved={setIsApproved}
           />
         </div>
       </div>

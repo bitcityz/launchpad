@@ -3,7 +3,7 @@ import '../../../assets/index.css'
 import CardPool from './CardPool'
 
 function PoolList(props) {
-  const { pools, account, isLoading, setUpdatePool, launchPoolAddress } = props
+  const { pools, account, isLoading, setUpdatePool, launchPoolAddress, setIsApproved } = props
   return (
     <div className="flex flex-col gap-y-8">
       {pools.length > 0 &&
@@ -16,6 +16,7 @@ function PoolList(props) {
               isLoading={isLoading}
               setUpdatePool={setUpdatePool}
               launchPoolAddress={launchPoolAddress}
+              setIsApproved={setIsApproved}
             />
           )
         })}

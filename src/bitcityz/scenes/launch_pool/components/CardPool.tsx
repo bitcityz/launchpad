@@ -17,7 +17,7 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress }) {
+function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, setIsApproved }) {
   const { id, amount, minLockingAmount, name, startTime, lockingTime, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
@@ -139,7 +139,14 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress }
                 Connect wallet
               </button>
             )}
-            {account && !isLoading && <StakingAction pool={pool} setUpdatePool={setUpdatePool} isLoading={isLoading} />}
+            {account && !isLoading && (
+              <StakingAction
+                pool={pool}
+                setUpdatePool={setUpdatePool}
+                isLoading={isLoading}
+                setIsApproved={setIsApproved}
+              />
+            )}
           </div>
         </div>
       </div>

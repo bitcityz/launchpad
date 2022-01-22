@@ -11,6 +11,7 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 export const useApprovePool = (lpContract: Contract) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
+  const [requestStatus, setRequestStatus] = useState(false)
   const { toastSuccess, toastError } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
   const { t } = useTranslation()
@@ -24,22 +25,24 @@ export const useApprovePool = (lpContract: Contract) => {
         toastSuccess(
           t('Contract Enabled'),
           <ToastDescriptionWithTx txHash={receipt.transactionHash}>
-            {t('You can now stake in the %symbol% pool!')}
+            {t('You can now stake in the %symbol% pool!', { symbol: 'BCTZ' })}
           </ToastDescriptionWithTx>,
         )
         setRequestedApproval(false)
+        setRequestStatus(true)
       } else {
         // user rejected tx or didn't go thru
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
         setRequestedApproval(false)
       }
     } catch (e) {
-      console.error(e)
+      setRequestedApproval(false)
+      setRequestStatus(false)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
   }, [lpContract, t, toastError, toastSuccess, callWithGasPrice])
 
-  return { handleApprove, requestedApproval }
+  return { handleApprove, requestedApproval, requestStatus }
 }
 
 // Approve CAKE auto pool
