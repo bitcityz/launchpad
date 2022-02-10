@@ -25,6 +25,7 @@ import calendarAddActive from '../../assets/images/calendar-add-active.svg'
 import activityActiveSvg from '../../assets/images/activity-active.svg'
 import editActiveSvg from '../../assets/images/edit-active.svg'
 import taskSquareActive from '../../assets/images/task-square-active.svg'
+import bgFantasy from '../../assets/images/bg-fantasy.png'
 
 const POOLS = [0, 1, 2]
 function PoolDetail() {
@@ -85,7 +86,10 @@ function PoolDetail() {
   }, [listPool]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="bg-[#050e21] py-[110px] ">
+    <div
+      className="bg-bottom bg-contain bg-no-repeat pt-[110px] pb-[240px]"
+      style={{ backgroundImage: `url(${bgFantasy})` }}
+    >
       {isLoading && <Spinner />}
       <div className="layout-container">
         <div className="relative px-6 py-7">

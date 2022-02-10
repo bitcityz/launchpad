@@ -9,7 +9,7 @@ function HomeHeader() {
     <div className="text-center py-[110px]">
       <img src={textSvg} className="mx-auto" alt="" />
       <h2 className="text-center text-[#7BF5FB] font-bold text-xl md:text-[32px] text-shadow">BITCITYZ LAUNCHPAD</h2>
-      <h2 className="text-center text-[#F5F5F5] font-bold text-xl md:text-[44px]">CITY OF THE HIDDEN GEMS</h2>
+      <h2 className="text-center text-[#F5F5F5] font-bold text-xl md:text-[44px] mt-4">CITY OF THE HIDDEN GEMS</h2>
       <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6 leading-5">
         In just a few simple steps, you can own your hidden gems by participating in IDO and IGO of high-quality
         projects.

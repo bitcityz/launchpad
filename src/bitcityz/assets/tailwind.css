@@ -289,4 +289,7 @@
   .right {
     transform: rotate(45deg);
   }
+  .linear-background {
+    background: linear-gradient(180deg, #050e21 0%, rgba(5, 14, 33, 0) 100%);
+  }
 }

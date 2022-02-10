@@ -67,10 +67,11 @@ function Footer() {
   }
   return (
     <footer
-      className="bg-cover bg-center bg-no-repeat pt-[84px] bg-[#050e21]"
+      className="bg-cover bg-center bg-no-repeat pt-[84px] bg-[#050e21] relative"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="layout-container grid md:grid-cols-2 gap-7">
+      <div className="absolute top-0 left-0 w-full h-[180px] linear-background z-0" />
+      <div className="layout-container grid md:grid-cols-2 gap-7 relative z-10">
         <div>
           <h6 className="text-xl md:text-2xl text-[#2CE7FF] font-bold">
             Subscribe to our newsletter for development news!

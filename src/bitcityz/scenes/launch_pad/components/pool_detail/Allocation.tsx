@@ -54,76 +54,80 @@ function Allocation({ idoPool, account }) {
   }, [idoUnlockContract, account])
   return (
     <div className="mt-5 relative">
-      <div className="flex flex-col md:items-center md:justify-between md:flex-row">
-        <p className="text-white font-semibold flex gap-x-2">
-          Total bought tokens:
-          <span className="text-skyblue text-shadow">
-            {totalToken.toLocaleString('en', {
-              maximumFractionDigits: 4,
-            })}{' '}
-            {idoPool.baseInfo.symbol}
-          </span>
-        </p>
-        <p className="text-white font-semibold flex gap-x-2">
-          Have bought:
-          <span className="text-skyblue text-shadow">
-            {Number(formatEther(idoPool.amount)).toLocaleString('en', {
-              maximumFractionDigits: 4,
-            })}{' '}
-            {idoPool.baseInfo.currencyPair}
-          </span>
-        </p>
-        <p className="text-white font-semibold flex gap-x-2">
-          Claimed:
-          {!claimPercentLoading ? (
-            <span className="text-skyblue text-shadow">
-              {((claimPercent * totalToken) / 100).toLocaleString('en', {
-                maximumFractionDigits: 4,
-              })}
-              /
-              {totalToken.toLocaleString('en', {
-                maximumFractionDigits: 4,
-              })}{' '}
-              {idoPool.baseInfo.symbol}
-            </span>
-          ) : (
-            <Skeleton width="100px" height="16px" />
-          )}
-        </p>
-      </div>
-      <div className="mt-5 px-6 py-4 rounded-2xl overflow-x-auto" style={{ background: 'rgba(44, 231, 255, 0.1)' }}>
-        <div className="min-w-[650px]">
-          <div className="grid grid-cols-4 gap-x-8">
-            <span className="text-[#F5F5F5] font-semibold">Action</span>
-            <span className="text-[#F5F5F5] font-semibold">Claimable</span>
-            <span className="text-[#F5F5F5] font-semibold">Time EightDee</span>
-            <span className="text-[#F5F5F5] font-semibold">Status</span>
+      {isBuyer && (
+        <div>
+          <div className="flex flex-col md:items-center md:justify-between md:flex-row">
+            <p className="text-white font-semibold flex gap-x-2">
+              Total bought tokens:
+              <span className="text-skyblue text-shadow">
+                {totalToken.toLocaleString('en', {
+                  maximumFractionDigits: 4,
+                })}{' '}
+                {idoPool.baseInfo.symbol}
+              </span>
+            </p>
+            <p className="text-white font-semibold flex gap-x-2">
+              Have bought:
+              <span className="text-skyblue text-shadow">
+                {Number(formatEther(idoPool.amount)).toLocaleString('en', {
+                  maximumFractionDigits: 4,
+                })}{' '}
+                {idoPool.baseInfo.currencyPair}
+              </span>
+            </p>
+            <p className="text-white font-semibold flex gap-x-2">
+              Claimed:
+              {!claimPercentLoading ? (
+                <span className="text-skyblue text-shadow">
+                  {((claimPercent * totalToken) / 100).toLocaleString('en', {
+                    maximumFractionDigits: 4,
+                  })}
+                  /
+                  {totalToken.toLocaleString('en', {
+                    maximumFractionDigits: 4,
+                  })}{' '}
+                  {idoPool.baseInfo.symbol}
+                </span>
+              ) : (
+                <Skeleton width="100px" height="16px" />
+              )}
+            </p>
           </div>
-          {loading ? (
-            <div className="flex flex-col mt-2 gap-y-2">
-              <Skeleton width="100%" height="32px" />
-              <Skeleton width="100%" height="32px" />
-              <Skeleton width="100%" height="32px" />
+          <div className="mt-5 px-6 py-4 rounded-2xl overflow-x-auto" style={{ background: 'rgba(44, 231, 255, 0.1)' }}>
+            <div className="min-w-[650px]">
+              <div className="grid grid-cols-4 gap-x-8">
+                <span className="text-[#F5F5F5] font-semibold">Action</span>
+                <span className="text-[#F5F5F5] font-semibold">Claimable</span>
+                <span className="text-[#F5F5F5] font-semibold">Time EightDee</span>
+                <span className="text-[#F5F5F5] font-semibold">Status</span>
+              </div>
+              {loading ? (
+                <div className="flex flex-col mt-2 gap-y-2">
+                  <Skeleton width="100%" height="32px" />
+                  <Skeleton width="100%" height="32px" />
+                  <Skeleton width="100%" height="32px" />
+                </div>
+              ) : (
+                isBuyer &&
+                claimTimes.length > 0 &&
+                Number(idoPool.status._hex) === 3 &&
+                claimTimes.map((claim) => {
+                  return (
+                    <AllocationCard
+                      key={claim}
+                      claim={claim}
+                      totalToken={totalToken}
+                      accountClaimIndex={accountClaimIndex}
+                      setIsUpdate={setIsUpdate}
+                      idoUnlock={idoPool.idoUnlock}
+                    />
+                  )
+                })
+              )}
             </div>
-          ) : (
-            isBuyer &&
-            claimTimes.length > 0 &&
-            Number(idoPool.status._hex) === 3 &&
-            claimTimes.map((claim) => {
-              return (
-                <AllocationCard
-                  key={claim}
-                  claim={claim}
-                  totalToken={totalToken}
-                  accountClaimIndex={accountClaimIndex}
-                  setIsUpdate={setIsUpdate}
-                  idoUnlock={idoPool.idoUnlock}
-                />
-              )
-            })
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

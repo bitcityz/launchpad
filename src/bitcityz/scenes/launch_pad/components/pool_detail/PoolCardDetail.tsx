@@ -104,7 +104,7 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
     const remainAmount = Number(formatEther(idoPool.remainAmount))
     const result = ((totalAmount - remainAmount) * 100) / totalAmount
     setPercent(result)
-  }, [idoPool])
+  }, [idoPool, isBuyer])
 
   useEffect(() => {
     const pool = pools.filter((r) => {
@@ -258,6 +258,11 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
               {account && !isInWhitelist && Number(idoPool.status._hex) === 2 && (
                 <p className="text-skyblue text-shadow font-semibold text-center md:text-right md:mt-auto">
                   You aren’t in whitelist
+                </p>
+              )}
+              {Number(idoPool.status._hex) === 3 && account && !isBuyer && (
+                <p className="text-skyblue text-shadow font-semibold text-center md:text-right md:mt-4">
+                  You did not join the pool
                 </p>
               )}
             </div>
