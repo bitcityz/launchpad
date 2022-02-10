@@ -128,6 +128,9 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
               </a>
             </div>
           </div>
+          {days === 0 && hours === 0 && minutes === 0 && Number(amount) > 0 && (
+            <p className="text-[#F5F5F5] mt-5">You have got a Mayor ticket!</p>
+          )}
           <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
             {isLoading && <Skeleton width="100%" height="42px" />}
             {!account && !isLoading && (

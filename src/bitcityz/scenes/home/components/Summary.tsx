@@ -15,7 +15,7 @@ function Summary(props) {
       <h5 className="text-[#F5F5F5] text-xl md:text-[32px] text-center">
         Buy and own potential coins in the fastest way
       </h5>
-      <p className="text-center text-[#F5F5F5]">
+      <p className="text-center text-[#F5F5F5] mt-2">
         Staking <span className="text-white font-semibold">BCTZ</span> to get pass-ticket. Join pool to claim hidden
         gems
       </p>
