@@ -102,7 +102,7 @@ function LaunchPool() {
     <>
       {isLoading && <Spinner />}
       <LaunchpoolHeader />
-      <div className="bg-bottom bg-contain bg-no-repeat pb-[240px]" style={{ backgroundImage: `url(${bgFantasy})` }}>
+      <div className="pb-[240px]">
         <div className="layout-container">
           <PoolList
             pools={pools}

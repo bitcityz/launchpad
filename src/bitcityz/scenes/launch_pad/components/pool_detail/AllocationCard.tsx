@@ -49,8 +49,8 @@ function AllocationCard({ claim, totalToken, accountClaimIndex, setIsUpdate, ido
       {!pendingTx && (
         <button
           type="button"
-          className={`rounded-[20px] text-black font-semibold w-[139px] h-[32px] flex items-center justify-center ${
-            isDisabled ? 'pointer-events-none bg-[#9E9E9E]' : 'bg-skyblue shadow-blue'
+          className={`rounded-[20px] font-semibold w-[139px] h-[32px] flex items-center justify-center ${
+            isDisabled ? 'pointer-events-none bg-[#9E9E9E] text-black' : 'fill-btn shadow-blue text-white'
           }`}
           onClick={handleClaim}
         >

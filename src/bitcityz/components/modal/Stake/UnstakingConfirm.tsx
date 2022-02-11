@@ -61,7 +61,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
         <div className="flex justify-center gap-x-6 items-center mt-5">
           <button
             type="button"
-            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-[#7BF5FB] px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
+            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-gradient px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
             onClick={onClose}
           >
             Cancel
@@ -69,7 +69,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
           {!pendingTx && (
             <button
               type="button"
-              className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
+              className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
               onClick={handleConfirmClick}
             >
               Confirm

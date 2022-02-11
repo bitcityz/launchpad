@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     font-size: 16px;
     color: black;
     font-weight: 400;
@@ -13,8 +16,9 @@
   input,
   button,
   textarea,
-  select {
-    font-family: 'Poppins', sans-serif;
+  select,
+  span {
+    font-family: 'Poppins', sans-serif !important;
     outline: none;
   }
 }
@@ -46,8 +50,8 @@
   }
 
   .mobile-menu {
-    @apply py-4 flex flex-col justify-start w-screen bg-cover bg-center bg-no-repeat bg-[#050e21] fixed z-[98] left-0 top-0;
-    background-image: url('./images/bg-header.png');
+    @apply py-4 flex flex-col justify-start w-screen bg-cover bg-center bg-no-repeat  fixed z-[98] left-0 top-0;
+    background-image: url('./images/background.png');
   }
 
   .desktop-menu {
@@ -291,5 +295,10 @@
   }
   .linear-background {
     background: linear-gradient(180deg, #050e21 0%, rgba(5, 14, 33, 0) 100%);
+  }
+
+  .fill-btn {
+    background: linear-gradient(98.3deg, #3DEDFF -46.01%, #3EB3FE 30.04%, #5033FF 100%);
+    box-shadow: 0px 0px 16px rgba(66, 232, 224, 0.6);
   }
 }

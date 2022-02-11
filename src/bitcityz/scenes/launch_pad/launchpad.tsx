@@ -91,14 +91,15 @@ function LaunchPad() {
 
   return (
     <div
-      className="bg-bottom bg-contain bg-no-repeat pt-[110px] pb-[240px]"
-      style={{ backgroundImage: `url(${bgFantasy})` }}
+      className="pt-[110px] pb-[240px]"
     >
       {isLoading && <Spinner />}
       <div className="layout-container">
         <div className="text-center">
           <img src={textSvg} className="mx-auto" alt="" />
-          <h2 className="text-center text-[#F5F5F5] font-bold text-[32px]">Launchpad</h2>
+          <div className="text-center">
+            <h2 className="text-center text-gradient inline-block font-bold text-[32px]">Launchpad</h2>
+          </div>
           <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6">
             Stake <span className="font-semibold">3 pools</span> at the same time. Get more opportunities to own hidden
             gems

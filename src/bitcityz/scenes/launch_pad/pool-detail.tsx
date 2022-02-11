@@ -87,8 +87,7 @@ function PoolDetail() {
 
   return (
     <div
-      className="bg-bottom bg-contain bg-no-repeat pt-[110px] pb-[240px]"
-      style={{ backgroundImage: `url(${bgFantasy})` }}
+      className="pt-[110px] pb-[240px]"
     >
       {isLoading && <Spinner />}
       <div className="layout-container">

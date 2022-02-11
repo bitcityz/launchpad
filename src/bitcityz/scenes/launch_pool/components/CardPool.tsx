@@ -72,17 +72,17 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
               className="max-w-none w-full xl:max-w-full"
               alt=""
             />
-            <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            {/* <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <span className="font-bold text-2xl text-skyblue text-shadow">{name}</span>
               <span className="font-bold text-xs text-skyblue text-shadow">PASS TICKET</span>
-            </p>
+            </p> */}
           </div>
           <button
             type="button"
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            {name} tickets: {ticket}
+            <span className="text-gradient">{name} tickets: {ticket}</span>
           </button>
         </div>
         <div className="flex-1 flex flex-col">
@@ -90,7 +90,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-4 md:mt-6">
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Required: </p>
-              <p className="text-skyblue font-semibold text-shadow mt-[10px]">
+              <p className="text-gradient font-semibold text-shadow mt-[10px]">
                 &gt;={' '}
                 {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
                   maximumFractionDigits: 0,
@@ -100,7 +100,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Staking: </p>
-              <p className="text-skyblue font-semibold text-shadow mt-[10px]">
+              <p className="text-gradient font-semibold text-shadow mt-[10px]">
                 {Number(amount).toLocaleString('en', {
                   maximumFractionDigits: 0,
                 })}{' '}
@@ -109,11 +109,11 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Lock-up Time:</p>
-              <p className="text-skyblue font-semibold text-shadow mt-[10px]">{(lockingTime / 3600).toFixed(2)} days</p>
+              <p className="text-gradient font-semibold text-shadow mt-[10px]">{(lockingTime / 3600).toFixed(2)} days</p>
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Remaining unlock</p>
-              <p className="text-skyblue font-semibold text-shadow mt-[10px] text-right md:text-left">
+              <p className="text-gradient font-semibold text-shadow mt-[10px] text-right md:text-left">
                 {days} days : {hours} hours : {minutes} mins
               </p>
             </div>
@@ -136,7 +136,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             {!account && !isLoading && (
               <button
                 type="button"
-                className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[42px] px-10 shadow-blue"
+                className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[42px] px-10 shadow-blue"
                 onClick={onPresentConnectModal}
               >
                 Connect wallet

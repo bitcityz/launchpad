@@ -59,7 +59,7 @@ function Header() {
             <li>
               <NavLink
                 to="/launchpad"
-                activeClassName="!text-skyblue text-shadow"
+                activeClassName="!text-gradient text-shadow"
                 className="text-sm text-[#F5F5F5] font-semibold"
                 onClick={_handleCloseMenu}
               >
@@ -69,7 +69,7 @@ function Header() {
             <li>
               <NavLink
                 to="/launchpool"
-                activeClassName="!text-skyblue text-shadow"
+                activeClassName="!text-gradient text-shadow"
                 className="text-sm text-[#F5F5F5] font-semibold"
                 onClick={_handleCloseMenu}
               >
@@ -91,7 +91,7 @@ function Header() {
             <button
               type="button"
               onClick={onPresentConnectModal}
-              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-[#212121] mt-4 text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4 ${
+              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-white mt-4 text-sm font-semibold flex items-center fill-btn border-none rounded-2xl py-[7px] px-4 ${
                 showMenu ? '' : 'hidden xl:flex'
               }`}
             >
@@ -102,7 +102,7 @@ function Header() {
             <button
               onClick={() => _handleShowWalletModal()}
               type="button"
-              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-[#212121] mt-4 text-sm font-semibold flex items-center bg-[#2CE7FF] shadow-blue border-none rounded-2xl py-[7px] px-4 ${
+              className={`xl:ml-auto xl:mx-0 xl:mt-0 max-w-[205px] mx-auto text-white mt-4 text-sm font-semibold flex items-center fill-btn border-none rounded-2xl py-[7px] px-4 ${
                 showMenu ? '' : 'hidden xl:flex'
               }`}
             >

@@ -20,8 +20,8 @@ function UpcomingPoolCard({ project, poolName }) {
         }}
       />
       <div className="relative z-10">
-        <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-          {poolName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+        <h6 className="text-xl text-shadow font-bold flex items-center">
+          <span className="text-gradient">{poolName} pool</span> <img src={oceanProtocolActive1} className="ml-2" alt="" />
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -39,7 +39,7 @@ function UpcomingPoolCard({ project, poolName }) {
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
                   {project.baseInfo.symbol}{' '}
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                  <span className="text-shadow font-semibold leading-5 text-gradient text-xs md:text-base">
                     {project.baseInfo.symbol} ={' '}
                     {Number(formatEther(project.tokenBuy2IDOtoken)).toLocaleString('en', {
                       maximumFractionDigits: 4,
@@ -64,11 +64,11 @@ function UpcomingPoolCard({ project, poolName }) {
                   </span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration start</span>
+                  <span className="text-[#BFBFBF]">Whitelist reg starts</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(project.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist registration end</span>
+                  <span className="text-[#BFBFBF]">Whitelist reg ends</span>
                   <span className="text-[#F5F5F5] font-semibold ml-8">
                     {format(project.endTimeWL * 1000, 'Pp')} (UTC)
                   </span>
@@ -76,7 +76,7 @@ function UpcomingPoolCard({ project, poolName }) {
               </div>
               <Link
                 to={`/launchpad/${project.id}`}
-                className="bg-skyblue mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-black font-semibold h-[44px] px-[50px] shadow-blue"
+                className="fill-btn mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-white font-semibold h-[44px] px-[50px] shadow-blue"
               >
                 More Details
               </Link>

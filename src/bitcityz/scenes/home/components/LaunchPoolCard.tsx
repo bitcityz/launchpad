@@ -51,12 +51,14 @@ function LaunchPoolCard({ pool }) {
             className="w-full md:w-auto"
             alt=""
           />
-          <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          {/* <p className="flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <span className="font-bold text-2xl text-skyblue text-shadow uppercase">{pool.name}</span>
             <span className="font-bold text-xs text-skyblue text-shadow">PASS TICKET</span>
-          </p>
+          </p> */}
         </div>
-        <p className="text-skyblue text-shadow font-semibold mt-4 text-center">Pool Details</p>
+        <div className="text-center">
+            <p className="text-gradient inline-block text-shadow font-semibold mt-4 text-center">Pool Details</p>
+        </div>
         <p className="flex justify-between items-center text-sm text-[#F5F5F5] mt-4">
           <span className="font-semibold">Required:</span>
           <span className="font-semibold">
@@ -75,10 +77,10 @@ function LaunchPoolCard({ pool }) {
       </div>
       <button
         type="button"
-        className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold"
+        className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-shadow font-semibold"
         style={{ backgroundImage: `url(${bgBtn})` }}
       >
-        {pool.name} tickets: {ticket}
+        <span className="text-gradient">{pool.name} tickets: {ticket}</span>
       </button>
     </div>
   )

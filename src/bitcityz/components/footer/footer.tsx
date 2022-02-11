@@ -67,13 +67,11 @@ function Footer() {
   }
   return (
     <footer
-      className="bg-cover bg-center bg-no-repeat pt-[84px] bg-[#050e21] relative"
-      style={{ backgroundImage: `url(${bg})` }}
+      className="pt-[84px] relative"
     >
-      <div className="absolute top-0 left-0 w-full h-[180px] linear-background z-0" />
       <div className="layout-container grid md:grid-cols-2 gap-7 relative z-10">
         <div>
-          <h6 className="text-xl md:text-2xl text-[#2CE7FF] font-bold">
+          <h6 className="text-xl md:text-2xl text-gradient font-bold">
             Subscribe to our newsletter for development news!
           </h6>
           <div className="mt-4">
@@ -99,8 +97,8 @@ function Footer() {
                 />
                 <button
                   type="button"
-                  className={`shadow-blue rounded-[10px] py-[7px] px-4 md:px-9 text-[#212121] font-semibold border-none ml-[11px] ${
-                    isLoading ? 'pointer-events-none bg-[#9E9E9E]' : 'bg-[#2CE7FF]'
+                  className={`shadow-blue rounded-[10px] py-[7px] px-4 md:px-9 text-white font-semibold border-none ml-[11px] ${
+                    isLoading ? 'pointer-events-none bg-[#9E9E9E]' : 'fill-btn'
                   }`}
                   onClick={handleSubmit}
                 >

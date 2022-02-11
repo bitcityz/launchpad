@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
 import '../../../assets/index.css'
-
+import { Lottie } from '@crello/react-lottie'
 import UpcomingPool from './UpcomingPool'
 
 import upcomingPool from '../../../assets/images/upcomingpool.svg'
 import line1 from '../../../assets/images/line1.svg'
 import line2 from '../../../assets/images/line2.svg'
 import oceanProtocolActive from '../../../assets/images/ocean-protocol-active.svg'
+import animationConfettiData from '../../../assets/images/confetti-outline.json'
 
 function UpcomingPoolTab({ pools, projects, listPool }) {
   const [tab, setTab] = useState('')
@@ -51,9 +52,14 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
   }, [tab, projects, listPool])
   return (
     <div>
-      <div className="text-center pt-[110px]">
+      <div className="text-center pt-[150px] relative">
         <img src={upcomingPool} className="mx-auto" alt="" />
-        <h2 className="text-center text-[#F5F5F5] font-bold text-[28px] md:text-[32px] text-shadow">Upcoming pool</h2>
+        <div className="text-center w-[120px] h-[120px] absolute left-1/2 -translate-x-1/2 top-16">
+            <Lottie config={{animationData: animationConfettiData, loop: true}} />
+        </div>
+        <div className="text-center">
+            <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] text-shadow mt-1">Upcoming pool</h2>
+        </div>
         <img src={line1} className="mt-14 w-full h-auto" alt="" />
         <div className="grid mobile-tab md:grid-cols-3 gap-x-8 relative">
           {pools.length > 0 &&
@@ -63,7 +69,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
                   key={pool.id}
                   type="button"
                   className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
-                    tab === pool.ticketHash ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[#F5F5F5]'
+                    tab === pool.ticketHash ? 'text-skyblue bg-[rgba(44,231,255,0.3)]' : 'text-[#F5F5F5]'
                   }`}
                   onClick={() => handleChangeTab(pool.ticketHash, pool.name)}
                 >

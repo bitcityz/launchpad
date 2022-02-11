@@ -14,7 +14,9 @@ function Performance(props) {
     <div>
       <div className="text-center pt-[110px]">
         <img src={performance} className="mx-auto" alt="" />
-        <h2 className="text-center text-[#F5F5F5] font-bold text-[32px] text-shadow">Performance</h2>
+        <div className="text-center">
+            <h2 className="text-center text-gradient inline-block font-bold text-[32px] text-shadow">Performance</h2>
+        </div>
 
         <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-12">
           <div className="flex justify-between items-center">
@@ -69,7 +71,7 @@ function Performance(props) {
             </div>
           </div>
         </div>
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse rounded-xl min-w-[800px]">
               <thead className="bg-[#030303] rounded-tl-xl rounded-tr-xl">
@@ -308,7 +310,7 @@ function Performance(props) {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

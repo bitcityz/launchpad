@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import '../../../assets/index.css'
-
 import UpcomingPoolCard from './UpcomingPoolCard'
 
 import comingSoonSvg from '../../../assets/images/comingsoon.svg'

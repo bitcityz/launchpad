@@ -10,9 +10,11 @@ function LaunchPool({ pools }) {
     <div>
       <div className="text-center pt-[170px]">
         <img src={launchPool} className="mx-auto" alt="" />
-        <h2 className="text-center text-[#F5F5F5] font-bold text-[28px] md:text-[32px] leading-9 text-shadow">
-          Launchpool
-        </h2>
+        <div className="text-center">
+            <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] leading-9 text-shadow">
+            Launchpool
+            </h2>
+        </div>
         <p className="text-center text-[#F5F5F5] mt-5 leading-5">
           Stake <span className="text-white font-semibold">3 pools</span> at the same time. Get more opportunities to
           own hidden gems
@@ -27,7 +29,7 @@ function LaunchPool({ pools }) {
       <div className="text-center">
         <Link
           to="/launchpool"
-          className="bg-skyblue mt-8 rounded-[20px] border-none flex items-center justify-center text-black font-semibold h-[44px] w-[180px] mx-auto shadow-blue"
+          className="fill-btn mt-8 rounded-[20px] border-none flex items-center justify-center text-white font-semibold h-[44px] w-[180px] mx-auto shadow-blue"
         >
           Stake now
         </Link>

@@ -6,7 +6,7 @@ function ApplyLaunch() {
   return (
     <div className="mt-[73px]">
       <h5 className="text-[#F5F5F5] text-[32px] text-center">
-        Launch your project on <span className="text-skyblue">BitcityZ</span> now!
+        Launch your project on <span className="text-gradient">BitcityZ</span> now!
       </h5>
       <p className="text-center text-white mt-8 leading-5">
         <span className="font-semibold text-white">BitcityZ Launchpad</span> is a platform that help and advise project
@@ -22,7 +22,7 @@ function ApplyLaunch() {
           target="_blank"
           rel="noreferrer"
           type="button"
-          className="bg-skyblue mt-8 flex items-center justify-center mx-auto max-w-[202px] rounded-[20px] border-none text-black font-semibold h-[44px] shadow-blue"
+          className="fill-btn mt-8 flex items-center justify-center mx-auto max-w-[202px] rounded-[20px] border-none text-white font-semibold h-[44px] shadow-blue"
         >
           Apply to launch
         </a>

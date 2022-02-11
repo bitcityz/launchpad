@@ -18,6 +18,7 @@ import ApplyLaunch from './components/ApplyLaunch'
 import HomeHeader from './components/HomeHeader'
 import '../../assets/index.css'
 import bg from '../../assets/images/bg-summary.png'
+import homeBg from '../../assets/images/home-bg.png'
 
 const POOLS = [0, 1, 2]
 const PRICE_USDT = 1
@@ -111,8 +112,9 @@ function Home() {
   }, [poolCalls, ticketCalls])
 
   return (
-    <div className="bg-[#050e21] bg-no-repeat bg-top" style={{ backgroundImage: `url(${bg})` }}>
+    <div>
       {isLoading && <Spinner />}
+      {/* <div className="bg-no-repeat bg-top" style={{ backgroundImage: `url(${bg})` }} /> */}
       <div className="layout-container">
         <HomeHeader />
         <Summary
@@ -123,7 +125,7 @@ function Home() {
         />
         <UpcomingPoolTab pools={pools} projects={projects} listPool={listPool} />
         <LaunchPool pools={pools} />
-        {/* <Performance /> */}
+        <Performance />
         <ApplyLaunch />
       </div>
     </div>

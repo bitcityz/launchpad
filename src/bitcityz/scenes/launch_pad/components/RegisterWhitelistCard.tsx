@@ -91,7 +91,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
         />
         <div className="relative z-10">
           <h6 className="flex items-center justify-between">
-            <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+            <span className="text-xl text-shadow font-bold text-gradient flex items-center">
               {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
             </span>
           </h6>
@@ -111,7 +111,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                   </p>
                   <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
                     <span>{ido.baseInfo.symbol}</span>
-                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                    <span className="text-shadow font-semibold leading-5 text-gradient text-xs md:text-base">
                       {ido.baseInfo.symbol} ={' '}
                       {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
                         maximumFractionDigits: 4,
@@ -124,7 +124,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
               <Social idoInfo={ido.baseInfo} />
               <NavLink
                 to={`/launchpad/${ido.id}`}
-                className="text-skyblue underline text-sm font-medium mt-4 inline-block"
+                className="text-gradient underline text-sm font-medium mt-4 inline-block"
               >
                 More detail
               </NavLink>
@@ -151,7 +151,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 {!account && (
                   <button
                     type="button"
-                    className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+                    className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-8 shadow-blue"
                     onClick={onPresentConnectModal}
                   >
                     Connect wallet
@@ -160,7 +160,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 {account && !isInWhitelist && (
                   <button
                     type="button"
-                    className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 shadow-blue"
+                    className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-8 shadow-blue"
                     onClick={_handleShowRegisterModal}
                   >
                     Register Whitelist
