@@ -78,7 +78,7 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         <h6 className="text-[#F5F5F5] text-xl md:text-[28px] font-bold text-center">Stake in {name} Pool</h6>
         <p className="text-[#F5F5F5] text-center mt-3">
           Required:{' '}
-          <span className="text-gradient text-shadow font-semibold">
+          <span className="text-skyblue text-shadow font-semibold">
             {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
@@ -87,7 +87,7 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         </p>
         <p className="text-[#F5F5F5] text-center mt-1">
           Lock-up Time:{' '}
-          <span className="text-gradient text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
+          <span className="text-skyblue text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
         </p>
         <div className="mt-7 max-w-[300px] md:max-w-[430px] mx-auto flex items-center gap-x-2">
           <div className="bg-white text-right px-4 py-3 rounded-[20px] flex items-center gap-x-2 flex-1">
@@ -111,7 +111,7 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         </div>
         <p className="text-[#F5F5F5] text-center mt-4">
           Available tokens:{' '}
-          <span className="text-gradient text-shadow font-semibold">
+          <span className="text-skyblue text-shadow font-semibold">
             {Number(fullBalance).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
@@ -121,7 +121,7 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         <div className="flex justify-center gap-x-6 items-center mt-5">
           <button
             type="button"
-            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-gradient px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
+            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-[#7BF5FB] px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
             onClick={onClose}
           >
             Cancel

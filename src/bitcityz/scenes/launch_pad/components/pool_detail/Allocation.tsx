@@ -68,7 +68,7 @@ function Allocation({ idoPool, account }) {
             </p>
             <p className="text-white font-semibold flex gap-x-2">
               Have bought:
-              <span className="text-gradient text-shadow">
+              <span className="text-skyblue text-shadow">
                 {Number(formatEther(idoPool.amount)).toLocaleString('en', {
                   maximumFractionDigits: 4,
                 })}{' '}
@@ -78,7 +78,7 @@ function Allocation({ idoPool, account }) {
             <p className="text-white font-semibold flex gap-x-2">
               Claimed:
               {!claimPercentLoading ? (
-                <span className="text-gradient text-shadow">
+                <span className="text-skyblue text-shadow">
                   {((claimPercent * totalToken) / 100).toLocaleString('en', {
                     maximumFractionDigits: 4,
                   })}

@@ -106,7 +106,7 @@ function InprogressCard({ ido, pools, account }) {
       />
       <div className="relative z-10">
         <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-          <span className="text-gradient">{idoName} pool</span> <img src={oceanProtocolActive1} className="ml-2" alt="" />
+          {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -124,7 +124,7 @@ function InprogressCard({ ido, pools, account }) {
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
                   <span>{ido.baseInfo.symbol}</span>
-                  <span className="text-shadow font-semibold leading-5 text-gradient text-xs md:text-base">
+                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
                     {ido.baseInfo.symbol} ={' '}
                     {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
                       maximumFractionDigits: 4,
@@ -231,7 +231,7 @@ function InprogressCard({ ido, pools, account }) {
                 </button>
               )}
               {account && !isInWhitelist && (
-                <p className="text-gradient inline-block text-shadow font-semibold mt-5 md:mt-auto">You aren’t in whitelist</p>
+                <p className="text-skyblue text-shadow font-semibold mt-5 md:mt-auto">You aren’t in whitelist</p>
               )}
             </div>
           </div>

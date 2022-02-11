@@ -98,3 +98,6 @@ export const getIdoAddress = () => {
 export const getIdoUnlockAddress = () => {
   return getAddress(addresses.idoUnlock)
 }
+export const getBCTZAddress = () => {
+  return getAddress(addresses.bctz)
+}

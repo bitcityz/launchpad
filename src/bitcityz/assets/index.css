@@ -1680,6 +1680,11 @@ input,
   color: rgb(191 191 191 / var(--tw-text-opacity));
 }
 
+.\!text-skyblue {
+  --tw-text-opacity: 1 !important;
+  color: rgb(123 245 251 / var(--tw-text-opacity)) !important;
+}
+
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;

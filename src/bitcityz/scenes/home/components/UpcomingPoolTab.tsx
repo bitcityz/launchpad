@@ -69,7 +69,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
                   key={pool.id}
                   type="button"
                   className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
-                    tab === pool.ticketHash ? 'text-skyblue bg-[rgba(44,231,255,0.3)]' : 'text-[#F5F5F5]'
+                    tab === pool.ticketHash ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[#F5F5F5]'
                   }`}
                   onClick={() => handleChangeTab(pool.ticketHash, pool.name)}
                 >

@@ -41,7 +41,7 @@ function StakingAction({ pool, setUpdatePool, isLoading, setIsApproved }) {
       {!isApproved && !isLoading && !requestedApproval && (
         <button
           type="button"
-          className="bg-skyblue rounded-[20px] border-none text-black text-sm font-semibold h-[42px] px-10 shadow-blue min-w-[186px]"
+          className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[42px] px-10 shadow-blue min-w-[186px]"
           onClick={handleApprove}
         >
           Approve contract

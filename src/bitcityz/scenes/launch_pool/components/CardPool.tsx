@@ -82,7 +82,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            <span className="text-gradient">{name} tickets: {ticket}</span>
+            {name} tickets: {ticket}
           </button>
         </div>
         <div className="flex-1 flex flex-col">
@@ -90,7 +90,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-4 md:mt-6">
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Required: </p>
-              <p className="text-gradient font-semibold text-shadow mt-[10px]">
+              <p className="text-skyblue font-semibold text-shadow mt-[10px]">
                 &gt;={' '}
                 {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
                   maximumFractionDigits: 0,
@@ -100,7 +100,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Staking: </p>
-              <p className="text-gradient font-semibold text-shadow mt-[10px]">
+              <p className="text-skyblue font-semibold text-shadow mt-[10px]">
                 {Number(amount).toLocaleString('en', {
                   maximumFractionDigits: 0,
                 })}{' '}
@@ -109,11 +109,11 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Lock-up Time:</p>
-              <p className="text-gradient font-semibold text-shadow mt-[10px]">{(lockingTime / 3600).toFixed(2)} days</p>
+              <p className="text-skyblue font-semibold text-shadow mt-[10px]">{(lockingTime / 3600).toFixed(2)} days</p>
             </div>
             <div className="flex justify-between items-center md:block">
               <p className="text-[#F5F5F5]">Remaining unlock</p>
-              <p className="text-gradient font-semibold text-shadow mt-[10px] text-right md:text-left">
+              <p className="text-skyblue font-semibold text-shadow mt-[10px] text-right md:text-left">
                 {days} days : {hours} hours : {minutes} mins
               </p>
             </div>

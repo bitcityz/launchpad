@@ -2,14 +2,23 @@ import React from 'react'
 
 import '../../../assets/index.css'
 
+import { getBCTZAddress } from 'utils/addressHelpers'
+import useCMCLink from '../../../hooks/useCMCLink'
+
 import performance from '../../../assets/images/performance.svg'
-import sLogo from '../../../assets/images/logo-s.png'
+import sLogo from '../../../assets/images/bctz-icon.png'
 import telegramLight from '../../../assets/images/telegram-light.svg'
 import twitterLight from '../../../assets/images/twitter-light.svg'
 import discordLight from '../../../assets/images/discord-light.svg'
-import btczIcon from '../../../assets/images/ic-btcz.svg'
+import facebook from '../../../assets/images/facebook.svg'
+import youtube from '../../../assets/images/youtube.svg'
+import medium from '../../../assets/images/medium.png'
+import btczIcon from '../../../assets/images/ic-bctz.png'
 
 function Performance(props) {
+  const address = getBCTZAddress()
+  const cmcLink = useCMCLink(address)
+  console.log(cmcLink)
   return (
     <div>
       <div className="text-center pt-[110px]">
@@ -25,9 +34,24 @@ function Performance(props) {
               <span className="text-[#F5F5F5] font-bold text-xl">BitcityZ</span>
             </div>
             <div className="flex items-center gap-x-5">
-              <img src={telegramLight} alt="" />
-              <img src={twitterLight} alt="" />
-              <img src={discordLight} alt="" />
+                <a href="https://t.me/BitCityZSocial" target="_blank" rel="noreferrer">
+                <img src={telegramLight} alt="Telegram" />
+                </a>
+                <a href="https://twitter.com/BitCityZ_social" target="_blank" rel="noreferrer">
+                <img src={twitterLight} alt="Twitter" />
+                </a>
+                <a href="https://medium.com/@bitcityz.social" target="_blank" rel="noreferrer">
+                <img src={medium} alt="Medium" />
+                </a>
+                <a href="https://discord.gg/yFwuxBME" target="_blank" rel="noreferrer">
+                <img src={discordLight} alt="Discord" />
+                </a>
+                <a href="https://www.youtube.com/channel/UCC1X5Hsg0YQYkDsp6K4SzDQ" target="_blank" rel="noreferrer">
+                <img src={youtube} alt="Youtube" />
+                </a>
+                <a href="https://www.facebook.com/bitcityz/" target="_blank" rel="noreferrer">
+                <img src={facebook} alt="Facebook" />
+                </a>
             </div>
           </div>
           <div className="grid gap-y-3 md:gap-y-0 md:grid-cols-4 md:gap-x-7 mt-8">
@@ -54,7 +78,7 @@ function Performance(props) {
                 Raised: <span className="font-semibold text-sm">$300,3M</span>
               </p>
               <p className="text-[#F5F5F5] text-left flex justify-between mt-4">
-                IDO Price: <span className="font-semibold text-sm">$1</span>
+                IDO Price: <span className="font-semibold text-sm">0.15 BUSD</span>
               </p>
             </div>
             <div className="md:pr-7">
