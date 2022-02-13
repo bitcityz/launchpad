@@ -7,31 +7,22 @@ import UpcomingPool from './UpcomingPool'
 import upcomingPool from '../../../assets/images/upcomingpool.svg'
 import line1 from '../../../assets/images/line1.svg'
 import line2 from '../../../assets/images/line2.svg'
-import oceanProtocolActive from '../../../assets/images/ocean-protocol-active.svg'
+import oceanProtocolActive from '../../../assets/images/ocean-protocol-active.png'
+import oceanProtocol from '../../../assets/images/ocean-protocol.png'
 import animationConfettiData from '../../../assets/images/confetti-outline.json'
 
 function UpcomingPoolTab({ pools, projects, listPool }) {
-  const [tab, setTab] = useState('')
+  const [tab, setTab] = useState(0)
   const [upcomingPr, setUpcomingPr] = useState([])
-  const [poolName, setPoolName] = useState('')
+  const [poolName, setPoolName] = useState('Mayor')
 
-  const handleChangeTab = (selectedTab, selectedPoolName) => {
+  const handleChangeTab = (selectedTab) => {
     if (selectedTab !== tab) {
       setUpcomingPr([])
       setTab(selectedTab)
-      setPoolName(selectedPoolName)
+      setPoolName(pools[selectedTab].name)
     }
   }
-
-  useEffect(() => {
-    const updateTab = () => {
-      if (pools.length > 0) {
-        setTab(pools[0].ticketHash)
-        setPoolName(pools[0].name)
-      }
-    }
-    updateTab()
-  }, [pools])
 
   useEffect(() => {
     const initData = async () => {
@@ -43,41 +34,70 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
       })
 
       const result = upcoming.filter((r) => {
-        return r.keyType === tab
+        return r.keyType === pools[tab].ticketHash
       })
       setUpcomingPr(result)
     }
-
-    initData()
-  }, [tab, projects, listPool])
+    if (pools.length > 0) {
+      initData()
+    }
+  }, [tab, projects, listPool, pools])
   return (
     <div>
       <div className="text-center pt-[150px] relative">
         <img src={upcomingPool} className="mx-auto" alt="" />
         <div className="text-center w-[120px] h-[120px] absolute left-1/2 -translate-x-1/2 top-16">
-            <Lottie config={{animationData: animationConfettiData, loop: true}} />
+          <Lottie config={{ animationData: animationConfettiData, loop: true }} />
         </div>
         <div className="text-center">
-            <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] text-shadow mt-1">Upcoming pool</h2>
+          <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] text-shadow mt-1">
+            Upcoming pool
+          </h2>
         </div>
-        <img src={line1} className="mt-14 w-full h-auto" alt="" />
+        <img src={line1} className="mt-4 w-full h-auto" alt="" />
         <div className="grid mobile-tab md:grid-cols-3 gap-x-8 relative">
-          {pools.length > 0 &&
-            pools.map((pool) => {
-              return (
-                <button
-                  key={pool.id}
-                  type="button"
-                  className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
-                    tab === pool.ticketHash ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[#F5F5F5]'
-                  }`}
-                  onClick={() => handleChangeTab(pool.ticketHash, pool.name)}
-                >
-                  {pool.name} pool
-                  <img src={oceanProtocolActive} className="ml-1" alt="" />
-                </button>
-              )
-            })}
+          <button
+            type="button"
+            className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
+              tab === 0 ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[rgba(158,158,158,0.5)]'
+            }`}
+            onClick={() => handleChangeTab(0)}
+          >
+            Mayor pool
+            {tab === 0 ? (
+              <img src={oceanProtocolActive} className="ml-1" alt="" />
+            ) : (
+              <img src={oceanProtocol} className="ml-1" alt="" />
+            )}
+          </button>
+          <button
+            type="button"
+            className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
+              tab === 1 ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[rgba(158,158,158,0.5)]'
+            }`}
+            onClick={() => handleChangeTab(1)}
+          >
+            Elite pool
+            {tab === 1 ? (
+              <img src={oceanProtocolActive} className="ml-1" alt="" />
+            ) : (
+              <img src={oceanProtocol} className="ml-1" alt="" />
+            )}
+          </button>
+          <button
+            type="button"
+            className={` h-[62px] rounded-xl w-full border-[1px] border-solid border-[#2CE7FF] text-sm text-shadow font-semibold flex items-center justify-center transition-all ${
+              tab === 2 ? 'text-[#2CE7FF] bg-[rgba(44,231,255,0.3)]' : 'text-[rgba(158,158,158,0.5)]'
+            }`}
+            onClick={() => handleChangeTab(2)}
+          >
+            Citizen pool
+            {tab === 2 ? (
+              <img src={oceanProtocolActive} className="ml-1" alt="" />
+            ) : (
+              <img src={oceanProtocol} className="ml-1" alt="" />
+            )}
+          </button>
         </div>
         <img src={line2} className="w-full h-auto" alt="" />
       </div>

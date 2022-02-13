@@ -2,7 +2,7 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'BitcityZ',
+  title: 'BitCityZ',
   description: '',
 }
 
@@ -31,19 +31,19 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
   switch (basePath) {
     case '/':
       return {
-        title: `${t('Home')} | ${t('BitcityZ')}`,
+        title: `${t('Home')} | ${t('BitCityZ')}`,
       }
     case '/launchpool':
       return {
-        title: `${t('Launchpool')} | ${t('BitcityZ')}`,
+        title: `${t('Launchpool')} | ${t('BitCityZ')}`,
       }
     case '/add':
       return {
-        title: `${t('Add Liquidity')} | ${t('BitcityZ')}`,
+        title: `${t('Add Liquidity')} | ${t('BitCityZ')}`,
       }
     case '/remove':
       return {
-        title: `${t('Remove Liquidity')} | ${t('BitcityZ')}`,
+        title: `${t('Remove Liquidity')} | ${t('BitCityZ')}`,
       }
     case '/liquidity':
       return {
@@ -51,7 +51,7 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
       }
     case '/find':
       return {
-        title: `${t('Import Pool')} | ${t('BitcityZ')}`,
+        title: `${t('Import Pool')} | ${t('BitCityZ')}`,
       }
     case '/competition':
       return {
@@ -59,78 +59,78 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
       }
     case '/prediction':
       return {
-        title: `${t('Prediction')} | ${t('BitcityZ')}`,
+        title: `${t('Prediction')} | ${t('BitCityZ')}`,
       }
     case '/prediction/leaderboard':
       return {
-        title: `${t('Leaderboard')} | ${t('BitcityZ')}`,
+        title: `${t('Leaderboard')} | ${t('BitCityZ')}`,
       }
     case '/farms':
       return {
-        title: `${t('Farms')} | ${t('BitcityZ')}`,
+        title: `${t('Farms')} | ${t('BitCityZ')}`,
       }
     case '/farms/auction':
       return {
-        title: `${t('Farm Auctions')} | ${t('BitcityZ')}`,
+        title: `${t('Farm Auctions')} | ${t('BitCityZ')}`,
       }
     case '/pools':
       return {
-        title: `${t('Pools')} | ${t('BitcityZ')}`,
+        title: `${t('Pools')} | ${t('BitCityZ')}`,
       }
     case '/lottery':
       return {
-        title: `${t('Lottery')} | ${t('BitcityZ')}`,
+        title: `${t('Lottery')} | ${t('BitCityZ')}`,
       }
     case '/ifo':
       return {
-        title: `${t('Initial Farm Offering')} | ${t('BitcityZ')}`,
+        title: `${t('Initial Farm Offering')} | ${t('BitCityZ')}`,
       }
     case '/teams':
       return {
-        title: `${t('Leaderboard')} | ${t('BitcityZ')}`,
+        title: `${t('Leaderboard')} | ${t('BitCityZ')}`,
       }
     case '/voting':
       return {
-        title: `${t('Voting')} | ${t('BitcityZ')}`,
+        title: `${t('Voting')} | ${t('BitCityZ')}`,
       }
     case '/voting/proposal':
       return {
-        title: `${t('Proposals')} | ${t('BitcityZ')}`,
+        title: `${t('Proposals')} | ${t('BitCityZ')}`,
       }
     case '/voting/proposal/create':
       return {
-        title: `${t('Make a Proposal')} | ${t('BitcityZ')}`,
+        title: `${t('Make a Proposal')} | ${t('BitCityZ')}`,
       }
     case '/info':
       return {
-        title: `${t('Overview')} | ${t('BitcityZ Info & Analytics')}`,
+        title: `${t('Overview')} | ${t('BitCityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/pools':
       return {
-        title: `${t('Pools')} | ${t('BitcityZ Info & Analytics')}`,
+        title: `${t('Pools')} | ${t('BitCityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/info/tokens':
       return {
-        title: `${t('Tokens')} | ${t('BitcityZ Info & Analytics')}`,
+        title: `${t('Tokens')} | ${t('BitCityZ Info & Analytics')}`,
         description: 'View statistics for Pancakeswap exchanges.',
       }
     case '/nfts':
       return {
-        title: `${t('Overview')} | ${t('BitcityZ')}`,
+        title: `${t('Overview')} | ${t('BitCityZ')}`,
       }
     case '/nfts/collections':
       return {
-        title: `${t('Collections')} | ${t('BitcityZ')}`,
+        title: `${t('Collections')} | ${t('BitCityZ')}`,
       }
     case '/nfts/profile':
       return {
-        title: `${t('Your Profile')} | ${t('BitcityZ')}`,
+        title: `${t('Your Profile')} | ${t('BitCityZ')}`,
       }
     case '/pancake-squad':
       return {
-        title: `${t('Pancake Squad')} | ${t('BitcityZ')}`,
+        title: `${t('Pancake Squad')} | ${t('BitCityZ')}`,
       }
     default:
       return null

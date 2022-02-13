@@ -4,7 +4,7 @@ import '../../../assets/index.css'
 
 function ApplyLaunch() {
   return (
-    <div className="mt-[73px]">
+    <div>
       <h5 className="text-[#F5F5F5] text-[32px] text-center">
         Launch your project on <span className="text-gradient">BitcityZ</span> now!
       </h5>

@@ -6,7 +6,7 @@ import UnstakingConfirm from 'bitcityz/components/modal/Stake/UnstakingConfirm'
 import { useERC20 } from 'hooks/useContract'
 import { useApprovePool } from '../hooks/useApprove'
 
-function StakingAction({ pool, setUpdatePool, isLoading, setIsApproved }) {
+function StakingAction({ pool, setUpdatePool, setIsApproved }) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
   const { amount, lockingToken, isApproved } = pool
@@ -36,9 +36,7 @@ function StakingAction({ pool, setUpdatePool, isLoading, setIsApproved }) {
   }
   return (
     <>
-      {isLoading && <Skeleton width="100%" height="42px" />}
-
-      {!isApproved && !isLoading && !requestedApproval && (
+      {!isApproved && !requestedApproval && (
         <button
           type="button"
           className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[42px] px-10 shadow-blue min-w-[186px]"
@@ -48,7 +46,7 @@ function StakingAction({ pool, setUpdatePool, isLoading, setIsApproved }) {
         </button>
       )}
 
-      {!isApproved && !isLoading && requestedApproval && (
+      {!isApproved && requestedApproval && (
         <button
           type="button"
           className="flex items-center justify-center text-sm h-[42px] px-7 min-w-[186px] font-semibold rounded-[20px] text-black pointer-events-none bg-[#9E9E9E] transition ease-in-out duration-150 cursor-not-allowed"
@@ -71,7 +69,7 @@ function StakingAction({ pool, setUpdatePool, isLoading, setIsApproved }) {
         </button>
       )}
 
-      {isApproved && !isLoading && (
+      {isApproved && (
         <div className="flex justify-center md:justify-end items-center w-full gap-x-5">
           <button
             type="button"

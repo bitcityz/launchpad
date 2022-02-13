@@ -7,13 +7,14 @@ import { getIdoAddress, getTicketAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
 import { useWeb3React } from '@web3-react/core'
 import useGetPools from '../../hooks/useGetPools'
+import useAccountClaimPercent from '../../hooks/useAccountClaimPercent'
 
 import PoolCardDetail from './components/pool_detail/PoolCardDetail'
 import About from './components/pool_detail/About'
 import Detail from './components/pool_detail/Detail'
 import WhiteList from './components/pool_detail/WhiteList'
 import Allocation from './components/pool_detail/Allocation'
-import { Spinner } from '../../components'
+import PoolCardDetailSkeleton from './components/pool_detail/PoolCardDetailSkeleton'
 
 import line1 from '../../assets/images/line1.svg'
 import line2 from '../../assets/images/line2.svg'
@@ -25,7 +26,6 @@ import calendarAddActive from '../../assets/images/calendar-add-active.svg'
 import activityActiveSvg from '../../assets/images/activity-active.svg'
 import editActiveSvg from '../../assets/images/edit-active.svg'
 import taskSquareActive from '../../assets/images/task-square-active.svg'
-import bgFantasy from '../../assets/images/bg-fantasy.png'
 
 const POOLS = [0, 1, 2]
 function PoolDetail() {
@@ -38,6 +38,13 @@ function PoolDetail() {
   const [pools, setPools] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const { account } = useWeb3React()
+  const [isRefresh, setIsRefresh] = useState(false)
+
+  const {
+    claimPercent,
+    isLoading: claimPercentLoading,
+    setIsUpdate,
+  } = useAccountClaimPercent(account, idoPool?.idoUnlock)
 
   const ticketCalls = useMemo(
     () =>
@@ -51,7 +58,6 @@ function PoolDetail() {
     setTabIndex(index)
   }
   useEffect(() => {
-    setIsLoading(true)
     const initData = async () => {
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
       setPools(poolLst)
@@ -83,17 +89,25 @@ function PoolDetail() {
     if (listPool.length > 0) {
       initData()
     }
-  }, [listPool]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [listPool, id, idoAddress, ticketCalls, isRefresh])
 
   return (
-    <div
-      className="pt-[110px] pb-[240px]"
-    >
-      {isLoading && <Spinner />}
+    <div className="pt-[110px] pb-[240px]">
       <div className="layout-container">
         <div className="relative px-6 py-7">
           <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />
-          {idoPool && <PoolCardDetail idoPool={idoPool} pools={pools} setIsLoading={setIsLoading} account={account} />}
+          {!idoPool ? (
+            <PoolCardDetailSkeleton />
+          ) : (
+            <PoolCardDetail
+              idoPool={idoPool}
+              pools={pools}
+              setIsLoading={setIsLoading}
+              account={account}
+              claimPercent={claimPercent}
+              setIsRefresh={setIsRefresh}
+            />
+          )}
         </div>
         <div className="relative px-6 pt-2 pb-6 mt-[30px]">
           <div className="rounded-2xl absolute top-0 left-0 w-full h-full bg-linear-1" />
@@ -150,10 +164,18 @@ function PoolDetail() {
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
 
-          {tabIndex === 1 && idoPool && <About idoPool={idoPool} />}
+          {tabIndex === 1 && <About idoPool={idoPool} isLoading={isLoading} />}
           {tabIndex === 2 && <Detail idoPool={idoPool} />}
-          {tabIndex === 3 && <WhiteList idoPool={idoPool} setIsLoading={setIsLoading} />}
-          {tabIndex === 4 && account && <Allocation idoPool={idoPool} account={account} />}
+          {tabIndex === 3 && <WhiteList idoPool={idoPool} />}
+          {tabIndex === 4 && account && (
+            <Allocation
+              idoPool={idoPool}
+              account={account}
+              claimPercent={claimPercent}
+              claimPercentLoading={claimPercentLoading}
+              setIsUpdate={setIsUpdate}
+            />
+          )}
         </div>
       </div>
     </div>

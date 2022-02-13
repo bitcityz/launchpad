@@ -12,7 +12,7 @@ import UpcomingPool from './components/UpcomingPool'
 import RegisterWhitelist from './components/RegisterWhitelist'
 import InProgress from './components/InProgress'
 import Completed from './components/Completed'
-import { Spinner } from '../../components'
+// import { Spinner } from '../../components'
 
 import textSvg from '../../assets/images/launchpad.svg'
 import line1 from '../../assets/images/line1.svg'
@@ -25,7 +25,6 @@ import calendarAddActive from '../../assets/images/calendar-add-active.svg'
 import activityActiveSvg from '../../assets/images/activity-active.svg'
 import editActiveSvg from '../../assets/images/edit-active.svg'
 import taskSquareActive from '../../assets/images/task-square-active.svg'
-import bgFantasy from '../../assets/images/bg-fantasy.png'
 
 const POOLS = [0, 1, 2]
 
@@ -33,7 +32,7 @@ function LaunchPad() {
   const { account } = useWeb3React()
   const [tabIndex, setTabIndex] = useState(1)
   const [pools, setPools] = useState([])
-  const { listPool } = useGetPools()
+  const { listPool, isLoading: isLoadingPool } = useGetPools()
   const _handleChangeTab = (index) => {
     setTabIndex(index)
   }
@@ -79,21 +78,20 @@ function LaunchPad() {
           completedPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
         }
       })
-
       setUpcoming(upcomingPr)
       setRegisterWhitelist(whitelistPr)
       setInprogress(inprogressPr)
       setCompleted(completedPr)
       setIsLoading(false)
     }
-    initialData()
-  }, [ticketCalls, idoAddress, listPool])
+    if (!isLoadingPool) {
+      initialData()
+    }
+  }, [ticketCalls, idoAddress, listPool, isLoadingPool])
 
   return (
-    <div
-      className="pt-[110px] pb-[240px]"
-    >
-      {isLoading && <Spinner />}
+    <div className="pt-[110px] pb-[240px]">
+      {/* {isLoading && <Spinner />} */}
       <div className="layout-container">
         <div className="text-center">
           <img src={textSvg} className="mx-auto" alt="" />
@@ -110,7 +108,7 @@ function LaunchPad() {
           <div className="grid mobile-tab md:grid-cols-4 gap-x-8 relative">
             <button
               type="button"
-              className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
+              className={` tab ${tabIndex === 1 ? 'tab-active' : ''} ${isLoading ? 'pointer-events-none' : ''}`}
               onClick={() => _handleChangeTab(1)}
             >
               {tabIndex === 1 ? (
@@ -122,7 +120,7 @@ function LaunchPad() {
             </button>
             <button
               type="button"
-              className={` tab ${tabIndex === 2 ? 'tab-active' : ''}`}
+              className={` tab ${tabIndex === 2 ? 'tab-active' : ''}  ${isLoading ? 'pointer-events-none' : ''}`}
               onClick={() => _handleChangeTab(2)}
             >
               {tabIndex === 2 ? (
@@ -134,7 +132,7 @@ function LaunchPad() {
             </button>
             <button
               type="button"
-              className={` tab ${tabIndex === 3 ? 'tab-active' : ''}`}
+              className={` tab ${tabIndex === 3 ? 'tab-active' : ''}  ${isLoading ? 'pointer-events-none' : ''}`}
               onClick={() => _handleChangeTab(3)}
             >
               {tabIndex === 3 ? (
@@ -146,7 +144,7 @@ function LaunchPad() {
             </button>
             <button
               type="button"
-              className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}
+              className={` tab ${tabIndex === 4 ? 'tab-active' : ''}  ${isLoading ? 'pointer-events-none' : ''}`}
               onClick={() => _handleChangeTab(4)}
             >
               {tabIndex === 4 ? (
@@ -159,7 +157,7 @@ function LaunchPad() {
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
         </div>
-        {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} />}
+        {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} isLoading={isLoading} />}
         {tabIndex === 2 && <RegisterWhitelist idos={registerWhitlis} pools={pools} account={account} />}
         {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} />}
         {tabIndex === 4 && <Completed idos={completed} pools={pools} account={account} />}

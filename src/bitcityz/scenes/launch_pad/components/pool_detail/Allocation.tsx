@@ -3,11 +3,10 @@ import '../../../../assets/index.css'
 import { formatEther } from 'ethers/lib/utils'
 import { Skeleton } from '@mexi/uikit'
 import { useIdoUnlockContract, useIdoContract } from 'hooks/useContract'
-import useAccountClaimPercent from '../../../../hooks/useAccountClaimPercent'
 
 import AllocationCard from './AllocationCard'
 
-function Allocation({ idoPool, account }) {
+function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIsUpdate }) {
   const idoUnlockContract = useIdoUnlockContract(idoPool.idoUnlock)
   const idoContract = useIdoContract()
   const [isBuyer, setIsBuyer] = useState(false)
@@ -15,11 +14,6 @@ function Allocation({ idoPool, account }) {
   const [loading, setLoading] = useState(true)
   const totalToken = Number(formatEther(idoPool.amount)) * Number(formatEther(idoPool.token2IDOtoken))
   const [accountClaimIndex, setAccountClaimIndex] = useState(null)
-  const {
-    claimPercent,
-    isLoading: claimPercentLoading,
-    setIsUpdate,
-  } = useAccountClaimPercent(account, idoPool.idoUnlock)
 
   useEffect(() => {
     if (account) {

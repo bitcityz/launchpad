@@ -9,7 +9,7 @@ import Pagination from '../../../../components/pagination/Pagination'
 import IcSearchSvg from '../../../../assets/images/ic-search.svg'
 
 const PAGE_SIZE = 10
-function WhiteList({ idoPool, setIsLoading }) {
+function WhiteList({ idoPool }) {
   const [whitelist, setWhitelist] = useState([])
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
@@ -21,7 +21,6 @@ function WhiteList({ idoPool, setIsLoading }) {
     const getListWhitelist = async () => {
       const resp = await idoContract.getWhitelist(idoPool.id)
       setAllWhitelist(resp)
-      // setIsLoading(false)
       setLoading(false)
     }
     getListWhitelist()
@@ -38,7 +37,6 @@ function WhiteList({ idoPool, setIsLoading }) {
   }, [currentPage, allWhitelist])
 
   const handleSearchAddress = () => {
-    setIsLoading(true)
     if (searchVal !== '') {
       const result = whitelist.filter((r) => {
         return r === searchVal
@@ -47,7 +45,6 @@ function WhiteList({ idoPool, setIsLoading }) {
     } else {
       setWhitelist(allWhitelist)
     }
-    setIsLoading(false)
   }
 
   return (

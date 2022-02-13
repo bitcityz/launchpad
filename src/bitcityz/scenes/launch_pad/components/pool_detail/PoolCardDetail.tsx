@@ -13,7 +13,6 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 import useToast from 'hooks/useToast'
 import useApprove from '../../hooks/useApprove'
-import useAccountClaimPercent from '../../../../hooks/useAccountClaimPercent'
 import useRefund from '../../hooks/useRefund'
 
 import Social from '../Social'
@@ -21,7 +20,7 @@ import Social from '../Social'
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
 import inWhitelistSvg from '../../../../assets/images/iswhitelist.svg'
 
-function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
+function PoolCardDetail({ idoPool, pools, setIsLoading, account, claimPercent, setIsRefresh }) {
   const { login, logout } = useAuth()
   const [idoName, setIdoName] = useState('')
   const [updateWhitelist, setUpdateWhitelist] = useState(false)
@@ -43,8 +42,6 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
 
   const [pendingTx, setPendingTx] = useState(false)
   const { onRefund } = useRefund(idoPool.id)
-
-  const { claimPercent } = useAccountClaimPercent(account, idoPool.idoUnlock)
 
   const { isApproved, handleApprove, handleConfirm } = useApprove({
     onRequiresApproval: async () => {
@@ -70,6 +67,7 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account }) {
     onSuccess: async () => {
       setIsLoading(false)
       setIsBuyer(true)
+      setIsRefresh(true)
       toastSuccess(`${t('Registed')}!`, t('You have successfully join pool'))
     },
     onError: async () => {

@@ -17,7 +17,7 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, setIsApproved }) {
+function CardPool({ pool, account, setUpdatePool, launchPoolAddress, setIsApproved }) {
   const { id, amount, minLockingAmount, name, startTime, lockingTime, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
@@ -132,8 +132,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
             <p className="text-[#F5F5F5] mt-5">You have got a Mayor ticket!</p>
           )}
           <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
-            {isLoading && <Skeleton width="100%" height="42px" />}
-            {!account && !isLoading && (
+            {!account && (
               <button
                 type="button"
                 className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[42px] px-10 shadow-blue"
@@ -142,14 +141,7 @@ function CardPool({ pool, account, isLoading, setUpdatePool, launchPoolAddress, 
                 Connect wallet
               </button>
             )}
-            {account && !isLoading && (
-              <StakingAction
-                pool={pool}
-                setUpdatePool={setUpdatePool}
-                isLoading={isLoading}
-                setIsApproved={setIsApproved}
-              />
-            )}
+            {account && <StakingAction pool={pool} setUpdatePool={setUpdatePool} setIsApproved={setIsApproved} />}
           </div>
         </div>
       </div>

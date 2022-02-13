@@ -18,40 +18,39 @@ import btczIcon from '../../../assets/images/ic-bctz.png'
 function Performance(props) {
   const address = getBCTZAddress()
   const cmcLink = useCMCLink(address)
-  console.log(cmcLink)
   return (
     <div>
       <div className="text-center pt-[110px]">
         <img src={performance} className="mx-auto" alt="" />
         <div className="text-center">
-            <h2 className="text-center text-gradient inline-block font-bold text-[32px] text-shadow">Performance</h2>
+          <h2 className="text-center text-gradient inline-block font-bold text-[32px] text-shadow">Performance</h2>
         </div>
 
-        <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-12">
+        <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-x-4">
               <img src={sLogo} alt="" />
               <span className="text-[#F5F5F5] font-bold text-xl">BitcityZ</span>
             </div>
             <div className="flex items-center gap-x-5">
-                <a href="https://t.me/BitCityZSocial" target="_blank" rel="noreferrer">
+              <a href="https://t.me/BitCityZSocial" target="_blank" rel="noreferrer">
                 <img src={telegramLight} alt="Telegram" />
-                </a>
-                <a href="https://twitter.com/BitCityZ_social" target="_blank" rel="noreferrer">
+              </a>
+              <a href="https://twitter.com/BitCityZ_social" target="_blank" rel="noreferrer">
                 <img src={twitterLight} alt="Twitter" />
-                </a>
-                <a href="https://medium.com/@bitcityz.social" target="_blank" rel="noreferrer">
+              </a>
+              <a href="https://medium.com/@bitcityz.social" target="_blank" rel="noreferrer">
                 <img src={medium} alt="Medium" />
-                </a>
-                <a href="https://discord.gg/yFwuxBME" target="_blank" rel="noreferrer">
+              </a>
+              <a href="https://discord.gg/yFwuxBME" target="_blank" rel="noreferrer">
                 <img src={discordLight} alt="Discord" />
-                </a>
-                <a href="https://www.youtube.com/channel/UCC1X5Hsg0YQYkDsp6K4SzDQ" target="_blank" rel="noreferrer">
+              </a>
+              <a href="https://www.youtube.com/channel/UCC1X5Hsg0YQYkDsp6K4SzDQ" target="_blank" rel="noreferrer">
                 <img src={youtube} alt="Youtube" />
-                </a>
-                <a href="https://www.facebook.com/bitcityz/" target="_blank" rel="noreferrer">
+              </a>
+              <a href="https://www.facebook.com/bitcityz/" target="_blank" rel="noreferrer">
                 <img src={facebook} alt="Facebook" />
-                </a>
+              </a>
             </div>
           </div>
           <div className="grid gap-y-3 md:gap-y-0 md:grid-cols-4 md:gap-x-7 mt-8">

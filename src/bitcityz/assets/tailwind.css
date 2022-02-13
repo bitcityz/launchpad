@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-    * {
-        font-family: 'Poppins', sans-serif !important;
-    }
+  * {
+    font-family: 'Poppins', sans-serif !important;
+  }
   body {
     font-family: 'Poppins', sans-serif !important;
     font-size: 16px;
@@ -199,6 +199,18 @@
   }
 }
 
+@keyframes skeletonVibe {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @layer utilities {
   .shadow-purple {
     box-shadow: 0px 100px 80px rgba(150, 114, 255, 0.07), 0px 64.8148px 46.8519px rgba(150, 114, 255, 0.0531481),
@@ -298,7 +310,43 @@
   }
 
   .fill-btn {
-    background: linear-gradient(98.3deg, #3DEDFF -46.01%, #3EB3FE 30.04%, #5033FF 100%);
+    background: linear-gradient(98.3deg, #3dedff -46.01%, #3eb3fe 30.04%, #5033ff 100%);
     box-shadow: 0px 0px 16px rgba(66, 232, 224, 0.6);
+  }
+
+  .skeleton,
+  .skeleton-short {
+    position: relative;
+    color: transparent !important;
+    background: transparent !important;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .skeleton:after,
+  .skeleton-short:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    content: '';
+    background-color: #e9eaeb;
+    -webkit-animation: skeletonVibe 1s ease-in-out infinite alternate;
+    animation: skeletonVibe 1s ease-in-out infinite alternate;
+  }
+  .skeleton:after {
+    width: 100%;
+  }
+  .skeleton-short:after {
+    width: 50%;
+  }
+  .skeleton-center:after {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  .no-project-card-bg {
+    background: linear-gradient(114.49deg, rgba(255, 255, 255, 0.165) -21.49%, rgba(255, 255, 255, 0) 111.75%);
   }
 }

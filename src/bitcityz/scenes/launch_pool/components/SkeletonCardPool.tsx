@@ -42,8 +42,9 @@ function SkeletonCardPool() {
               <Skeleton height="40px" width="100%" />
             </div>
           </div>
-          <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
-            <Skeleton height="42px" width="100%" />
+          <div className="flex justify-center mt-5 gap-x-5 md:mt-0 md:items-end md:justify-end md:flex-1">
+            <Skeleton height="42px" width="186px" />
+            <Skeleton height="42px" width="186px" />
           </div>
         </div>
       </div>

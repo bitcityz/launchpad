@@ -8,7 +8,6 @@ import discordIcon from '../../assets/images/discord.svg'
 import youtubeIcon from '../../assets/images/youtube.svg'
 import facebookIcon from '../../assets/images/facebook.svg'
 import bitcity from '../../assets/images/footer-bitcity.png'
-import bg from '../../assets/images/bg-footer.png'
 
 function Footer() {
   const [email, setEmail] = useState('')
@@ -66,9 +65,7 @@ function Footer() {
     xhr.send(finalData)
   }
   return (
-    <footer
-      className="pt-[84px] relative"
-    >
+    <footer className="pt-[84px] relative">
       <div className="layout-container grid md:grid-cols-2 gap-7 relative z-10">
         <div>
           <h6 className="text-xl md:text-2xl text-gradient font-bold">

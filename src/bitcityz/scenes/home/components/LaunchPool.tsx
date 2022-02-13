@@ -11,16 +11,16 @@ function LaunchPool({ pools }) {
       <div className="text-center pt-[170px]">
         <img src={launchPool} className="mx-auto" alt="" />
         <div className="text-center">
-            <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] leading-9 text-shadow">
+          <h2 className="text-center text-gradient inline-block font-bold text-[28px] md:text-[32px] leading-9 text-shadow">
             Launchpool
-            </h2>
+          </h2>
         </div>
         <p className="text-center text-[#F5F5F5] mt-5 leading-5">
           Stake <span className="text-white font-semibold">3 pools</span> at the same time. Get more opportunities to
           own hidden gems
         </p>
       </div>
-      <div className="grid gap-y-8 md:gap-y-0 md:grid-cols-3 md:gap-x-8 mt-[52px]">
+      <div className="grid gap-y-8 md:gap-y-0 md:grid-cols-3 md:gap-x-8 mt-8">
         {pools.length > 0 &&
           pools.map((pool) => {
             return <LaunchPoolCard key={pool.id} pool={pool} />

@@ -11,8 +11,6 @@ import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import useGetBalanceOf from '../../hooks/useGetBalanceOf'
 import PoolList from './components/PoolList'
 import LaunchpoolHeader from './components/LaunchpoolHeader'
-import { Spinner } from '../../components'
-import bgFantasy from '../../assets/images/bg-fantasy.png'
 
 const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 const POOLS = [0, 1, 2]
@@ -26,7 +24,6 @@ function LaunchPool() {
   const [pools, setPools] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
-  // const [balance, setBalance] = useState(new BigNumber(0))
   const [updatePool, setUpdatePool] = useState(false)
 
   const { balance } = useGetBalanceOf(account)
@@ -56,22 +53,13 @@ function LaunchPool() {
   )
 
   useEffect(() => {
-    if (account) {
-      erc20Contract.allowance(account, launchPoolAddress).then((res) => {
-        setIsApproved(res && new BigNumber(res._hex).isGreaterThan(0))
-      })
-      // erc20Contract.balanceOf(account).then((res) => {
-      //   setBalance(res)
-      // })
-    }
-  }, [erc20Contract, account, launchPoolAddress])
-
-  useEffect(() => {
     const initialData = async () => {
-      setIsLoading(true)
       let userInfos
       if (account) {
         userInfos = await multicallv2(launchPoolABI, userCalls)
+        erc20Contract.allowance(account, launchPoolAddress)
+        const res = await erc20Contract.allowance(account, launchPoolAddress)
+        setIsApproved(res && new BigNumber(res._hex).isGreaterThan(0))
       }
       const poolInfos = await multicallv2(launchPoolABI, poolCalls)
 
@@ -97,10 +85,9 @@ function LaunchPool() {
       setIsLoading(false)
     }
     initialData()
-  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance, updatePool])
+  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance, updatePool, erc20Contract, launchPoolAddress])
   return (
     <>
-      {isLoading && <Spinner />}
       <LaunchpoolHeader />
       <div className="pb-[240px]">
         <div className="layout-container">

@@ -13,12 +13,9 @@ import Summary from './components/Summary'
 import UpcomingPoolTab from './components/UpcomingPoolTab'
 import LaunchPool from './components/LaunchPool'
 import Performance from './components/Performance'
-import { Spinner } from '../../components'
 import ApplyLaunch from './components/ApplyLaunch'
 import HomeHeader from './components/HomeHeader'
 import '../../assets/index.css'
-import bg from '../../assets/images/bg-summary.png'
-import homeBg from '../../assets/images/home-bg.png'
 
 const POOLS = [0, 1, 2]
 const PRICE_USDT = 1
@@ -26,7 +23,7 @@ function Home() {
   const [pools, setPools] = useState([])
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const { listPool } = useGetPools()
+  const { listPool, isLoading: isLoadingPool } = useGetPools()
 
   const launchPoolAddress = getLaunchPoolAddress()
 
@@ -73,24 +70,26 @@ function Home() {
   useEffect(() => {
     setIsLoading(true)
     const getTotalFundRaised = async () => {
-      const calls = listPool.map((data, index) => {
-        return { address: idoAddress, name: 'poolInfo', params: [index] }
-      })
+      if (!isLoadingPool) {
+        const calls = listPool.map((data, index) => {
+          return { address: idoAddress, name: 'poolInfo', params: [index] }
+        })
 
-      const idoInfos = await multicallv2(bitcityIdoABI, calls)
-      setProjects(idoInfos)
-      const getFundRaisedCalls = idoInfos.map((ido) => {
-        return { address: idoAddress, name: 'totalFundRaised', params: [ido.idoToken2Buy] }
-      })
-      const fundRaised = await multicallv2(bitcityIdoABI, getFundRaisedCalls)
-      setTotalFundRaised(0)
-      fundRaised.forEach((value) => {
-        setTotalFundRaised((val) => val + Number(new BigNumber(value).dividedBy(DEFAULT_TOKEN_DECIMAL)) * PRICE_USDT)
-      })
-      setIsLoading(false)
+        const idoInfos = await multicallv2(bitcityIdoABI, calls)
+        setProjects(idoInfos)
+        const getFundRaisedCalls = idoInfos.map((ido) => {
+          return { address: idoAddress, name: 'totalFundRaised', params: [ido.idoToken2Buy] }
+        })
+        const fundRaised = await multicallv2(bitcityIdoABI, getFundRaisedCalls)
+        setTotalFundRaised(0)
+        fundRaised.forEach((value) => {
+          setTotalFundRaised((val) => val + Number(new BigNumber(value).dividedBy(DEFAULT_TOKEN_DECIMAL)) * PRICE_USDT)
+        })
+        setIsLoading(false)
+      }
     }
     getTotalFundRaised()
-  }, [idoAddress, listPool])
+  }, [idoAddress, listPool, isLoadingPool])
 
   useEffect(() => {
     const initialData = async () => {
@@ -113,8 +112,6 @@ function Home() {
 
   return (
     <div>
-      {isLoading && <Spinner />}
-      {/* <div className="bg-no-repeat bg-top" style={{ backgroundImage: `url(${bg})` }} /> */}
       <div className="layout-container">
         <HomeHeader />
         <Summary
@@ -122,11 +119,16 @@ function Home() {
           totalFundRaised={totalFundRaised}
           totalProjects={totalProjects}
           totalInvestors={totalInvestors}
+          isLoading={isLoading}
         />
         <UpcomingPoolTab pools={pools} projects={projects} listPool={listPool} />
         <LaunchPool pools={pools} />
         <Performance />
-        <ApplyLaunch />
+      </div>
+      <div className="bg-[rgba(44,231,255,0.1)] py-12 mt-[120px]">
+        <div className="layout-container">
+          <ApplyLaunch />
+        </div>
       </div>
     </div>
   )

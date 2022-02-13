@@ -53,7 +53,9 @@ function Detail({ idoPool }) {
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Access type:</span>
-            <span className="font-semibold text-[#F5F5F5]">{accessType} pass-ticket</span>
+            <span className={`font-semibold text-[#F5F5F5] max-h-4 ${accessType === '' ? 'skeleton w-28' : ''}`}>
+              {accessType} pass-ticket
+            </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>

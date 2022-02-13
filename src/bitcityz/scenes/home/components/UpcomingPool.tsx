@@ -8,7 +8,7 @@ import spaceShipSvg from '../../../assets/images/spaceship.svg'
 
 function UpcomingPool({ upcomingPr, poolName }) {
   return (
-    <div className="mt-14 flex flex-col gap-y-8">
+    <div className="flex flex-col gap-y-8">
       {upcomingPr.length > 0 &&
         upcomingPr.map((project) => {
           return <UpcomingPoolCard key={project.id} project={project} poolName={poolName} />

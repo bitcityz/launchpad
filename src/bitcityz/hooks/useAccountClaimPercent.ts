@@ -39,7 +39,7 @@ const useAccountClaimPercent = (account, address) => {
       }
     }
 
-    if (account) {
+    if (account && address) {
       initData()
     }
   }, [idoUnlockContract, account, address, isUpdate])
