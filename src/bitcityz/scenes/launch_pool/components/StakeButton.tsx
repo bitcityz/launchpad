@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react'
 import '../../../assets/index.css'
 
 function StakingButton() {
-    const [amount, setAmount] = useState('0');
+  const [amount, setAmount] = useState('0')
   return (
     <>
-        {/* { !isLoading ? ( */}
-            <button
-                type="button"
-                className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
-                    amount === '0' ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
-                }`}
-                // onClick={() => _handleShowStakingModal()}
-                >
-                Stake BCTZ
-            </button>
-        {/* ) : (
+      {/* { !isLoading ? ( */}
+      <button
+        type="button"
+        className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
+          amount === '0' ? 'bg-skyblue shadow-blue text-black' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+        }`}
+        // onClick={() => _handleShowStakingModal()}
+      >
+        Stake BCTZ
+      </button>
+      {/* ) : (
             <button
                 type="button"
                 className="flex items-center justify-center text-sm h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] font-semibold rounded-[20px] text-[#F5F5F5] pointer-events-none bg-disabled transition ease-in-out duration-150 cursor-not-allowed"

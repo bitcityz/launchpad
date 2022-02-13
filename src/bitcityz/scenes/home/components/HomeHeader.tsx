@@ -9,18 +9,19 @@ function HomeHeader() {
     <div className="text-center py-[136px]">
       <img src={textSvg} className="mx-auto" alt="" />
       <div className="text-center">
-        <h2 className="text-center text-gradient inline-block font-bold text-xl md:text-[32px] text-shadow">BITCITYZ LAUNCHPAD</h2>
+        <h2 className="text-center text-gradient inline-block font-bold text-xl md:text-[32px] text-shadow">
+          BITCITYZ LAUNCHPAD
+        </h2>
       </div>
-      <h2 className="text-center text-[#F5F5F5] font-bold text-xl md:text-[44px] mt-3 leading-[48px]">CITY OF THE HIDDEN GEMS</h2>
+      <h2 className="text-center text-[#F5F5F5] font-bold text-xl md:text-[44px] mt-3 leading-[48px]">
+        CITY OF THE HIDDEN GEMS
+      </h2>
       <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6 leading-5">
         In just a few simple steps, you can own your hidden gems by participating in IDO and IGO of high-quality
         projects.
       </p>
       <div className="flex flex-col gap-y-5 md:gap-y-0 md:flex-row items-center justify-center mt-7 md:gap-x-10">
-        <Link
-          to="/launchpad"
-          className="fill-btn rounded-[20px] border-none text-white font-semibold py-3 px-[38px]"
-        >
+        <Link to="/launchpad" className="fill-btn rounded-[20px] border-none text-white font-semibold py-3 px-[38px]">
           Join Launchpad
         </Link>
         {/* <button
