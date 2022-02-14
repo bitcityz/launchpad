@@ -65,10 +65,10 @@ function Footer() {
     xhr.send(finalData)
   }
   return (
-    <footer className="pt-[84px] relative">
+    <footer className="pt-14 relative">
       <div className="layout-container grid md:grid-cols-2 gap-7 relative z-10">
         <div>
-          <h6 className="text-xl md:text-2xl text-gradient font-bold">
+          <h6 className="text-xl md:text-2xl text-skyblue text-shadow font-bold">
             Subscribe to our newsletter for development news!
           </h6>
           <div className="mt-4">
@@ -94,8 +94,8 @@ function Footer() {
                 />
                 <button
                   type="button"
-                  className={`shadow-blue rounded-[10px] py-[7px] px-4 md:px-9 text-white font-semibold border-none ml-[11px] ${
-                    isLoading ? 'pointer-events-none bg-[#9E9E9E]' : 'fill-btn'
+                  className={`shadow-blue rounded-[10px] py-[7px] px-4 md:px-9 text-[#212121] font-semibold border-none ml-[11px] ${
+                    isLoading ? 'pointer-events-none bg-[#9E9E9E]' : 'bg-skyblue'
                   }`}
                   onClick={handleSubmit}
                 >
@@ -130,7 +130,7 @@ function Footer() {
           <div className="mt-1">
             <a href="https://t.me/BitCityZGlobalGroup" className="flex items-center" target="_blank" rel="noreferrer">
               <img src={telegramIcon} className="mr-2 w-9 h-9" alt="" />
-              <span className="font-bold text-4xl text-gradient">BitCityZ Global Group</span>
+              <span className="font-bold text-4xl text-skyblue text-shadow">BitCityZ Global Group</span>
             </a>
           </div>
         </div>

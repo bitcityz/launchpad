@@ -2,8 +2,8 @@ import React from 'react'
 
 import '../../../assets/index.css'
 
+import ComingSoonCard from 'bitcityz/components/comingsoon/ComingSoonCard'
 import SkeletonCardPool from './SkeletonCardPool'
-import NoProjectCard from './NoProjectCard'
 
 import IdoCard from './IdoCard'
 
@@ -18,7 +18,7 @@ function UpcomingPool({ idos, pools, isLoading }) {
       ) : (
         <>
           {idos.length === 0 ? (
-            <NoProjectCard />
+            <ComingSoonCard />
           ) : (
             idos.map((ido) => {
               return <IdoCard key={ido.id} ido={ido} pools={pools} />

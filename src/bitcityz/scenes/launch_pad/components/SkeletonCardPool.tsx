@@ -39,9 +39,9 @@ function SkeletonCardPool() {
             </div>
             <div className="mt-2 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
-                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
+                {/* <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
                   <Skeleton height="24px" width="100%" />
-                </div>
+                </div> */}
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt- md:mt-2">
                   <Skeleton height="24px" width="100%" />
                 </div>

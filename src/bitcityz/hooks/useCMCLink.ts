@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 // endpoint to check asset exists and get url to CMC page
 // returns 400 status code if token is not on CMC
-const CMC_ENDPOINT = 'https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/info?address='
+const CMC_ENDPOINT = 'http://159.223.72.119:5001/cmc-call?uri=cryptocurrency/info?address='
 
 /**
  * Check if asset exists on CMC, if exists

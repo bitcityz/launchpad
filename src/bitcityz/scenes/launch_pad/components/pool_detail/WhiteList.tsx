@@ -9,7 +9,7 @@ import Pagination from '../../../../components/pagination/Pagination'
 import IcSearchSvg from '../../../../assets/images/ic-search.svg'
 
 const PAGE_SIZE = 10
-function WhiteList({ idoPool }) {
+function WhiteList({ idoPool, updateWhitelist, setUpdateWhitelist }) {
   const [whitelist, setWhitelist] = useState([])
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
@@ -22,9 +22,10 @@ function WhiteList({ idoPool }) {
       const resp = await idoContract.getWhitelist(idoPool.id)
       setAllWhitelist(resp)
       setLoading(false)
+      setUpdateWhitelist(false)
     }
     getListWhitelist()
-  }, [idoContract, idoPool])
+  }, [idoContract, idoPool, updateWhitelist, setUpdateWhitelist])
 
   useEffect(() => {
     const generateDataByPage = (pageIndex) => {

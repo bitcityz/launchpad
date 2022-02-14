@@ -40,14 +40,14 @@ function IdoCard({ ido, pools }) {
               <div className="flex-1">
                 <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
                   {ido.baseInfo.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                  <span className="text-[#F5F5F5] leading-5 text-xs md:text-sm">
                     ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
                   </span>
                 </p>
 
-                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
+                <p className="text-[#F5F5F5] font-bold leading-7 mt-1 flex flex-col gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center text-2xl">
                   <span>{ido.baseInfo.symbol}</span>
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                  <span className="text-shadow font-bold text-[#2CE7FF] -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} ={' '}
                     {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
                       maximumFractionDigits: 4,
@@ -58,9 +58,9 @@ function IdoCard({ ido, pools }) {
               </div>
             </div>
             <Social idoInfo={ido.baseInfo} />
-            <div className="mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
+            <div className="md:mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
+                {/* <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
@@ -71,21 +71,23 @@ function IdoCard({ ido, pools }) {
                     )}{' '}
                     {ido.baseInfo.currencyPair}
                   </span>
-                </p>
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist reg starts</span>
+                </p> */}
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg starts</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(ido.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist reg ends</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTimeWL * 1000, 'Pp')} (UTC)</span>
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg ends</span>
+                  <span className="text-[#F5F5F5] font-semibold">{format(ido.endTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
               </div>
-              <Link
+            </div>
+            <div className="md:inline-block mt-5">
+                <Link
                 to={`/launchpad/${ido.id}`}
-                className="fill-btn mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-white font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-transparent rounded-[20px] flex items-center justify-center border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-[50px]"
               >
-                More Details
+                Project Details
               </Link>
             </div>
           </div>

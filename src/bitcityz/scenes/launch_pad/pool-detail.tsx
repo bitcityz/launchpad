@@ -39,6 +39,7 @@ function PoolDetail() {
   const [isLoading, setIsLoading] = useState(true)
   const { account } = useWeb3React()
   const [isRefresh, setIsRefresh] = useState(false)
+  const [updateWhitelist, setUpdateWhitelist] = useState(false)
 
   const {
     claimPercent,
@@ -92,7 +93,7 @@ function PoolDetail() {
   }, [listPool, id, idoAddress, ticketCalls, isRefresh])
 
   return (
-    <div className="pt-[110px] pb-[240px]">
+    <div className="py-[110px]">
       <div className="layout-container">
         <div className="relative px-6 py-7">
           <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />
@@ -106,13 +107,15 @@ function PoolDetail() {
               account={account}
               claimPercent={claimPercent}
               setIsRefresh={setIsRefresh}
+              setUpdateWhitelist={setUpdateWhitelist}
+              updateWhitelist={updateWhitelist}
             />
           )}
         </div>
-        <div className="relative px-6 pt-2 pb-6 mt-[30px]">
+        <div className="relative px-6 pt-2 pb-6 mt-2">
           <div className="rounded-2xl absolute top-0 left-0 w-full h-full bg-linear-1" />
           <img src={line1} className="w-full h-auto" alt="" />
-          <div className="grid mobile-tab md:grid-cols-4 gap-x-8 relative">
+          <div className={`grid mobile-tab gap-x-8 relative ${Number(idoPool?.status._hex) > 0 ? 'md:grid-cols-4':'md:grid-cols-2'}`}>
             <button
               type="button"
               className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
@@ -137,36 +140,40 @@ function PoolDetail() {
               )}
               Pool details
             </button>
-            <button
-              type="button"
-              className={` tab ${tabIndex === 3 ? 'tab-active' : ''}`}
-              onClick={() => _handleChangeTab(3)}
-            >
-              {tabIndex === 3 ? (
-                <img src={activityActiveSvg} className="ml-1" alt="" />
-              ) : (
-                <img src={activitySvg} className="ml-1" alt="" />
-              )}
-              Whitelist
-            </button>
-            <button
-              type="button"
-              className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}
-              onClick={() => _handleChangeTab(4)}
-            >
-              {tabIndex === 4 ? (
-                <img src={taskSquareActive} className="ml-1" alt="" />
-              ) : (
-                <img src={taskSquare} className="ml-1" alt="" />
-              )}
-              Your allocation
-            </button>
+            {Number(idoPool?.status._hex) > 0 && (
+                <button
+                type="button"
+                className={` tab ${tabIndex === 3 ? 'tab-active' : ''}`}
+                onClick={() => _handleChangeTab(3)}
+                >
+                {tabIndex === 3 ? (
+                    <img src={activityActiveSvg} className="ml-1" alt="" />
+                ) : (
+                    <img src={activitySvg} className="ml-1" alt="" />
+                )}
+                Whitelist
+                </button>
+            )}
+            {Number(idoPool?.status._hex) > 0 && (
+                <button
+                type="button"
+                className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}
+                onClick={() => _handleChangeTab(4)}
+                >
+                {tabIndex === 4 ? (
+                    <img src={taskSquareActive} className="ml-1" alt="" />
+                ) : (
+                    <img src={taskSquare} className="ml-1" alt="" />
+                )}
+                Your allocation
+                </button>
+            )}
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
 
           {tabIndex === 1 && <About idoPool={idoPool} isLoading={isLoading} />}
           {tabIndex === 2 && <Detail idoPool={idoPool} />}
-          {tabIndex === 3 && <WhiteList idoPool={idoPool} />}
+          {tabIndex === 3 && <WhiteList idoPool={idoPool} updateWhitelist={updateWhitelist} setUpdateWhitelist={setUpdateWhitelist} />}
           {tabIndex === 4 && account && (
             <Allocation
               idoPool={idoPool}

@@ -22,9 +22,7 @@ function Performance(props) {
     <div>
       <div className="text-center pt-[110px]">
         <img src={performance} className="mx-auto" alt="" />
-        <div className="text-center">
-          <h2 className="text-center text-gradient inline-block font-bold text-[32px] text-shadow">Performance</h2>
-        </div>
+          <h2 className="text-center text-skyblue font-bold text-[32px] text-shadow">Performance</h2>
 
         <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-8">
           <div className="flex justify-between items-center">

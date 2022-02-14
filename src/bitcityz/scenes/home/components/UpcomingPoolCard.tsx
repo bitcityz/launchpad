@@ -76,7 +76,7 @@ function UpcomingPoolCard({ project, poolName }) {
               </div>
               <Link
                 to={`/launchpad/${project.id}`}
-                className="fill-btn mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-white font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-skyblue mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-[#212121] font-semibold h-[44px] px-[50px] shadow-blue"
               >
                 More Details
               </Link>

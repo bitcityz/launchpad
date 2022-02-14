@@ -151,7 +151,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 {!account && (
                   <button
                     type="button"
-                    className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-8 shadow-blue"
+                    className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
                     onClick={onPresentConnectModal}
                   >
                     Connect wallet
@@ -160,7 +160,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                 {account && !isInWhitelist && (
                   <button
                     type="button"
-                    className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-8 shadow-blue"
+                    className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
                     onClick={_handleShowRegisterModal}
                   >
                     Register Whitelist

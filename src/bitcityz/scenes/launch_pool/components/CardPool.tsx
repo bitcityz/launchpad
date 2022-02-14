@@ -135,7 +135,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, setIsApprov
             {!account && (
               <button
                 type="button"
-                className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[42px] px-10 shadow-blue"
+                className="bg-skyblue rounded-[20px] border-none text-[#212121] text-sm font-semibold h-[42px] px-10 shadow-blue"
                 onClick={onPresentConnectModal}
               >
                 Connect wallet

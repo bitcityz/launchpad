@@ -173,7 +173,7 @@ function InprogressCard({ ido, pools, account }) {
               {!account && (
                 <button
                   type="button"
-                  className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-8 shadow-blue"
+                  className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
                   onClick={onPresentConnectModal}
                 >
                   Connect wallet
@@ -182,7 +182,7 @@ function InprogressCard({ ido, pools, account }) {
               {account && isApproved && !isBuyer && isInWhitelist && !pendingTx && (
                 <button
                   type="button"
-                  className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-10 shadow-blue"
+                  className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-10 shadow-blue"
                   onClick={handleConfirm}
                 >
                   Join pool
@@ -192,7 +192,7 @@ function InprogressCard({ ido, pools, account }) {
               {account && !isApproved && !isBuyer && isInWhitelist && !pendingTx && (
                 <button
                   type="button"
-                  className="fill-btn mt-5 md:mt-auto rounded-[20px] border-none text-white font-semibold h-[44px] px-10 shadow-blue"
+                  className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-10 shadow-blue"
                   onClick={handleApprove}
                 >
                   Approve

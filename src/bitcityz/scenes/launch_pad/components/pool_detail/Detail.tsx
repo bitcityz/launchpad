@@ -5,7 +5,10 @@ import { formatEther } from 'ethers/lib/utils'
 import { getTicketAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
-import tokenURI from '../../../../assets/images/tokenURI.png'
+
+import bgCardPink from '../../../../assets/images/bg-lauchpool-card-pink.png'
+import bgCardBlue from '../../../../assets/images/bg-lauchpool-card-blue.png'
+import bgCardGreen from '../../../../assets/images/bg-lauchpool-card-green.png'
 
 const POOLS = [0, 1, 2]
 function Detail({ idoPool }) {
@@ -33,7 +36,15 @@ function Detail({ idoPool }) {
   return (
     <div className="pt-5 relative">
       <div className="flex flex-col md:flex-row items-start md:gap-x-9">
-        <img src={tokenURI} alt="" />
+        {idoPool.baseInfo.accessType === 'Citizen pass-ticket' && (
+            <img src={bgCardGreen} alt="" />
+        )}
+        {idoPool.baseInfo.accessType === 'Mayor pass-ticket' && (
+            <img src={bgCardPink} alt="" />
+        )}
+        {idoPool.baseInfo.accessType === 'Elite pass-ticket' && (
+            <img src={bgCardBlue} alt="" />
+        )}
         <div className="flex-1">
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Token Distribution:</span>
@@ -53,24 +64,22 @@ function Detail({ idoPool }) {
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Access type:</span>
-            <span className={`font-semibold text-[#F5F5F5] max-h-4 ${accessType === '' ? 'skeleton w-28' : ''}`}>
-              {accessType} pass-ticket
+            <span className="font-semibold text-[#F5F5F5]">
+                {idoPool.baseInfo.accessType}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>
             <span className="font-semibold text-[#F5F5F5]">
-              1 {idoPool.baseInfo.symbol} ={' '}
-              {Number(formatEther(idoPool.token2IDOtoken)).toLocaleString('en', {
-                maximumFractionDigits: 4,
-              })}{' '}
+            1 {idoPool.baseInfo.symbol} ={' '}
+              {idoPool.baseInfo.price}{' '}
               {idoPool.baseInfo.currencyPair}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Total capital raise:</span>
             <span className="font-semibold text-[#F5F5F5]">
-              {(Number(formatEther(idoPool.totalAmount)) * Number(formatEther(idoPool.token2IDOtoken))).toLocaleString(
+              {(Number(formatEther(idoPool.totalAmount)) * idoPool.baseInfo.price).toLocaleString(
                 'en',
                 {
                   maximumFractionDigits: 4,

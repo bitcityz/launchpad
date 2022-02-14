@@ -69,7 +69,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
           {!pendingTx && (
             <button
               type="button"
-              className="fill-btn rounded-[20px] border-none text-white text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
+              className="bg-skyblue rounded-[20px] border-none text-[#212121] text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
               onClick={handleConfirmClick}
             >
               Confirm

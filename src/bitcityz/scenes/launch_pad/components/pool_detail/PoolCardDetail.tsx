@@ -20,10 +20,9 @@ import Social from '../Social'
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
 import inWhitelistSvg from '../../../../assets/images/iswhitelist.svg'
 
-function PoolCardDetail({ idoPool, pools, setIsLoading, account, claimPercent, setIsRefresh }) {
+function PoolCardDetail({ idoPool, pools, setIsLoading, account, claimPercent, setIsRefresh, setUpdateWhitelist, updateWhitelist }) {
   const { login, logout } = useAuth()
   const [idoName, setIdoName] = useState('')
-  const [updateWhitelist, setUpdateWhitelist] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [isBuyer, setIsBuyer] = useState(false)
   const { t } = useTranslation()
@@ -145,7 +144,7 @@ function PoolCardDetail({ idoPool, pools, setIsLoading, account, claimPercent, s
       }
       checkAccountJoined()
     }
-  }, [account, idoPool, idoContract, updateWhitelist])
+  }, [account, idoPool, idoContract, updateWhitelist, setUpdateWhitelist])
 
   return (
     <div className="relative">
