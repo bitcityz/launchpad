@@ -115,7 +115,11 @@ function PoolDetail() {
         <div className="relative px-6 pt-2 pb-6 mt-2">
           <div className="rounded-2xl absolute top-0 left-0 w-full h-full bg-linear-1" />
           <img src={line1} className="w-full h-auto" alt="" />
-          <div className={`grid mobile-tab gap-x-8 relative ${Number(idoPool?.status._hex) > 0 ? 'md:grid-cols-4':'md:grid-cols-2'}`}>
+          <div
+            className={`grid mobile-tab gap-x-8 relative ${
+              Number(idoPool?.status._hex) > 0 ? 'md:grid-cols-4' : 'md:grid-cols-2'
+            }`}
+          >
             <button
               type="button"
               className={` tab ${tabIndex === 1 ? 'tab-active' : ''}`}
@@ -141,39 +145,41 @@ function PoolDetail() {
               Pool details
             </button>
             {Number(idoPool?.status._hex) > 0 && (
-                <button
+              <button
                 type="button"
                 className={` tab ${tabIndex === 3 ? 'tab-active' : ''}`}
                 onClick={() => _handleChangeTab(3)}
-                >
+              >
                 {tabIndex === 3 ? (
-                    <img src={activityActiveSvg} className="ml-1" alt="" />
+                  <img src={activityActiveSvg} className="ml-1" alt="" />
                 ) : (
-                    <img src={activitySvg} className="ml-1" alt="" />
+                  <img src={activitySvg} className="ml-1" alt="" />
                 )}
                 Whitelist
-                </button>
+              </button>
             )}
             {Number(idoPool?.status._hex) > 0 && (
-                <button
+              <button
                 type="button"
                 className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}
                 onClick={() => _handleChangeTab(4)}
-                >
+              >
                 {tabIndex === 4 ? (
-                    <img src={taskSquareActive} className="ml-1" alt="" />
+                  <img src={taskSquareActive} className="ml-1" alt="" />
                 ) : (
-                    <img src={taskSquare} className="ml-1" alt="" />
+                  <img src={taskSquare} className="ml-1" alt="" />
                 )}
                 Your allocation
-                </button>
+              </button>
             )}
           </div>
           <img src={line2} className="w-full h-auto" alt="" />
 
           {tabIndex === 1 && <About idoPool={idoPool} isLoading={isLoading} />}
           {tabIndex === 2 && <Detail idoPool={idoPool} />}
-          {tabIndex === 3 && <WhiteList idoPool={idoPool} updateWhitelist={updateWhitelist} setUpdateWhitelist={setUpdateWhitelist} />}
+          {tabIndex === 3 && (
+            <WhiteList idoPool={idoPool} updateWhitelist={updateWhitelist} setUpdateWhitelist={setUpdateWhitelist} />
+          )}
           {tabIndex === 4 && account && (
             <Allocation
               idoPool={idoPool}

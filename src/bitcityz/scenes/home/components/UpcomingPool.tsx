@@ -12,9 +12,7 @@ function UpcomingPool({ upcomingPr, poolName }) {
           return <UpcomingPoolCard key={project.id} project={project} poolName={poolName} />
         })}
 
-      {upcomingPr.length === 0 && (
-        <ComingSoonCard />
-      )}
+      {upcomingPr.length === 0 && <ComingSoonCard />}
     </div>
   )
 }

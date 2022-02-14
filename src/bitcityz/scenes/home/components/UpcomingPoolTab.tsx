@@ -49,9 +49,9 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
         <div className="text-center w-[120px] h-[120px] absolute left-1/2 -translate-x-1/2 top-16">
           <Lottie config={{ animationData: animationConfettiData, loop: true }} />
         </div>
-          <h2 className="text-center text-skyblue font-bold text-[28px] md:text-[32px] text-shadow mt-1">
-            Upcoming pool
-          </h2>
+        <h2 className="text-center text-skyblue font-bold text-[28px] md:text-[32px] text-shadow mt-1">
+          Upcoming pool
+        </h2>
         <img src={line1} className="mt-4 w-full h-auto" alt="" />
         <div className="grid mobile-tab md:grid-cols-3 gap-x-8 relative">
           <button

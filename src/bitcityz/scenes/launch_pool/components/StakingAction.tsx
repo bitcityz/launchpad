@@ -74,7 +74,9 @@ function StakingAction({ pool, setUpdatePool, setIsApproved }) {
           <button
             type="button"
             className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
-              amount !== '0' ? 'bg-skyblue shadow-blue text-[#212121]' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+              amount !== '0'
+                ? 'bg-skyblue shadow-blue text-[#212121]'
+                : 'pointer-events-none text-[#F5F5F5] bg-disabled '
             }`}
             onClick={() => _handleShowUnstakeConfirm()}
           >
@@ -83,7 +85,9 @@ function StakingAction({ pool, setUpdatePool, setIsApproved }) {
           <button
             type="button"
             className={` rounded-[20px] border-none  text-sm font-semibold h-[42px] px-5 min-w-[140px] md:px-10 md:min-w-[186px] ${
-              amount === '0' ? 'bg-skyblue shadow-blue text-[#212121]' : 'pointer-events-none text-[#F5F5F5] bg-disabled '
+              amount === '0'
+                ? 'bg-skyblue shadow-blue text-[#212121]'
+                : 'pointer-events-none text-[#F5F5F5] bg-disabled '
             }`}
             onClick={() => _handleShowStakingModal()}
           >

@@ -20,7 +20,16 @@ import Social from '../Social'
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
 import inWhitelistSvg from '../../../../assets/images/iswhitelist.svg'
 
-function PoolCardDetail({ idoPool, pools, setIsLoading, account, claimPercent, setIsRefresh, setUpdateWhitelist, updateWhitelist }) {
+function PoolCardDetail({
+  idoPool,
+  pools,
+  setIsLoading,
+  account,
+  claimPercent,
+  setIsRefresh,
+  setUpdateWhitelist,
+  updateWhitelist,
+}) {
   const { login, logout } = useAuth()
   const [idoName, setIdoName] = useState('')
   const [isInWhitelist, setIsInWhitelist] = useState(false)

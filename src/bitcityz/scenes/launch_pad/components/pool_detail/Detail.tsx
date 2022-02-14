@@ -36,15 +36,9 @@ function Detail({ idoPool }) {
   return (
     <div className="pt-5 relative">
       <div className="flex flex-col md:flex-row items-start md:gap-x-9">
-        {idoPool.baseInfo.accessType === 'Citizen pass-ticket' && (
-            <img src={bgCardGreen} alt="" />
-        )}
-        {idoPool.baseInfo.accessType === 'Mayor pass-ticket' && (
-            <img src={bgCardPink} alt="" />
-        )}
-        {idoPool.baseInfo.accessType === 'Elite pass-ticket' && (
-            <img src={bgCardBlue} alt="" />
-        )}
+        {idoPool.baseInfo.accessType === 'Citizen pass-ticket' && <img src={bgCardGreen} alt="" />}
+        {idoPool.baseInfo.accessType === 'Mayor pass-ticket' && <img src={bgCardPink} alt="" />}
+        {idoPool.baseInfo.accessType === 'Elite pass-ticket' && <img src={bgCardBlue} alt="" />}
         <div className="flex-1">
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Token Distribution:</span>
@@ -64,27 +58,20 @@ function Detail({ idoPool }) {
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Access type:</span>
-            <span className="font-semibold text-[#F5F5F5]">
-                {idoPool.baseInfo.accessType}
-            </span>
+            <span className="font-semibold text-[#F5F5F5]">{idoPool.baseInfo.accessType}</span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>
             <span className="font-semibold text-[#F5F5F5]">
-            1 {idoPool.baseInfo.symbol} ={' '}
-              {idoPool.baseInfo.price}{' '}
-              {idoPool.baseInfo.currencyPair}
+              1 {idoPool.baseInfo.symbol} = {idoPool.baseInfo.price} {idoPool.baseInfo.currencyPair}
             </span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Total capital raise:</span>
             <span className="font-semibold text-[#F5F5F5]">
-              {(Number(formatEther(idoPool.totalAmount)) * idoPool.baseInfo.price).toLocaleString(
-                'en',
-                {
-                  maximumFractionDigits: 4,
-                },
-              )}{' '}
+              {(Number(formatEther(idoPool.totalAmount)) * idoPool.baseInfo.price).toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
               {idoPool.baseInfo.currencyPair}
             </span>
           </p>
