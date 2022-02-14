@@ -14,6 +14,7 @@ import { useTicketContract, useIdoContract } from 'hooks/useContract'
 import Social from './Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
+import checkedPng from '../../../assets/images/checked.png'
 
 function RegisterWhitelistCard({ ido, pools, account }) {
   const [showRegisterModal, setShowRegisterModal] = useState(false)
@@ -103,34 +104,28 @@ function RegisterWhitelistCard({ ido, pools, account }) {
               <div className="flex items-start gap-x-3">
                 <img src={ido.baseInfo.logo.small} alt="" />
                 <div className="flex-1">
-                  <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
+                  <p className="text-[#F5F5F5] font-medium leading-5 flex justify-between items-center">
                     {ido.baseInfo.name}{' '}
-                    <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                    <span className="text-[#F5F5F5] font-normal md:text-sm">
                       ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
                     </span>
                   </p>
-                  <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
+                  <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
                     <span>{ido.baseInfo.symbol}</span>
-                    <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                    <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                       {ido.baseInfo.symbol} ={' '}
-                      {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                      {/* {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
                         maximumFractionDigits: 4,
-                      })}{' '}
-                      {ido.baseInfo.currencyPair}
+                      })}{' '} */}
+                      {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                     </span>
                   </p>
                 </div>
               </div>
               <Social idoInfo={ido.baseInfo} />
-              <NavLink
-                to={`/launchpad/${ido.id}`}
-                className="text-skyblue underline text-sm font-medium mt-4 inline-block"
-              >
-                More detail
-              </NavLink>
-              <div className="mt-4 flex flex-col md:flex-row md:gap-x-8">
-                <div className="flex-1">
-                  <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
+              <div className="mt-5 md:mt-3 flex flex-col md:flex-row md:gap-x-8">
+                <div className="flex-1 text-left">
+                  {/* <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                     <span className="text-[#BFBFBF]">Total capital raise</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {(
@@ -140,14 +135,16 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                       })}{' '}
                       {ido.baseInfo.currencyPair}
                     </span>
-                  </p>
-                  <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
+                  </p> */}
+                  <p className="flex flex-row gap-x-4">
                     <span className="text-[#BFBFBF]">Register Whitelist</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {days}d : {hours}h : {minutes}m : {seconds}s
                     </span>
                   </p>
                 </div>
+              </div>
+              <div className="flex flex-col gap-y-4 mt-5 md:flex-row md:gap-y-0 md:gap-x-4">
                 {!account && (
                   <button
                     type="button"
@@ -167,13 +164,17 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                   </button>
                 )}
                 {account && isInWhitelist && (
-                  <button
-                    type="button"
-                    className="bg-[#9E9E9E] mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-8 pointer-events-none"
-                  >
-                    Registed
-                  </button>
+                  <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
+                    <img src={checkedPng} alt="" />
+                    Registered
+                  </span>
                 )}
+                <NavLink
+                  to={`/launchpad/${ido.id}`}
+                  className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"
+                >
+                  Project Details
+                </NavLink>
               </div>
             </div>
           </div>

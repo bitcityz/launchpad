@@ -47,12 +47,8 @@ function IdoCard({ ido, pools }) {
 
                 <p className="text-[#F5F5F5] font-bold leading-7 mt-1 flex flex-col gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center text-2xl">
                   <span>{ido.baseInfo.symbol}</span>
-                  <span className="text-shadow font-bold text-[#2CE7FF] -translate-x-[60px] md:-translate-x-0">
-                    {ido.baseInfo.symbol} ={' '}
-                    {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
-                      maximumFractionDigits: 4,
-                    })}{' '}
-                    {ido.baseInfo.currencyPair}
+                  <span className="text-shadow font-bold text-skyblue -translate-x-[60px] md:-translate-x-0">
+                    {ido.baseInfo.symbol} = {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                   </span>
                 </p>
               </div>
@@ -83,7 +79,7 @@ function IdoCard({ ido, pools }) {
               </div>
             </div>
             <div className="md:inline-block mt-5">
-                <Link
+              <Link
                 to={`/launchpad/${ido.id}`}
                 className="bg-transparent rounded-[20px] flex items-center justify-center border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-[50px]"
               >

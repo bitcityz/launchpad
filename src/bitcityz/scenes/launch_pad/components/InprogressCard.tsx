@@ -6,9 +6,10 @@ import BigNumber from 'bignumber.js'
 import { getIdoAddress } from 'utils/addressHelpers'
 import { NavLink } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils'
-import { format } from 'date-fns'
+import { format, isAfter, differenceInSeconds } from 'date-fns'
 import { useIdoContract, useTokenContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import getTimePeriods from 'utils/getTimePeriods'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 import { useWalletModal } from '@mexi/uikit'
@@ -17,12 +18,14 @@ import useApprove from '../hooks/useApprove'
 import Social from './Social'
 
 import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
+import checkedPng from '../../../assets/images/checked.png'
 
 function InprogressCard({ ido, pools, account }) {
   const [isBuyer, setIsBuyer] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [idoName, setIdoName] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
+  const [secondsRemaining, setSecondsRemaining] = useState(0)
   const { toastSuccess } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
   const erc20Contract = useTokenContract(ido.idoToken2Buy)
@@ -34,6 +37,15 @@ function InprogressCard({ ido, pools, account }) {
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
   const idoAddress = getIdoAddress()
+
+  useEffect(() => {
+    setInterval(() => {
+      const temp = isAfter(ido.endTime * 1000, new Date()) ? differenceInSeconds(ido.endTime * 1000, new Date()) : 0
+      setSecondsRemaining(temp)
+    }, 1000)
+  }, [ido])
+
+  const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
 
   const { isApproved, handleApprove, handleConfirm } = useApprove({
     onRequiresApproval: async () => {
@@ -116,34 +128,28 @@ function InprogressCard({ ido, pools, account }) {
             <div className="flex items-start gap-x-3">
               <img src={ido.baseInfo.logo.small} alt="" />
               <div className="flex-1">
-                <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
+                <p className="text-[#F5F5F5] font-medium leading-5 flex justify-between items-center">
                   {ido.baseInfo.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                  <span className="text-[#F5F5F5] font-normal md:text-sm">
                     ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
                   </span>
                 </p>
-                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
+                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
                   <span>{ido.baseInfo.symbol}</span>
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
+                  <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} ={' '}
-                    {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
-                      maximumFractionDigits: 4,
-                    })}{' '}
-                    {ido.baseInfo.currencyPair}
+                    {/* {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '} */}
+                    {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                   </span>
                 </p>
               </div>
             </div>
             <Social idoInfo={ido.baseInfo} />
-            <NavLink
-              to={`/launchpad/${ido.id}`}
-              className="text-skyblue underline text-sm font-medium mt-4 inline-block"
-            >
-              More detail
-            </NavLink>
-            <div className="mt-4 flex flex-col md:flex-row md:gap-x-8">
+            <div className="mt-5 flex flex-col md:flex-row md:gap-x-8">
               <div className="flex-1">
-                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
+                {/* <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
                   <span className="text-[#BFBFBF]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
@@ -154,22 +160,25 @@ function InprogressCard({ ido, pools, account }) {
                     )}{' '}
                     {ido.baseInfo.currencyPair}
                   </span>
+                </div> */}
+                <div className="flex gap-x-3 justify-start items-center">
+                  <span className="text-[#BFBFBF] w-[130px] text-left">Join Pool</span>
+                  <span className="text-[#F5F5F5] font-semibold">
+                    {days}d : {hours}h : {minutes}m : {seconds}s
+                  </span>
                 </div>
-                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Swap process</span>
-                  <div className="flex flex-1 w-full items-center justify-end gap-x-2">
-                    <div className="flex-1 md:max-w-[142px] bg-[#F5F5F5] h-2 rounded-[100px]">
+                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-3 items-start md:items-center mt-3">
+                  <span className="text-[#BFBFBF] w-[130px] text-left">Swap process</span>
+                  <div className="flex flex-1 w-full md:max-w-[300px] items-center justify-end gap-x-2">
+                    <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
                       <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${percent}%` }} />
                     </div>
                     <span className="text-white font-semibold">{percent}%</span>
                   </div>
                 </div>
-                <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Pool closes</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">{format(ido.endTime * 1000, 'Pp')} (UTC)</span>
-                </div>
               </div>
-
+            </div>
+            <div className="flex flex-col gap-y-4 mt-5 md:flex-row md:gap-y-0 md:gap-x-4">
               {!account && (
                 <button
                   type="button"
@@ -223,16 +232,22 @@ function InprogressCard({ ido, pools, account }) {
               )}
 
               {account && isBuyer && isInWhitelist && (
-                <button
-                  type="button"
-                  className="bg-[#9E9E9E] mt-5 md:mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] px-[50px]"
-                >
+                <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
+                  <img src={checkedPng} alt="" />
                   Joined
-                </button>
+                </span>
               )}
               {account && !isInWhitelist && (
-                <p className="text-skyblue text-shadow font-semibold mt-5 md:mt-auto">You aren’t in whitelist</p>
+                <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
+                  You aren’t in whitelist
+                </p>
               )}
+              <NavLink
+                to={`/launchpad/${ido.id}`}
+                className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"
+              >
+                Project Details
+              </NavLink>
             </div>
           </div>
         </div>

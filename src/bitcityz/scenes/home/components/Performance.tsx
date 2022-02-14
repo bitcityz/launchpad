@@ -22,7 +22,7 @@ function Performance(props) {
     <div>
       <div className="text-center pt-[110px]">
         <img src={performance} className="mx-auto" alt="" />
-          <h2 className="text-center text-skyblue font-bold text-[32px] text-shadow">Performance</h2>
+        <h2 className="text-center text-skyblue font-bold text-[32px] text-shadow">Performance</h2>
 
         <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-8">
           <div className="flex justify-between items-center">
@@ -55,24 +55,25 @@ function Performance(props) {
             <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left">Current Price</p>
               <h6 className="flex justify-between items-center mt-4">
-                <p className="text-[#F5F5F5] font-bold text-2xl">$ 100.56</p>{' '}
-                <span className="text-[#00DE09] text-xs font-semibold"> 3.148%</span>
+                <p className="text-[#F5F5F5] font-bold text-2xl">N/A</p>{' '}
+                {/* <span className="text-[#00DE09] text-xs font-semibold"> N/A</span> */}
               </h6>
             </div>
             <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left flex justify-between">
-                Market Cap: <span className="font-semibold text-sm">$300,3M</span>
+                Market Cap: <span className="font-semibold text-sm">N/A</span>
               </p>
               <p className="text-[#F5F5F5] text-left flex justify-between mt-4">
                 Vol (24h):{' '}
                 <span className="font-semibold text-sm">
-                  $5.8M <small className="text-[#00DE09] text-xs font-semibold">70%</small>
+                  N/A
+                  {/* <small className="text-[#00DE09] text-xs font-semibold">N/A</small> */}
                 </span>
               </p>
             </div>
             <div className="md:pr-7 md:border-r-[1px] md:border-solid md:border-[#C4C4C4]">
               <p className="text-[#F5F5F5] text-left flex justify-between">
-                Raised: <span className="font-semibold text-sm">$300,3M</span>
+                Raised: <span className="font-semibold text-sm">N/A</span>
               </p>
               <p className="text-[#F5F5F5] text-left flex justify-between mt-4">
                 IDO Price: <span className="font-semibold text-sm">0.15 BUSD</span>

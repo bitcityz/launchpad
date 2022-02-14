@@ -11,8 +11,13 @@ import externalink from '../../../assets/images/external-link.svg'
 
 function Social({ idoInfo }) {
   return (
-    <div className="mt-4 flex items-center gap-x-2 justify-start">
-      <a href={`https://${idoInfo?.website}`} target="_blank" rel="noreferrer" className="flex bg-[#F5F5F5] py-1 gap-x-2 text-black rounded-[20px] px-3 justify-around">
+    <div className="mt-3 flex items-center gap-x-2 justify-start">
+      <a
+        href={`https://${idoInfo?.website}`}
+        target="_blank"
+        rel="noreferrer"
+        className="flex bg-[#F5F5F5] py-1 gap-x-2 text-black rounded-[20px] px-3 justify-around"
+      >
         <img src={linkSvg} alt="" />
         <span>{idoInfo?.website}</span>
         <img src={externalink} alt="" />
