@@ -349,4 +349,7 @@
   .no-project-card-bg {
     background: linear-gradient(114.49deg, rgba(255, 255, 255, 0.165) -21.49%, rgba(255, 255, 255, 0) 111.75%);
   }
+  .whitelist-card-grid {
+    grid-template-columns: auto 225px;
+  }
 }

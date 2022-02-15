@@ -36,9 +36,9 @@ function Detail({ idoPool }) {
   return (
     <div className="pt-5 relative">
       <div className="flex flex-col md:flex-row items-start md:gap-x-9">
-        {idoPool.baseInfo.accessType === 'Citizen pass-ticket' && <img src={bgCardGreen} alt="" />}
-        {idoPool.baseInfo.accessType === 'Mayor pass-ticket' && <img src={bgCardPink} alt="" />}
-        {idoPool.baseInfo.accessType === 'Elite pass-ticket' && <img src={bgCardBlue} alt="" />}
+        {idoPool.baseInfo.accessType === 'Citizen' && <img src={bgCardGreen} alt="" />}
+        {idoPool.baseInfo.accessType === 'Mayor' && <img src={bgCardPink} alt="" />}
+        {idoPool.baseInfo.accessType === 'Elite' && <img src={bgCardBlue} alt="" />}
         <div className="flex-1">
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Token Distribution:</span>
@@ -58,7 +58,7 @@ function Detail({ idoPool }) {
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Access type:</span>
-            <span className="font-semibold text-[#F5F5F5]">{idoPool.baseInfo.accessType}</span>
+            <span className="font-semibold text-[#F5F5F5]">{idoPool.baseInfo.accessType} pass-ticket</span>
           </p>
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Price per token:</span>
@@ -70,7 +70,7 @@ function Detail({ idoPool }) {
             <span className="text-[#9E9E9E]">Total capital raise:</span>
             <span className="font-semibold text-[#F5F5F5]">
               {(Number(formatEther(idoPool.totalAmount)) * idoPool.baseInfo.price).toLocaleString('en', {
-                maximumFractionDigits: 4,
+                maximumFractionDigits: 0,
               })}{' '}
               {idoPool.baseInfo.currencyPair}
             </span>
@@ -89,13 +89,19 @@ function Detail({ idoPool }) {
           }`}
         >
           {Number(idoPool.status._hex) > 1 && (
-            <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Close)</p>
+            <p className="text-[#9E9E9E] font-semibold leading-5">
+              Register {idoPool.baseInfo.accessType} pool whitelist (Close)
+            </p>
           )}
           {Number(idoPool.status._hex) < 1 && (
-            <p className="text-[#9E9E9E] font-semibold leading-5">Register mayor pool whitelist (Incoming)</p>
+            <p className="text-[#9E9E9E] font-semibold leading-5">
+              Register {idoPool.baseInfo.accessType} pool whitelist (Incoming)
+            </p>
           )}
           {Number(idoPool.status._hex) === 1 && (
-            <p className="text-skyblue font-semibold leading-5">Register mayor pool whitelist (Opening)</p>
+            <p className="text-skyblue font-semibold leading-5">
+              Register {idoPool.baseInfo.accessType} pool whitelist (Opening)
+            </p>
           )}
           <p className={`leading-5 ${idoPool.status === 1 ? 'text-skyblue' : 'text-[#9E9E9E]'}`}>
             Open: {format(idoPool.startTimeWL * 1000, 'Pp')} (UTC) - Close: {format(idoPool.endTimeWL * 1000, 'Pp')} UTC
@@ -107,10 +113,10 @@ function Detail({ idoPool }) {
           }`}
         >
           {Number(idoPool.status._hex) === 2 && (
-            <p className="text-skyblue font-semibold leading-5">Join mayor pool (Opening)</p>
+            <p className="text-skyblue font-semibold leading-5">Join {idoPool.baseInfo.accessType} pool (Opening)</p>
           )}
           {Number(idoPool.status._hex) > 2 && (
-            <p className="text-[#9E9E9E] font-semibold leading-5">Join mayor pool (Closed)</p>
+            <p className="text-[#9E9E9E] font-semibold leading-5">Join {idoPool.baseInfo.accessType} pool (Closed)</p>
           )}
           <p className={`leading-5 ${idoPool.status === 2 ? 'text-skyblue' : 'text-[#9E9E9E]'}`}>
             Open: {format(idoPool.endTimeWL * 1000, 'Pp')} (UTC) - Close: {format(idoPool.endTime * 1000, 'Pp')} UTC

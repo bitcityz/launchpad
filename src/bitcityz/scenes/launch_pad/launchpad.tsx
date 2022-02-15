@@ -59,7 +59,6 @@ function LaunchPad() {
       const visiblePools = listPool.filter((p) => {
         return p.delFlg === false
       })
-
       const calls = visiblePools.map((data) => {
         return { address: idoAddress, name: 'poolInfo', params: [data.id] }
       })
@@ -77,13 +76,13 @@ function LaunchPad() {
           baseInfo.push(el[ido.idoToken])
         })
 
-        if (Number(ido.status._hex) === 0) {
+        if (Number(ido.status._hex) === 0 && baseInfo[0]) {
           upcomingPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
-        } else if (Number(ido.status._hex) === 1) {
+        } else if (Number(ido.status._hex) === 1 && baseInfo[0]) {
           whitelistPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
-        } else if (Number(ido.status._hex) === 2) {
+        } else if (Number(ido.status._hex) === 2 && baseInfo[0]) {
           inprogressPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
-        } else {
+        } else if (Number(ido.status._hex) === 3 && baseInfo[0]) {
           completedPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         }
       })

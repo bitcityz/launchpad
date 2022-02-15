@@ -17,7 +17,7 @@ import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 import linkSqare from '../../../assets/images/link-square.svg'
 
-function CardPool({ pool, account, setUpdatePool, launchPoolAddress, setIsApproved }) {
+function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved, setIsApproved }) {
   const { id, amount, minLockingAmount, name, startTime, lockingTime, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
@@ -129,7 +129,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, setIsApprov
             </div>
           </div>
           {days === 0 && hours === 0 && minutes === 0 && Number(amount) > 0 && (
-            <p className="text-[#F5F5F5] mt-5">You have got a Mayor ticket!</p>
+            <p className="text-[#F5F5F5] mt-5">You have got a {name} ticket!</p>
           )}
           <div className="flex justify-center mt-5 md:mt-0 md:items-end md:justify-end md:flex-1">
             {!account && (
@@ -141,7 +141,15 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, setIsApprov
                 Connect wallet
               </button>
             )}
-            {account && <StakingAction pool={pool} setUpdatePool={setUpdatePool} setIsApproved={setIsApproved} />}
+            {account && (
+              <StakingAction
+                pool={pool}
+                setUpdatePool={setUpdatePool}
+                isApproved={isApproved}
+                setIsApproved={setIsApproved}
+                account={account}
+              />
+            )}
           </div>
         </div>
       </div>

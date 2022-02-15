@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../assets/index.css'
-import BigNumber from 'bignumber.js'
 import { formatEther } from 'ethers/lib/utils'
-import { ethers } from 'ethers'
-
-import { getIdoAddress } from 'utils/addressHelpers'
-import { useWalletModal } from '@mexi/uikit'
-import useAuth from 'hooks/useAuth'
-import { useTranslation } from 'contexts/Localization'
-import { useTicketContract, useIdoContract, useTokenContract } from 'hooks/useContract'
-import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
-import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
-import useToast from 'hooks/useToast'
-import useApprove from '../../hooks/useApprove'
-import useRefund from '../../hooks/useRefund'
-
-import Social from '../Social'
+import { useIdoContract } from 'hooks/useContract'
+import UpcomingCardDetail from './UpcomingCardDetail'
+import RegisterWhitelistCardDetail from './RegisterWhitelistCardDetail'
+import InprogressCardDetail from './InprogressCardDetail'
+import CompletedCardDetail from './CompletedCardDetail'
 
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
-import inWhitelistSvg from '../../../../assets/images/iswhitelist.svg'
 
 function PoolCardDetail({
   idoPool,
@@ -30,130 +19,34 @@ function PoolCardDetail({
   setUpdateWhitelist,
   updateWhitelist,
 }) {
-  const { login, logout } = useAuth()
   const [idoName, setIdoName] = useState('')
-  const [isInWhitelist, setIsInWhitelist] = useState(false)
-  const [isBuyer, setIsBuyer] = useState(false)
-  const { t } = useTranslation()
-  const { onPresentConnectModal } = useWalletModal(login, logout, t)
-  const idoContract = useIdoContract()
-  const { toastSuccess, toastError } = useToast()
-
-  const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const [ticket, setTicket] = useState(0)
-  const [ticketId, setTicketId] = useState(0)
   const [percent, setPercent] = useState(0)
-  const ticketContract = useTicketContract()
-  const { callWithGasPrice } = useCallWithGasPrice()
-  const erc20Contract = useTokenContract(idoPool.idoToken2Buy)
-  const idoAddress = getIdoAddress()
-
-  const [pendingTx, setPendingTx] = useState(false)
-  const { onRefund } = useRefund(idoPool.id)
-
-  const { isApproved, handleApprove, handleConfirm } = useApprove({
-    onRequiresApproval: async () => {
-      try {
-        const response = await erc20Contract.allowance(account, idoAddress)
-        return response && new BigNumber(response._hex).isGreaterThan(0)
-      } catch (error) {
-        return false
-      }
-    },
-    onApprove: () => {
-      setIsLoading(true)
-      return callWithGasPrice(erc20Contract, 'approve', [idoAddress, ethers.constants.MaxUint256])
-    },
-    onApproveSuccess: async () => {
-      setIsLoading(false)
-      toastSuccess(t('Contract approved - you can now join pool!'))
-    },
-    onConfirm: () => {
-      setIsLoading(true)
-      return callWithGasPrice(idoContract, 'buy', [idoPool.id])
-    },
-    onSuccess: async () => {
-      setIsLoading(false)
-      setIsBuyer(true)
-      setIsRefresh(true)
-      toastSuccess(`${t('Registed')}!`, t('You have successfully join pool'))
-    },
-    onError: async () => {
-      setIsLoading(false)
-    },
-  })
-
-  const _handleShowRegisterModal = () => {
-    setShowRegisterModal(true)
-  }
-
-  const handleRefundClick = async () => {
-    setPendingTx(true)
-    try {
-      // refund
-      await onRefund()
-      setIsBuyer(false)
-      toastSuccess(`${t('Refund')}!`, t('You are refund successful!'))
-      setPendingTx(false)
-    } catch (e) {
-      toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
-      setPendingTx(false)
-    }
-  }
-
-  const _handleCloseConfirm = () => {
-    setShowRegisterModal(false)
-  }
-
-  useEffect(() => {
-    const totalAmount = Number(formatEther(idoPool.totalAmount))
-    const remainAmount = Number(formatEther(idoPool.remainAmount))
-    const result = ((totalAmount - remainAmount) * 100) / totalAmount
-    setPercent(result)
-  }, [idoPool, isBuyer])
+  const idoContract = useIdoContract()
+  const [isBuyer, setIsBuyer] = useState(false)
 
   useEffect(() => {
     const pool = pools.filter((r) => {
       return r.hash === idoPool.keyType
     })
     setIdoName(pool[0].name)
+  }, [pools, idoPool])
 
-    if (account) {
-      setTicket(0)
-      ticketContract.balanceOf(account).then((resp) => {
-        const totalTicket = new BigNumber(resp._hex).toNumber()
-        if (totalTicket > 0) {
-          for (let i = 0; i < totalTicket; i++) {
-            ticketContract.tokenOfOwnerByIndex(account, i).then((res) => {
-              const tokenId = new BigNumber(res._hex).toNumber()
-              ticketContract.tokenHash(tokenId).then((r) => {
-                if (r === pool[0].hash) {
-                  setTicket((val) => val + 1)
-                  setTicketId(tokenId)
-                }
-              })
-            })
-          }
-        }
-      })
-    }
-  }, [pools, idoPool, account, ticketContract])
+  useEffect(() => {
+    const totalAmount = Number(formatEther(idoPool.totalAmount))
+    const remainAmount = Number(formatEther(idoPool.remainAmount))
+    const result = ((totalAmount - remainAmount) * 100) / totalAmount
+    setPercent(result)
+  }, [idoPool])
 
   useEffect(() => {
     if (account) {
-      const checkAccountInWhiteList = async () => {
-        const response = await idoContract.isWhitelist(account, idoPool.id)
-        setIsInWhitelist(response)
-        setUpdateWhitelist(false)
-      }
-      checkAccountInWhiteList()
       const checkAccountJoined = async () => {
         const response = await idoContract.isBuyer(account, idoPool.id)
         setIsBuyer(response)
       }
       checkAccountJoined()
     }
-  }, [account, idoPool, idoContract, updateWhitelist, setUpdateWhitelist])
+  }, [account, idoPool, idoContract])
 
   return (
     <div className="relative">
@@ -162,7 +55,35 @@ function PoolCardDetail({
       </h6>
       <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
         <img src={idoPool.baseInfo.logo.large} alt="" />
-        <div className="flex-1">
+        {Number(idoPool.status._hex) === 0 && <UpcomingCardDetail idoPool={idoPool} />}
+        {Number(idoPool.status._hex) === 1 && (
+          <RegisterWhitelistCardDetail
+            idoPool={idoPool}
+            account={account}
+            updateWhitelist={updateWhitelist}
+            setUpdateWhitelist={setUpdateWhitelist}
+            pools={pools}
+            idoName={idoName}
+          />
+        )}
+        {Number(idoPool.status._hex) === 2 && (
+          <InprogressCardDetail
+            idoPool={idoPool}
+            account={account}
+            setIsLoading={setIsLoading}
+            setIsRefresh={setIsRefresh}
+          />
+        )}
+        {Number(idoPool.status._hex) === 3 && (
+          <CompletedCardDetail
+            idoPool={idoPool}
+            account={account}
+            claimPercent={claimPercent}
+            isBuyer={isBuyer}
+            setIsBuyer={setIsBuyer}
+          />
+        )}
+        {/* <div className="flex-1">
           <div className="flex items-start gap-x-3">
             <img src={idoPool.baseInfo.logo.small} alt="" />
             <div className="flex-1">
@@ -295,17 +216,29 @@ function PoolCardDetail({
               </div>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
-      {showRegisterModal && (
-        <RegisterModal
-          onClose={_handleCloseConfirm}
-          ido={idoPool}
-          idoName={idoName}
-          ticket={ticket}
-          ticketId={ticketId}
-          setUpdateWhitelist={setUpdateWhitelist}
-        />
+      {Number(idoPool.status._hex) === 2 && (
+        <div className="flex w-full pt-5 md:border-t-[1px] md:border-solid md:border-[#434343] flex-col gap-y-1 items-start md:items-start md:mt-6">
+          <span className="text-[#BFBFBF]">Swap process</span>
+          <div className="flex w-full items-center justify-end gap-x-2">
+            <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
+              <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${percent}%` }} />
+            </div>
+            <span className="text-white font-semibold">{percent}%</span>
+          </div>
+        </div>
+      )}
+      {Number(idoPool.status._hex) === 3 && account && isBuyer && (
+        <div className="flex w-full pt-5 md:border-t-[1px] md:border-solid md:border-[#434343] flex-col gap-y-1 items-start md:items-start md:mt-6">
+          <span className="text-[#BFBFBF]">Claim process</span>
+          <div className="flex w-full items-center justify-end gap-x-2">
+            <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
+              <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
+            </div>
+            <span className="text-white font-semibold">{claimPercent}%</span>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { getFullDisplayBalance } from 'utils/formatBalance'
+import { getFullDisplayBalance, getBalanceNumber } from 'utils/formatBalance'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
+import useGetBalanceOf from '../../../hooks/useGetBalanceOf'
 import useStakePool from '../../../scenes/launch_pool/hooks/useStakePool'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function StakingModal({ onClose, pool, setUpdatePool }) {
-  const { id, minLockingAmount, name, lockingTime, balance } = pool
+function StakingModal({ onClose, pool, setUpdatePool, account }) {
+  const { id, minLockingAmount, name, lockingTime } = pool
   const { onStake } = useStakePool(id)
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
-  const fullBalance = useMemo(() => {
-    return getFullDisplayBalance(balance._hex)
-  }, [balance])
+  const { balance } = useGetBalanceOf(account)
 
   const { toastSuccess, toastError } = useToast()
 
@@ -23,8 +22,8 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
   const [pendingTx, setPendingTx] = useState(false)
 
   const handleSelectMax = useCallback(() => {
-    setStakeAmount(fullBalance)
-  }, [fullBalance, setStakeAmount])
+    setStakeAmount(balance)
+  }, [balance, setStakeAmount])
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -112,7 +111,7 @@ function StakingModal({ onClose, pool, setUpdatePool }) {
         <p className="text-[#F5F5F5] text-center mt-4">
           Available tokens:{' '}
           <span className="text-skyblue text-shadow font-semibold">
-            {Number(fullBalance).toLocaleString('en', {
+            {Number(balance).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
             BCTZ

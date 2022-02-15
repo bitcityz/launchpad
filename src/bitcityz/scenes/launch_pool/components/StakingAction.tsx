@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Skeleton } from '@mexi/uikit'
 import '../../../assets/index.css'
 import StakingModal from 'bitcityz/components/modal/Stake/StakingModal'
 import UnstakingConfirm from 'bitcityz/components/modal/Stake/UnstakingConfirm'
 import { useERC20 } from 'hooks/useContract'
 import { useApprovePool } from '../hooks/useApprove'
 
-function StakingAction({ pool, setUpdatePool, setIsApproved }) {
+function StakingAction({ pool, setUpdatePool, isApproved, setIsApproved, account }) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
-  const { amount, lockingToken, isApproved } = pool
+  const { amount, lockingToken } = pool
   const stakingTokenContract = useERC20(lockingToken || '')
   const { handleApprove, requestedApproval, requestStatus } = useApprovePool(stakingTokenContract)
 
@@ -93,7 +92,9 @@ function StakingAction({ pool, setUpdatePool, setIsApproved }) {
           >
             Stake BCTZ
           </button>
-          {showStakingModal && <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} />}
+          {showStakingModal && (
+            <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} account={account} />
+          )}
           {showUnstakingConfirm && (
             <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} setUpdatePool={setUpdatePool} />
           )}

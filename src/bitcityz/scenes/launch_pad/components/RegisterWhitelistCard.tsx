@@ -28,6 +28,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   const [ticketId, setTicketId] = useState(0)
   const ticketContract = useTicketContract()
   const idoContract = useIdoContract()
+  const [pendingTx, setPendingTx] = useState(true)
 
   const secondsRemaining = isAfter(ido.endTimeWL * 1000, new Date())
     ? differenceInSeconds(ido.endTimeWL * 1000, new Date())
@@ -69,13 +70,16 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   }, [pools, ido, account, ticketContract])
 
   useEffect(() => {
+    const checkAccountInWhiteList = async () => {
+      const response = await idoContract.isWhitelist(account, ido.id)
+      setPendingTx(false)
+      setIsInWhitelist(response)
+      setUpdateWhitelist(false)
+    }
     if (account) {
-      const checkAccountInWhiteList = async () => {
-        const response = await idoContract.isWhitelist(account, ido.id)
-        setIsInWhitelist(response)
-        setUpdateWhitelist(false)
-      }
       checkAccountInWhiteList()
+    } else {
+      setPendingTx(false)
     }
   }, [account, ido, idoContract, updateWhitelist])
 
@@ -154,7 +158,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     Connect wallet
                   </button>
                 )}
-                {account && !isInWhitelist && (
+                {account && !isInWhitelist && !pendingTx && (
                   <button
                     type="button"
                     className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
@@ -163,12 +167,22 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     Register Whitelist
                   </button>
                 )}
-                {account && isInWhitelist && (
+                {account && isInWhitelist && !pendingTx && (
                   <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
                     <img src={checkedPng} alt="" />
                     Registered
                   </span>
                 )}
+                {((account && !isInWhitelist) || !account) &&
+                  days === 0 &&
+                  hours === 0 &&
+                  minutes === 0 &&
+                  seconds === 0 &&
+                  !pendingTx && (
+                    <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
+                      Registration timeout
+                    </p>
+                  )}
                 <NavLink
                   to={`/launchpad/${ido.id}`}
                   className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"

@@ -5,17 +5,15 @@ import BigNumber from 'bignumber.js'
 import { multicallv2 } from 'utils/multicall'
 import { useWeb3React } from '@web3-react/core'
 import { useTokenContract } from 'hooks/useContract'
-import { getLaunchPoolAddress, getTicketAddress } from 'utils/addressHelpers'
+import { getLaunchPoolAddress, getTicketAddress, getBCTZAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
-import useGetBalanceOf from '../../hooks/useGetBalanceOf'
 import PoolList from './components/PoolList'
 import LaunchpoolHeader from './components/LaunchpoolHeader'
 
-const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 const POOLS = [0, 1, 2]
 function LaunchPool() {
-  const erc20Contract = useTokenContract(bctz)
+  const erc20Contract = useTokenContract(getBCTZAddress())
 
   const { account } = useWeb3React()
   const launchPoolAddress = getLaunchPoolAddress()
@@ -25,8 +23,6 @@ function LaunchPool() {
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
   const [updatePool, setUpdatePool] = useState(false)
-
-  const { balance } = useGetBalanceOf(account)
 
   const userCalls = useMemo(
     () =>
@@ -53,14 +49,30 @@ function LaunchPool() {
   )
 
   useEffect(() => {
+    let isMounted = true
+    const checkApprove = async () => {
+      if (isMounted) {
+        const res = await erc20Contract.allowance(account, launchPoolAddress)
+        setIsApproved(res.gt(0))
+      }
+    }
+    if (account) {
+      checkApprove()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [account, erc20Contract, launchPoolAddress])
+
+  useEffect(() => {
     const initialData = async () => {
       let userInfos
       if (account) {
         userInfos = await multicallv2(launchPoolABI, userCalls)
-        erc20Contract.allowance(account, launchPoolAddress)
-        const res = await erc20Contract.allowance(account, launchPoolAddress)
-        setIsApproved(res && new BigNumber(res._hex).isGreaterThan(0))
+        // const res = await erc20Contract.allowance(account, launchPoolAddress)
+        // setIsApproved(res.gt(0))
       }
+
       const poolInfos = await multicallv2(launchPoolABI, poolCalls)
 
       const ticketInfos = await multicallv2(launchPoolTicketABI, ticketCalls)
@@ -75,8 +87,6 @@ function LaunchPool() {
           lockingToken: pool.lockingToken,
           lockingTime: new BigNumber(pool.lockingTime._hex).toString(),
           minLockingAmount: new BigNumber(pool.minLockingAmount._hex).toString(),
-          isApproved,
-          balance,
           ticketHash: ticketInfos[index].hash,
         }
       })
@@ -85,7 +95,7 @@ function LaunchPool() {
       setIsLoading(false)
     }
     initialData()
-  }, [account, userCalls, poolCalls, ticketCalls, isApproved, balance, updatePool, erc20Contract, launchPoolAddress])
+  }, [account, userCalls, poolCalls, ticketCalls, updatePool, erc20Contract, launchPoolAddress])
   return (
     <>
       <LaunchpoolHeader />
@@ -97,6 +107,7 @@ function LaunchPool() {
             isLoading={isLoading}
             setUpdatePool={setUpdatePool}
             launchPoolAddress={launchPoolAddress}
+            isApproved={isApproved}
             setIsApproved={setIsApproved}
           />
         </div>
