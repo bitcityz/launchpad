@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import '../../assets/index.css'
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
 import { getIdoAddress, getTicketAddress } from 'utils/addressHelpers'
@@ -40,6 +40,7 @@ function PoolDetail() {
   const { account } = useWeb3React()
   const [isRefresh, setIsRefresh] = useState(false)
   const [updateWhitelist, setUpdateWhitelist] = useState(false)
+  const [redirctTo, setRedirctTo] = useState(false)
 
   const {
     claimPercent,
@@ -58,39 +59,49 @@ function PoolDetail() {
   const _handleChangeTab = (index) => {
     setTabIndex(index)
   }
+
   useEffect(() => {
     const initData = async () => {
-      const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
-      setPools(poolLst)
-      const calls = [{ address: idoAddress, name: 'poolInfo', params: [id] }]
+      try {
+        const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
+        setPools(poolLst)
+        const calls = [{ address: idoAddress, name: 'poolInfo', params: [id] }]
 
-      const idoPoolInfo = await multicallv2(bitcityIdoABI, calls)
-      const data = idoPoolInfo.map((ido) => {
-        return {
-          id,
-          idoToken: ido.idoToken,
-          idoToken2Buy: ido.idoToken2Buy,
-          token2IDOtoken: ido.tokenBuy2IDOtoken,
-          amount: ido.amount,
-          totalAmount: ido.totalAmount,
-          remainAmount: ido.remainAmount,
-          idoUnlock: ido.idoUnlock,
-          keyType: ido.keyType,
-          startTime: ido.startTime,
-          endTime: ido.endTime,
-          startTimeWL: ido.startTimeWL,
-          endTimeWL: ido.endTimeWL,
-          status: ido.status,
-          baseInfo: listPool[id][ido.idoToken],
-        }
-      })
-      setIdoPool(data[0])
-      setIsLoading(false)
+        const idoPoolInfo = await multicallv2(bitcityIdoABI, calls)
+
+        const data = idoPoolInfo.map((ido) => {
+          return {
+            id,
+            idoToken: ido.idoToken,
+            idoToken2Buy: ido.idoToken2Buy,
+            token2IDOtoken: ido.tokenBuy2IDOtoken,
+            amount: ido.amount,
+            totalAmount: ido.totalAmount,
+            remainAmount: ido.remainAmount,
+            idoUnlock: ido.idoUnlock,
+            keyType: ido.keyType,
+            startTime: ido.startTime,
+            endTime: ido.endTime,
+            startTimeWL: ido.startTimeWL,
+            endTimeWL: ido.endTimeWL,
+            status: ido.status,
+            baseInfo: listPool[id][ido.idoToken],
+          }
+        })
+        setIdoPool(data[0])
+        setIsLoading(false)
+      } catch (err) {
+        setRedirctTo(true)
+      }
     }
     if (listPool.length > 0) {
       initData()
     }
   }, [listPool, id, idoAddress, ticketCalls, isRefresh])
+
+  if (redirctTo) {
+    return <Redirect to="/" />
+  }
 
   return (
     <div className="py-[110px]">
@@ -117,7 +128,11 @@ function PoolDetail() {
           <img src={line1} className="w-full h-auto" alt="" />
           <div
             className={`grid mobile-tab gap-x-8 relative ${
-              Number(idoPool?.status._hex) > 0 ? 'md:grid-cols-4' : 'md:grid-cols-2'
+              Number(idoPool?.status._hex) > 0
+                ? Number(idoPool?.status._hex) > 2
+                  ? 'md:grid-cols-4'
+                  : 'md:grid-cols-3'
+                : 'md:grid-cols-2'
             }`}
           >
             <button
@@ -158,7 +173,7 @@ function PoolDetail() {
                 Whitelist
               </button>
             )}
-            {Number(idoPool?.status._hex) > 0 && (
+            {Number(idoPool?.status._hex) > 2 && (
               <button
                 type="button"
                 className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}

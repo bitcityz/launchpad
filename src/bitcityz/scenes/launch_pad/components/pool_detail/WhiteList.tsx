@@ -19,10 +19,14 @@ function WhiteList({ idoPool, updateWhitelist, setUpdateWhitelist }) {
 
   useEffect(() => {
     const getListWhitelist = async () => {
-      const resp = await idoContract.getWhitelist(idoPool.id)
-      setAllWhitelist(resp)
-      setLoading(false)
-      setUpdateWhitelist(false)
+      try {
+        const resp = await idoContract.getWhitelist(idoPool.id)
+        setAllWhitelist(resp)
+        setLoading(false)
+        setUpdateWhitelist(false)
+      } catch (err) {
+        setLoading(false)
+      }
     }
     getListWhitelist()
   }, [idoContract, idoPool, updateWhitelist, setUpdateWhitelist])

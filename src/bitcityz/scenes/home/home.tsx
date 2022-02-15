@@ -22,6 +22,7 @@ const PRICE_USDT = 1
 function Home() {
   const [pools, setPools] = useState([])
   const [projects, setProjects] = useState([])
+  const [visiblePools, setVisiblePools] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const { listPool, isLoading: isLoadingPool } = useGetPools()
 
@@ -71,11 +72,16 @@ function Home() {
     setIsLoading(true)
     const getTotalFundRaised = async () => {
       if (!isLoadingPool) {
-        const calls = listPool.map((data, index) => {
-          return { address: idoAddress, name: 'poolInfo', params: [index] }
+        const tempVisiblePools = listPool.filter((p) => {
+          return p.delFlg === false
+        })
+        setVisiblePools(tempVisiblePools)
+        const calls = tempVisiblePools.map((data) => {
+          return { address: idoAddress, name: 'poolInfo', params: [data.id] }
         })
 
         const idoInfos = await multicallv2(bitcityIdoABI, calls)
+        console.log(idoInfos)
         setProjects(idoInfos)
         const getFundRaisedCalls = idoInfos.map((ido) => {
           return { address: idoAddress, name: 'totalFundRaised', params: [ido.idoToken2Buy] }
@@ -121,7 +127,7 @@ function Home() {
           totalInvestors={totalInvestors}
           isLoading={isLoading}
         />
-        <UpcomingPoolTab pools={pools} projects={projects} listPool={listPool} />
+        <UpcomingPoolTab pools={pools} projects={projects} listPool={visiblePools} />
         <LaunchPool pools={pools} />
         <Performance />
       </div>

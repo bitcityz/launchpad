@@ -27,9 +27,13 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
   useEffect(() => {
     const initData = async () => {
       const upcoming = []
-      projects.forEach((ido, index) => {
+      projects.forEach((ido) => {
         if (Number(ido.status._hex) === 0) {
-          upcoming.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
+          const baseInfo = []
+          listPool.forEach((el) => {
+            baseInfo.push(el[ido.idoToken])
+          })
+          upcoming.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         }
       })
 

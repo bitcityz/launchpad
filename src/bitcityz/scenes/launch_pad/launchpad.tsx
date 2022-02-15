@@ -56,8 +56,12 @@ function LaunchPad() {
   useEffect(() => {
     const initialData = async () => {
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
-      const calls = listPool.map((data, index) => {
-        return { address: idoAddress, name: 'poolInfo', params: [index] }
+      const visiblePools = listPool.filter((p) => {
+        return p.delFlg === false
+      })
+
+      const calls = visiblePools.map((data) => {
+        return { address: idoAddress, name: 'poolInfo', params: [data.id] }
       })
 
       const idoInfos = await multicallv2(bitcityIdoABI, calls)
@@ -67,15 +71,20 @@ function LaunchPad() {
       const whitelistPr = []
       const inprogressPr = []
       const completedPr = []
-      idoInfos.forEach((ido, index) => {
+      idoInfos.forEach((ido) => {
+        const baseInfo = []
+        visiblePools.forEach((el) => {
+          baseInfo.push(el[ido.idoToken])
+        })
+
         if (Number(ido.status._hex) === 0) {
-          upcomingPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
+          upcomingPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         } else if (Number(ido.status._hex) === 1) {
-          whitelistPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
+          whitelistPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         } else if (Number(ido.status._hex) === 2) {
-          inprogressPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
+          inprogressPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         } else {
-          completedPr.push({ id: index, ...ido, baseInfo: listPool[index][ido.idoToken] })
+          completedPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         }
       })
       setUpcoming(upcomingPr)
