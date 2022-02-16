@@ -25,7 +25,7 @@ function Performance() {
         <h2 className="text-center text-skyblue font-bold text-[32px] text-shadow">Performance</h2>
 
         <div className="border-[1px] border-solid border-skyblue rounded-xl p-5 mt-8">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
             <div className="flex items-center gap-x-4">
               <img src={sLogo} alt="" />
               <span className="text-[#F5F5F5] font-bold text-xl">BitcityZ</span>
