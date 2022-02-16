@@ -110,9 +110,9 @@ function LaunchPad() {
         <div className="text-center">
           <img src={textSvg} className="mx-auto" alt="" />
           <h2 className="text-center text-skyblue text-shadow font-bold text-[32px]">Launchpad</h2>
-          <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6">
-            Stake <span className="font-semibold">3 pools</span> at the same time. Get more opportunities to own hidden
-            gems
+          <p className="text-[#F5F5F5] text-center leading-5 max-w-[547px] mx-auto mt-6">
+            In just a few simple steps, you can own your hidden gems by participating in IDO and IGO of high-quality
+            projects.
           </p>
         </div>
         <div className="text-center">
