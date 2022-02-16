@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
-import { formatEther } from 'ethers/lib/utils'
 import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
 

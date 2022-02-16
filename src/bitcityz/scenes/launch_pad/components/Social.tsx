@@ -2,9 +2,7 @@ import React from 'react'
 
 import '../../../assets/index.css'
 
-import ieBlack from '../../../assets/images/ie-black.svg'
 import twitterBlack from '../../../assets/images/twitter-black.svg'
-import mediumBlack from '../../../assets/images/medium-black.svg'
 import telegramBlack from '../../../assets/images/telegram-black.svg'
 import linkSvg from '../../../assets/images/link.svg'
 import externalink from '../../../assets/images/external-link.svg'

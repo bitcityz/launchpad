@@ -25,7 +25,7 @@ function PoolCardDetail({
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
   const [isBuyer, setIsBuyer] = useState(false)
-  const { targetRef, tooltip, tooltipVisible } = useTooltip('Copied', { placement: 'top' })
+  const { targetRef, tooltip } = useTooltip('Copied', { placement: 'top' })
   const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
@@ -71,8 +71,8 @@ function PoolCardDetail({
           setIsCopied(false)
         }, 1500)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setIsCopied(false)
       })
   }
 

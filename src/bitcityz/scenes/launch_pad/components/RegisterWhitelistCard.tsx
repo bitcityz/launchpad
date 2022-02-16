@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 import getTimePeriods from 'utils/getTimePeriods'
-import { formatEther } from 'ethers/lib/utils'
 import '../../../assets/index.css'
 import { NavLink } from 'react-router-dom'
 import { useWalletModal } from '@mexi/uikit'
@@ -85,11 +84,16 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   }, [account, ido, idoContract, updateWhitelist])
 
   useEffect(() => {
+    countdown()
     setInterval(() => {
-      const temp = isAfter(ido.endTimeWL * 1000, new Date()) ? differenceInSeconds(ido.endTimeWL * 1000, new Date()) : 0
-      setSecondsRemaining(temp)
+      countdown()
     }, 1000)
-  }, [ido])
+  })
+
+  const countdown = () => {
+    const temp = isAfter(ido.endTimeWL * 1000, new Date()) ? differenceInSeconds(ido.endTimeWL * 1000, new Date()) : 0
+    setSecondsRemaining(temp)
+  }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
 

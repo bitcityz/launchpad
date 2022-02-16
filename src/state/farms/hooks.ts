@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBalanceAmount } from 'utils/formatBalance'
-import { farmsConfig } from 'config/constants'
+// import { farmsConfig } from 'config/constants'
 import useRefresh from 'hooks/useRefresh'
 import { deserializeToken } from 'state/user/hooks/helpers'
-import { fetchFarmsPublicDataAsync, nonArchivedFarms } from '.'
+import { fetchFarmsPublicDataAsync } from '.'
 import { State, SerializedFarm, DeserializedFarmUserData, DeserializedFarm, DeserializedFarmsState } from '../types'
 
 const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData => {
@@ -48,7 +48,7 @@ export const usePollFarmsPublicData = (includeArchive = false) => {
   const { slowRefresh } = useRefresh()
 
   useEffect(() => {
-    const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
+    // const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
     // dispatch(fetchFarmsPublicDataAsync(pids))
   }, [includeArchive, dispatch, slowRefresh])
 }
@@ -59,7 +59,7 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
   const { account } = useWeb3React()
 
   useEffect(() => {
-    const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
+    // const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
     if (account) {
       // dispatch(fetchFarmUserDataAsync({ account, pids }))
     }

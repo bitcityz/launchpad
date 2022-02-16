@@ -38,7 +38,6 @@ import {
   getLaunchPoolAddress,
   getTicketAddress,
   getIdoAddress,
-  getIdoUnlockAddress,
 } from 'utils/addressHelpers'
 
 // Imports below migrated from Exchange useContract.ts

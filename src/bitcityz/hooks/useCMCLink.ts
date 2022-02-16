@@ -22,12 +22,11 @@ const useCMCLink = (address: string): string | undefined => {
         // if link exists, format the url
         if (result.status === 200) {
           result.json().then(({ data }) => {
-            console.log('==========', data)
             setCMCPageUrl(data.url)
           })
         }
       } catch (e) {
-        console.log(e)
+        setCMCPageUrl(e)
       }
     }
     if (address) {

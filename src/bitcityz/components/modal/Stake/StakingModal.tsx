@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { getFullDisplayBalance, getBalanceNumber } from 'utils/formatBalance'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'

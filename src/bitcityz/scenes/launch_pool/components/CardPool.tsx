@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
-import { useWalletModal, Skeleton } from '@mexi/uikit'
+import { useWalletModal } from '@mexi/uikit'
 import useAuth from 'hooks/useAuth'
 import { isAfter, differenceInSeconds } from 'date-fns'
 import { useTranslation } from 'contexts/Localization'

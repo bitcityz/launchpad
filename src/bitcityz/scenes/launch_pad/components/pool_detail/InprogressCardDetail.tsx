@@ -34,13 +34,18 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
   const idoAddress = getIdoAddress()
 
   useEffect(() => {
+    countdown()
     setInterval(() => {
-      const temp = isAfter(idoPool.endTime * 1000, new Date())
-        ? differenceInSeconds(idoPool.endTime * 1000, new Date())
-        : 0
-      setSecondsRemaining(temp)
+      countdown()
     }, 1000)
-  }, [idoPool])
+  })
+
+  const countdown = () => {
+    const temp = isAfter(idoPool.endTime * 1000, new Date())
+      ? differenceInSeconds(idoPool.endTime * 1000, new Date())
+      : 0
+    setSecondsRemaining(temp)
+  }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
 

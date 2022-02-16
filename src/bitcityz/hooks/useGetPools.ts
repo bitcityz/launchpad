@@ -8,7 +8,6 @@ const useGetPools = () => {
     const fetchPools = async () => {
       const res = await fetch(`${POOL_API}?_=${Date.now()}`)
       const data = await res.json()
-      console.log(data)
       setListPool(data.pools)
       setIsLoading(false)
     }

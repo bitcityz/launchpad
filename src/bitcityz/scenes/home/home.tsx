@@ -81,7 +81,6 @@ function Home() {
         })
 
         const idoInfos = await multicallv2(bitcityIdoABI, calls)
-        console.log(idoInfos)
         setProjects(idoInfos)
         const getFundRaisedCalls = idoInfos.map((ido) => {
           return { address: idoAddress, name: 'totalFundRaised', params: [ido.idoToken2Buy] }

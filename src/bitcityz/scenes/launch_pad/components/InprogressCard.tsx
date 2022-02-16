@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import { getIdoAddress } from 'utils/addressHelpers'
 import { NavLink } from 'react-router-dom'
 import { formatEther } from 'ethers/lib/utils'
-import { format, isAfter, differenceInSeconds } from 'date-fns'
+import { isAfter, differenceInSeconds } from 'date-fns'
 import { useIdoContract, useTokenContract } from 'hooks/useContract'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import getTimePeriods from 'utils/getTimePeriods'
@@ -39,11 +39,17 @@ function InprogressCard({ ido, pools, account }) {
   const idoAddress = getIdoAddress()
 
   useEffect(() => {
+    countdown()
     setInterval(() => {
       const temp = isAfter(ido.endTime * 1000, new Date()) ? differenceInSeconds(ido.endTime * 1000, new Date()) : 0
       setSecondsRemaining(temp)
     }, 1000)
-  }, [ido])
+  })
+
+  const countdown = () => {
+    const temp = isAfter(ido.endTime * 1000, new Date()) ? differenceInSeconds(ido.endTime * 1000, new Date()) : 0
+    setSecondsRemaining(temp)
+  }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
 

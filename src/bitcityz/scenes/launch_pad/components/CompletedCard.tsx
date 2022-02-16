@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import '../../../assets/index.css'
 import { useTooltip } from '@mexi/uikit'
 import { NavLink } from 'react-router-dom'
-import { formatEther } from 'ethers/lib/utils'
 import { useIdoContract } from 'hooks/useContract'
 import truncateHash from 'utils/truncateHash'
 import useAccountClaimPercent from '../../../hooks/useAccountClaimPercent'
@@ -19,7 +18,7 @@ function CompletedCard({ ido, pools, account }) {
   const [isCopied, setIsCopied] = useState(false)
   const { claimPercent } = useAccountClaimPercent(account, ido.idoUnlock)
   const idoContract = useIdoContract()
-  const { targetRef, tooltip, tooltipVisible } = useTooltip('Copied', { placement: 'top' })
+  const { targetRef, tooltip } = useTooltip('Copied', { placement: 'top' })
 
   useEffect(() => {
     const pool = pools.filter((r) => {
@@ -57,8 +56,8 @@ function CompletedCard({ ido, pools, account }) {
           setIsCopied(false)
         }, 1500)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setIsCopied(false)
       })
   }
 

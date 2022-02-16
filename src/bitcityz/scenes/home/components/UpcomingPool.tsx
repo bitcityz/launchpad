@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import '../../../assets/index.css'
 import ComingSoonCard from 'bitcityz/components/comingsoon/ComingSoonCard'

@@ -1,38 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React from 'react'
 import '../../../../assets/index.css'
 import { format } from 'date-fns'
 import { formatEther } from 'ethers/lib/utils'
-import { getTicketAddress } from 'utils/addressHelpers'
-import { multicallv2 } from 'utils/multicall'
-import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 
 import bgCardPink from '../../../../assets/images/bg-lauchpool-card-pink.png'
 import bgCardBlue from '../../../../assets/images/bg-lauchpool-card-blue.png'
 import bgCardGreen from '../../../../assets/images/bg-lauchpool-card-green.png'
 
-const POOLS = [0, 1, 2]
 function Detail({ idoPool }) {
-  const [accessType, setAccessType] = useState('')
-  const ticketAddress = getTicketAddress()
-  const poolCalls = useMemo(
-    () =>
-      POOLS.map((id) => {
-        return { address: ticketAddress, name: 'types', params: [id] }
-      }),
-    [ticketAddress],
-  )
-
-  useEffect(() => {
-    const initData = async () => {
-      const pools = await multicallv2(launchPoolTicketABI, poolCalls)
-      const pool = pools.filter((r) => {
-        return r.hash === idoPool.keyType
-      })
-      setAccessType(pool[0].name)
-    }
-    initData()
-  }, [poolCalls, idoPool])
-
   return (
     <div className="pt-5 relative">
       <div className="flex flex-col md:flex-row items-start md:gap-x-9">

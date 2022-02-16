@@ -2,8 +2,8 @@ import React from 'react'
 
 import '../../../assets/index.css'
 
-import { getBCTZAddress } from 'utils/addressHelpers'
-import useCMCLink from '../../../hooks/useCMCLink'
+// import { getBCTZAddress } from 'utils/addressHelpers'
+// import useCMCLink from '../../../hooks/useCMCLink'
 
 import performance from '../../../assets/images/performance.svg'
 import sLogo from '../../../assets/images/bctz-icon.png'
@@ -15,9 +15,9 @@ import youtube from '../../../assets/images/youtube.svg'
 import medium from '../../../assets/images/medium.png'
 import btczIcon from '../../../assets/images/ic-bctz.png'
 
-function Performance(props) {
-  const address = getBCTZAddress()
-  const cmcLink = useCMCLink(address)
+function Performance() {
+  // const address = getBCTZAddress()
+  // const cmcLink = useCMCLink(address)
   return (
     <div>
       <div className="text-center pt-[110px]">
