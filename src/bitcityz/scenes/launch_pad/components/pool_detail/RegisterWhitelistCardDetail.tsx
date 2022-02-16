@@ -74,8 +74,8 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
 
   useEffect(() => {
     setInterval(() => {
-      const temp = isAfter(idoPool.endTime * 1000, new Date())
-        ? differenceInSeconds(idoPool.endTime * 1000, new Date())
+      const temp = isAfter(idoPool.endTimeWL * 1000, new Date())
+        ? differenceInSeconds(idoPool.endTimeWL * 1000, new Date())
         : 0
       setSecondsRemaining(temp)
     }, 1000)

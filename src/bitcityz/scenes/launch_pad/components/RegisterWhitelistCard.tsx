@@ -29,12 +29,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   const ticketContract = useTicketContract()
   const idoContract = useIdoContract()
   const [pendingTx, setPendingTx] = useState(true)
-
-  const secondsRemaining = isAfter(ido.endTimeWL * 1000, new Date())
-    ? differenceInSeconds(ido.endTimeWL * 1000, new Date())
-    : 0
-
-  const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
+  const [secondsRemaining, setSecondsRemaining] = useState(0)
 
   const _handleCloseConfirm = () => {
     setShowRegisterModal(false)
@@ -88,6 +83,15 @@ function RegisterWhitelistCard({ ido, pools, account }) {
       isMounted = false
     }
   }, [account, ido, idoContract, updateWhitelist])
+
+  useEffect(() => {
+    setInterval(() => {
+      const temp = isAfter(ido.endTimeWL * 1000, new Date()) ? differenceInSeconds(ido.endTimeWL * 1000, new Date()) : 0
+      setSecondsRemaining(temp)
+    }, 1000)
+  }, [ido])
+
+  const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
 
   return (
     <>
