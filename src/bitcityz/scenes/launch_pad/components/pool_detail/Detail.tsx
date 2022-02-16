@@ -47,12 +47,15 @@ function Detail({ idoPool }) {
           <p className="grid gap-x-3 mt-3 grid-cols-[140px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
             <span className="text-[#9E9E9E]">Swap Amount:</span>
             <span className="font-semibold text-[#F5F5F5]">
-              {(Number(formatEther(idoPool.totalAmount)) - Number(formatEther(idoPool.remainAmount))).toLocaleString(
+              {/* {(Number(formatEther(idoPool.totalAmount)) - Number(formatEther(idoPool.remainAmount))).toLocaleString(
                 'en',
                 {
                   maximumFractionDigits: 4,
                 },
-              )}{' '}
+              )}{' '} */}
+              {idoPool.baseInfo.swapAmount.toLocaleString('en', {
+                maximumFractionDigits: 2,
+              })}{' '}
               {idoPool.baseInfo.symbol}
             </span>
           </p>
