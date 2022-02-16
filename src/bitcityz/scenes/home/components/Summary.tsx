@@ -1,15 +1,11 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import '../../../assets/index.css'
-import { getFullDisplayBalance } from 'utils/formatBalance'
 
 const BCTZ_PRICE = 1
 function Summary(props) {
   const { balance, totalFundRaised, totalInvestors, totalProjects, isLoading } = props
 
-  const currentFundsLocked = useMemo(() => {
-    return getFullDisplayBalance(balance._hex)
-  }, [balance])
   return (
     <div>
       <h5 className="text-[#F5F5F5] text-xl md:text-[32px] text-center">
@@ -35,7 +31,7 @@ function Summary(props) {
             }`}
           >
             $
-            {(Number(currentFundsLocked) * BCTZ_PRICE).toLocaleString('en', {
+            {(Number(balance) * BCTZ_PRICE).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
           </h6>

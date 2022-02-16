@@ -51,8 +51,8 @@ function LaunchPool() {
   useEffect(() => {
     let isMounted = true
     const checkApprove = async () => {
+      const res = await erc20Contract.allowance(account, launchPoolAddress)
       if (isMounted) {
-        const res = await erc20Contract.allowance(account, launchPoolAddress)
         setIsApproved(res.gt(0))
       }
     }
@@ -65,6 +65,7 @@ function LaunchPool() {
   }, [account, erc20Contract, launchPoolAddress])
 
   useEffect(() => {
+    let isMounted = true
     const initialData = async () => {
       let userInfos
       if (account) {
@@ -90,11 +91,17 @@ function LaunchPool() {
           ticketHash: ticketInfos[index].hash,
         }
       })
-      setPools(data)
-      setUpdatePool(false)
-      setIsLoading(false)
+      if (isMounted) {
+        setPools(data)
+        setUpdatePool(false)
+        setIsLoading(false)
+      }
     }
+
     initialData()
+    return () => {
+      isMounted = false
+    }
   }, [account, userCalls, poolCalls, ticketCalls, updatePool, erc20Contract, launchPoolAddress])
   return (
     <>

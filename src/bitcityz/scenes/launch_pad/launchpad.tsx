@@ -54,6 +54,7 @@ function LaunchPad() {
   )
 
   useEffect(() => {
+    let isMounted = true
     const initialData = async () => {
       const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
       const visiblePools = listPool.filter((p) => {
@@ -86,14 +87,19 @@ function LaunchPad() {
           completedPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         }
       })
-      setUpcoming(upcomingPr)
-      setRegisterWhitelist(whitelistPr)
-      setInprogress(inprogressPr)
-      setCompleted(completedPr)
-      setIsLoading(false)
+      if (isMounted) {
+        setUpcoming(upcomingPr)
+        setRegisterWhitelist(whitelistPr)
+        setInprogress(inprogressPr)
+        setCompleted(completedPr)
+        setIsLoading(false)
+      }
     }
     if (!isLoadingPool) {
       initialData()
+    }
+    return () => {
+      isMounted = false
     }
   }, [ticketCalls, idoAddress, listPool, isLoadingPool])
 

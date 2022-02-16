@@ -70,16 +70,22 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   }, [pools, ido, account, ticketContract])
 
   useEffect(() => {
+    let isMounted = true
     const checkAccountInWhiteList = async () => {
       const response = await idoContract.isWhitelist(account, ido.id)
-      setPendingTx(false)
-      setIsInWhitelist(response)
-      setUpdateWhitelist(false)
+      if (isMounted) {
+        setPendingTx(false)
+        setIsInWhitelist(response)
+        setUpdateWhitelist(false)
+      }
     }
     if (account) {
       checkAccountInWhiteList()
     } else {
       setPendingTx(false)
+    }
+    return () => {
+      isMounted = false
     }
   }, [account, ido, idoContract, updateWhitelist])
 
