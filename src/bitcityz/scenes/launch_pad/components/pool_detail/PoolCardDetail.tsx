@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../assets/index.css'
 import { formatEther } from 'ethers/lib/utils'
+import { useTooltip } from '@mexi/uikit'
 import { useIdoContract } from 'hooks/useContract'
 import UpcomingCardDetail from './UpcomingCardDetail'
 import RegisterWhitelistCardDetail from './RegisterWhitelistCardDetail'
@@ -8,6 +9,7 @@ import InprogressCardDetail from './InprogressCardDetail'
 import CompletedCardDetail from './CompletedCardDetail'
 
 import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
+import copyPng from '../../../../assets/images/copy.png'
 
 function PoolCardDetail({
   idoPool,
@@ -23,6 +25,8 @@ function PoolCardDetail({
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
   const [isBuyer, setIsBuyer] = useState(false)
+  const { targetRef, tooltip, tooltipVisible } = useTooltip('Copied', { placement: 'top' })
+  const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
     const pool = pools.filter((r) => {
@@ -47,6 +51,30 @@ function PoolCardDetail({
       checkAccountJoined()
     }
   }, [account, idoPool, idoContract])
+
+  // This is the function we wrote earlier
+  async function copyTextToClipboard(text) {
+    if ('clipboard' in navigator) {
+      const resp = await navigator.clipboard.writeText(text)
+      return resp
+    }
+    return document.execCommand('copy', true, text)
+  }
+
+  const handleCopyClick = (copyText) => {
+    // Asynchronously call copyTextToClipboard
+    copyTextToClipboard(copyText)
+      .then(() => {
+        // If successful, update the isCopied state value
+        setIsCopied(true)
+        setTimeout(() => {
+          setIsCopied(false)
+        }, 1500)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <div className="relative">
@@ -237,6 +265,21 @@ function PoolCardDetail({
               <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
             </div>
             <span className="text-white font-semibold">{claimPercent}%</span>
+          </div>
+          <div className="flex mt-4 gap-x-3">
+            <span className="text-[#F5F5F5]">Contract address</span>
+            <span className="text-skyblue font-semibold flex gap-x-3">
+              {idoPool.idoToken}
+              <button
+                className="border-none bg-transparent"
+                type="button"
+                onClick={() => handleCopyClick(idoPool.idoToken)}
+                ref={targetRef}
+              >
+                <img src={copyPng} className="cursor-pointer" alt="" />
+              </button>
+              {isCopied && tooltip}
+            </span>
           </div>
         </div>
       )}
