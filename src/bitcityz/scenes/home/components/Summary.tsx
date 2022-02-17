@@ -16,7 +16,7 @@ function Summary(props) {
         gems
       </p>
       <div className="mt-14 grid gap-y-5 md:gap-y-0 md:grid-cols-4 md:gap-x-8">
-        <div className="relative px-[9px] py-4 rounded-2xl">
+        <div className="relative px-[9px] py-4 rounded-2xl border-[1px] border-solid border-[rgba(123,245,251,0.2)]">
           <div
             className="absolute opacity-30 top-0 left-0 w-full h-full rounded-2xl"
             style={{
@@ -36,7 +36,7 @@ function Summary(props) {
             })}{' '}
           </h6>
         </div>
-        <div className="relative px-[9px] py-4 rounded-2xl">
+        <div className="relative px-[9px] py-4 rounded-2xl border-[1px] border-solid border-[rgba(123,245,251,0.2)]">
           <div
             className="absolute opacity-30 top-0 left-0 w-full h-full rounded-2xl"
             style={{
@@ -56,7 +56,7 @@ function Summary(props) {
             })}
           </h6>
         </div>
-        <div className="relative px-[9px] py-4 rounded-2xl">
+        <div className="relative px-[9px] py-4 rounded-2xl border-[1px] border-solid border-[rgba(123,245,251,0.2)]">
           <div
             className="absolute opacity-30 top-0 left-0 w-full h-full rounded-2xl"
             style={{
@@ -73,7 +73,7 @@ function Summary(props) {
             {totalProjects}
           </h6>
         </div>
-        <div className="relative px-[9px] py-4 rounded-2xl">
+        <div className="relative px-[9px] py-4 rounded-2xl border-[1px] border-solid border-[rgba(123,245,251,0.2)]">
           <div
             className="absolute opacity-30 top-0 left-0 w-full h-full rounded-2xl"
             style={{

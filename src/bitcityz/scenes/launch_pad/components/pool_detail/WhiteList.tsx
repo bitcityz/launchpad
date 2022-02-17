@@ -9,7 +9,7 @@ import Pagination from '../../../../components/pagination/Pagination'
 import IcSearchSvg from '../../../../assets/images/ic-search.svg'
 
 const PAGE_SIZE = 10
-function WhiteList({ idoPool, updateWhitelist, setUpdateWhitelist }) {
+function WhiteList({ idoPool, updateWhitelist }) {
   const [whitelist, setWhitelist] = useState([])
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
@@ -23,13 +23,12 @@ function WhiteList({ idoPool, updateWhitelist, setUpdateWhitelist }) {
         const resp = await idoContract.getWhitelist(idoPool.id)
         setAllWhitelist(resp)
         setLoading(false)
-        setUpdateWhitelist(false)
       } catch (err) {
         setLoading(false)
       }
     }
     getListWhitelist()
-  }, [idoContract, idoPool, updateWhitelist, setUpdateWhitelist])
+  }, [idoContract, idoPool, updateWhitelist])
 
   useEffect(() => {
     const generateDataByPage = (pageIndex) => {
@@ -65,6 +64,7 @@ function WhiteList({ idoPool, updateWhitelist, setUpdateWhitelist }) {
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
             placeholder="Search your wallet address"
+            onBlur={handleSearchAddress}
           />
           <button type="button" className="border-none bg-transparent" onClick={handleSearchAddress}>
             <img src={IcSearchSvg} alt="" />

@@ -144,7 +144,7 @@ function CompletedCard({ ido, pools, account }) {
                 </p>
               )}
               <NavLink
-                to={`/launchpad/${ido.id}`}
+                to={`/launchpad/${window.btoa(ido.id)}`}
                 className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"
               >
                 Project Details

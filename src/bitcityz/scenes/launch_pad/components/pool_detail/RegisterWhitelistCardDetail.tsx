@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import '../../../../assets/index.css'
 import BigNumber from 'bignumber.js'
 import { isAfter, differenceInSeconds } from 'date-fns'
@@ -26,6 +26,8 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
   const [ticket, setTicket] = useState(0)
   const [ticketId, setTicketId] = useState(0)
   const ticketContract = useTicketContract()
+
+  const timer = useRef(null)
 
   const _handleShowRegisterModal = () => {
     setShowRegisterModal(true)
@@ -74,9 +76,10 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
 
   useEffect(() => {
     countdown()
-    setInterval(() => {
+    timer.current = setInterval(() => {
       countdown()
     }, 1000)
+    return () => clearInterval(timer.current)
   })
 
   const countdown = () => {
@@ -84,6 +87,9 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
       ? differenceInSeconds(idoPool.endTimeWL * 1000, new Date())
       : 0
     setSecondsRemaining(temp)
+    if (temp === 0) {
+      clearInterval(timer.current)
+    }
   }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)

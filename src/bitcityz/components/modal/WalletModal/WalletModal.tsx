@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from 'hooks/useAuth'
 import { useWeb3React } from '@web3-react/core'
 
 import '../../../assets/index.css'
+import { useTooltip } from '@mexi/uikit'
 import closeCirlce from '../../../assets/images/close-circle.svg'
 import copySvg from '../../../assets/images/copy.svg'
 import linkSqare from '../../../assets/images/link-square.svg'
@@ -13,6 +14,8 @@ function WalletModal(props) {
   const { account } = useWeb3React()
   const { logout } = useAuth()
   const { onClose } = props
+  const { targetRef, tooltip } = useTooltip('Copied', { placement: 'top' })
+  const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -20,6 +23,30 @@ function WalletModal(props) {
       document.body.style.overflow = 'unset'
     }
   }, [])
+
+  // This is the function we wrote earlier
+  async function copyTextToClipboard(text) {
+    if ('clipboard' in navigator) {
+      const resp = await navigator.clipboard.writeText(text)
+      return resp
+    }
+    return document.execCommand('copy', true, text)
+  }
+
+  const handleCopyClick = (copyText) => {
+    // Asynchronously call copyTextToClipboard
+    copyTextToClipboard(copyText)
+      .then(() => {
+        // If successful, update the isCopied state value
+        setIsCopied(true)
+        setTimeout(() => {
+          setIsCopied(false)
+        }, 1500)
+      })
+      .catch(() => {
+        setIsCopied(false)
+      })
+  }
 
   return (
     <div
@@ -61,7 +88,16 @@ function WalletModal(props) {
                   className="border-none bg-transparent font-semibold text-[17px] text-[#F5F5F5] w-full"
                   value={account}
                 />
-                <img src={copySvg} alt="" className="ml-3" />
+                {/* <img src={copySvg} alt="" className="ml-3" /> */}
+                <button
+                  className="border-none bg-transparent ml-3"
+                  type="button"
+                  onClick={() => handleCopyClick(account)}
+                  ref={targetRef}
+                >
+                  <img src={copySvg} className="cursor-pointer" alt="" />
+                </button>
+                {isCopied && tooltip}
               </span>
             </div>
             <div className="flex items-center justify-between">

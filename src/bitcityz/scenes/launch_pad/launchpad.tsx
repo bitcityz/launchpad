@@ -30,7 +30,7 @@ const POOLS = [0, 1, 2]
 
 function LaunchPad() {
   const { account } = useWeb3React()
-  const [tabIndex, setTabIndex] = useState(1)
+  const [tabIndex, setTabIndex] = useState(2)
   const [pools, setPools] = useState([])
   const { listPool, isLoading: isLoadingPool } = useGetPools()
   const _handleChangeTab = (index) => {
@@ -170,7 +170,9 @@ function LaunchPad() {
           <img src={line2} className="w-full h-auto" alt="" />
         </div>
         {tabIndex === 1 && <UpcomingPool idos={upcoming} pools={pools} isLoading={isLoading} />}
-        {tabIndex === 2 && <RegisterWhitelist idos={registerWhitlis} pools={pools} account={account} />}
+        {tabIndex === 2 && (
+          <RegisterWhitelist idos={registerWhitlis} pools={pools} account={account} isLoading={isLoading} />
+        )}
         {tabIndex === 3 && <InProgress idos={inprogress} pools={pools} account={account} />}
         {tabIndex === 4 && <Completed idos={completed} pools={pools} account={account} />}
       </div>

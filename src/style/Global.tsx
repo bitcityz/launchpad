@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
       max-width: 100%;
     }
   }
+  #portal-root .kogKyy {
+      z-index: 9999;
+  }
 `
 
 export default GlobalStyle

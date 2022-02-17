@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../../../../assets/index.css'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
@@ -33,11 +33,14 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
   const erc20Contract = useTokenContract(idoPool.idoToken2Buy)
   const idoAddress = getIdoAddress()
 
+  const timer = useRef(null)
+
   useEffect(() => {
     countdown()
-    setInterval(() => {
+    timer.current = setInterval(() => {
       countdown()
     }, 1000)
+    return () => clearInterval(timer.current)
   })
 
   const countdown = () => {
@@ -45,6 +48,9 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
       ? differenceInSeconds(idoPool.endTime * 1000, new Date())
       : 0
     setSecondsRemaining(temp)
+    if (temp === 0) {
+      clearInterval(timer.current)
+    }
   }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)

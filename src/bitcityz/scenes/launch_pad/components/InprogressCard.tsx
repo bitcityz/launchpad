@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import '../../../assets/index.css'
 import { ethers } from 'ethers'
@@ -38,17 +38,23 @@ function InprogressCard({ ido, pools, account }) {
   const idoContract = useIdoContract()
   const idoAddress = getIdoAddress()
 
+  const timer = useRef(null)
+
   useEffect(() => {
     countdown()
-    setInterval(() => {
+    timer.current = setInterval(() => {
       const temp = isAfter(ido.endTime * 1000, new Date()) ? differenceInSeconds(ido.endTime * 1000, new Date()) : 0
       setSecondsRemaining(temp)
     }, 1000)
+    return () => clearInterval(timer.current)
   })
 
   const countdown = () => {
     const temp = isAfter(ido.endTime * 1000, new Date()) ? differenceInSeconds(ido.endTime * 1000, new Date()) : 0
     setSecondsRemaining(temp)
+    if (temp === 0) {
+      clearInterval(timer.current)
+    }
   }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
@@ -252,7 +258,7 @@ function InprogressCard({ ido, pools, account }) {
                 </p>
               )}
               <NavLink
-                to={`/launchpad/${ido.id}`}
+                to={`/launchpad/${window.btoa(ido.id)}`}
                 className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"
               >
                 Project Details

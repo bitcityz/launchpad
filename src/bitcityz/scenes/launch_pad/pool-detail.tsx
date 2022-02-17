@@ -65,13 +65,13 @@ function PoolDetail() {
       try {
         const poolLst = await multicallv2(launchPoolTicketABI, ticketCalls)
         setPools(poolLst)
-        const calls = [{ address: idoAddress, name: 'poolInfo', params: [id] }]
+        const decodedId = window.atob(id)
+        const calls = [{ address: idoAddress, name: 'poolInfo', params: [decodedId] }]
 
         const idoPoolInfo = await multicallv2(bitcityIdoABI, calls)
-
         const data = idoPoolInfo.map((ido) => {
           return {
-            id,
+            id: decodedId,
             idoToken: ido.idoToken,
             idoToken2Buy: ido.idoToken2Buy,
             token2IDOtoken: ido.tokenBuy2IDOtoken,
@@ -85,10 +85,13 @@ function PoolDetail() {
             startTimeWL: ido.startTimeWL,
             endTimeWL: ido.endTimeWL,
             status: ido.status,
-            baseInfo: listPool[id][ido.idoToken],
+            baseInfo: listPool[decodedId][ido.idoToken],
           }
         })
         setIdoPool(data[0])
+        if (Number(data[0].status._hex) === 1) {
+          setTabIndex(3)
+        }
         setIsLoading(false)
       } catch (err) {
         setRedirctTo(true)
@@ -192,9 +195,7 @@ function PoolDetail() {
 
           {tabIndex === 1 && <About idoPool={idoPool} isLoading={isLoading} />}
           {tabIndex === 2 && <Detail idoPool={idoPool} />}
-          {tabIndex === 3 && (
-            <WhiteList idoPool={idoPool} updateWhitelist={updateWhitelist} setUpdateWhitelist={setUpdateWhitelist} />
-          )}
+          {tabIndex === 3 && <WhiteList idoPool={idoPool} updateWhitelist={updateWhitelist} />}
           {tabIndex === 4 && account && (
             <Allocation
               idoPool={idoPool}

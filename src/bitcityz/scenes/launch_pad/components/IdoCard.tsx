@@ -79,7 +79,7 @@ function IdoCard({ ido, pools }) {
             </div>
             <div className="md:inline-block mt-5">
               <Link
-                to={`/launchpad/${ido.id}`}
+                to={`/launchpad/${window.btoa(ido.id)}`}
                 className="bg-transparent rounded-[20px] flex items-center justify-center border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-[50px]"
               >
                 Project Details

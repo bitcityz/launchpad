@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import '../../../assets/index.css'
 import { useWalletModal } from '@mexi/uikit'
 import useAuth from 'hooks/useAuth'
+import { useBlock } from 'state/block/hooks'
 import { isAfter, differenceInSeconds } from 'date-fns'
 import { useTranslation } from 'contexts/Localization'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
@@ -27,13 +28,16 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
     ? differenceInSeconds(unlockTime * 1000, new Date())
     : 0
   const { days, hours, minutes } = getTimePeriods(secondsRemaining)
+  const { currentBlock } = useBlock()
 
   const ticketContract = useTicketContract()
 
   const [ticket, setTicket] = useState(0)
+  const [loadingTicket, setLoadingTicket] = useState(true)
 
   useEffect(() => {
     if (account) {
+      setLoadingTicket(true)
       setTicket(0)
       ticketContract.balanceOf(account).then((resp) => {
         const totalTicket = new BigNumber(resp._hex).toNumber()
@@ -49,11 +53,12 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             })
           }
         }
+        setLoadingTicket(false)
       })
     } else {
       setTicket(0)
     }
-  }, [account, ticketContract, ticketHash, amount])
+  }, [account, ticketContract, ticketHash, amount, currentBlock])
 
   return (
     <div className="relative p-6">
@@ -82,7 +87,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            {name} tickets: {ticket}
+            {name} tickets: <span className={`w-[30px] ${loadingTicket ? 'skeleton' : ''}`}>{ticket}</span>
           </button>
         </div>
         <div className="flex-1 flex flex-col">

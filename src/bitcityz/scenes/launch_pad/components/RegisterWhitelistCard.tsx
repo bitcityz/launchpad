@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { isAfter, differenceInSeconds } from 'date-fns'
 import BigNumber from 'bignumber.js'
 import useAuth from 'hooks/useAuth'
@@ -29,6 +29,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
   const idoContract = useIdoContract()
   const [pendingTx, setPendingTx] = useState(true)
   const [secondsRemaining, setSecondsRemaining] = useState(0)
+  const timer = useRef(null)
 
   const _handleCloseConfirm = () => {
     setShowRegisterModal(false)
@@ -85,14 +86,18 @@ function RegisterWhitelistCard({ ido, pools, account }) {
 
   useEffect(() => {
     countdown()
-    setInterval(() => {
+    timer.current = setInterval(() => {
       countdown()
     }, 1000)
+    return () => clearInterval(timer.current)
   })
 
   const countdown = () => {
     const temp = isAfter(ido.endTimeWL * 1000, new Date()) ? differenceInSeconds(ido.endTimeWL * 1000, new Date()) : 0
     setSecondsRemaining(temp)
+    if (temp === 0) {
+      clearInterval(timer.current)
+    }
   }
 
   const { days, hours, minutes, seconds } = getTimePeriods(secondsRemaining)
@@ -198,7 +203,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     </p>
                   )}
                 <NavLink
-                  to={`/launchpad/${ido.id}`}
+                  to={`/launchpad/${window.btoa(ido.id)}`}
                   className="text-skyblue border-skyblue border-[1px] border-solid rounded-[20px] h-[44px] flex items-center px-12 font-semibold justify-center"
                 >
                   Project Details

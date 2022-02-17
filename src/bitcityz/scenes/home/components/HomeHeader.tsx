@@ -2,6 +2,7 @@ import React from 'react'
 
 import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
+import ClaimTicket from './ClaimTicket'
 import textSvg from '../../../assets/images/text.svg'
 
 function HomeHeader() {
@@ -30,6 +31,7 @@ function HomeHeader() {
           Learn about Launchpad
         </button> */}
       </div>
+      <ClaimTicket />
     </div>
   )
 }
