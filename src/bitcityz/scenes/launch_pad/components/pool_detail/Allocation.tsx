@@ -52,7 +52,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
       <div>
         <div className="flex flex-col md:items-center md:justify-between md:flex-row">
           <p className="text-white font-semibold flex gap-x-2">
-            Total bought tokens:
+            Your tokens:
             <span className="text-skyblue text-shadow">
               {Number(formatEther(idoPool.amount)).toLocaleString('en', {
                 maximumFractionDigits: 4,
@@ -61,7 +61,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
             </span>
           </p>
           <p className="text-white font-semibold flex gap-x-2">
-            Have bought:
+            Funds needed:
             <span className="text-skyblue text-shadow">
               {totalToken.toLocaleString('en', {
                 maximumFractionDigits: 4,
