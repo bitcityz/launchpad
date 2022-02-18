@@ -5,7 +5,7 @@ import { Skeleton } from '@mexi/uikit'
 
 function About({ idoPool, isLoading }) {
   return (
-    <div className="relative hihi">
+    <div className="relative haha">
       <h6 className="text-[#F5F5F5]">Introduction</h6>
       {isLoading ? (
         <div className="flex flex-col gap-y-1 mt-5">
