@@ -101,3 +101,6 @@ export const getIdoUnlockAddress = () => {
 export const getBCTZAddress = () => {
   return getAddress(addresses.bctz)
 }
+export const getBitcityCampaignAddress = () => {
+  return getAddress(addresses.campaign)
+}
