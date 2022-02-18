@@ -5,7 +5,7 @@ import { Skeleton } from '@mexi/uikit'
 
 function About({ idoPool, isLoading }) {
   return (
-    <div className="relative">
+    <div className="relative hihi">
       <h6 className="text-[#F5F5F5]">Introduction</h6>
       {isLoading ? (
         <div className="flex flex-col gap-y-1 mt-5">
@@ -16,7 +16,6 @@ function About({ idoPool, isLoading }) {
       ) : (
         <p className="text-[#9E9E9E] mt-5 leading-5">{idoPool.baseInfo.description}</p>
       )}
-
       <h6 className="text-[#F5F5F5] mt-7">Token infomation</h6>
       <p className="grid gap-x-3 mt-3 grid-cols-[110px,auto] md:grid-cols-[150px,auto] md:gap-x-8">
         <span className="text-[#9E9E9E]">Name</span>
