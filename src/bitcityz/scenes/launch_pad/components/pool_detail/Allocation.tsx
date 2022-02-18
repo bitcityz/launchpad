@@ -12,7 +12,6 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
   const [isBuyer, setIsBuyer] = useState(false)
   const [claimTimes, setClaimTimes] = useState([])
   const [loading, setLoading] = useState(true)
-  console.log(Number(formatEther(idoPool.amount)))
   const totalToken = Number(formatEther(idoPool.amount)) * Number(formatEther(idoPool.token2IDOtoken))
   const [accountClaimIndex, setAccountClaimIndex] = useState(null)
 

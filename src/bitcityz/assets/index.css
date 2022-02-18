@@ -940,6 +940,10 @@ input,
   width: 139px;
 }
 
+.w-\[45px\] {
+  width: 45px;
+}
+
 .min-w-\[140px\] {
   min-width: 140px;
 }
@@ -2245,6 +2249,10 @@ input,
     width: 167px;
   }
 
+  .md\:w-full {
+    width: 100%;
+  }
+
   .md\:min-w-\[200px\] {
     min-width: 200px;
   }
@@ -2264,10 +2272,6 @@ input,
 
   .md\:max-w-\[350px\] {
     max-width: 350px;
-  }
-
-  .md\:max-w-\[250px\] {
-    max-width: 250px;
   }
 
   .md\:max-w-\[275px\] {
@@ -2460,11 +2464,6 @@ input,
   .md\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .md\:px-5 {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
   }
 
   .md\:pr-7 {

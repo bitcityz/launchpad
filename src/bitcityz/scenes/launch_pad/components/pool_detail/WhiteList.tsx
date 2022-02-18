@@ -14,6 +14,7 @@ function WhiteList({ idoPool, updateWhitelist }) {
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
   const [loading, setLoading] = useState(true)
   const idoContract = useIdoContract()
 
@@ -21,6 +22,7 @@ function WhiteList({ idoPool, updateWhitelist }) {
     const getListWhitelist = async () => {
       try {
         const resp = await idoContract.getWhitelist(idoPool.id)
+        setTotalPage(resp.length)
         setAllWhitelist(resp)
         setLoading(false)
       } catch (err) {
@@ -37,17 +39,33 @@ function WhiteList({ idoPool, updateWhitelist }) {
       const result = allWhitelist.slice(from, to)
       setWhitelist(result)
     }
-    generateDataByPage(currentPage)
-  }, [currentPage, allWhitelist])
+    generateDataByPage(1)
+  }, [allWhitelist])
 
   const handleSearchAddress = () => {
     if (searchVal !== '') {
-      const result = whitelist.filter((r) => {
+      const result = allWhitelist.filter((r) => {
         return r === searchVal
       })
+      setTotalPage(result.length)
       setWhitelist(result)
+      setCurrentPage(1)
     } else {
-      setWhitelist(allWhitelist)
+      setTotalPage(allWhitelist.length)
+      const from = 0
+      const to = PAGE_SIZE
+      const result = allWhitelist.slice(from, to)
+      setWhitelist(result)
+    }
+  }
+
+  const handleChangePage = (page) => {
+    if (page !== currentPage) {
+      const from = page === 1 ? 0 : (page - 1) * PAGE_SIZE
+      const to = page * PAGE_SIZE
+      const result = allWhitelist.slice(from, to)
+      setWhitelist(result)
+      setCurrentPage(page)
     }
   }
 
@@ -107,9 +125,9 @@ function WhiteList({ idoPool, updateWhitelist }) {
       <div className="mt-5">
         <Pagination
           currentPage={currentPage}
-          totalCount={allWhitelist.length}
+          totalCount={totalPage}
           pageSize={PAGE_SIZE}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={(page) => handleChangePage(page)}
         />
       </div>
     </div>

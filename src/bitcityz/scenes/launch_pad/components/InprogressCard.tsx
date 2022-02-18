@@ -112,11 +112,11 @@ function InprogressCard({ ido, pools, account }) {
     const checkAccountJoined = async () => {
       const response = await idoContract.isBuyer(account, ido.id)
       setIsBuyer(response)
+      setPendingTx(false)
     }
     if (account) {
       checkAccountInWhiteList()
       checkAccountJoined()
-      setPendingTx(false)
     } else {
       setPendingTx(false)
     }

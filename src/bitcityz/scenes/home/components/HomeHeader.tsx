@@ -1,7 +1,7 @@
 import React from 'react'
 
 import '../../../assets/index.css'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import ClaimTicket from './ClaimTicket'
 import textSvg from '../../../assets/images/text.svg'
 
@@ -13,17 +13,17 @@ function HomeHeader() {
       <h2 className="text-center text-[#F5F5F5] font-bold text-xl md:text-[44px] mt-3 leading-[48px]">
         CITY OF THE HIDDEN GEMS
       </h2>
-      <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6 leading-5">
+      {/* <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6 leading-5">
         In just a few simple steps, you can own your hidden gems by participating in IDO and IGO of high-quality
         projects.
-      </p>
+      </p> */}
       <div className="flex flex-col gap-y-5 md:gap-y-0 md:flex-row items-center justify-center mt-7 md:gap-x-10">
-        <Link
+        {/* <Link
           to="/launchpad"
           className="bg-skyblue rounded-[20px] border-none text-[#212121] font-semibold py-3 px-[38px]"
         >
           Join Launchpad
-        </Link>
+        </Link> */}
         {/* <button
           type="button"
           className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] text-gradient font-semibold py-3 px-4"

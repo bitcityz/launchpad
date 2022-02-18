@@ -2,7 +2,7 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'BitCityZ',
+  title: 'BitCityZ Launchpad',
   description: '',
 }
 

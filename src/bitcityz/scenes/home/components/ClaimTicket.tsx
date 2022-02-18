@@ -31,7 +31,7 @@ function ClaimTicket() {
     try {
       setPendingTx(true)
       const transaction = await campaignContract.claim()
-      const resp = await transaction.wait()
+      await transaction.wait()
       setPendingTx(false)
       setUserIsClaimed(true)
     } catch (err) {

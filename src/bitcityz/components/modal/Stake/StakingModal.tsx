@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import BigNumber from 'bignumber.js'
+import NumberFormat from 'react-number-format'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import useGetBalanceOf from '../../../hooks/useGetBalanceOf'
@@ -19,18 +20,31 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
 
   const [stakeAmount, setStakeAmount] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
+  const [showMsg, setShowMsg] = useState(false)
+  const thousandSeparator = true
 
   const handleSelectMax = useCallback(() => {
     setStakeAmount(balance)
-  }, [balance, setStakeAmount])
+    if (Number(balance) >= Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))) {
+      setShowMsg(false)
+    }
+  }, [balance, setStakeAmount, minLockingAmount])
 
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
       if (e.currentTarget.validity.valid) {
-        setStakeAmount(e.currentTarget.value.replace(/,/g, '.'))
+        setStakeAmount(e.currentTarget.value)
+        if (
+          Number(e.currentTarget.value.replace(/,/g, '')) >=
+          Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))
+        ) {
+          setShowMsg(false)
+        } else {
+          setShowMsg(true)
+        }
       }
     },
-    [setStakeAmount],
+    [setStakeAmount, minLockingAmount],
   )
 
   useEffect(() => {
@@ -41,20 +55,26 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
   }, [])
 
   const handleConfirmClick = async () => {
-    setPendingTx(true)
     try {
       // staking
-      await onStake(stakeAmount, 18)
-      toastSuccess(
-        `${t('Staked')}!`,
-        t('Your %symbol% funds have been staked in the pool!', {
-          symbol: tokenName,
-        }),
-      )
+      if (
+        Number(stakeAmount.replace(/,/g, '')) < Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))
+      ) {
+        setShowMsg(true)
+      } else {
+        setPendingTx(true)
+        await onStake(stakeAmount.replace(/,/g, ''), 18)
+        toastSuccess(
+          `${t('Staked')}!`,
+          t('Your %symbol% funds have been staked in the pool!', {
+            symbol: tokenName,
+          }),
+        )
 
-      setPendingTx(false)
-      setUpdatePool(true)
-      onClose()
+        setPendingTx(false)
+        setUpdatePool(true)
+        onClose()
+      }
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       setPendingTx(false)
@@ -89,13 +109,20 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
         </p>
         <div className="mt-7 max-w-[300px] md:max-w-[430px] mx-auto flex items-center gap-x-2">
           <div className="bg-white text-right px-4 py-3 rounded-[20px] flex items-center gap-x-2 flex-1">
-            <input
+            {/* <input
               type="text"
               value={stakeAmount}
               pattern="^[0-9]*[.,]?[0-9]{0,18}$"
               onChange={handleChange}
               className="bg-transparent border-none text-[#9E9E9E] font-semibold flex-1 text-right pt-[1px] max-w-[145px] md:max-w-max"
               placeholder="0.00"
+            /> */}
+            <NumberFormat
+              className="bg-transparent border-none text-[#9E9E9E] font-semibold flex-1 max-w-[145px] text-right pt-[1px] md:max-w-full"
+              value={stakeAmount}
+              onChange={handleChange}
+              placeholder="0.00"
+              thousandSeparator={thousandSeparator}
             />
             <span className="text-[#212121] font-semibold">BCTZ</span>
           </div>
@@ -107,6 +134,15 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
             Max
           </button>
         </div>
+        {showMsg && (
+          <p className="text-[#FF4D4F] text-xs font-semibold mt-1">
+            You have to stake minimum{' '}
+            {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
+              maximumFractionDigits: 0,
+            })}{' '}
+            BCTZ to enter in this pool !
+          </p>
+        )}
         <p className="text-[#F5F5F5] text-center mt-4">
           Available tokens:{' '}
           <span className="text-skyblue text-shadow font-semibold">
