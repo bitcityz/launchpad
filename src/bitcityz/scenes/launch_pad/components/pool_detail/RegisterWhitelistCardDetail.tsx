@@ -18,6 +18,7 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
   const idoContract = useIdoContract()
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [showButton, setShowButton] = useState(false)
   const { t } = useTranslation()
   const { login, logout } = useAuth()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
@@ -69,8 +70,11 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
         const response = await idoContract.isWhitelist(account, idoPool.id)
         setIsInWhitelist(response)
         setUpdateWhitelist(false)
+        setShowButton(true)
       }
       checkAccountInWhiteList()
+    } else {
+      setShowButton(false)
     }
   }, [account, idoPool, idoContract, updateWhitelist, setUpdateWhitelist])
 
@@ -136,13 +140,13 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
               Connect wallet
             </button>
           )}
-          {account && isInWhitelist && (
+          {account && isInWhitelist && showButton && (
             <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-8 flex gap-x-3 items-center justify-center">
               <img src={checkedPng} alt="" />
               Registered
             </span>
           )}
-          {account && !isInWhitelist && (days !== 0 || hours !== 0 || minutes !== 0 || seconds !== 0) && (
+          {account && showButton && !isInWhitelist && (days !== 0 || hours !== 0 || minutes !== 0 || seconds !== 0) && (
             <button
               type="button"
               className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:px-8 shadow-blue"
@@ -151,7 +155,7 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
               Register Whitelist
             </button>
           )}
-          {days === 0 && hours === 0 && minutes === 0 && seconds === 0 && !isInWhitelist && (
+          {days === 0 && hours === 0 && minutes === 0 && seconds === 0 && !isInWhitelist && showButton && (
             <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
               Registration timeout
             </p>

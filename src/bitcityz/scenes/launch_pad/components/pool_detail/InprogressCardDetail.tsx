@@ -21,6 +21,7 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
   const { login, logout } = useAuth()
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
+  const [showButton, setShowButton] = useState(false)
   const [isBuyer, setIsBuyer] = useState(false)
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
@@ -102,6 +103,7 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
       const checkAccountJoined = async () => {
         const response = await idoContract.isBuyer(account, idoPool.id)
         setIsBuyer(response)
+        setShowButton(true)
       }
       checkAccountJoined()
     }
@@ -149,7 +151,7 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
               Connect wallet
             </button>
           )}
-          {account && isApproved && isInWhitelist && !isBuyer && !pendingTx && (
+          {account && isApproved && isInWhitelist && !isBuyer && !pendingTx && showButton && (
             <button
               type="button"
               className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:px-14 shadow-blue"
@@ -158,7 +160,7 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
               Join pool
             </button>
           )}
-          {account && !isApproved && isInWhitelist && !isBuyer && !pendingTx && (
+          {account && !isApproved && isInWhitelist && !isBuyer && !pendingTx && showButton && (
             <button
               type="button"
               className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:px-14 shadow-blue"
@@ -189,14 +191,14 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
               Waiting...
             </button>
           )}
-          {account && isBuyer && isInWhitelist && (
+          {account && isBuyer && isInWhitelist && showButton && (
             <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
               <img src={checkedPng} alt="" />
               Joined
             </span>
           )}
 
-          {account && !isInWhitelist && (
+          {account && !isInWhitelist && showButton && (
             <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
               You aren’t in whitelist
             </p>
