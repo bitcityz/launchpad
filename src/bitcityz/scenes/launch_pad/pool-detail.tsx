@@ -4,6 +4,7 @@ import { useParams, Redirect } from 'react-router-dom'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
 import bitcityIdoABI from 'config/abi/bitcityIdo.json'
 import { getIdoAddress, getTicketAddress } from 'utils/addressHelpers'
+import { useIdoContract } from 'hooks/useContract'
 import { multicallv2 } from 'utils/multicall'
 import { useWeb3React } from '@web3-react/core'
 import useGetPools from '../../hooks/useGetPools'
@@ -41,6 +42,8 @@ function PoolDetail() {
   const [isRefresh, setIsRefresh] = useState(false)
   const [updateWhitelist, setUpdateWhitelist] = useState(false)
   const [redirctTo, setRedirctTo] = useState(false)
+  const idoContract = useIdoContract()
+  const [isInWhitelist, setIsInWhitelist] = useState(false)
 
   const {
     claimPercent,
@@ -92,6 +95,7 @@ function PoolDetail() {
         if (Number(data[0].status._hex) === 1) {
           setTabIndex(3)
         }
+
         setIsLoading(false)
       } catch (err) {
         setRedirctTo(true)
@@ -101,6 +105,19 @@ function PoolDetail() {
       initData()
     }
   }, [listPool, id, idoAddress, ticketCalls, isRefresh])
+
+  useEffect(() => {
+    const checkAccountInWhitelist = async () => {
+      const response = await idoContract.isWhitelist(account, idoPool.id)
+      setIsInWhitelist(response)
+      if (Number(idoPool.status._hex) > 1 && account && response) {
+        setTabIndex(4)
+      }
+    }
+    if (account && idoPool) {
+      checkAccountInWhitelist()
+    }
+  }, [idoPool, idoContract, account])
 
   if (redirctTo) {
     return <Redirect to="/" />
@@ -132,7 +149,7 @@ function PoolDetail() {
           <div
             className={`grid mobile-tab gap-x-8 relative ${
               Number(idoPool?.status._hex) > 0
-                ? Number(idoPool?.status._hex) > 2
+                ? Number(idoPool?.status._hex) > 1 && account && isInWhitelist
                   ? 'md:grid-cols-4'
                   : 'md:grid-cols-3'
                 : 'md:grid-cols-2'
@@ -176,7 +193,7 @@ function PoolDetail() {
                 Whitelist
               </button>
             )}
-            {Number(idoPool?.status._hex) > 2 && (
+            {Number(idoPool?.status._hex) > 1 && account && isInWhitelist && (
               <button
                 type="button"
                 className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}

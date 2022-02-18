@@ -253,7 +253,12 @@ function PoolCardDetail({
             <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
               <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${percent}%` }} />
             </div>
-            <span className="text-white font-semibold">{percent}%</span>
+            <span className="text-white font-semibold">
+              {percent.toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
+              %
+            </span>
           </div>
         </div>
       )}
@@ -264,7 +269,12 @@ function PoolCardDetail({
             <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
               <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
             </div>
-            <span className="text-white font-semibold">{claimPercent}%</span>
+            <span className="text-white font-semibold">
+              {claimPercent.toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
+              %
+            </span>
           </div>
           <div className="flex mt-4 gap-x-3">
             <span className="text-[#F5F5F5]">Contract address</span>

@@ -12,6 +12,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
   const [isBuyer, setIsBuyer] = useState(false)
   const [claimTimes, setClaimTimes] = useState([])
   const [loading, setLoading] = useState(true)
+  console.log(Number(formatEther(idoPool.amount)))
   const totalToken = Number(formatEther(idoPool.amount)) * Number(formatEther(idoPool.token2IDOtoken))
   const [accountClaimIndex, setAccountClaimIndex] = useState(null)
 
@@ -48,45 +49,45 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
   }, [idoUnlockContract, account])
   return (
     <div className="mt-5 relative">
-      {isBuyer && (
-        <div>
-          <div className="flex flex-col md:items-center md:justify-between md:flex-row">
-            <p className="text-white font-semibold flex gap-x-2">
-              Total bought tokens:
+      <div>
+        <div className="flex flex-col md:items-center md:justify-between md:flex-row">
+          <p className="text-white font-semibold flex gap-x-2">
+            Total bought tokens:
+            <span className="text-skyblue text-shadow">
+              {Number(formatEther(idoPool.amount)).toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
+              {idoPool.baseInfo.symbol}
+            </span>
+          </p>
+          <p className="text-white font-semibold flex gap-x-2">
+            Have bought:
+            <span className="text-skyblue text-shadow">
+              {totalToken.toLocaleString('en', {
+                maximumFractionDigits: 4,
+              })}{' '}
+              {idoPool.baseInfo.currencyPair}
+            </span>
+          </p>
+          <p className="text-white font-semibold flex gap-x-2">
+            Claimed:
+            {!claimPercentLoading ? (
               <span className="text-skyblue text-shadow">
-                {totalToken.toLocaleString('en', {
+                {((claimPercent * totalToken) / 100).toLocaleString('en', {
+                  maximumFractionDigits: 4,
+                })}
+                /
+                {Number(formatEther(idoPool.amount)).toLocaleString('en', {
                   maximumFractionDigits: 4,
                 })}{' '}
                 {idoPool.baseInfo.symbol}
               </span>
-            </p>
-            <p className="text-white font-semibold flex gap-x-2">
-              Have bought:
-              <span className="text-skyblue text-shadow">
-                {Number(formatEther(idoPool.amount)).toLocaleString('en', {
-                  maximumFractionDigits: 4,
-                })}{' '}
-                {idoPool.baseInfo.currencyPair}
-              </span>
-            </p>
-            <p className="text-white font-semibold flex gap-x-2">
-              Claimed:
-              {!claimPercentLoading ? (
-                <span className="text-skyblue text-shadow">
-                  {((claimPercent * totalToken) / 100).toLocaleString('en', {
-                    maximumFractionDigits: 4,
-                  })}
-                  /
-                  {totalToken.toLocaleString('en', {
-                    maximumFractionDigits: 4,
-                  })}{' '}
-                  {idoPool.baseInfo.symbol}
-                </span>
-              ) : (
-                <Skeleton width="100px" height="16px" />
-              )}
-            </p>
-          </div>
+            ) : (
+              <Skeleton width="100px" height="16px" />
+            )}
+          </p>
+        </div>
+        {isBuyer && (
           <div className="mt-5 px-6 py-4 rounded-2xl overflow-x-auto" style={{ background: 'rgba(44, 231, 255, 0.1)' }}>
             <div className="min-w-[650px]">
               <div className="grid grid-cols-4 gap-x-8">
@@ -120,8 +121,8 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
               )}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }

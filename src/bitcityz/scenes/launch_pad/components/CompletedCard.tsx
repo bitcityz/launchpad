@@ -116,7 +116,12 @@ function CompletedCard({ ido, pools, account }) {
                       <div className="flex-1 md:max-w-[275px] bg-[#F5F5F5] h-2 rounded-[100px]">
                         <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
                       </div>
-                      <span className="text-white font-semibold">{claimPercent}%</span>
+                      <span className="text-white font-semibold">
+                        {claimPercent.toLocaleString('en', {
+                          maximumFractionDigits: 4,
+                        })}{' '}
+                        %
+                      </span>
                     </div>
                   </div>
                 )}
