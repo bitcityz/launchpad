@@ -140,6 +140,7 @@ function PoolDetail() {
               setIsRefresh={setIsRefresh}
               setUpdateWhitelist={setUpdateWhitelist}
               updateWhitelist={updateWhitelist}
+              isRefresh={isRefresh}
             />
           )}
         </div>

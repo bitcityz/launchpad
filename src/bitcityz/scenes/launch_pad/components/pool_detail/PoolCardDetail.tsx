@@ -20,6 +20,7 @@ function PoolCardDetail({
   setIsRefresh,
   setUpdateWhitelist,
   updateWhitelist,
+  isRefresh,
 }) {
   const [idoName, setIdoName] = useState('')
   const [percent, setPercent] = useState(0)
@@ -40,7 +41,7 @@ function PoolCardDetail({
     const remainAmount = Number(formatEther(idoPool.remainAmount))
     const result = ((totalAmount - remainAmount) * 100) / totalAmount
     setPercent(result)
-  }, [idoPool])
+  }, [idoPool, isRefresh])
 
   useEffect(() => {
     if (account) {
