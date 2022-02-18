@@ -102,7 +102,7 @@ function InprogressCard({ ido, pools, account }) {
     const remainAmount = Number(formatEther(ido.remainAmount))
     const result = ((totalAmount - remainAmount) * 100) / totalAmount
     setPercent(result)
-  }, [ido])
+  }, [ido, isBuyer])
 
   useEffect(() => {
     const checkAccountInWhiteList = async () => {
