@@ -4,11 +4,10 @@ import { ethers, Contract } from 'ethers'
 import { useTranslation } from 'contexts/Localization'
 import { useCake, useTokenContract, useCakeVaultContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
-import { getLaunchPoolAddress } from 'utils/addressHelpers'
+import { getLaunchPoolAddress, getBCTZAddress } from 'utils/addressHelpers'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { ToastDescriptionWithTx } from 'components/Toast'
 
-const bctz = '0xE90CABC44faE173881879BFD87A736BA0bE31305'
 export const useApprovePool = (lpContract: Contract) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [requestStatus, setRequestStatus] = useState(false)
@@ -79,7 +78,8 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
 export const useCheckApprovalStatus = () => {
   const [isAllowanceApproved, setIsAllowanceApproved] = useState(false)
   const { account } = useWeb3React()
-  const erc20Contract = useTokenContract(bctz)
+  const bctzAddress = getBCTZAddress()
+  const erc20Contract = useTokenContract(bctzAddress)
   const launchPoolAddress = getLaunchPoolAddress()
   useEffect(() => {
     const checkApprovalStatus = async () => {
