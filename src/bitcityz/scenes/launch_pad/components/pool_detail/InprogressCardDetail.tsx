@@ -98,6 +98,11 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
       const checkAccountInWhiteList = async () => {
         const response = await idoContract.isWhitelist(account, idoPool.id)
         setIsInWhitelist(response)
+        if (response) {
+          checkAccountJoined()
+        } else {
+          setShowButton(true)
+        }
       }
       checkAccountInWhiteList()
       const checkAccountJoined = async () => {
@@ -105,7 +110,6 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
         setIsBuyer(response)
         setShowButton(true)
       }
-      checkAccountJoined()
     }
   }, [account, idoPool, idoContract])
 

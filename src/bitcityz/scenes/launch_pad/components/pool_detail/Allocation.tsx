@@ -49,7 +49,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
   return (
     <div className="mt-5 relative">
       <div>
-        <div className="flex flex-col md:items-center md:justify-between md:flex-row">
+        <div className="flex flex-col gap-y-1 md:gap-y-0 md:items-center md:justify-between md:flex-row">
           <p className="text-white font-semibold flex gap-x-2">
             Your tokens:
             <span className="text-skyblue text-shadow">
@@ -68,7 +68,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
               {idoPool.baseInfo.currencyPair}
             </span>
           </p>
-          <p className="text-white font-semibold flex gap-x-2">
+          <div className="text-white font-semibold flex gap-x-2">
             Claimed:
             {!claimPercentLoading ? (
               <span className="text-skyblue text-shadow">
@@ -84,7 +84,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
             ) : (
               <Skeleton width="100px" height="16px" />
             )}
-          </p>
+          </div>
         </div>
         {isBuyer && (
           <div className="mt-5 px-6 py-4 rounded-2xl overflow-x-auto" style={{ background: 'rgba(44, 231, 255, 0.1)' }}>

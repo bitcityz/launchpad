@@ -24,7 +24,8 @@ function InprogressCard({ ido, pools, account }) {
   const [isBuyer, setIsBuyer] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
   const [idoName, setIdoName] = useState('')
-  const [pendingTx, setPendingTx] = useState(true)
+  const [pendingTx, setPendingTx] = useState(false)
+  const [showButton, setShowButton] = useState(false)
   const [secondsRemaining, setSecondsRemaining] = useState(0)
   const { toastSuccess } = useToast()
   const { callWithGasPrice } = useCallWithGasPrice()
@@ -108,17 +109,21 @@ function InprogressCard({ ido, pools, account }) {
     const checkAccountInWhiteList = async () => {
       const response = await idoContract.isWhitelist(account, ido.id)
       setIsInWhitelist(response)
+      if (response) {
+        checkAccountJoined()
+      } else {
+        setShowButton(true)
+      }
     }
     const checkAccountJoined = async () => {
       const response = await idoContract.isBuyer(account, ido.id)
       setIsBuyer(response)
-      setPendingTx(false)
+      setShowButton(true)
     }
     if (account) {
       checkAccountInWhiteList()
-      checkAccountJoined()
     } else {
-      setPendingTx(false)
+      setShowButton(true)
     }
   }, [account, ido, idoContract])
 
@@ -208,7 +213,7 @@ function InprogressCard({ ido, pools, account }) {
                   Connect wallet
                 </button>
               )}
-              {account && isApproved && !isBuyer && isInWhitelist && !pendingTx && (
+              {account && isApproved && !isBuyer && isInWhitelist && !pendingTx && showButton && (
                 <button
                   type="button"
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-10 shadow-blue"
@@ -218,7 +223,7 @@ function InprogressCard({ ido, pools, account }) {
                 </button>
               )}
 
-              {account && !isApproved && !isBuyer && isInWhitelist && !pendingTx && (
+              {account && !isApproved && !isBuyer && isInWhitelist && !pendingTx && showButton && (
                 <button
                   type="button"
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-10 shadow-blue"
@@ -251,13 +256,13 @@ function InprogressCard({ ido, pools, account }) {
                 </button>
               )}
 
-              {account && isBuyer && isInWhitelist && !pendingTx && (
+              {account && isBuyer && isInWhitelist && !pendingTx && showButton && (
                 <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
                   <img src={checkedPng} alt="" />
                   Joined
                 </span>
               )}
-              {account && !isInWhitelist && !pendingTx && (
+              {account && !isInWhitelist && !pendingTx && showButton && (
                 <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
                   You aren’t in whitelist
                 </p>
