@@ -38,6 +38,8 @@ function InprogressCard({ ido, pools, account }) {
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
   const idoAddress = getIdoAddress()
+  console.log(ido)
+  const totalToken = Number(formatEther(ido.amount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
 
   const timer = useRef(null)
 
@@ -148,14 +150,14 @@ function InprogressCard({ ido, pools, account }) {
             <div className="flex items-start gap-x-3">
               <img src={ido.baseInfo.logo.small} alt="" />
               <div className="flex-1">
-                <p className="text-[#F5F5F5] font-medium leading-5 flex justify-between items-center">
+                <p className="text-[#F5F5F5] font-bold text-xl leading-6 flex justify-between items-center">
                   {ido.baseInfo.name}{' '}
                   <span className="text-[#F5F5F5] font-normal md:text-sm">
                     ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
                   </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
-                  <span>{ido.baseInfo.symbol}</span>
+                  <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
                   <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} ={' '}
                     {/* {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
@@ -187,6 +189,21 @@ function InprogressCard({ ido, pools, account }) {
                     {days}d : {hours}h : {minutes}m : {seconds}s
                   </span>
                 </div>
+                {account && isInWhitelist && (
+                  <div className="flex gap-x-3 justify-start items-center mt-3">
+                    <span className="text-[#BFBFBF] w-[130px] text-left">Available to buy</span>
+                    <span className="text-[#F5F5F5] font-semibold">
+                      {Number(formatEther(ido.amount)).toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {ido.baseInfo.symbol} <small className="text-[#BFBFBF] font-normal">cost</small>{' '}
+                      {totalToken.toLocaleString('en', {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {ido.baseInfo.currencyPair}
+                    </span>
+                  </div>
+                )}
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-3 items-start md:items-center mt-3">
                   <span className="text-[#BFBFBF] w-[130px] text-left">Swap process</span>
                   <div className="flex flex-1 w-full md:max-w-[300px] items-center justify-end gap-x-2">

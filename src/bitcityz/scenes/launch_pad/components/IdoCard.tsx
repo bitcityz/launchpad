@@ -37,16 +37,16 @@ function IdoCard({ ido, pools }) {
             <div className="flex items-start gap-x-3">
               <img src={ido.baseInfo.logo.small} alt="" />
               <div className="flex-1">
-                <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
+                <p className="text-[#F5F5F5] font-bold text-xl leading-6 flex justify-between items-center">
                   {ido.baseInfo.name}{' '}
                   <span className="text-[#F5F5F5] leading-5 text-xs md:text-sm">
                     ({ido.baseInfo.symbol}/{ido.baseInfo.currencyPair})
                   </span>
                 </p>
 
-                <p className="text-[#F5F5F5] font-bold leading-7 mt-1 flex flex-col gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center text-2xl">
-                  <span>{ido.baseInfo.symbol}</span>
-                  <span className="text-shadow font-bold text-skyblue -translate-x-[60px] md:-translate-x-0">
+                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
+                  <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
+                  <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} = {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                   </span>
                 </p>
