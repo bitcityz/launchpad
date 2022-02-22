@@ -136,7 +136,7 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
           ({idoPool.baseInfo.symbol}/{idoPool.baseInfo.currencyPair})
         </p>
         <p className="flex flex-row mt-8 gap-x-4 md:gap-x-0 md:flex-col gap-y-1 md:items-end md:mt-1">
-          <span className="text-[#F5F5F5] leading-5">Register whitelist</span>
+          <span className="text-[#F5F5F5] leading-5">Join pool</span>
           <span
             className={`leading-5 font-semibold ${
               days !== 0 || hours !== 0 || minutes !== 0 || seconds !== 0 ? 'text-[#F5F5F5]' : 'text-[#FF4D4F]'
