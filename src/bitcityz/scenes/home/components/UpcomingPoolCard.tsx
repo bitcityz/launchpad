@@ -58,7 +58,7 @@ function UpcomingPoolCard({ project, poolName }) {
                     {(
                       Number(formatEther(project.totalAmount)) * Number(formatEther(project.tokenBuy2IDOtoken))
                     ).toLocaleString('en', {
-                      maximumFractionDigits: 4,
+                      maximumFractionDigits: 0,
                     })}{' '}
                     {project.baseInfo.currencyPair}
                   </span>
