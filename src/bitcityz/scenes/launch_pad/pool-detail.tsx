@@ -43,7 +43,7 @@ function PoolDetail() {
   const [updateWhitelist, setUpdateWhitelist] = useState(false)
   const [redirctTo, setRedirctTo] = useState(false)
   const idoContract = useIdoContract()
-  const [isInWhitelist, setIsInWhitelist] = useState(false)
+  const [isBuyer, setIsBuyer] = useState(false)
 
   const {
     claimPercent,
@@ -107,15 +107,15 @@ function PoolDetail() {
   }, [listPool, id, idoAddress, ticketCalls, isRefresh])
 
   useEffect(() => {
-    const checkAccountInWhitelist = async () => {
-      const response = await idoContract.isWhitelist(account, idoPool.id)
-      setIsInWhitelist(response)
+    const checkAccountJoined = async () => {
+      const response = await idoContract.isBuyer(account, idoPool.id)
+      setIsBuyer(response)
       if (Number(idoPool.status._hex) > 1 && account && response) {
         setTabIndex(4)
       }
     }
     if (account && idoPool) {
-      checkAccountInWhitelist()
+      checkAccountJoined()
     }
   }, [idoPool, idoContract, account])
 
@@ -150,7 +150,7 @@ function PoolDetail() {
           <div
             className={`grid mobile-tab gap-x-8 relative ${
               Number(idoPool?.status._hex) > 0
-                ? Number(idoPool?.status._hex) > 1 && account && isInWhitelist
+                ? Number(idoPool?.status._hex) > 1 && account && isBuyer
                   ? 'md:grid-cols-4'
                   : 'md:grid-cols-3'
                 : 'md:grid-cols-2'
@@ -194,7 +194,7 @@ function PoolDetail() {
                 Whitelist
               </button>
             )}
-            {Number(idoPool?.status._hex) > 1 && account && isInWhitelist && (
+            {Number(idoPool?.status._hex) > 1 && account && isBuyer && (
               <button
                 type="button"
                 className={` tab ${tabIndex === 4 ? 'tab-active' : ''}`}

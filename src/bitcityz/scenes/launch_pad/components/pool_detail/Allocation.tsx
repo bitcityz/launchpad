@@ -63,7 +63,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
             Funds needed:
             <span className="text-skyblue text-shadow">
               {totalToken.toLocaleString('en', {
-                maximumFractionDigits: 4,
+                maximumFractionDigits: 0,
               })}{' '}
               {idoPool.baseInfo.currencyPair}
             </span>

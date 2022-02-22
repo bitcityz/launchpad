@@ -198,7 +198,7 @@ function InprogressCard({ ido, pools, account }) {
                       })}{' '}
                       {ido.baseInfo.symbol} <small className="text-[#BFBFBF] font-normal">cost</small>{' '}
                       {totalToken.toLocaleString('en', {
-                        maximumFractionDigits: 4,
+                        maximumFractionDigits: 0,
                       })}{' '}
                       {ido.baseInfo.currencyPair}
                     </span>
