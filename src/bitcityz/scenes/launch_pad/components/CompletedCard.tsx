@@ -142,7 +142,7 @@ function CompletedCard({ ido, pools, account }) {
             <div className="flex flex-col gap-y-4 mt-5 md:flex-row md:gap-y-0 md:gap-x-4">
               {account && !isBuyer && (
                 <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
-                  You did not join the pool
+                  You haven&apos;t joined the pool yet
                 </p>
               )}
               <NavLink

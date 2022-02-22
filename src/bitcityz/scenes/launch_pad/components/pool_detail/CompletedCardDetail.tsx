@@ -29,7 +29,7 @@ function CompletedCardDetail({ idoPool, account, claimPercent, isBuyer, setIsBuy
   }
 
   return (
-    <div className="flex-1 grid md:gap-x-4 md:whitelist-card-grid">
+    <div className="flex-1 grid md:gap-x-4 md:completed-card-grid">
       <div>
         <div className="flex items-start gap-x-3">
           <img src={idoPool.baseInfo.logo.small} alt="" />
@@ -84,7 +84,7 @@ function CompletedCardDetail({ idoPool, account, claimPercent, isBuyer, setIsBuy
           )}
           {account && !isBuyer && (
             <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
-              You did not join the pool
+              You haven&apos;t joined the pool yet
             </p>
           )}
         </div>

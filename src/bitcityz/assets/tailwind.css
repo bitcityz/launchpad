@@ -352,6 +352,9 @@
   .whitelist-card-grid {
     grid-template-columns: auto 225px;
   }
+  .completed-card-grid {
+    grid-template-columns: auto 270px;
+  }
   .kogKyy {
     z-index: 9999 !important;
   }
