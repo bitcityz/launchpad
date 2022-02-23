@@ -170,6 +170,7 @@ function RegisterWhitelistCardDetail({ idoPool, account, updateWhitelist, setUpd
           ticket={ticket}
           ticketId={ticketId}
           setUpdateWhitelist={setUpdateWhitelist}
+          projectName={idoPool.baseInfo.name}
         />
       )}
     </div>

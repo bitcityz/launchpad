@@ -9,7 +9,7 @@ import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
 const NOT_ON_IDO = '0x0000000000000000000000000000000000000000'
-function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhitelist }) {
+function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhitelist, projectName }) {
   const { t } = useTranslation()
 
   const ticketContract = useTicketContract()
@@ -77,7 +77,7 @@ function RegisterModal({ onClose, idoName, ticket, ticketId, ido, setUpdateWhite
           Register <span className="text-skyblue text-shadow">{idoName} round</span> whitelist
         </h6>
         <p className="text-[#F5F5F5] text-center mt-3">
-          Project: <span className="text-skyblue text-shadow font-semibold"> Goose FX Finance</span>
+          Project: <span className="text-skyblue text-shadow font-semibold"> {projectName}</span>
         </p>
         <div className="mt-7">
           <div className="bg-white text-right px-4 py-3 max-w-[150px] rounded-[20px] flex items-center gap-x-2 mx-auto">

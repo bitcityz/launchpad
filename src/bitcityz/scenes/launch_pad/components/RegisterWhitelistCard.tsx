@@ -218,6 +218,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
           ticket={ticket}
           ticketId={ticketId}
           setUpdateWhitelist={setUpdateWhitelist}
+          projectName={ido.baseInfo.name}
         />
       )}
     </>
