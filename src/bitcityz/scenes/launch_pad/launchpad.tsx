@@ -98,8 +98,6 @@ function LaunchPad() {
         }
         if (whitelistPr.length === 0 && inprogressPr.length > 0) {
           setTabIndex(3)
-        } else {
-          setTabIndex(1)
         }
       }
     }
