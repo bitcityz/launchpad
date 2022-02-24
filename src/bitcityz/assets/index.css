@@ -1213,6 +1213,11 @@ input,
   row-gap: 0.5rem;
 }
 
+.gap-x-12 {
+  -webkit-column-gap: 3rem;
+          column-gap: 3rem;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -2217,6 +2222,10 @@ input,
     margin-top: 0.25rem;
   }
 
+  .md\:mr-24 {
+    margin-right: 6rem;
+  }
+
   .md\:block {
     display: block;
   }
@@ -2272,6 +2281,10 @@ input,
 
   .md\:max-w-\[300px\] {
     max-width: 300px;
+  }
+
+  .md\:max-w-\[150px\] {
+    max-width: 150px;
   }
 
   .md\:flex-1 {

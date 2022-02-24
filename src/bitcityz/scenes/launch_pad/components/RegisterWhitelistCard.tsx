@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { isAfter, differenceInSeconds } from 'date-fns'
+import { formatEther } from 'ethers/lib/utils'
 import BigNumber from 'bignumber.js'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
@@ -145,7 +146,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
               <Social idoInfo={ido.baseInfo} />
               <div className="mt-5 md:mt-3 flex flex-col md:flex-row md:gap-x-8">
                 <div className="flex-1 text-left">
-                  {/* <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
+                  <p className="flex flex-row gap-x-4">
                     <span className="text-[#BFBFBF]">Total capital raise</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {(
@@ -155,8 +156,8 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                       })}{' '}
                       {ido.baseInfo.currencyPair}
                     </span>
-                  </p> */}
-                  <p className="flex flex-row gap-x-4">
+                  </p>
+                  <p className="flex flex-row gap-x-4 mt-3">
                     <span className="text-[#BFBFBF]">Register Whitelist</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {days}d : {hours}h : {minutes}m : {seconds}s

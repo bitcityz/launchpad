@@ -141,6 +141,8 @@ function PoolDetail() {
               setUpdateWhitelist={setUpdateWhitelist}
               updateWhitelist={updateWhitelist}
               isRefresh={isRefresh}
+              setIsBuyer={setIsBuyer}
+              isBuyer={isBuyer}
             />
           )}
         </div>

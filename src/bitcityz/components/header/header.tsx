@@ -42,7 +42,7 @@ function Header() {
       {showWalletModal && <WalletModal onClose={_handleCloseModal} />}
       <header className="relative">
         <nav className={`layout-container mobile-menu xl:desktop-menu ${showMenu ? 'h-screen' : 'h-[55px]'}`}>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between md:mr-24">
             <Link to="/" onClick={_handleCloseMenu}>
               <img src={logo} className="mr-8" alt="" />
             </Link>
@@ -52,7 +52,7 @@ function Header() {
             </button>
           </div>
           <ul
-            className={`xl:flex xl:flex-row xl:mt-0 flex flex-col gap-y-4 mt-8 justify-center items-center gap-x-4 list-none ${
+            className={`xl:flex xl:flex-row xl:mt-0 flex flex-col gap-y-4 mt-8 justify-center items-center gap-x-12 list-none ${
               showMenu ? '' : 'hidden'
             }`}
           >

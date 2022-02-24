@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
+import { formatEther } from 'ethers/lib/utils'
 import { useTooltip } from '@mexi/uikit'
 import { NavLink } from 'react-router-dom'
 import { useIdoContract } from 'hooks/useContract'
@@ -19,6 +20,7 @@ function CompletedCard({ ido, pools, account }) {
   const { claimPercent } = useAccountClaimPercent(account, ido.idoUnlock)
   const idoContract = useIdoContract()
   const { targetRef, tooltip } = useTooltip('Copied', { placement: 'top' })
+  const [showButton, setShowButton] = useState(false)
 
   useEffect(() => {
     const pool = pools.filter((r) => {
@@ -32,6 +34,7 @@ function CompletedCard({ ido, pools, account }) {
       const checkAccountJoined = async () => {
         const response = await idoContract.isBuyer(account, ido.id)
         setIsBuyer(response)
+        setShowButton(true)
       }
       checkAccountJoined()
     }
@@ -106,7 +109,19 @@ function CompletedCard({ ido, pools, account }) {
             </NavLink> */}
             <div className="mt-4 flex flex-col md:flex-row md:gap-x-8">
               <div className="flex-1">
-                {account && isBuyer && (
+                <div className="flex gap-x-3 justify-start items-center">
+                  <span className="text-[#BFBFBF] w-[130px]">Total capital raise</span>
+                  <span className="text-[#F5F5F5] font-semibold">
+                    {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
+                      'en',
+                      {
+                        maximumFractionDigits: 0,
+                      },
+                    )}{' '}
+                    {ido.baseInfo.currencyPair}
+                  </span>
+                </div>
+                {account && isBuyer && showButton && (
                   <div className="flex flex-col gap-y-1 items-start md:gap-y-0 md:flex-row md:items-center">
                     <span className="text-[#BFBFBF] w-[142px] text-left">Claim process</span>
                     <div className="flex flex-1 w-full items-center justify-start gap-x-2">
@@ -140,7 +155,7 @@ function CompletedCard({ ido, pools, account }) {
               </div>
             </div>
             <div className="flex flex-col gap-y-4 mt-5 md:flex-row md:gap-y-0 md:gap-x-4">
-              {account && !isBuyer && (
+              {account && !isBuyer && showButton && (
                 <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
                   You haven&apos;t joined the pool yet
                 </p>

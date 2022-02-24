@@ -50,11 +50,11 @@ function CompletedCardDetail({ idoPool, account, claimPercent, isBuyer, setIsBuy
         <p className="text-[#F5F5F5] hidden text-right leading-5 font-semibold text-xs md:text-base md:block">
           ({idoPool.baseInfo.symbol}/{idoPool.baseInfo.currencyPair})
         </p>
-        <div className="w-full md:mt-16 md:w-auto order-3 md:-order-none">
+        <div className="w-full md:mt-16 md:w-auto text-right order-3 md:-order-none">
           {account && isBuyer && claimPercent === 0 && !pendingTx && (
             <button
               type="button"
-              className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:px-14 shadow-blue"
+              className="bg-skyblue mt-auto rounded-[20px] border-none text-black font-semibold h-[44px] w-full md:max-w-[150px] md:px-14 shadow-blue"
               onClick={handleRefundClick}
             >
               Refund
@@ -63,7 +63,7 @@ function CompletedCardDetail({ idoPool, account, claimPercent, isBuyer, setIsBuy
           {account && isBuyer && claimPercent === 0 && pendingTx && (
             <button
               type="button"
-              className="flex items-center justify-center w-full h-[44px] font-semibold rounded-[20px] text-black pointer-events-none bg-[#9E9E9E] transition ease-in-out duration-150 cursor-not-allowed"
+              className="flex items-center md:ml-auto justify-center w-full h-[44px] font-semibold md:max-w-[150px] rounded-[20px] text-black pointer-events-none bg-[#9E9E9E] transition ease-in-out duration-150 cursor-not-allowed"
               disabled
             >
               <svg
@@ -83,7 +83,7 @@ function CompletedCardDetail({ idoPool, account, claimPercent, isBuyer, setIsBuy
             </button>
           )}
           {account && !isBuyer && (
-            <p className="text-[#FF4D4F] font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
+            <p className="text-[#FF4D4F] mt-5 md:mt-0 font-semibold border-[1px] border-solid border-[#FF4D4F] rounded-[20px] flex items-center justify-center h-[44px] px-4">
               You haven&apos;t joined the pool yet
             </p>
           )}

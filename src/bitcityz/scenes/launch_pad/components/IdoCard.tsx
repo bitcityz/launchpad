@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import '../../../assets/index.css'
+import { formatEther } from 'ethers/lib/utils'
 import { Link } from 'react-router-dom'
 
 import Social from './Social'
@@ -55,8 +56,8 @@ function IdoCard({ ido, pools }) {
             <Social idoInfo={ido.baseInfo} />
             <div className="md:mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
-                {/* <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
-                  <span className="text-[#BFBFBF]">Total capital raise</span>
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
                       'en',
@@ -66,7 +67,7 @@ function IdoCard({ ido, pools }) {
                     )}{' '}
                     {ido.baseInfo.currencyPair}
                   </span>
-                </p> */}
+                </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
                   <span className="text-[#BFBFBF] w-[180px]">Whitelist reg starts</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(ido.startTimeWL * 1000, 'Pp')} (UTC)</span>

@@ -21,11 +21,12 @@ function PoolCardDetail({
   setUpdateWhitelist,
   updateWhitelist,
   isRefresh,
+  setIsBuyer,
+  isBuyer,
 }) {
   const [idoName, setIdoName] = useState('')
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
-  const [isBuyer, setIsBuyer] = useState(false)
   const { targetRef, tooltip } = useTooltip('Copied', { placement: 'top' })
   const [isCopied, setIsCopied] = useState(false)
   const [isInWhitelist, setIsInWhitelist] = useState(false)
@@ -52,12 +53,6 @@ function PoolCardDetail({
         setIsInWhitelist(response)
       }
       checkAccountInWhiteList()
-
-      const checkAccountJoined = async () => {
-        const response = await idoContract.isBuyer(account, idoPool.id)
-        setIsBuyer(response)
-      }
-      checkAccountJoined()
     }
   }, [account, idoPool, idoContract])
 
@@ -90,7 +85,13 @@ function PoolCardDetail({
       <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
         {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
       </h6>
-      <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px] md:pb-5 md:border-b-[1px] md:border-solid md:border-[#434343]">
+      <div
+        className={`mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px] ${
+          Number(idoPool.status._hex) === 2 || (Number(idoPool.status._hex) === 3 && account)
+            ? 'md:pb-5 md:border-b-[1px] md:border-solid md:border-[#434343]'
+            : ''
+        }`}
+      >
         <img src={idoPool.baseInfo.logo.large} alt="" />
         {Number(idoPool.status._hex) === 0 && <UpcomingCardDetail idoPool={idoPool} />}
         {Number(idoPool.status._hex) === 1 && (
@@ -152,21 +153,26 @@ function PoolCardDetail({
           </div>
         </div>
       )}
-      {Number(idoPool.status._hex) === 3 && account && isBuyer && (
-        <div className="flex w-full pt-5 md:border-t-[1px] md:border-solid md:border-[#434343] flex-col gap-y-1 items-start md:items-start md:mt-6">
-          <span className="text-[#BFBFBF]">Claim process</span>
-          <div className="flex w-full items-center justify-end gap-x-2">
-            <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
-              <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
+
+      <div className="flex w-full pt-5 flex-col gap-y-1 items-start md:items-start">
+        {Number(idoPool.status._hex) === 3 && account && isBuyer && (
+          <div className="w-full">
+            <span className="text-[#BFBFBF]">Claim process</span>
+            <div className="flex w-full items-center justify-end gap-x-2 mt-3">
+              <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
+                <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />
+              </div>
+              <span className="text-white font-semibold">
+                {claimPercent.toLocaleString('en', {
+                  maximumFractionDigits: 4,
+                })}{' '}
+                %
+              </span>
             </div>
-            <span className="text-white font-semibold">
-              {claimPercent.toLocaleString('en', {
-                maximumFractionDigits: 4,
-              })}{' '}
-              %
-            </span>
           </div>
-          <div className="flex mt-4 gap-x-3">
+        )}
+        {Number(idoPool.status._hex) === 3 && (
+          <div className={`flex ${isBuyer ? 'mt-4' : ''} gap-x-3`}>
             <span className="text-[#F5F5F5]">Contract address</span>
             <span className="text-skyblue font-semibold flex gap-x-3">
               {idoPool.idoToken}
@@ -181,8 +187,8 @@ function PoolCardDetail({
               {isCopied && tooltip}
             </span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }

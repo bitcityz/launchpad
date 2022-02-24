@@ -171,8 +171,8 @@ function InprogressCard({ ido, pools, account }) {
             <Social idoInfo={ido.baseInfo} />
             <div className="mt-5 flex flex-col md:flex-row md:gap-x-8">
               <div className="flex-1">
-                {/* <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row justify-between items-center">
-                  <span className="text-[#BFBFBF]">Total capital raise</span>
+                <div className="flex gap-x-3 justify-start items-center">
+                  <span className="text-[#BFBFBF] w-[130px]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
                       'en',
@@ -182,8 +182,8 @@ function InprogressCard({ ido, pools, account }) {
                     )}{' '}
                     {ido.baseInfo.currencyPair}
                   </span>
-                </div> */}
-                <div className="flex gap-x-3 justify-start items-center">
+                </div>
+                <div className="flex gap-x-3 justify-start items-center mt-3">
                   <span className="text-[#BFBFBF] w-[130px] text-left">Join Pool</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {days}d : {hours}h : {minutes}m : {seconds}s
