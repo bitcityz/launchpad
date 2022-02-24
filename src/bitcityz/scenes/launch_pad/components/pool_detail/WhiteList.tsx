@@ -4,17 +4,12 @@ import { useIdoContract } from 'hooks/useContract'
 import truncateHash from 'utils/truncateHash'
 import { Skeleton } from '@mexi/uikit'
 
-import Pagination from '../../../../components/pagination/Pagination'
-
 import IcSearchSvg from '../../../../assets/images/ic-search.svg'
 
-const PAGE_SIZE = 10
 function WhiteList({ idoPool, updateWhitelist }) {
   const [whitelist, setWhitelist] = useState([])
   const [allWhitelist, setAllWhitelist] = useState([])
   const [searchVal, setSearchVal] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPage, setTotalPage] = useState(0)
   const [loading, setLoading] = useState(true)
   const idoContract = useIdoContract()
 
@@ -22,8 +17,8 @@ function WhiteList({ idoPool, updateWhitelist }) {
     const getListWhitelist = async () => {
       try {
         const resp = await idoContract.getWhitelist(idoPool.id)
-        setTotalPage(resp.length)
         setAllWhitelist(resp)
+        setWhitelist(resp)
         setLoading(false)
       } catch (err) {
         setLoading(false)
@@ -32,40 +27,14 @@ function WhiteList({ idoPool, updateWhitelist }) {
     getListWhitelist()
   }, [idoContract, idoPool, updateWhitelist])
 
-  useEffect(() => {
-    const generateDataByPage = (pageIndex) => {
-      const from = pageIndex === 1 ? 0 : (pageIndex - 1) * PAGE_SIZE
-      const to = pageIndex * PAGE_SIZE
-      const result = allWhitelist.slice(from, to)
-      setWhitelist(result)
-    }
-    generateDataByPage(1)
-  }, [allWhitelist])
-
   const handleSearchAddress = () => {
     if (searchVal !== '') {
       const result = allWhitelist.filter((r) => {
-        return r === searchVal
+        return r.includes(searchVal)
       })
-      setTotalPage(result.length)
       setWhitelist(result)
-      setCurrentPage(1)
     } else {
-      setTotalPage(allWhitelist.length)
-      const from = 0
-      const to = PAGE_SIZE
-      const result = allWhitelist.slice(from, to)
-      setWhitelist(result)
-    }
-  }
-
-  const handleChangePage = (page) => {
-    if (page !== currentPage) {
-      const from = page === 1 ? 0 : (page - 1) * PAGE_SIZE
-      const to = page * PAGE_SIZE
-      const result = allWhitelist.slice(from, to)
-      setWhitelist(result)
-      setCurrentPage(page)
+      setWhitelist(allWhitelist)
     }
   }
 
@@ -82,13 +51,13 @@ function WhiteList({ idoPool, updateWhitelist }) {
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
             placeholder="Search your wallet address"
-            onBlur={handleSearchAddress}
+            onKeyUp={handleSearchAddress}
           />
           <button type="button" className="border-none bg-transparent" onClick={handleSearchAddress}>
             <img src={IcSearchSvg} alt="" />
           </button>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 max-h-[572px] overflow-y-auto">
           <div
             className="rounded-xl px-4 py-[18px] grid gap-x-2 grid-cols-[50px,auto] md:grid-cols-[100px,auto] md:gap-x-5"
             style={{ background: 'rgba(245, 245, 245, 0.1)' }}
@@ -121,14 +90,6 @@ function WhiteList({ idoPool, updateWhitelist }) {
             })
           )}
         </div>
-      </div>
-      <div className="mt-5">
-        <Pagination
-          currentPage={currentPage}
-          totalCount={totalPage}
-          pageSize={PAGE_SIZE}
-          onPageChange={(page) => handleChangePage(page)}
-        />
       </div>
     </div>
   )

@@ -872,6 +872,22 @@ input,
   height: 32px;
 }
 
+.h-\[520px\] {
+  height: 520px;
+}
+
+.h-\[500px\] {
+  height: 500px;
+}
+
+.max-h-\[520px\] {
+  max-height: 520px;
+}
+
+.max-h-\[572px\] {
+  max-height: 572px;
+}
+
 .w-9 {
   width: 2.25rem;
 }
@@ -1220,6 +1236,14 @@ input,
 
 .overflow-x-auto {
   overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .whitespace-nowrap {
