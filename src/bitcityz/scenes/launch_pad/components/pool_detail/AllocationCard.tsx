@@ -54,7 +54,7 @@ function AllocationCard({ claim, totalToken, accountClaimIndex, setIsUpdate, ido
           }`}
           onClick={handleClaim}
         >
-          Claim
+          {isDisabled ? <span>Claimed</span> : <span>Claim</span>}
         </button>
       )}
 
