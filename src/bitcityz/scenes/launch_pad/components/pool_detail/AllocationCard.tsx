@@ -85,7 +85,7 @@ function AllocationCard({ claim, totalToken, accountClaimIndex, setIsUpdate, ido
           maximumFractionDigits: 4,
         })}
       </span>
-      <span className="text-[#BFBFBF] font-semibold">Oct 15 2021, 2:30 PM UTC</span>
+      <span className="text-[#BFBFBF] font-semibold">N/A</span>
       <span className="text-[#BFBFBF] font-semibold">{unlockPercent}%</span>
     </div>
   )
