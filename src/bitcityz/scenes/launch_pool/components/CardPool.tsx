@@ -9,7 +9,7 @@ import { useTranslation } from 'contexts/Localization'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import getTimePeriods from 'utils/getTimePeriods'
 import BigNumber from 'bignumber.js'
-import { useTicketContract } from 'hooks/useContract'
+import { useTicketContract, useLaunchPoolContract } from 'hooks/useContract'
 import StakingAction from './StakingAction'
 
 import bgCardPink from '../../../assets/images/bg-lauchpool-card-pink.png'
@@ -30,11 +30,17 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
   const { currentBlock } = useBlock()
 
   const ticketContract = useTicketContract()
+  const launchPoolContract = useLaunchPoolContract()
 
   const [ticket, setTicket] = useState(0)
+  const [availableTicket, setAvailableTicket] = useState(0)
+
+  const [intervalTime, setIntervalTime] = useState(
+    Number(lockingTime) - (differenceInSeconds(new Date(), startTime * 1000) % Number(lockingTime)),
+  )
 
   const secondsRemaining = startTime > 0 ? differenceInSeconds(new Date(), startTime * 1000) : 0
-  const availableTicket = Math.floor(secondsRemaining / lockingTime)
+  // const availableTicket = Math.floor(secondsRemaining / lockingTime)
   const { days, hours, minutes } = getTimePeriods(secondsRemaining)
 
   const calculateTicket = useCallback(
@@ -53,9 +59,34 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
     [account, ticketContract],
   )
 
+  const getKeyAvailable = useCallback(
+    (updateInterval) => {
+      launchPoolContract.keyAvailable(id, account).then((resp) => {
+        setAvailableTicket(Number(resp._hex))
+        if (updateInterval) {
+          setIntervalTime(lockingTime * 1 + 2)
+        }
+      })
+    },
+    [launchPoolContract, id, account, lockingTime],
+  )
+
+  useEffect(() => {
+    let intervalId
+    if (amount > 0) {
+      getKeyAvailable(false)
+      intervalId = setInterval(() => {
+        getKeyAvailable(true)
+      }, (intervalTime * 1 + 2) * 1000)
+    }
+
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [getKeyAvailable, amount, intervalTime])
+
   useEffect(() => {
     if (account) {
-      setTicket(0)
       ticketContract.balanceOf(account).then((resp) => {
         const totalTicket = new BigNumber(resp._hex).toNumber()
         if (totalTicket > 0) {
@@ -159,7 +190,8 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             <p className="text-[#F5F5F5] font-semibold text-xs flex items-center">
               {account && isApproved ? (
                 <>
-                  <img src={infoSvg} alt="" className="mr-1" /> One pass-ticket will be generated in 7 days
+                  <img src={infoSvg} alt="" className="mr-1" /> One pass-ticket will be generated in{' '}
+                  {(lockingTime / 3600).toFixed(2)} days
                 </>
               ) : (
                 <>
@@ -193,6 +225,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
                 setIsApproved={setIsApproved}
                 account={account}
                 availableTicket={availableTicket}
+                setAvailableTicket={setAvailableTicket}
               />
             )}
           </div>

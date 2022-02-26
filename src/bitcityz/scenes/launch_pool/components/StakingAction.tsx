@@ -7,7 +7,15 @@ import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import { useApprovePool } from '../hooks/useApprove'
 
-function StakingAction({ pool, setUpdatePool, isApproved, setIsApproved, account, availableTicket }) {
+function StakingAction({
+  pool,
+  setUpdatePool,
+  isApproved,
+  setIsApproved,
+  account,
+  availableTicket,
+  setAvailableTicket,
+}) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
   const { amount, lockingToken, id } = pool
@@ -49,6 +57,7 @@ function StakingAction({ pool, setUpdatePool, isApproved, setIsApproved, account
       console.log(resp)
       setPendingTx(false)
       setUpdatePool(true)
+      setAvailableTicket(0)
       toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
     } catch (err) {
       console.log(err)
@@ -157,6 +166,7 @@ function StakingAction({ pool, setUpdatePool, isApproved, setIsApproved, account
               onClose={_handleCloseConfirm}
               setUpdatePool={setUpdatePool}
               availableTicket={availableTicket}
+              setAvailableTicket={setAvailableTicket}
             />
           )}
         </div>

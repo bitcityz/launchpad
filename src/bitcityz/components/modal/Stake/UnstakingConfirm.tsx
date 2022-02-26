@@ -5,7 +5,7 @@ import useUnstakePool from '../../../scenes/launch_pool/hooks/useUnstakePool'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket }) {
+function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAvailableTicket }) {
   const { id, name } = pool
   const { onUnstake } = useUnstakePool(id)
   const { t } = useTranslation()
@@ -28,6 +28,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket }) {
       )
       setPendingTx(false)
       setUpdatePool(true)
+      setAvailableTicket(0)
       onClose()
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
