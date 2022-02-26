@@ -146,7 +146,7 @@ function LaunchPad() {
               ) : (
                 <img src={editSvg} className="ml-1" alt="" />
               )}
-              Register Whitelist
+              Register whitelist
             </button>
             <button
               type="button"
