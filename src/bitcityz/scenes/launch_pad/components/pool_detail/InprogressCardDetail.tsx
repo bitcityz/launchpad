@@ -119,13 +119,13 @@ function InprogressCardDetail({ idoPool, account, setIsLoading, setIsRefresh }) 
         <div className="flex items-start gap-x-3">
           <img src={idoPool.baseInfo.logo.small} alt="" />
           <div className="flex-1">
-            <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
+            <p className="text-[#F5F5F5] leading-6 text-xl font-bold flex justify-between items-center">
               {idoPool.baseInfo.name}{' '}
               <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base md:hidden">
                 ({idoPool.baseInfo.symbol}/{idoPool.baseInfo.currencyPair})
               </span>
             </p>
-            <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1">{idoPool.baseInfo.symbol}</p>
+            <p className="text-[#F5F5F5] text-sm font-medium leading-5 mt-1">Token name: {idoPool.baseInfo.symbol}</p>
             <p className="text-sm text-[#BFBFBF] hidden md:block">{idoPool.baseInfo.shortDescription}</p>
           </div>
         </div>

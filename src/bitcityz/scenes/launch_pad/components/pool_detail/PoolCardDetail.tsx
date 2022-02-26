@@ -3,6 +3,7 @@ import '../../../../assets/index.css'
 import { formatEther } from 'ethers/lib/utils'
 import { useTooltip } from '@mexi/uikit'
 import { useIdoContract } from 'hooks/useContract'
+import truncateHash from 'utils/truncateHash'
 import UpcomingCardDetail from './UpcomingCardDetail'
 import RegisterWhitelistCardDetail from './RegisterWhitelistCardDetail'
 import InprogressCardDetail from './InprogressCardDetail'
@@ -172,10 +173,11 @@ function PoolCardDetail({
           </div>
         )}
         {Number(idoPool.status._hex) === 3 && (
-          <div className={`flex ${isBuyer ? 'mt-4' : ''} gap-x-3`}>
+          <div className={`flex flex-col gap-y-1 md:gap-y-0 text-sm md:flex-row ${isBuyer ? 'mt-4' : ''} md:gap-x-3`}>
             <span className="text-[#F5F5F5]">Contract address</span>
             <span className="text-skyblue font-semibold flex gap-x-3">
-              {idoPool.idoToken}
+              <span className="md:hidden">{truncateHash(idoPool.idoToken, 16, 16)}</span>
+              <span className="hidden md:inline-block">{idoPool.idoToken}</span>
               <button
                 className="border-none bg-transparent"
                 type="button"

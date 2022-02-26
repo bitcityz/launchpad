@@ -122,7 +122,7 @@ function CompletedCard({ ido, pools, account }) {
                   </span>
                 </div>
                 {account && isBuyer && showButton && (
-                  <div className="flex flex-col gap-y-1 items-start md:gap-y-0 md:flex-row md:items-center">
+                  <div className="flex flex-col mt-3 gap-y-1 items-start md:gap-y-0 md:flex-row md:items-center">
                     <span className="text-[#BFBFBF] w-[142px] text-left">Claim process</span>
                     <div className="flex flex-1 w-full items-center justify-start gap-x-2">
                       <div className="flex-1 md:max-w-[275px] bg-[#F5F5F5] h-2 rounded-[100px]">

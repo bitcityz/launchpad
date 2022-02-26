@@ -92,7 +92,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
               <div className="grid grid-cols-4 gap-x-8">
                 <span className="text-[#F5F5F5] font-semibold">Action</span>
                 <span className="text-[#F5F5F5] font-semibold">Claimable</span>
-                <span className="text-[#F5F5F5] font-semibold">Time EightDee</span>
+                <span className="text-[#F5F5F5] font-semibold">Time</span>
                 <span className="text-[#F5F5F5] font-semibold">Status</span>
               </div>
               {loading ? (
@@ -110,7 +110,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
                     <AllocationCard
                       key={claim}
                       claim={claim}
-                      totalToken={totalToken}
+                      totalToken={Number(formatEther(idoPool.amount))}
                       accountClaimIndex={accountClaimIndex}
                       setIsUpdate={setIsUpdate}
                       idoUnlock={idoPool.idoUnlock}
