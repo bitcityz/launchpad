@@ -38,7 +38,6 @@ function InprogressCard({ ido, pools, account }) {
   const [percent, setPercent] = useState(0)
   const idoContract = useIdoContract()
   const idoAddress = getIdoAddress()
-  console.log(ido)
   const totalToken = Number(formatEther(ido.amount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
 
   const timer = useRef(null)
@@ -184,7 +183,7 @@ function InprogressCard({ ido, pools, account }) {
                   </span>
                 </div>
                 <div className="flex gap-x-3 justify-start items-center mt-3">
-                  <span className="text-[#BFBFBF] w-[130px] text-left">Join Pool</span>
+                  <span className="text-[#BFBFBF] w-[130px] text-left">Join pool</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {days}d : {hours}h : {minutes}m : {seconds}s
                   </span>

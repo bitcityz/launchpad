@@ -158,7 +158,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     </span>
                   </p>
                   <p className="flex flex-row gap-x-4 mt-3">
-                    <span className="text-[#BFBFBF]">Register Whitelist</span>
+                    <span className="text-[#BFBFBF]">Register whitelist</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {days}d : {hours}h : {minutes}m : {seconds}s
                     </span>

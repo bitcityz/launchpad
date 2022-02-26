@@ -872,18 +872,6 @@ input,
   height: 32px;
 }
 
-.h-\[520px\] {
-  height: 520px;
-}
-
-.h-\[500px\] {
-  height: 500px;
-}
-
-.max-h-\[520px\] {
-  max-height: 520px;
-}
-
 .max-h-\[572px\] {
   max-height: 572px;
 }
@@ -916,12 +904,12 @@ input,
   width: 120px;
 }
 
-.w-\[142px\] {
-  width: 142px;
-}
-
 .w-\[130px\] {
   width: 130px;
+}
+
+.w-\[142px\] {
+  width: 142px;
 }
 
 .w-\[151px\] {
@@ -1006,6 +994,10 @@ input,
 
 .max-w-none {
   max-width: none;
+}
+
+.max-w-\[177px\] {
+  max-width: 177px;
 }
 
 .max-w-\[calc\(100vw-200px\)\] {
@@ -1170,9 +1162,9 @@ input,
   row-gap: 1rem;
 }
 
-.gap-x-4 {
-  -webkit-column-gap: 1rem;
-          column-gap: 1rem;
+.gap-x-12 {
+  -webkit-column-gap: 3rem;
+          column-gap: 3rem;
 }
 
 .gap-x-2 {
@@ -1216,6 +1208,11 @@ input,
   row-gap: 2rem;
 }
 
+.gap-x-4 {
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+}
+
 .gap-x-5 {
   -webkit-column-gap: 1.25rem;
           column-gap: 1.25rem;
@@ -1225,13 +1222,12 @@ input,
   row-gap: 0.25rem;
 }
 
-.gap-y-2 {
-  row-gap: 0.5rem;
+.gap-y-0 {
+  row-gap: 0px;
 }
 
-.gap-x-12 {
-  -webkit-column-gap: 3rem;
-          column-gap: 3rem;
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 
 .overflow-x-auto {
@@ -1240,10 +1236,6 @@ input,
 
 .overflow-y-auto {
   overflow-y: auto;
-}
-
-.overflow-y-scroll {
-  overflow-y: scroll;
 }
 
 .whitespace-nowrap {
@@ -1346,6 +1338,11 @@ input,
 .border-\[\#FF4D4F\] {
   --tw-border-opacity: 1;
   border-color: rgb(255 77 79 / var(--tw-border-opacity));
+}
+
+.border-\[\#262626\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(38 38 38 / var(--tw-border-opacity));
 }
 
 .bg-\[\#050e21\] {
@@ -1614,6 +1611,10 @@ input,
 
 .pt-\[150px\] {
   padding-top: 150px;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .pt-5 {
@@ -2210,6 +2211,15 @@ input,
     order: 0;
   }
 
+  .md\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .md\:mr-24 {
+    margin-right: 6rem;
+  }
+
   .md\:mt-auto {
     margin-top: auto;
   }
@@ -2230,12 +2240,12 @@ input,
     margin-top: 0.75rem;
   }
 
-  .md\:mt-6 {
-    margin-top: 1.5rem;
-  }
-
   .md\:mt-0 {
     margin-top: 0px;
+  }
+
+  .md\:mt-6 {
+    margin-top: 1.5rem;
   }
 
   .md\:mt-16 {
@@ -2244,10 +2254,6 @@ input,
 
   .md\:mt-1 {
     margin-top: 0.25rem;
-  }
-
-  .md\:mr-24 {
-    margin-right: 6rem;
   }
 
   .md\:block {
@@ -2442,10 +2448,6 @@ input,
 
   .md\:border-b-\[1px\] {
     border-bottom-width: 1px;
-  }
-
-  .md\:border-t-\[1px\] {
-    border-top-width: 1px;
   }
 
   .md\:border-solid {
