@@ -152,7 +152,12 @@ function StakingAction({ pool, setUpdatePool, isApproved, setIsApproved, account
             <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} account={account} />
           )}
           {showUnstakingConfirm && (
-            <UnstakingConfirm pool={pool} onClose={_handleCloseConfirm} setUpdatePool={setUpdatePool} />
+            <UnstakingConfirm
+              pool={pool}
+              onClose={_handleCloseConfirm}
+              setUpdatePool={setUpdatePool}
+              availableTicket={availableTicket}
+            />
           )}
         </div>
       )}

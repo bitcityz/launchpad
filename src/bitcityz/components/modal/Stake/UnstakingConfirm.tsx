@@ -5,7 +5,7 @@ import useUnstakePool from '../../../scenes/launch_pool/hooks/useUnstakePool'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
+function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket }) {
   const { id, name } = pool
   const { onUnstake } = useUnstakePool(id)
   const { t } = useTranslation()
@@ -55,9 +55,15 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool }) {
         style={{ backgroundImage: `url(${bgStaking})`, backgroundSize: '100% 100%' }}
       >
         <h6 className="text-[#F5F5F5] text-xl md:text-[28px] font-bold text-center">Unstake in {name} Pool</h6>
-        <p className="text-[#F5F5F5] text-center mt-3 max-w-[300px] md:max-w-[350px] mx-auto">
-          When you unstake {tokenName} tokens, the contract will harvest rewards automatically for you!
-        </p>
+        {availableTicket >= 1 ? (
+          <p className="text-[#F5F5F5] text-center mt-3 max-w-[300px] md:max-w-[350px] mx-auto">
+            When you unstake {tokenName} tokens, the contract will harvest rewards automatically for you!
+          </p>
+        ) : (
+          <p className="text-[#F5F5F5] text-center mt-3 max-w-[300px] md:max-w-[350px] mx-auto">
+            Your staking time is not enough to generate one pass-ticket
+          </p>
+        )}
         <div className="flex justify-center gap-x-6 items-center mt-5">
           <button
             type="button"
