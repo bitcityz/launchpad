@@ -10,7 +10,7 @@ import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
 function StakingModal({ onClose, pool, setUpdatePool, account }) {
-  const { id, minLockingAmount, name, lockingTime } = pool
+  const { id, minLockingAmount, name } = pool
   const { onStake } = useStakePool(id)
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
@@ -97,16 +97,17 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
         <p className="text-[#F5F5F5] text-center mt-3">
           Required:{' '}
           <span className="text-skyblue text-shadow font-semibold">
+            Min.{' '}
             {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
             BCTZ
           </span>
         </p>
-        <p className="text-[#F5F5F5] text-center mt-1">
+        {/* <p className="text-[#F5F5F5] text-center mt-1">
           Lock-up Time:{' '}
           <span className="text-skyblue text-shadow font-semibold">{(lockingTime / 3600).toFixed(2)} days</span>
-        </p>
+        </p> */}
         <div className="mt-7 max-w-[300px] md:max-w-[430px] mx-auto flex items-center gap-x-2">
           <div className="bg-white text-right px-4 py-3 rounded-[20px] flex items-center gap-x-2 flex-1">
             {/* <input

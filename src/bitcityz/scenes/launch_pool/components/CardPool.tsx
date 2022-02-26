@@ -97,7 +97,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            {name} tickets: {ticket}
+            Your {name} tickets: {ticket}
           </button>
         </div>
         <div className="flex-1 flex flex-col">
