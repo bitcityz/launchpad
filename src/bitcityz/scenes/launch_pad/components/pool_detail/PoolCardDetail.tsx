@@ -173,10 +173,10 @@ function PoolCardDetail({
           </div>
         )}
         {Number(idoPool.status._hex) === 3 && (
-          <div className={`flex flex-col gap-y-1 md:gap-y-0 text-sm md:flex-row ${isBuyer ? 'mt-4' : ''} md:gap-x-3`}>
+          <div className={`flex flex-col gap-y-1 md:gap-y-0 md:flex-row ${isBuyer ? 'mt-4' : ''} md:gap-x-3`}>
             <span className="text-[#F5F5F5]">Contract address</span>
             <span className="text-skyblue font-semibold flex gap-x-3">
-              <span className="md:hidden">{truncateHash(idoPool.idoToken, 16, 16)}</span>
+              <span className="md:hidden">{truncateHash(idoPool.idoToken, 13, 13)}</span>
               <span className="hidden md:inline-block">{idoPool.idoToken}</span>
               <button
                 className="border-none bg-transparent"
