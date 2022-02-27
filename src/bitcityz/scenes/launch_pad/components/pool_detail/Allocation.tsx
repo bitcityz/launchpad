@@ -72,7 +72,7 @@ function Allocation({ idoPool, account, claimPercent, claimPercentLoading, setIs
             Claimed:
             {!claimPercentLoading ? (
               <span className="text-skyblue text-shadow">
-                {((claimPercent * totalToken) / 100).toLocaleString('en', {
+                {((claimPercent * Number(formatEther(idoPool.amount))) / 100).toLocaleString('en', {
                   maximumFractionDigits: 4,
                 })}
                 /
