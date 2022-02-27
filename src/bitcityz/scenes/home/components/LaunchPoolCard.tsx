@@ -70,7 +70,7 @@ function LaunchPoolCard({ pool }) {
         </p>
         <p className="flex justify-between items-center text-sm text-[#F5F5F5] mt-2">
           <span className="font-semibold">Required Lock Time:</span>
-          <span className="font-semibold"> {(pool.lockingTime / 3600).toFixed(2)} days</span>
+          <span className="font-semibold"> {(pool.lockingTime / 86400).toFixed(4)} days</span>
         </p>
       </div>
       <button

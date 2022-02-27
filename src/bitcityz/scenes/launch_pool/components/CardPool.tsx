@@ -191,7 +191,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
               {account && isApproved ? (
                 <>
                   <img src={infoSvg} alt="" className="mr-1" /> One pass-ticket will be generated in{' '}
-                  {(lockingTime / 3600).toFixed(2)} days
+                  {(lockingTime / 86400).toFixed(4)} days
                 </>
               ) : (
                 <>
