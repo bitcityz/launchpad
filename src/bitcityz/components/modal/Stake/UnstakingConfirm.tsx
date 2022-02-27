@@ -66,20 +66,13 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAv
           </p>
         )}
         <div className="flex justify-center gap-x-6 items-center mt-5">
-          <button
-            type="button"
-            className="bg-transparent border-[#7BF5FB] border-solid border-[1px] rounded-[20px] h-[44px] text-[#7BF5FB] px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
           {!pendingTx && (
             <button
               type="button"
-              className="bg-skyblue rounded-[20px] border-none text-[#212121] text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 shadow-blue md:min-w-[200px]"
+              className="bg-transparent rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue text-sm font-semibold h-[44px] px-5 min-w-[140px] md:px-10 md:min-w-[200px]"
               onClick={handleConfirmClick}
             >
-              Confirm
+              Unstake now
             </button>
           )}
           {pendingTx && (
@@ -104,6 +97,13 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAv
               Waiting...
             </button>
           )}
+          <button
+            type="button"
+            className="bg-skyblue border-none rounded-[20px] h-[44px] text-[#212121] px-5 min-w-[140px] md:px-10 font-semibold md:min-w-[200px]"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
