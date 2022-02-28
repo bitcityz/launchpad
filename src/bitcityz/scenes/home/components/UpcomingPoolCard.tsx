@@ -31,54 +31,51 @@ function UpcomingPoolCard({ project, poolName }) {
             <div className="flex items-start gap-x-3">
               <img src={project.baseInfo.logo.small} alt="" />
               <div className="flex-1">
-                <p className="text-[#F5F5F5] leading-5 flex justify-between items-center">
+                <p className="text-[#F5F5F5] font-bold text-xl leading-6 flex justify-between items-center">
                   {project.baseInfo.name}{' '}
-                  <span className="text-[#F5F5F5] leading-5 font-semibold text-xs md:text-base">
+                  <span className="text-[#F5F5F5] leading-5 text-xs md:text-sm">
                     ({project.baseInfo.symbol}/{project.baseInfo.currencyPair})
                   </span>
                 </p>
-                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex justify-between items-center">
-                  {project.baseInfo.symbol}{' '}
-                  <span className="text-shadow font-semibold leading-5 text-[#2CE7FF] text-xs md:text-base">
-                    {project.baseInfo.symbol} ={' '}
-                    {Number(formatEther(project.tokenBuy2IDOtoken)).toLocaleString('en', {
-                      maximumFractionDigits: 4,
-                    })}{' '}
-                    {project.baseInfo.currencyPair}
+
+                <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
+                  <span className="text-sm font-medium">Token name: {project.baseInfo.symbol}</span>
+                  <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
+                    {project.baseInfo.symbol} = {project.baseInfo.price} {project.baseInfo.currencyPair}
                   </span>
                 </p>
               </div>
             </div>
             <Social idoInfo={project.baseInfo} />
-            <div className="mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
+            <div className="md:mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center">
-                  <span className="text-[#BFBFBF]">Total capital raise</span>
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Total capital raise</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(
                       Number(formatEther(project.totalAmount)) * Number(formatEther(project.tokenBuy2IDOtoken))
                     ).toLocaleString('en', {
-                      maximumFractionDigits: 0,
+                      maximumFractionDigits: 4,
                     })}{' '}
                     {project.baseInfo.currencyPair}
                   </span>
                 </p>
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist reg starts</span>
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg starts</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(project.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
-                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:justify-between items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF]">Whitelist reg ends</span>
-                  <span className="text-[#F5F5F5] font-semibold ml-8">
-                    {format(project.endTimeWL * 1000, 'Pp')} (UTC)
-                  </span>
+                <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg ends</span>
+                  <span className="text-[#F5F5F5] font-semibold">{format(project.endTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
               </div>
+            </div>
+            <div className="md:inline-block mt-5">
               <Link
                 to={`/launchpad/${window.btoa(project.id)}`}
-                className="bg-skyblue mt-5 md:ml-auto rounded-[20px] flex items-center justify-center border-none text-[#212121] font-semibold h-[44px] px-[50px] shadow-blue"
+                className="bg-transparent rounded-[20px] flex items-center justify-center border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-[50px]"
               >
-                More Details
+                Project Details
               </Link>
             </div>
           </div>

@@ -31,7 +31,9 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
         if (Number(ido.status._hex) === 0) {
           const baseInfo = []
           listPool.forEach((el) => {
-            baseInfo.push(el[ido.idoToken])
+            if (el.keyType === ido.keyType) {
+              baseInfo.push(el[ido.idoToken])
+            }
           })
           upcoming.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         }

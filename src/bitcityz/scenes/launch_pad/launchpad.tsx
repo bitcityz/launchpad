@@ -74,9 +74,10 @@ function LaunchPad() {
       idoInfos.forEach((ido) => {
         const baseInfo = []
         visiblePools.forEach((el) => {
-          baseInfo.push(el[ido.idoToken])
+          if (el.keyType === ido.keyType) {
+            baseInfo.push(el[ido.idoToken])
+          }
         })
-
         if (Number(ido.status._hex) === 0 && baseInfo[0]) {
           upcomingPr.push({ id: baseInfo[0].id, ...ido, baseInfo: baseInfo[0] })
         } else if (Number(ido.status._hex) === 1 && baseInfo[0]) {
