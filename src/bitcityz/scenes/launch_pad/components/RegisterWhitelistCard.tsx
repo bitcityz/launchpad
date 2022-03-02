@@ -13,8 +13,10 @@ import RegisterModal from 'bitcityz/components/modal/WhiteList/RegisterModal'
 import { useTicketContract, useIdoContract } from 'hooks/useContract'
 import Social from './Social'
 
-import oceanProtocolActive1 from '../../../assets/images/ocean-protocol-active1.svg'
 import checkedPng from '../../../assets/images/checked.png'
+import icCitizen from '../../../assets/images/ic-citizen.png'
+import icElite from '../../../assets/images/ic-elite.png'
+import icMayor from '../../../assets/images/ic-mayor.png'
 
 function RegisterWhitelistCard({ ido, pools, account }) {
   const [showRegisterModal, setShowRegisterModal] = useState(false)
@@ -105,20 +107,29 @@ function RegisterWhitelistCard({ ido, pools, account }) {
 
   return (
     <>
-      <div className="relative px-6 py-5">
-        <div
-          className="absolute opacity-50 rounded-2xl top-0 left-0 w-full h-full"
-          style={{
-            background:
-              'linear-gradient(114.49deg, rgba(255, 255, 255, 0.165) -21.49%, rgba(255, 255, 255, 0) 111.75%)',
-            backdropFilter: 'blur(140px)',
-          }}
-        />
+      <div
+        className={`relative px-6 py-5 pool-card ${
+          idoName === 'Mayor'
+            ? 'sm-mayor-card md:mayor-card'
+            : idoName === 'Elite'
+            ? 'sm-elite-card md:elite-card'
+            : 'sm-citizen-card md:citizen-card'
+        }`}
+        // style={{
+        //   backgroundImage: `url(${
+        //     idoName === 'Mayor' ? bgMayorCard : idoName === 'Elite' ? bgEliteCard : bgCitizenCard
+        //   })`,
+        // }}
+      >
+        {/* <div className="absolute card rounded-2xl top-0 left-0 w-full h-full" /> */}
         <div className="relative z-10">
-          <h6 className="flex items-center justify-between">
-            <span className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-              {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
-            </span>
+          <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+            <img
+              src={idoName === 'Mayor' ? icMayor : idoName === 'Elite' ? icElite : icCitizen}
+              className="mr-2"
+              alt=""
+            />{' '}
+            {idoName} pool
           </h6>
           <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
             <div>

@@ -358,4 +358,38 @@
   .kogKyy {
     z-index: 9999 !important;
   }
+
+  .pool-card {
+    border-radius: 16px;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .mayor-card {
+    background-image: url('./images/bg-mayor-card.png');
+  }
+  .elite-card {
+    background-image: url('./images/bg-elite-card.png');
+  }
+  .citizen-card {
+    background-image: url('./images/bg-citizen-card.png');
+  }
+  .sm-mayor-card {
+    background-image: url('./images/sm-bg-mayor-card.png');
+  }
+  .sm-elite-card {
+    background-image: url('./images/sm-bg-elite-card.png');
+  }
+  .sm-citizen-card {
+    background-image: url('./images/sm-bg-citizen-card.png');
+  }
+  .mayor-card h6 {
+    color: #ff2cd1;
+  }
+  .elite-card h6 {
+    color: #2ce7ff;
+  }
+  .citizen-card h6 {
+    color: #ffffff;
+  }
 }
