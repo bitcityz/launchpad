@@ -85,7 +85,7 @@ function PoolCardDetail({
 
   return (
     <div className="relative">
-      <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
+      <h6 className="text-xl font-bold text-[#2CE7FF] flex items-center">
         <img src={idoName === 'Mayor' ? icMayor : idoName === 'Elite' ? icElite : icCitizen} className="mr-2" alt="" />{' '}
         {idoName} pool
       </h6>
