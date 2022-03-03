@@ -127,12 +127,12 @@ function PoolDetail() {
     <div className="py-[110px]">
       <div className="layout-container">
         <div
-          className={`relative px-6 py-7 pool-card ${
+          className={`relative px-6 py-7 ${
             idoPool?.baseInfo.accessType === 'Mayor'
-              ? 'sm-mayor-card md:mayor-card'
+              ? 'mayor-detail'
               : idoPool?.baseInfo.accessType === 'Elite'
-              ? 'sm-elite-card md:elite-card'
-              : 'sm-citizen-card md:citizen-card'
+              ? 'elite-detail'
+              : 'citizen-detail'
           }`}
         >
           <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />

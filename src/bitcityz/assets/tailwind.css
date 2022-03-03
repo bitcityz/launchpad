@@ -383,13 +383,16 @@
   .sm-citizen-card {
     background-image: url('./images/sm-bg-citizen-card.png');
   }
-  .mayor-card h6 {
+  .mayor-card h6,
+  .mayor-detail h6 {
     color: #ff2cd1;
   }
-  .elite-card h6 {
+  .elite-card h6,
+  .elite-detail h6 {
     color: #2ce7ff;
   }
-  .citizen-card h6 {
+  .citizen-card h6,
+  .citizen-detail h6 {
     color: #ffffff;
   }
 }
