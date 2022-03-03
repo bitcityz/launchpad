@@ -9,7 +9,9 @@ import RegisterWhitelistCardDetail from './RegisterWhitelistCardDetail'
 import InprogressCardDetail from './InprogressCardDetail'
 import CompletedCardDetail from './CompletedCardDetail'
 
-import oceanProtocolActive1 from '../../../../assets/images/ocean-protocol-active1.svg'
+import icCitizen from '../../../../assets/images/ic-citizen.png'
+import icElite from '../../../../assets/images/ic-elite.png'
+import icMayor from '../../../../assets/images/ic-mayor.png'
 import copyPng from '../../../../assets/images/copy.png'
 
 function PoolCardDetail({
@@ -84,7 +86,8 @@ function PoolCardDetail({
   return (
     <div className="relative">
       <h6 className="text-xl text-shadow font-bold text-[#2CE7FF] flex items-center">
-        {idoName} pool <img src={oceanProtocolActive1} className="ml-2" alt="" />
+        <img src={idoName === 'Mayor' ? icMayor : idoName === 'Elite' ? icElite : icCitizen} className="mr-2" alt="" />{' '}
+        {idoName} pool
       </h6>
       <div
         className={`mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px] ${

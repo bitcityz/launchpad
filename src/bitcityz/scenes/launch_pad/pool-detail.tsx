@@ -126,7 +126,15 @@ function PoolDetail() {
   return (
     <div className="py-[110px]">
       <div className="layout-container">
-        <div className="relative px-6 py-7">
+        <div
+          className={`relative px-6 py-7 pool-card ${
+            idoPool?.baseInfo.accessType === 'Mayor'
+              ? 'sm-mayor-card md:mayor-card'
+              : idoPool?.baseInfo.accessType === 'Elite'
+              ? 'sm-elite-card md:elite-card'
+              : 'sm-citizen-card md:citizen-card'
+          }`}
+        >
           <div className="bg-linear rounded-2xl absolute top-0 left-0 w-full h-full" />
           {!idoPool ? (
             <PoolCardDetailSkeleton />
