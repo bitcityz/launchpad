@@ -71,7 +71,6 @@ function StakingAction({
         toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
       }
     } catch (err) {
-      console.log(err)
       setPendingTx(false)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
