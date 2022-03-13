@@ -6,6 +6,7 @@ import { useERC20, useLaunchPoolContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
 import { useApprovePool } from '../hooks/useApprove'
+import useGetSign from '../../../hooks/useGetSign'
 
 function StakingAction({
   pool,
@@ -26,6 +27,7 @@ function StakingAction({
   const poolContract = useLaunchPoolContract()
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
+  const { onSign } = useGetSign()
 
   const _handleShowStakingModal = () => {
     setShowStakingModal(true)
@@ -52,13 +54,22 @@ function StakingAction({
   const _handleClaimTicket = async () => {
     try {
       setPendingTx(true)
-      const transaction = await poolContract.claimKey(id)
-      const resp = await transaction.wait()
-      console.log(resp)
-      setPendingTx(false)
-      setUpdatePool(true)
-      setAvailableTicket(0)
-      toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
+      const signData = await onSign(account, id)
+      if (signData) {
+        const transaction = await poolContract.claimKey(
+          id,
+          signData.feeTokenAmount,
+          signData.signID,
+          signData.v,
+          signData.r,
+          signData.s,
+        )
+        const resp = await transaction.wait()
+        setPendingTx(false)
+        setUpdatePool(true)
+        setAvailableTicket(0)
+        toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
+      }
     } catch (err) {
       console.log(err)
       setPendingTx(false)
@@ -167,6 +178,7 @@ function StakingAction({
               setUpdatePool={setUpdatePool}
               availableTicket={availableTicket}
               setAvailableTicket={setAvailableTicket}
+              account={account}
             />
           )}
         </div>

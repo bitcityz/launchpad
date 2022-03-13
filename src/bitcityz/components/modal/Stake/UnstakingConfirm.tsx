@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import useUnstakePool from '../../../scenes/launch_pool/hooks/useUnstakePool'
+import useGetSign from '../../../hooks/useGetSign'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAvailableTicket }) {
+function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAvailableTicket, account }) {
   const { id, name } = pool
   const { onUnstake } = useUnstakePool(id)
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
+  const { onSign } = useGetSign()
 
   const { toastSuccess, toastError } = useToast()
 
@@ -19,17 +21,20 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAv
     setPendingTx(true)
     try {
       // unstaking
-      await onUnstake()
-      toastSuccess(
-        `${t('Unstaked')}!`,
-        t('Your %symbol% earnings have also been harvested to your wallet!', {
-          symbol: tokenName,
-        }),
-      )
-      setPendingTx(false)
-      setUpdatePool(true)
-      setAvailableTicket(0)
-      onClose()
+      const signData = await onSign(account, id)
+      if (signData) {
+        await onUnstake(signData)
+        toastSuccess(
+          `${t('Unstaked')}!`,
+          t('Your %symbol% earnings have also been harvested to your wallet!', {
+            symbol: tokenName,
+          }),
+        )
+        setPendingTx(false)
+        setUpdatePool(true)
+        setAvailableTicket(0)
+        onClose()
+      }
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
       setPendingTx(false)

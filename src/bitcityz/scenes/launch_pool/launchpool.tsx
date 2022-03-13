@@ -8,6 +8,7 @@ import { useTokenContract } from 'hooks/useContract'
 import { getLaunchPoolAddress, getTicketAddress, getBCTZAddress } from 'utils/addressHelpers'
 import launchPoolABI from 'config/abi/launchPool.json'
 import launchPoolTicketABI from 'config/abi/launchPoolTicket.json'
+import useLevel from './hooks/useLevel'
 import PoolList from './components/PoolList'
 import LaunchpoolHeader from './components/LaunchpoolHeader'
 
@@ -23,6 +24,8 @@ function LaunchPool() {
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
   const [updatePool, setUpdatePool] = useState(false)
+
+  // const { addressInfo } = useLevel(account, pid)
 
   const userCalls = useMemo(
     () =>

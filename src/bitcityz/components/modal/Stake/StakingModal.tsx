@@ -6,6 +6,7 @@ import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import useGetBalanceOf from '../../../hooks/useGetBalanceOf'
 import useStakePool from '../../../scenes/launch_pool/hooks/useStakePool'
+import useGetSign from '../../../hooks/useGetSign'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
@@ -15,6 +16,7 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
   const { balance } = useGetBalanceOf(account)
+  const { onSign } = useGetSign()
 
   const { toastSuccess, toastError } = useToast()
 
@@ -63,17 +65,21 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
         setShowMsg(true)
       } else {
         setPendingTx(true)
-        await onStake(stakeAmount.replace(/,/g, ''), 18)
-        toastSuccess(
-          `${t('Staked')}!`,
-          t('Your %symbol% funds have been staked in the pool!', {
-            symbol: tokenName,
-          }),
-        )
+        const signData = await onSign(account, id)
 
-        setPendingTx(false)
-        setUpdatePool(true)
-        onClose()
+        if (signData) {
+          await onStake(stakeAmount.replace(/,/g, ''), 18, signData)
+          toastSuccess(
+            `${t('Staked')}!`,
+            t('Your %symbol% funds have been staked in the pool!', {
+              symbol: tokenName,
+            }),
+          )
+
+          setPendingTx(false)
+          setUpdatePool(true)
+          onClose()
+        }
       }
     } catch (e) {
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
