@@ -4,7 +4,7 @@ import CardPool from './CardPool'
 import SkeletonCardPool from './SkeletonCardPool'
 
 function PoolList(props) {
-  const { pools, account, isLoading, setUpdatePool, launchPoolAddress, isApproved, setIsApproved } = props
+  const { pools, account, isLoading, setUpdatePool, launchPoolAddress, isApproved, setIsApproved, addressInfo } = props
   return (
     <div className="flex flex-col gap-y-8">
       {isLoading ? (
@@ -26,6 +26,7 @@ function PoolList(props) {
                   launchPoolAddress={launchPoolAddress}
                   isApproved={isApproved}
                   setIsApproved={setIsApproved}
+                  addressInfo={addressInfo}
                 />
               )
             })}

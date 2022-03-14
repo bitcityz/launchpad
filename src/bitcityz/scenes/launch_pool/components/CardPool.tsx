@@ -6,7 +6,6 @@ import useAuth from 'hooks/useAuth'
 import { useBlock } from 'state/block/hooks'
 import { differenceInSeconds } from 'date-fns'
 import { useTranslation } from 'contexts/Localization'
-import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import getTimePeriods from 'utils/getTimePeriods'
 import BigNumber from 'bignumber.js'
 import { useTicketContract, useLaunchPoolContract } from 'hooks/useContract'
@@ -21,8 +20,8 @@ import externalink from '../../../assets/images/external-link.svg'
 import infoSvg from '../../../assets/images/info.svg'
 import warningInfoSvg from '../../../assets/images/warning-info.svg'
 
-function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved, setIsApproved }) {
-  const { id, amount, minLockingAmount, name, startTime, lockingTime, ticketHash } = pool
+function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved, setIsApproved, addressInfo }) {
+  const { id, amount, name, startTime, lockingTime, ticketHash } = pool
   const { login, logout } = useAuth()
   const { t } = useTranslation()
   const { onPresentConnectModal } = useWalletModal(login, logout, t)
@@ -149,11 +148,29 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             <div className="flex justify-between items-center md:block">
               <p className="text-[#9E9E9E] font-semibold text-sm">Required</p>
               <p className="text-[#F5F5F5] font-semibold text-shadow mt-2">
-                Min.{' '}
-                {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
-                  maximumFractionDigits: 0,
-                })}{' '}
-                BCTZ
+                {account ? (
+                  <>
+                    {' '}
+                    Min.{' '}
+                    {(name === 'Mayor'
+                      ? addressInfo
+                        ? addressInfo.amount_staking_bctz_mayor_pool
+                        : 0
+                      : name === 'Elite'
+                      ? addressInfo
+                        ? addressInfo?.amount_staking_bctz_elite_pool
+                        : 0
+                      : addressInfo
+                      ? addressInfo?.amount_staking_bctz_citizen_pool
+                      : 0
+                    ).toLocaleString('en', {
+                      maximumFractionDigits: 0,
+                    })}{' '}
+                    BCTZ
+                  </>
+                ) : (
+                  <>N/A</>
+                )}
               </p>
             </div>
             <div className="flex justify-between items-center md:block">
@@ -226,6 +243,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
                 account={account}
                 availableTicket={availableTicket}
                 setAvailableTicket={setAvailableTicket}
+                addressInfo={addressInfo}
               />
             )}
           </div>

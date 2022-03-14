@@ -10,8 +10,8 @@ import useGetSign from '../../../hooks/useGetSign'
 import '../../../assets/index.css'
 import bgStaking from '../../../assets/images/bg-staking.png'
 
-function StakingModal({ onClose, pool, setUpdatePool, account }) {
-  const { id, minLockingAmount, name } = pool
+function StakingModal({ onClose, pool, setUpdatePool, account, addressInfo }) {
+  const { id, name } = pool
   const { onStake } = useStakePool(id)
   const { t } = useTranslation()
   const tokenName = 'BCTZ'
@@ -25,9 +25,16 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
   const [showMsg, setShowMsg] = useState(false)
   const thousandSeparator = true
 
+  const minLockingAmount =
+    name === 'Mayor'
+      ? addressInfo.amount_staking_bctz_mayor_pool
+      : name === 'Elite'
+      ? addressInfo.amount_staking_bctz_elite_pool
+      : addressInfo.amount_staking_bctz_citizen_pool
+
   const handleSelectMax = useCallback(() => {
     setStakeAmount(balance)
-    if (Number(balance) >= Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))) {
+    if (Number(balance) >= Number(minLockingAmount)) {
       setShowMsg(false)
     }
   }, [balance, setStakeAmount, minLockingAmount])
@@ -36,10 +43,7 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
     (e: React.FormEvent<HTMLInputElement>) => {
       if (e.currentTarget.validity.valid) {
         setStakeAmount(e.currentTarget.value)
-        if (
-          Number(e.currentTarget.value.replace(/,/g, '')) >=
-          Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))
-        ) {
+        if (Number(e.currentTarget.value.replace(/,/g, '')) >= Number(minLockingAmount)) {
           setShowMsg(false)
         } else {
           setShowMsg(true)
@@ -59,9 +63,7 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
   const handleConfirmClick = async () => {
     try {
       // staking
-      if (
-        Number(stakeAmount.replace(/,/g, '')) < Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL))
-      ) {
+      if (Number(stakeAmount.replace(/,/g, '')) < Number(minLockingAmount)) {
         setShowMsg(true)
       } else {
         setPendingTx(true)
@@ -104,7 +106,12 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
           Required:{' '}
           <span className="text-skyblue text-shadow font-semibold">
             Min.{' '}
-            {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
+            {(name === 'Mayor'
+              ? addressInfo?.amount_staking_bctz_mayor_pool
+              : name === 'Elite'
+              ? addressInfo?.amount_staking_bctz_elite_pool
+              : addressInfo?.amount_staking_bctz_citizen_pool
+            ).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
             BCTZ
@@ -144,7 +151,7 @@ function StakingModal({ onClose, pool, setUpdatePool, account }) {
         {showMsg && (
           <p className="text-[#FF4D4F] text-xs font-semibold mt-1">
             You have to stake minimum{' '}
-            {Number(new BigNumber(minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
+            {Number(minLockingAmount).toLocaleString('en', {
               maximumFractionDigits: 0,
             })}{' '}
             BCTZ to enter in this pool !

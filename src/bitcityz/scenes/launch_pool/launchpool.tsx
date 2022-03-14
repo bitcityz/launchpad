@@ -24,8 +24,9 @@ function LaunchPool() {
   const [isLoading, setIsLoading] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
   const [updatePool, setUpdatePool] = useState(false)
+  const [addressInfo, setAddressInfo] = useState(null)
 
-  // const { addressInfo } = useLevel(account, pid)
+  const { getUserLevel } = useLevel()
 
   const userCalls = useMemo(
     () =>
@@ -50,6 +51,22 @@ function LaunchPool() {
       }),
     [ticketAddress],
   )
+
+  useEffect(() => {
+    let isMounted = true
+    const getAccountInfo = async () => {
+      const resp = await getUserLevel(account)
+      if (isMounted) {
+        setAddressInfo(resp.result)
+      }
+    }
+    if (account) {
+      getAccountInfo()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [account, getUserLevel])
 
   useEffect(() => {
     let isMounted = true
@@ -119,6 +136,7 @@ function LaunchPool() {
             launchPoolAddress={launchPoolAddress}
             isApproved={isApproved}
             setIsApproved={setIsApproved}
+            addressInfo={addressInfo}
           />
         </div>
       </div>

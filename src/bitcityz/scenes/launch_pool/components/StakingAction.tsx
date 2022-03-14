@@ -16,6 +16,7 @@ function StakingAction({
   account,
   availableTicket,
   setAvailableTicket,
+  addressInfo,
 }) {
   const [showStakingModal, setShowStakingModal] = useState(false)
   const [showUnstakingConfirm, setShowUnstakingConfirm] = useState(false)
@@ -168,7 +169,13 @@ function StakingAction({
             </button>
           )}
           {showStakingModal && (
-            <StakingModal pool={pool} onClose={_handleCloseModal} setUpdatePool={setUpdatePool} account={account} />
+            <StakingModal
+              pool={pool}
+              onClose={_handleCloseModal}
+              setUpdatePool={setUpdatePool}
+              account={account}
+              addressInfo={addressInfo}
+            />
           )}
           {showUnstakingConfirm && (
             <UnstakingConfirm

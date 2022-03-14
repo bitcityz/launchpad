@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
 import { Link } from 'react-router-dom'
+import { useWeb3React } from '@web3-react/core'
 import LaunchPoolCard from './LaunchPoolCard'
+import useLevel from '../../launch_pool/hooks/useLevel'
 import launchPool from '../../../assets/images/launchpool.svg'
 
 function LaunchPool({ pools }) {
+  const [addressInfo, setAddressInfo] = useState(null)
+  const { account } = useWeb3React()
+  const { getUserLevel } = useLevel()
+
+  useEffect(() => {
+    let isMounted = true
+    const getAccountInfo = async () => {
+      const resp = await getUserLevel(account)
+      if (isMounted) {
+        setAddressInfo(resp.result)
+      }
+    }
+    if (account) {
+      getAccountInfo()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [account, getUserLevel])
   return (
     <div>
       <div className="text-center pt-[170px]">
@@ -21,7 +42,7 @@ function LaunchPool({ pools }) {
       <div className="grid gap-y-8 md:gap-y-0 md:grid-cols-3 md:gap-x-8 mt-8">
         {pools.length > 0 &&
           pools.map((pool) => {
-            return <LaunchPoolCard key={pool.id} pool={pool} />
+            return <LaunchPoolCard key={pool.id} pool={pool} account={account} addressInfo={addressInfo} />
           })}
       </div>
       <div className="text-center">

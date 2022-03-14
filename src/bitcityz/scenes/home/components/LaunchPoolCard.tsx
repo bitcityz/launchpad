@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react'
 
 import '../../../assets/index.css'
 import BigNumber from 'bignumber.js'
-import { DEFAULT_TOKEN_DECIMAL } from 'config'
 import { useTicketContract } from 'hooks/useContract'
-import { useWeb3React } from '@web3-react/core'
 
 import bgCardPink from '../../../assets/images/bg-lauchpool-card-pink.png'
 import bgCardBlue from '../../../assets/images/bg-lauchpool-card-blue.png'
 import bgCardGreen from '../../../assets/images/bg-lauchpool-card-green.png'
 import bgBtn from '../../../assets/images/bg-launch-pool-btn.png'
 
-function LaunchPoolCard({ pool }) {
+function LaunchPoolCard({ pool, account, addressInfo }) {
   const [ticket, setTicket] = useState(0)
   const ticketContract = useTicketContract()
-  const { account } = useWeb3React()
 
   useEffect(() => {
     setTicket(0)
@@ -60,17 +57,34 @@ function LaunchPoolCard({ pool }) {
         <p className="flex justify-between items-center text-sm text-[#F5F5F5] mt-4">
           <span className="font-semibold">Required:</span>
           <span className="font-semibold">
-            {' '}
-            &gt;={' '}
-            {Number(new BigNumber(pool.minLockingAmount).dividedBy(DEFAULT_TOKEN_DECIMAL)).toLocaleString('en', {
-              maximumFractionDigits: 0,
-            })}{' '}
-            BCTZ
+            {account ? (
+              <>
+                {' '}
+                Min.{' '}
+                {(pool.id === 0
+                  ? addressInfo
+                    ? addressInfo.amount_staking_bctz_mayor_pool
+                    : 0
+                  : pool.id === 1
+                  ? addressInfo
+                    ? addressInfo?.amount_staking_bctz_elite_pool
+                    : 0
+                  : addressInfo
+                  ? addressInfo?.amount_staking_bctz_citizen_pool
+                  : 0
+                ).toLocaleString('en', {
+                  maximumFractionDigits: 0,
+                })}{' '}
+                BCTZ
+              </>
+            ) : (
+              <>N/A</>
+            )}
           </span>
         </p>
         <p className="flex justify-between items-center text-sm text-[#F5F5F5] mt-2">
           <span className="font-semibold">Required Lock Time:</span>
-          <span className="font-semibold"> {(pool.lockingTime / 86400).toFixed(4)} days</span>
+          <span className="font-semibold"> {(pool.lockingTime / 86400).toFixed(0)} days</span>
         </p>
       </div>
       <button
