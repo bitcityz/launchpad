@@ -64,13 +64,14 @@ function StakingAction({
           signData.r,
           signData.s,
         )
-        const resp = await transaction.wait()
+        await transaction.wait()
         setPendingTx(false)
         setUpdatePool(true)
         setAvailableTicket(0)
         toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
       }
     } catch (err) {
+      console.log(err)
       setPendingTx(false)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
