@@ -58,11 +58,11 @@ function StakingAction({
       if (signData) {
         const transaction = await poolContract.claimKey(
           id,
-          signData.feeTokenAmount,
-          signData.signID,
-          signData.v,
-          signData.r,
-          signData.s,
+          signData.sigature.feeTokenAmount,
+          signData.sigature.signID,
+          signData.sigature.v,
+          signData.sigature.r,
+          signData.sigature.s,
         )
         await transaction.wait()
         setPendingTx(false)
@@ -71,7 +71,6 @@ function StakingAction({
         toastSuccess(`${t('Claimed')}!`, t('You claimed ticket successful!'))
       }
     } catch (err) {
-      console.log(err)
       setPendingTx(false)
       toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
     }
