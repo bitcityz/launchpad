@@ -67,7 +67,7 @@ function StakingModal({ onClose, pool, setUpdatePool, account, addressInfo }) {
         setShowMsg(true)
       } else {
         setPendingTx(true)
-        const signData = await onSign(account, id)
+        const signData = await onSign(account, id, 0)
 
         if (signData) {
           await onStake(stakeAmount.replace(/,/g, ''), 18, signData)

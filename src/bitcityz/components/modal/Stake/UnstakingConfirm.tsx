@@ -21,7 +21,7 @@ function UnstakingConfirm({ onClose, pool, setUpdatePool, availableTicket, setAv
     setPendingTx(true)
     try {
       // unstaking
-      const signData = await onSign(account, id)
+      const signData = await onSign(account, id, 1)
       if (signData) {
         await onUnstake(signData)
         toastSuccess(

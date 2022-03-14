@@ -55,7 +55,7 @@ function StakingAction({
   const _handleClaimTicket = async () => {
     try {
       setPendingTx(true)
-      const signData = await onSign(account, id)
+      const signData = await onSign(account, id, 2)
       if (signData) {
         const transaction = await poolContract.claimKey(
           id,
