@@ -107,7 +107,7 @@ function LaunchPool() {
           name: pool.name,
           lockingToken: pool.lockingToken,
           lockingTime: new BigNumber(pool.lockingTime._hex).toString(),
-          minLockingAmount: new BigNumber(pool.minLockingAmount._hex).toString(),
+          // minLockingAmount: new BigNumber(pool.minLockingAmount._hex).toString(),
           ticketHash: ticketInfos[index].hash,
         }
       })

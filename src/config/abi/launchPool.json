@@ -51,7 +51,6 @@
     "inputs": [
       { "internalType": "string", "name": "_name", "type": "string" },
       { "internalType": "contract IERC20", "name": "_lockingToken", "type": "address" },
-      { "internalType": "uint256", "name": "_minLockingAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_lockingTime", "type": "uint256" },
       { "internalType": "uint256", "name": "_keyType", "type": "uint256" }
     ],
@@ -99,6 +98,7 @@
     "inputs": [
       { "internalType": "address", "name": "_user", "type": "address" },
       { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "uint256", "name": "_feeTokenAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_signId", "type": "uint256" }
     ],
@@ -142,6 +142,7 @@
     "inputs": [
       { "internalType": "address", "name": "_user", "type": "address" },
       { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" },
       { "internalType": "uint256", "name": "_feeTokenAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_signId", "type": "uint256" },
       { "internalType": "uint8", "name": "v", "type": "uint8" },
@@ -159,7 +160,6 @@
     "outputs": [
       { "internalType": "string", "name": "name", "type": "string" },
       { "internalType": "contract IERC20", "name": "lockingToken", "type": "address" },
-      { "internalType": "uint256", "name": "minLockingAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "lockingTime", "type": "uint256" },
       { "internalType": "uint256", "name": "keyType", "type": "uint256" },
       { "internalType": "bool", "name": "status", "type": "bool" }
@@ -178,7 +178,6 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "_pid", "type": "uint256" },
-      { "internalType": "uint256", "name": "_minLockingAmount", "type": "uint256" },
       { "internalType": "uint256", "name": "_lockingTime", "type": "uint256" },
       { "internalType": "bool", "name": "_status", "type": "bool" }
     ],
