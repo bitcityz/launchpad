@@ -153,7 +153,7 @@ function InprogressCard({ ido, pools, account }) {
             className="mr-2"
             alt=""
           />{' '}
-          {idoName} pool
+          {idoName} Pool
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -170,7 +170,7 @@ function InprogressCard({ ido, pools, account }) {
                   </span>
                 </p>
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
-                  <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
+                  <span className="text-sm font-medium">Token&apos;s Name: {ido.baseInfo.symbol}</span>
                   <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} ={' '}
                     {/* {Number(formatEther(ido.tokenBuy2IDOtoken)).toLocaleString('en', {
@@ -185,7 +185,7 @@ function InprogressCard({ ido, pools, account }) {
             <div className="mt-5 flex flex-col md:flex-row md:gap-x-8">
               <div className="flex-1">
                 <div className="flex gap-x-3 justify-start items-center">
-                  <span className="text-[#BFBFBF] w-[130px]">Total capital raise</span>
+                  <span className="text-[#BFBFBF] w-[130px]">Total Capital Raised</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
                       'en',
@@ -197,7 +197,7 @@ function InprogressCard({ ido, pools, account }) {
                   </span>
                 </div>
                 <div className="flex gap-x-3 justify-start items-center mt-3">
-                  <span className="text-[#BFBFBF] w-[130px] text-left">Join pool</span>
+                  <span className="text-[#BFBFBF] w-[130px] text-left">Join Pool</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {days}d : {hours}h : {minutes}m : {seconds}s
                   </span>
@@ -218,7 +218,7 @@ function InprogressCard({ ido, pools, account }) {
                   </div>
                 )}
                 <div className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-3 items-start md:items-center mt-3">
-                  <span className="text-[#BFBFBF] w-[130px] text-left">Swap process</span>
+                  <span className="text-[#BFBFBF] w-[130px] text-left">Swap Process</span>
                   <div className="flex flex-1 w-full md:max-w-[300px] items-center justify-end gap-x-2">
                     <div className="flex-1 w-full bg-[#F5F5F5] h-2 rounded-[100px]">
                       <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${percent}%` }} />
@@ -240,7 +240,7 @@ function InprogressCard({ ido, pools, account }) {
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
                   onClick={onPresentConnectModal}
                 >
-                  Connect wallet
+                  Connect Wallet
                 </button>
               )}
               {account && isApproved && !isBuyer && isInWhitelist && !pendingTx && showButton && (
@@ -249,7 +249,7 @@ function InprogressCard({ ido, pools, account }) {
                   className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-10 shadow-blue"
                   onClick={handleConfirm}
                 >
-                  Join pool
+                  Join Pool
                 </button>
               )}
 

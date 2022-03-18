@@ -9,7 +9,7 @@ function Summary(props) {
   return (
     <div>
       <h5 className="text-[#F5F5F5] text-xl md:text-[32px] text-center">
-        Buy and own potential coins in the fastest way
+        Buy and own potential tokens in the fastest way
       </h5>
       <p className="text-center text-[#F5F5F5] mt-4">
         Staking <span className="text-white font-semibold">BCTZ</span> to get pass-ticket. Join pool to claim hidden
@@ -81,7 +81,7 @@ function Summary(props) {
                 'linear-gradient(114.49deg, rgba(255, 255, 255, 0.33) -21.49%, rgba(255, 255, 255, 0) 111.75%)',
             }}
           />
-          <p className="text-[#F5F5F5] font-semibold text-center relative">Inverstors</p>
+          <p className="text-[#F5F5F5] font-semibold text-center relative">Investors</p>
           <h6
             className={`text-[#2CE7FF] font-bold text-[32px] text-center text-shadow mt-3 ${
               isLoading ? 'skeleton-short skeleton-center' : ''

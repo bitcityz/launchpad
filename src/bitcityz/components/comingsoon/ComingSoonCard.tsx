@@ -12,7 +12,7 @@ function ComingSoonCard() {
     >
       <img src={comingSoon} alt="Sleep" />
       <h6 className="text-center text-[#F5F5F5] font-bold text-[32px] mt-14">Coming soon !</h6>
-      <p className="text-white text-base mt-4">The upcoming project will comming soon.</p>
+      {/* <p className="text-white text-base mt-4">The upcoming project will comming soon.</p> */}
     </div>
   )
 }

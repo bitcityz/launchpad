@@ -84,7 +84,7 @@ function LaunchPoolCard({ pool, account, addressInfo }) {
         </p>
         <p className="flex justify-between items-center text-sm text-[#F5F5F5] mt-2">
           <span className="font-semibold">Required Lock Time:</span>
-          <span className="font-semibold"> {(pool.lockingTime / 86400).toFixed(0)} days</span>
+          <span className="font-semibold"> {(pool.lockingTime / 86400).toFixed(0)} day</span>
         </p>
       </div>
       <button
@@ -92,7 +92,7 @@ function LaunchPoolCard({ pool, account, addressInfo }) {
         className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold"
         style={{ backgroundImage: `url(${bgBtn})` }}
       >
-        {pool.name} tickets: {ticket}
+        {pool.name} {ticket > 1 ? 'Tickets' : 'Ticket'}: {ticket}
       </button>
     </div>
   )

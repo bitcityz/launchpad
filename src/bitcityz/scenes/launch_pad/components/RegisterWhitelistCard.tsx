@@ -129,7 +129,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
               className="mr-2"
               alt=""
             />{' '}
-            {idoName} pool
+            {idoName} Pool
           </h6>
           <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
             <div>
@@ -147,7 +147,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                   </p>
 
                   <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
-                    <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
+                    <span className="text-sm font-medium">Token&apos;s Name: {ido.baseInfo.symbol}</span>
                     <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                       {ido.baseInfo.symbol} = {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                     </span>
@@ -158,7 +158,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
               <div className="mt-5 md:mt-3 flex flex-col md:flex-row md:gap-x-8">
                 <div className="flex-1 text-left">
                   <p className="flex flex-row gap-x-4">
-                    <span className="text-[#BFBFBF]">Total capital raise</span>
+                    <span className="text-[#BFBFBF]">Total Capital Raised</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {(
                         Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))
@@ -169,7 +169,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     </span>
                   </p>
                   <p className="flex flex-row gap-x-4 mt-3">
-                    <span className="text-[#BFBFBF]">Register whitelist</span>
+                    <span className="text-[#BFBFBF]">Register Whitelist</span>
                     <span className="text-[#F5F5F5] font-semibold">
                       {days}d : {hours}h : {minutes}m : {seconds}s
                     </span>
@@ -183,7 +183,7 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
                     onClick={onPresentConnectModal}
                   >
-                    Connect wallet
+                    Connect Wallet
                   </button>
                 )}
                 {account && !isInWhitelist && !pendingTx && (

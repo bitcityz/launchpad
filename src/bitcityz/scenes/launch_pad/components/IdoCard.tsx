@@ -42,7 +42,7 @@ function IdoCard({ ido, pools }) {
             className="mr-2"
             alt=""
           />{' '}
-          {idoName} pool
+          {idoName} Pool
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -60,7 +60,7 @@ function IdoCard({ ido, pools }) {
                 </p>
 
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
-                  <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
+                  <span className="text-sm font-medium">Token&apos;s Name: {ido.baseInfo.symbol}</span>
                   <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} = {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                   </span>
@@ -71,7 +71,7 @@ function IdoCard({ ido, pools }) {
             <div className="md:mt-4 flex flex-col gap-y-5 md:gap- md:flex-row md:gap-x-8">
               <div className="flex-1">
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF] w-[180px]">Total capital raise</span>
+                  <span className="text-[#BFBFBF] w-[180px]">Total Capital Raised</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
                       'en',
@@ -83,11 +83,11 @@ function IdoCard({ ido, pools }) {
                   </span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg starts</span>
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist Reg Starts</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(ido.startTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
                 <p className="flex flex-col gap-y-1 md:gap-y-0 md:flex-row md:gap-x-9 items-start md:items-center mt-5 md:mt-2">
-                  <span className="text-[#BFBFBF] w-[180px]">Whitelist reg ends</span>
+                  <span className="text-[#BFBFBF] w-[180px]">Whitelist Reg Ends</span>
                   <span className="text-[#F5F5F5] font-semibold">{format(ido.endTimeWL * 1000, 'Pp')} (UTC)</span>
                 </p>
               </div>

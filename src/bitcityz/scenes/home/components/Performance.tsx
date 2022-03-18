@@ -28,7 +28,7 @@ function Performance() {
           <div className="flex flex-col gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
             <div className="flex items-center gap-x-4">
               <img src={sLogo} alt="" />
-              <span className="text-[#F5F5F5] font-bold text-xl">BitcityZ</span>
+              <span className="text-[#F5F5F5] font-bold text-xl">BitCityZ</span>
             </div>
             <div className="flex items-center gap-x-5">
               <a href="https://t.me/BitCityZSocial" target="_blank" rel="noreferrer">

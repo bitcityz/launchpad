@@ -10,7 +10,7 @@ function LaunchpoolHeader() {
       <img src={textSvg} className="mx-auto" alt="" />
       <h2 className="text-center text-skyblue text-shadow font-bold text-[32px]">Launchpool</h2>
       <p className="text-[#F5F5F5] text-center max-w-[547px] mx-auto mt-6">
-        Stake <span className="font-semibold">3 pools</span> at the same time. Get more opportunities to own hidden gems
+        Three pools can be staked at the same time. Let&apos;s get more opportunities to own hidden gems together!
       </p>
     </div>
   )

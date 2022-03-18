@@ -56,7 +56,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
           <Lottie config={{ animationData: animationConfettiData, loop: true }} />
         </div>
         <h2 className="text-center text-skyblue font-bold text-[28px] md:text-[32px] text-shadow mt-1">
-          Upcoming pool
+          Upcoming Pool
         </h2>
         <img src={line1} className="mt-4 w-full h-auto" alt="" />
         <div className="grid mobile-tab md:grid-cols-3 gap-x-8 relative">
@@ -67,7 +67,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
             }`}
             onClick={() => handleChangeTab(0)}
           >
-            Mayor pool
+            Mayor Pool
             {tab === 0 ? (
               <img src={oceanProtocolActive} className="ml-1" alt="" />
             ) : (
@@ -81,7 +81,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
             }`}
             onClick={() => handleChangeTab(1)}
           >
-            Elite pool
+            Elite Pool
             {tab === 1 ? (
               <img src={oceanProtocolActive} className="ml-1" alt="" />
             ) : (
@@ -95,7 +95,7 @@ function UpcomingPoolTab({ pools, projects, listPool }) {
             }`}
             onClick={() => handleChangeTab(2)}
           >
-            Citizen pool
+            Citizen Pool
             {tab === 2 ? (
               <img src={oceanProtocolActive} className="ml-1" alt="" />
             ) : (

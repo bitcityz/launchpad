@@ -89,7 +89,7 @@ function CompletedCard({ ido, pools, account }) {
             className="mr-2"
             alt=""
           />{' '}
-          {idoName} pool
+          {idoName} Pool
         </h6>
         <div className="mt-5 flex flex-col gap-y-5 md:gap-y-0 md:flex-row md:gap-x-[30px]">
           <div>
@@ -107,7 +107,7 @@ function CompletedCard({ ido, pools, account }) {
                 </p>
 
                 <p className="text-[#F5F5F5] text-xl font-bold leading-6 mt-1 flex flex-col items-start gap-y-3 md:gap-y-0 md:flex-row md:justify-between md:items-center">
-                  <span className="text-sm font-medium">Token name: {ido.baseInfo.symbol}</span>
+                  <span className="text-sm font-medium">Token&apos;s Name: {ido.baseInfo.symbol}</span>
                   <span className="text-shadow font-semibold md:font-bold leading-5 text-skyblue text-2xl -translate-x-[60px] md:-translate-x-0">
                     {ido.baseInfo.symbol} = {ido.baseInfo.price} {ido.baseInfo.currencyPair}
                   </span>
@@ -124,7 +124,7 @@ function CompletedCard({ ido, pools, account }) {
             <div className="mt-4 flex flex-col md:flex-row md:gap-x-8">
               <div className="flex-1">
                 <div className="flex gap-x-3 justify-start items-center">
-                  <span className="text-[#BFBFBF] w-[130px]">Total capital raise</span>
+                  <span className="text-[#BFBFBF] w-[130px]">Total Capital Raised</span>
                   <span className="text-[#F5F5F5] font-semibold">
                     {(Number(formatEther(ido.totalAmount)) * Number(formatEther(ido.tokenBuy2IDOtoken))).toLocaleString(
                       'en',
@@ -137,7 +137,7 @@ function CompletedCard({ ido, pools, account }) {
                 </div>
                 {account && isBuyer && showButton && (
                   <div className="flex flex-col mt-3 gap-y-1 items-start md:gap-y-0 md:flex-row md:items-center">
-                    <span className="text-[#BFBFBF] w-[142px] text-left">Claim process</span>
+                    <span className="text-[#BFBFBF] w-[142px] text-left">Claim Process</span>
                     <div className="flex flex-1 w-full items-center justify-start gap-x-2">
                       <div className="flex-1 md:max-w-[275px] bg-[#F5F5F5] h-2 rounded-[100px]">
                         <div className="bg-[#1890FF] h-2 rounded-[100px]" style={{ width: `${claimPercent}%` }} />

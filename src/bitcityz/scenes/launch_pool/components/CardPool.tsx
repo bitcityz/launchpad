@@ -127,11 +127,11 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             className="w-full h-[77px] bg-no-repeat bg-center bg-contain text-skyblue text-shadow font-semibold translate-y-[10px]"
             style={{ backgroundImage: `url(${bgBtn})` }}
           >
-            Your {name} tickets: {ticket}
+            Your {name} {ticket > 1 ? 'Tickets' : 'Ticket'}: {ticket}
           </button>
         </div>
         <div className="flex-1 flex flex-col">
-          <h6 className="text-2xl font-bold text-[#F5F5F5] leading-6 hidden md:block">{name} Pass-ticket</h6>
+          <h6 className="text-2xl font-bold text-[#F5F5F5] leading-6 hidden md:block">{name} Pass-Ticket</h6>
           <div className="mt-2">
             <a
               href={`https://testnet.bscscan.com/address/${launchPoolAddress}`}
@@ -140,7 +140,7 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
               className="mx-auto md:mx-0 flex bg-[#F5F5F5] max-w-[177px] py-1 gap-x-2 text-xs font-semibold text-black rounded-[20px] px-3 justify-around"
             >
               <img src={linkSvg} alt="" />
-              <span>Smart contract</span>
+              <span>Smart Contract</span>
               <img src={externalink} alt="" />
             </a>
           </div>
@@ -199,7 +199,9 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
             <p className="text-[#9E9E9E] font-semibold text-sm">
               Available to claim{' '}
               {account && isApproved ? (
-                <span className="text-[#F5F5F5] font-semibold text-shadow">{availableTicket} tickets</span>
+                <span className="text-[#F5F5F5] font-semibold text-shadow">
+                  {availableTicket} {availableTicket > 1 ? 'tickets' : 'ticket'}
+                </span>
               ) : (
                 <span className="text-[#F5F5F5] font-semibold text-shadow">N/A</span>
               )}
@@ -208,14 +210,14 @@ function CardPool({ pool, account, setUpdatePool, launchPoolAddress, isApproved,
               {account && isApproved ? (
                 <>
                   <img src={infoSvg} alt="" className="mr-1" /> One pass-ticket will be generated in{' '}
-                  {(lockingTime / 86400).toFixed(0)} days
+                  {(lockingTime / 86400).toFixed(0)} day
                 </>
               ) : (
                 <>
                   <img src={warningInfoSvg} alt="" className="mr-1" />
                   {!account && <span className="text-[#FF4D4F]">Connect wallet to see available ticket</span>}
                   {account && !isApproved && (
-                    <span className="text-[#FF4D4F]">Approval contract to see available ticket</span>
+                    <span className="text-[#FF4D4F]">Approve contract to see available ticket</span>
                   )}
                 </>
               )}
