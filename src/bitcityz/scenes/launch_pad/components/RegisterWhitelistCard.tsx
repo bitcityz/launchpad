@@ -186,15 +186,18 @@ function RegisterWhitelistCard({ ido, pools, account }) {
                     Connect Wallet
                   </button>
                 )}
-                {account && !isInWhitelist && !pendingTx && (
-                  <button
-                    type="button"
-                    className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
-                    onClick={_handleShowRegisterModal}
-                  >
-                    Register Whitelist
-                  </button>
-                )}
+                {account &&
+                  !isInWhitelist &&
+                  !pendingTx &&
+                  (days !== 0 || hours !== 0 || minutes !== 0 || seconds !== 0) && (
+                    <button
+                      type="button"
+                      className="bg-skyblue mt-5 md:mt-auto rounded-[20px] border-none text-[#212121] font-semibold h-[44px] px-8 shadow-blue"
+                      onClick={_handleShowRegisterModal}
+                    >
+                      Register Whitelist
+                    </button>
+                  )}
                 {account && isInWhitelist && !pendingTx && (
                   <span className="mt-5 md:mt-auto rounded-[20px] border-[1px] border-solid border-skyblue text-skyblue font-semibold h-[44px] px-12 flex gap-x-3 items-center justify-center">
                     <img src={checkedPng} alt="" />
